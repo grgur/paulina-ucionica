@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verb Patterns — Paulinina Učionica</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #FFF8F0;
+      --bg-card: #FFFFFF;
+      --text-main: #3A3A3A;
+      --text-light: #6B6B6B;
+      --blue: #4A90D9;
+      --blue-light: #E8F4FD;
+      --green: #5CB85C;
+      --green-light: #E8F8E8;
+      --orange: #FF9800;
+      --orange-light: #FFF3E0;
+      --red: #E74C3C;
+      --red-light: #FDE8E8;
+      --purple: #9B59B6;
+      --purple-light: #F3E8FD;
+      --teal: #26A69A;
+      --teal-light: #E0F2F1;
+      --radius: 16px;
+      --shadow: 0 2px 12px rgba(0,0,0,0.06);
+      --shadow-hover: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Lexend', 'Verdana', sans-serif;
+      background: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.8;
+      letter-spacing: 0.03em;
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      font-size: 19px;
+    }
+    h1 { font-size: 32px; font-weight: 700; color: #2C3E50; margin-bottom: 8px; line-height: 1.3; }
+    h2 { font-size: 26px; font-weight: 600; color: #34495E; margin-top: 32px; margin-bottom: 16px; }
+    h3 { font-size: 22px; font-weight: 600; margin-bottom: 12px; }
+    p { margin-bottom: 16px; }
+
+    /* Header */
+    .lesson-header {
+      text-align: center;
+      padding: 32px 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: var(--radius);
+      color: white;
+      margin-bottom: 28px;
+    }
+    .lesson-header h1 { color: white; font-size: 30px; }
+    .lesson-header .subtitle { font-size: 18px; opacity: 0.9; margin-top: 8px; }
+    .lesson-header .emoji-row { font-size: 36px; margin-bottom: 12px; }
+
+    /* Progress */
+    .progress-wrapper { margin-bottom: 28px; position: sticky; top: 0; background: var(--bg-main); padding: 12px 0; z-index: 100; }
+    .progress-labels { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 16px; color: var(--text-light); }
+    .progress-bar { height: 12px; background: #E8E4DF; border-radius: 6px; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--blue), var(--teal)); border-radius: 6px; transition: width 0.4s ease; }
+
+    /* Step dots */
+    .step-dots { display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+    .step-dot {
+      width: 38px; height: 38px; border-radius: 50%; border: 3px solid #DDD;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 15px; cursor: pointer; transition: all 0.3s;
+      background: white; color: var(--text-light);
+    }
+    .step-dot.active { border-color: var(--blue); background: var(--blue); color: white; }
+    .step-dot.done { border-color: var(--green); background: var(--green); color: white; }
+    .step-dot:hover { transform: scale(1.1); }
+
+    /* Cards */
+    .kartica {
+      background: var(--bg-card); border-radius: var(--radius);
+      padding: 24px 28px; margin-bottom: 20px;
+      box-shadow: var(--shadow); border-left: 5px solid transparent;
+    }
+    .kartica-naslov { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 18px; margin-bottom: 12px; }
+    .kartica-ikona { font-size: 24px; }
+    .kartica-definicija { border-left-color: var(--blue); background: var(--blue-light); }
+    .kartica-primjer { border-left-color: var(--green); background: var(--green-light); }
+    .kartica-vazno { border-left-color: var(--orange); background: var(--orange-light); }
+    .kartica-upozorenje { border-left-color: var(--red); background: var(--red-light); }
+    .kartica-savjet { border-left-color: var(--purple); background: var(--purple-light); }
+    .kartica-formula { border-left-color: var(--teal); background: var(--teal-light); }
+
+    /* Section */
+    .section { display: none; animation: fadeIn 0.4s ease; }
+    .section.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Nav buttons */
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 32px; gap: 12px; }
+    .btn {
+      font-family: inherit; font-size: 18px; padding: 14px 32px;
+      border-radius: 12px; border: none; cursor: pointer;
+      font-weight: 600; transition: all 0.2s; min-height: 52px;
+    }
+    .btn-primary { background: var(--blue); color: white; }
+    .btn-primary:hover { background: #3A7BC8; transform: translateY(-1px); }
+    .btn-secondary { background: white; color: var(--text-main); border: 2px solid #DDD; }
+    .btn-secondary:hover { border-color: var(--blue); }
+    .btn-green { background: var(--green); color: white; }
+    .btn-green:hover { background: #4CA84C; }
+
+    /* TTS button */
+    .btn-sound {
+      background: none; border: 2px solid #DDD; border-radius: 50%;
+      width: 40px; height: 40px; font-size: 20px; cursor: pointer;
+      transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center;
+    }
+    .btn-sound:hover { border-color: var(--blue); background: var(--blue-light); }
+
+    /* Verb pattern table */
+    .pattern-table {
+      width: 100%; border-collapse: separate; border-spacing: 0;
+      border-radius: 12px; overflow: hidden; margin: 16px 0;
+      box-shadow: var(--shadow);
+    }
+    .pattern-table th {
+      background: var(--blue); color: white; padding: 14px 16px;
+      text-align: left; font-size: 16px; font-weight: 600;
+    }
+    .pattern-table td {
+      padding: 14px 16px; border-bottom: 1px solid #EEE;
+      font-size: 17px; background: white;
+    }
+    .pattern-table tr:last-child td { border-bottom: none; }
+    .pattern-table tr:hover td { background: var(--blue-light); }
+    .verb-highlight { color: var(--blue); font-weight: 700; }
+    .pattern-highlight { color: var(--teal); font-weight: 600; }
+    .obj-highlight { color: var(--orange); font-weight: 600; }
+
+    /* Expand/collapse */
+    .expand-btn {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--purple-light); border: 2px dashed var(--purple);
+      border-radius: 10px; padding: 10px 18px; cursor: pointer;
+      font-family: inherit; font-size: 16px; color: var(--purple);
+      font-weight: 500; margin: 10px 0; transition: all 0.2s;
+    }
+    .expand-btn:hover { background: var(--purple); color: white; }
+    .expand-content {
+      display: none; padding: 16px 20px; background: var(--purple-light);
+      border-radius: 12px; margin-top: 8px; border-left: 4px solid var(--purple);
+    }
+
+    /* Quiz */
+    .pitanje {
+      background: var(--bg-card); border-radius: var(--radius);
+      padding: 28px; margin-bottom: 24px; box-shadow: var(--shadow);
+    }
+    .pitanje-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .pitanje-broj { font-size: 14px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-light); font-weight: 600; }
+    .pitanje-tekst { font-size: 20px; font-weight: 500; margin-bottom: 20px; }
+    .opcije { display: flex; flex-direction: column; gap: 10px; }
+    .opcija {
+      display: flex; align-items: center; gap: 14px;
+      padding: 16px 20px; background: #FAFAFA; border: 2px solid #E8E4DF;
+      border-radius: 12px; cursor: pointer; font-size: 18px;
+      text-align: left; transition: all 0.2s; font-family: inherit;
+    }
+    .opcija:hover { border-color: var(--blue); background: var(--blue-light); }
+    .opcija.disabled { pointer-events: none; opacity: 0.7; }
+    .opcija-slovo {
+      width: 36px; height: 36px; border-radius: 50%; background: var(--blue);
+      color: white; display: flex; align-items: center; justify-content: center;
+      font-weight: 700; flex-shrink: 0;
+    }
+    .opcija.tocno { border-color: var(--green); background: var(--green-light); }
+    .opcija.tocno .opcija-slovo { background: var(--green); }
+    .opcija.netocno { border-color: var(--red); background: var(--red-light); }
+    .opcija.netocno .opcija-slovo { background: var(--red); }
+    .feedback {
+      margin-top: 16px; padding: 16px 20px; border-radius: 12px;
+      font-size: 17px; line-height: 1.7; display: none;
+    }
+    .feedback.tocno { background: var(--green-light); border-left: 4px solid var(--green); }
+    .feedback.netocno { background: var(--orange-light); border-left: 4px solid var(--orange); }
+
+    /* Fill-in-blank */
+    .fill-blank {
+      display: inline-block; border-bottom: 3px solid var(--blue);
+      min-width: 120px; padding: 4px 8px; margin: 0 4px;
+      font-family: inherit; font-size: 18px; background: transparent;
+      outline: none; text-align: center; color: var(--blue); font-weight: 600;
+    }
+    .fill-blank.correct { border-color: var(--green); color: var(--green); background: var(--green-light); border-radius: 6px; }
+    .fill-blank.incorrect { border-color: var(--red); color: var(--red); background: var(--red-light); border-radius: 6px; }
+
+    /* Exam mode */
+    .exam-header {
+      text-align: center; padding: 28px;
+      background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+      border-radius: var(--radius); color: white; margin-bottom: 28px;
+    }
+    .exam-score {
+      text-align: center; padding: 40px;
+      background: var(--bg-card); border-radius: var(--radius);
+      box-shadow: var(--shadow); margin: 24px 0;
+    }
+    .score-circle {
+      width: 140px; height: 140px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px; font-size: 42px; font-weight: 700;
+      position: relative;
+    }
+    .score-circle svg { position: absolute; top: 0; left: 0; }
+
+    /* Sentence builder */
+    .sentence-zone {
+      min-height: 60px; border: 3px dashed #CCC; border-radius: 12px;
+      padding: 12px; margin: 12px 0; display: flex; flex-wrap: wrap; gap: 8px;
+      align-items: center; transition: border-color 0.3s;
+    }
+    .sentence-zone.active { border-color: var(--blue); background: var(--blue-light); }
+    .word-chip {
+      display: inline-block; padding: 10px 18px; background: var(--blue);
+      color: white; border-radius: 10px; cursor: pointer; font-size: 17px;
+      font-weight: 500; transition: all 0.2s; user-select: none;
+    }
+    .word-chip:hover { transform: scale(1.05); background: #3A7BC8; }
+    .word-chip.placed { background: var(--teal); }
+    .word-chip.disabled { background: #CCC; cursor: default; }
+    .word-bank { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      body { padding: 12px; }
+      .kartica { padding: 16px; }
+      h1 { font-size: 24px; }
+      p, li { font-size: 17px; }
+      .btn { width: 100%; margin-bottom: 8px; padding: 12px 20px; }
+      .nav-buttons { flex-direction: column; }
+      .pattern-table { font-size: 15px; }
+      .pattern-table td, .pattern-table th { padding: 10px 12px; }
+      .lesson-header { padding: 20px 16px; }
+    }
+    @keyframes padaj { to { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
+
+    /* Exam badge */
+    .difficulty-badge {
+      display: inline-block; padding: 4px 14px; border-radius: 20px;
+      font-size: 14px; font-weight: 600; margin-left: 8px;
+    }
+    .difficulty-hard { background: #FDE8E8; color: #E74C3C; }
+    .difficulty-medium { background: #FFF3E0; color: #FF9800; }
+  </style>
+</head>
+<body>
+
+<!-- ===== LESSON HEADER ===== -->
+<div class="lesson-header">
+  <div class="emoji-row">🏆 🎾 🧠</div>
+  <h1>Verb Patterns</h1>
+  <div class="subtitle">Engleski jezik — Uzorci glagola u sportu i psihologiji</div>
+</div>
+
+<!-- ===== PROGRESS ===== -->
+<div class="progress-wrapper">
+  <div class="progress-labels">
+    <span>Cjelina <strong id="current-step">1</strong> od <strong id="total-steps">7</strong></span>
+    <span id="progress-pct">14%</span>
+  </div>
+  <div class="progress-bar">
+    <div class="progress-fill" id="progress-fill" style="width: 14%"></div>
+  </div>
+  <div class="step-dots" id="step-dots"></div>
+</div>
+
+<!-- ===================================== -->
+<!-- CJELINA 1: Uvod — Što su verb patterns -->
+<!-- ===================================== -->
+<div class="section active" id="section-1">
+  <h2>1. Što su Verb Patterns? 🤔</h2>
+
+  <div class="kartica kartica-definicija">
+    <div class="kartica-naslov">
+      <span class="kartica-ikona">📘</span>
+      <span>Definicija</span>
+      <button class="btn-sound" onclick="procitajEN('Verb patterns are the rules for what form a second verb takes after the first verb.')">🔊</button>
+    </div>
+    <p><strong>Verb patterns</strong> (uzorci glagola) govore nam <strong>koji oblik</strong> ima drugi glagol kad dolazi nakon prvog glagola.</p>
+    <p>Na hrvatskom: "Želim <strong>ići</strong>" — nakon "želim" dolazi infinitiv.</p>
+    <p>Na engleskom je kompleksnije — postoji <strong>5 glavnih uzoraka</strong>!</p>
+  </div>
+
+  <div class="kartica kartica-vazno">
+    <div class="kartica-naslov">
+      <span class="kartica-ikona">⚡</span>
+      <span>Zašto je ovo važno?</span>
+    </div>
+    <p>U engleskom, različiti glagoli zahtijevaju <strong>različite oblike</strong> glagola koji dolazi iza njih.</p>
+    <p>Ne možeš jednostavno staviti infinitiv svugdje — moraš znati pravilo!</p>
+  </div>
+
+  <div class="kartica kartica-primjer">
+    <div class="kartica-naslov">
+      <span class="kartica-ikona">💚</span>
+      <span>Pogledaj razliku</span>
+    </div>
+    <p>✅ I <span class="verb-highlight">want</span> <span class="pattern-highlight">to win</span>. (want + to infinitive)</p>
+    <p>✅ I <span class="verb-highlight">enjoy</span> <span class="pattern-highlight">playing</span>. (enjoy + -ing)</p>
+    <p>✅ She <span class="verb-highlight">made</span> me <span class="pattern-highlight">practice</span>. (make + object + bare infinitive)</p>
+    <p>❌ I want winning. ← <strong>KRIVO!</strong></p>
+    <p>❌ I enjoy to play. ← <strong>KRIVO!</strong></p>
+  </div>
+
+  <button class="expand-btn" onclick="toggleExpand('extra1')">💡 Zašto Englezi imaju toliko pravila?</button>
+  <div class="expand-content" id="extra1">
+    <p>Engleski nema padežne nastavke kao hrvatski. Umjesto toga koristi <strong>poziciju riječi</strong> i <strong>oblike glagola</strong> da pokaže značenje.</p>
+    <p>Zato je red riječi tako bitan — i zato postoje verb patterns!</p>
+  </div>
+
+  <!-- Mini kviz -->
+  <div class="kartica" style="margin-top: 24px; background: #F5F0E8;">
+    <h3>🎯 Brza provjera</h3>
+    <div class="pitanje" style="box-shadow: none; padding: 16px 0;">
+      <p class="pitanje-tekst">Koji glagolski oblik dolazi iza "want"?</p>
+      <div class="opcije">
+        <button class="opcija" onclick="checkMini(this, false, 'mf1')"><span class="opcija-slovo">A</span><span>-ing (wanting)</span></button>
+        <button class="opcija" onclick="checkMini(this, true, 'mf1')"><span class="opcija-slovo">B</span><span>to + infinitive (to win)</span></button>
+        <button class="opcija" onclick="checkMini(this, false, 'mf1')"><span class="opcija-slovo">C</span><span>bare infinitive (win)</span></button>
+      </div>
+      <div class="feedback" id="mf1"></div>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <div></div>
+    <button class="btn btn-primary" onclick="goToSection(2)">Dalje →</button>
+  </div>
+</div>
+
+<!-- ===================================== -->
+<!-- CJELINA 2: Verb + to infinitive -->
+<!-- ===================================== -->
+<div class="section" id="section-2">
+  <h2>2. Verb + to infinitive 📝</h2>
+
+  <div class="kartica kartica-definicija">
+    <div class="kartica-naslov">
+      <span class="kartica-ikona">📘</span>
+      <span>Pravilo</span>
+      <button class="btn-sound" onclick="procitajEN('Some verbs are followed by to plus the infinitive form of the verb.')">🔊</button>
+    </div>
+    <p>Neki glagoli zahtijevaju <strong>to + infinitive</strong> iza sebe.</p>
+    <p>Uzorak: <span class="verb-highlight">VERB</span> + <span class="pattern-highlight">to + glagol</span></p>
+  </div>
+
+  <div class="kartica kartica-formula">
+    <div class="kartica-naslov">
+      <span class="kartica-ikona">📋</span>
+      <span>Glagoli koji traže TO + infinitive</span>
+    </div>
+    <table class="pattern-table">
+      <tr><th>Glagol</th><th>Primjer</th><th>Prijevod</th></tr>
+      <tr><td><strong>want</strong></td><td>I want <span class="pattern-highlight">to win</span></td><td>Želim pobijediti</td></tr>
+      <tr><td><strong>need</strong></td><td>They need <span class="pattern-highlight">to stay</span> positive</td><td>Moraju ostati pozitivni</td></tr>
+      <tr><td><strong>try</strong></td><td>They try <span class="pattern-highlight">to recreate</span> success</td><td>Pokušavaju ponovno stvoriti uspjeh</td></tr>
+      <tr><td><strong>expect</strong></td><td>Top athletes expect <span class="pattern-highlight">to win</span></td><td>Vrhunski sportaši očekuju pobjedu</td></tr>
+      <tr><td><strong>manage</strong></td><td>If they manage <span class="pattern-highlight">to control</span> nerves</td><td>Ako uspiju kontrolirati nerve</td></tr>
+      <tr><td><strong>tend</strong></td><td>They tend <span class="pattern-highlight">to do</span> better</td><td>Imaju tendenciju biti bolji</td></tr>
+      <tr><td><strong>decide</strong></td><td>I decided <span class="pattern-highlight">to prepare</span></td><td>Odlučio/la sam se pripremiti</td></tr>
+    </table>
+  </div>
+
+  <div class="kartica kartica-savjet">
+    <div class="kartica-naslov">
+      <span class="kartica-ikona">💡</span>
+      <span>Trik za pamćenje</span>
+    </div>
+    <p>Ovi glagoli govore o <strong>budućoj namjeri</strong> ili <strong>cilju</strong>.</p>
+    <p>Kad <strong>želiš</strong>, <strong>trebaš</strong>, <strong>pokušavaš</strong> ili <strong>očekuješ</strong> nešto — to se još nije dogodilo → zato <strong>TO + infinitive</strong>!</p>
+  </div>
+
+  <!-- Mini kviz -->
+  <div class="kartica" style="margin-top: 24px; background: #F5F0E8;">
+    <h3>🎯 Brza provjera</h3>
+    <div class="pitanje" style="box-shadow: none; padding: 16px 0;">
+      <p class="pitanje-tekst">Dopuni: Athletes expect _____ the competition.</p>
+      <div class="opcije">
+        <button class="opcija" onclick="checkMini(this, false, 'mf2')"><span class="opcija-slovo">A</span><span>winning</span></button>
+        <button class="opcija" onclick="checkMini(this, true, 'mf2')"><span class="opcija-slovo">B</span><span>to win</span></button>
+        <button class="opcija" onclick="checkMini(this, false, 'mf2')"><span class="opcija-slovo">C</span><span>win</span></button>
+      </div>
+      <div class="feedback" id="mf2"></div>
+    </div>
+    <div class="pitanje" style="box-shadow: none; padding: 16px 0;">
+      <p class="pitanje-tekst">Dopuni: She managed _____ her nerves before the match.</p>
+      <div class="opcije">
+        <button class="opcija" onclick="checkMini(this, false, 'mf2b')"><span class="opcija-slovo">A</span><span>controlling</span></button>
+        <button class="opcija" onclick="checkMini(this, false, 'mf2b')"><span class="opcija-slovo">B</span><span>control</span></button>
+        <button class="opcija" onclick="checkMini(this, true, 'mf2b')"><span class="opcija-slovo">C</span><span>to control</span></button>
+      </div>
+      <div class="feedback" id="mf2b"></div>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goToSection(1)">← Nazad</button>
+    <button class="btn btn-primary" onclick="goToSection(3)">Dalje →</button>
+  </div>
+</div>
+
+<!-- ===================================== -->
+<!-- CJELINA 3: Verb + object + to inf -->
+<!-- ===================================== -->
+<div class="section" id="section-3">
+  <h2>3. Verb + Object + to infinitive 👤</h2>
+
+  <div class="kartica kartica-definicija">
+    <div class="kartica-naslov">
+      <span class="kartica-ikona">📘</span>
+      <span>Pravilo</span>
+      <button class="btn-sound" onclick="procitajEN('Some verbs need an object — a person or thing — before to plus infinitive.')">🔊</button>
+    </div>
+    <p>Neki glagoli trebaju <strong>objekt</strong> (osobu) između glagola i "to + infinitive".</p>
+    <p>Uzorak: <span class="verb-highlight">VERB</span> + <span class="obj-highlight">OBJECT</span> + <span class="pattern-highlight">to + glagol</span></p>
+  </div>
+
+  <div class="kartica kartica-formula">
+    <div class="kartica-naslov">
+      <span class="kartica-ikona">📋</span>
+      <span>Glagoli s objektom + to infinitive</span>
+    </div>
+    <table class="pattern-table">
+      <tr><th>Glagol</th><th>Primjer</th><th>Prijevod</th></tr>
+      <tr><td><strong>advise</strong></td><td>I advise <span class="obj-highlight">athletes</span> <span class="pattern-highlight">to visit</span></td><td>Savjetujem sportašima da posjete</td></tr>
+      <tr><td><strong>allow</strong></td><td>This allows <span class="obj-highlight">them</span> <span class="pattern-highlight">to visualise</span></td><td>Ovo im omogućuje da vizualiziraju</td></tr>
+      <tr><td><strong>encourage</strong></td><td>I encourage <span class="obj-highlight">athletes</span> <span class="pattern-highlight">to talk</span></td><td>Potičem sportaše da pričaju</td></tr>
+      <tr><td><strong>force</strong></td><td>I force <span class="obj-highlight">them</span> <span class="pattern-highlight">to concentrate</span></td><td>Prisiljavam ih da se koncentriraju</td></tr>
+      <tr><td><strong>help</strong></td><td>I help <span class="obj-highlight">them</span> <span class="pattern-highlight">to prepare</span></td><td>Pomažem im da se pripreme</td></tr>
+    </table>
+  </div>
+
+  <div class="kartica kartica-upozorenje">
+    <div class="kartica-naslov">
+      <span class="kartica-ikona">⚠️</span>
+      <span>Česta greška!</span>
+    </div>
+    <p>❌ I advise <strong>to visit</strong> the stadium. ← Fali objekt! TKO da posjeti?</p>
+    <p>✅ I advise <strong>athletes to visit</strong> the stadium. ← Sad je jasno!</p>
+    <p style="margin-top: 12px;">❌ She encouraged <strong>studying</strong>. ← Krivi uzorak za "encourage"!</p>
+    <p>✅ She encouraged <strong>them to study</strong>. ← Točno!</p>
+  </div>
+
+  <button class="expand-btn" onclick="toggleExpand('extra3')">💡 "Help" je poseban — ima dva oblika!</button>
+  <div class="expand-content" id="extra3">
+    <p>Glagol <strong>help</strong> može ići s "to" ili bez:</p>
+    <p>✅ I help them <strong>to prepare</strong>. (formalniji)</p>
+    <p>✅ I help them <strong>prepare</strong>. (neformalniji)</p>
+    <p>Oba su ispravna! Ali na ispitu je sigurnije staviti "to".</p>
+  </div>
+
+  <!-- Mini kviz -->
+  <div class="kartica" style="margin-top: 24px; background: #F5F0E8;">
+    <h3>🎯 Brza provjera</h3>
+    <div class="pitanje" style="box-shadow: none; padding: 16px 0;">
+      <p class="pitanje-tekst">Koji je ispravan redoslijed?</p>
+      <div class="opcije">
+        <button class="opcija" onclick="checkMini(this, false, 'mf3')"><span class="opcija-slovo">A</span><span>The coach encouraged to train hard.</span></button>
+        <button class="opcija" onclick="checkMini(this, true, 'mf3')"><span class="opcija-slovo">B</span><span>The coach encouraged them to train hard.</span></button>
+        <button class="opcija" onclick="checkMini(this, false, 'mf3')"><span class="opcija-slovo">C</span><span>The coach encouraged them training hard.</span></button>
+      </div>
+      <div class="feedback" id="mf3"></div>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goToSection(2)">← Nazad</button>
+    <button class="btn btn-primary" onclick="goToSection(4)">Dalje →</button>
+  </div>
+</div>
+
+<!-- ===================================== -->
+<!-- CJELINA 4: Verb + -ing -->
+<!-- ===================================== -->
+<div class="section" id="section-4">
+  <h2>4. Verb + -ing 🔄</h2>
+
+  <div class="kartica kartica-definicija">
+    <div class="kartica-naslov">
+      <span class="kartica-ikona">📘</span>
+      <span>Pravilo</span>
+      <button class="btn-sound" onclick="procitajEN('Some verbs are followed by the ing form of the verb, also called the gerund.')">🔊</button>
+    </div>
+    <p>Neki glagoli zahtijevaju <strong>-ing oblik</strong> iza sebe.</p>
+    <p>Uzorak: <span class="verb-highlight">VERB</span> + <span class="pattern-highlight">glagol + -ing</span></p>
+  </div>
+
+  <div class="kartica kartica-formula">
+    <div class="kartica-naslov">
+      <span class="kartica-ikona">📋</span>
+      <span>Glagoli koji traže -ing</span>
+    </div>
+    <table class="pattern-table">
+      <tr><th>Glagol</th><th>Primjer</th><th>Prijevod</th></tr>
+      <tr><td><strong>stop</strong></td><td>Tell the voice to stop <span class="pattern-highlight">talking</span></td><td>Reci glasu da prestane pričati</td></tr>
+      <tr><td><strong>can't help</strong></td><td>Athletes can't help <span class="pattern-highlight">feeling</span> nervous</td><td>Sportaši ne mogu ne osjećati nervozu</td></tr>
+      <tr><td><strong>enjoy</strong></td><td>I enjoy <span class="pattern-highlight">watching</span> tennis</td><td>Uživam gledajući tenis</td></tr>
+      <tr><td><strong>imagine</strong></td><td>They imagine <span class="pattern-highlight">winning</span></td><td>Zamišljaju kako pobjeđuju</td></tr>
+      <tr><td><strong>spend (time)</strong></td><td>They spent time <span class="pattern-highlight">preparing</span></td><td>Proveli su vrijeme pripremajući se</td></tr>
+    </table>
+  </div>
+
+  <div class="kartica kartica-savjet">
+    <div class="kartica-naslov">
+      <span class="kartica-ikona">💡</span>
+      <span>Trik za pamćenje</span>
+    </div>
+    <p>Glagoli s -ing često govore o <strong>nečemu što se već događa</strong> ili o <strong>osjećajima</strong>.</p>
+    <p>Kad <strong>uživaš</strong>, <strong>zamišljaš</strong> ili <strong>ne možeš prestati</strong> — to se događa SADA → zato <strong>-ing</strong>!</p>
+  </div>
+
+  <div class="kartica kartica-upozorenje">
+    <div class="kartica-naslov">
+      <span class="kartica-ikona">⚠️</span>
+      <span>Pazi! "Stop" ima DVA značenja!</span>
+    </div>
+    <p><strong>stop + -ing</strong> = prestati raditi nešto</p>
+    <p>→ He stopped <strong>smoking</strong>. (Prestao je pušiti.)</p>
+    <p style="margin-top: 12px;"><strong>stop + to infinitive</strong> = stati da bi napravio nešto</p>
+    <p>→ He stopped <strong>to smoke</strong>. (Stao je da bi zapalio cigaretu.)</p>
+    <p style="margin-top: 8px;">Potpuno različito značenje! 🤯</p>
+  </div>
+
+  <!-- Mini kviz -->
+  <div class="kartica" style="margin-top: 24px; background: #F5F0E8;">
+    <h3>🎯 Brza provjera</h3>
+    <div class="pitanje" style="box-shadow: none; padding: 16px 0;">
+      <p class="pitanje-tekst">Dopuni: I can't help _____ nervous before exams.</p>
+      <div class="opcije">
+        <button class="opcija" onclick="checkMini(this, true, 'mf4')"><span class="opcija-slovo">A</span><span>feeling</span></button>
+        <button class="opcija" onclick="checkMini(this, false, 'mf4')"><span class="opcija-slovo">B</span><span>to feel</span></button>
+        <button class="opcija" onclick="checkMini(this, false, 'mf4')"><span class="opcija-slovo">C</span><span>feel</span></button>
+      </div>
+      <div class="feedback" id="mf4"></div>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goToSection(3)">← Nazad</button>
+    <button class="btn btn-primary" onclick="goToSection(5)">Dalje →</button>
+  </div>
+</div>
+
+<!-- ===================================== -->
+<!-- CJELINA 5: Make/Let + bare infinitive -->
+<!-- ===================================== -->
+<div class="section" id="section-5">
+  <h2>5. Make / Let + bare infinitive 🎯</h2>
+
+  <div class="kartica kartica-definicija">
+    <div class="kartica-naslov">
+      <span class="kartica-ikona">📘</span>
+      <span>Pravilo</span>
+      <button class="btn-sound" onclick="procitajEN('Make and let are special. They are followed by an object and then the bare infinitive — without to.')">🔊</button>
+    </div>
+    <p><strong>Make</strong> i <strong>let</strong> su posebni — iza njih ide <strong>objekt + glagol BEZ "to"</strong>!</p>
+    <p>Uzorak: <span class="verb-highlight">MAKE/LET</span> + <span class="obj-highlight">OBJECT</span> + <span class="pattern-highlight">glagol (bez to!)</span></p>
+  </div>
+
+  <div class="kartica kartica-formula">
+    <div class="kartica-naslov">
+      <span class="kartica-ikona">📋</span>
+      <span>Primjeri</span>
+    </div>
+    <table class="pattern-table">
+      <tr><th>Glagol</th><th>Primjer</th><th>Prijevod</th></tr>
+      <tr><td><strong>make</strong></td><td>I make <span class="obj-highlight">them</span> <span class="pattern-highlight">relax</span></td><td>Natjeram ih da se opuste</td></tr>
+      <tr><td><strong>let</strong></td><td>I let <span class="obj-highlight">them</span> <span class="pattern-highlight">talk</span></td><td>Pustim ih da pričaju</td></tr>
+    </table>
+  </div>
+
+  <div class="kartica kartica-upozorenje">
+    <div class="kartica-naslov">
+      <span class="kartica-ikona">⚠️</span>
+      <span>Najčešća greška na ispitu!</span>
+    </div>
+    <p>❌ She <strong>made</strong> me <strong>to study</strong>. ← KRIVO! Nema "to" iza "make"!</p>
+    <p>✅ She <strong>made</strong> me <strong>study</strong>. ← TOČNO!</p>
+    <p style="margin-top: 12px;">❌ My parents <strong>let</strong> me <strong>to go</strong> out. ← KRIVO!</p>
+    <p>✅ My parents <strong>let</strong> me <strong>go</strong> out. ← TOČNO!</p>
+  </div>
+
+  <div class="kartica kartica-savjet">
+    <div class="kartica-naslov">
+      <span class="kartica-ikona">💡</span>
+      <span>Kako zapamtiti?</span>
+    </div>
+    <p><strong>MAKE</strong> = natjerati nekoga → ima MOĆ → ne treba mu "to"!</p>
+    <p><strong>LET</strong> = pustiti nekoga → daje SLOBODU → ne treba mu "to"!</p>
+    <p style="margin-top: 8px;">Zapamti: <strong>Moćni glagoli ne trebaju "to"!</strong> 💪</p>
+  </div>
+
+  <!-- Mini kviz -->
+  <div class="kartica" style="margin-top: 24px; background: #F5F0E8;">
+    <h3>🎯 Brza provjera</h3>
+    <div class="pitanje" style="box-shadow: none; padding: 16px 0;">
+      <p class="pitanje-tekst">Koji je točan?</p>
+      <div class="opcije">
+        <button class="opcija" onclick="checkMini(this, false, 'mf5')"><span class="opcija-slovo">A</span><span>The coach made them to run faster.</span></button>
+        <button class="opcija" onclick="checkMini(this, true, 'mf5')"><span class="opcija-slovo">B</span><span>The coach made them run faster.</span></button>
+        <button class="opcija" onclick="checkMini(this, false, 'mf5')"><span class="opcija-slovo">C</span><span>The coach made them running faster.</span></button>
+      </div>
+      <div class="feedback" id="mf5"></div>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goToSection(4)">← Nazad</button>
+    <button class="btn btn-primary" onclick="goToSection(6)">Dalje →</button>
+  </div>
+</div>
+
+<!-- ===================================== -->
+<!-- CJELINA 6: Pregled svih uzoraka -->
+<!-- ===================================== -->
+<div class="section" id="section-6">
+  <h2>6. Pregled svih uzoraka 📊</h2>
+
+  <div class="kartica kartica-vazno">
+    <div class="kartica-naslov">
+      <span class="kartica-ikona">⭐</span>
+      <span>Svi uzorci na jednom mjestu</span>
+    </div>
+    <table class="pattern-table">
+      <tr><th>Uzorak</th><th>Glagoli</th><th>Primjer</th></tr>
+      <tr>
+        <td><strong>V + to inf</strong></td>
+        <td>want, need, try, expect, manage, tend, decide</td>
+        <td>I <span class="verb-highlight">want</span> <span class="pattern-highlight">to win</span></td>
+      </tr>
+      <tr>
+        <td><strong>V + obj + to inf</strong></td>
+        <td>advise, allow, encourage, force, help</td>
+        <td>I <span class="verb-highlight">advise</span> <span class="obj-highlight">them</span> <span class="pattern-highlight">to rest</span></td>
+      </tr>
+      <tr>
+        <td><strong>V + -ing</strong></td>
+        <td>stop, enjoy, imagine, can't help, spend time</td>
+        <td>I <span class="verb-highlight">enjoy</span> <span class="pattern-highlight">running</span></td>
+      </tr>
+      <tr>
+        <td><strong>V + obj + bare inf</strong></td>
+        <td>make, let</td>
+        <td>She <span class="verb-highlight">let</span> <span class="obj-highlight">me</span> <span class="pattern-highlight">go</span></td>
+      </tr>
+      <tr>
+        <td><strong>Modal + bare inf</strong></td>
+        <td>can, could, should, must</td>
+        <td>They <span class="verb-highlight">can</span> <span class="pattern-highlight">imagine</span></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="kartica kartica-savjet">
+    <div class="kartica-naslov">
+      <span class="kartica-ikona">🧠</span>
+      <span>Recap — sportska psihologija</span>
+    </div>
+    <p>Svi ovi primjeri dolaze iz teksta <strong>"Think Like a Winner"</strong> o sportskom psihologu koji pomaže sportašima.</p>
+    <p>On koristi 3 tehnike:</p>
+    <p>🔮 <strong>Vizualizacija</strong> — zamišljanje uspjeha</p>
+    <p>💪 <strong>Pozitivno mišljenje</strong> — fokus na pobjedu</p>
+    <p>😌 <strong>Opuštanje</strong> — kontrola nervoze</p>
+  </div>
+
+  <!-- Mini kviz — match -->
+  <div class="kartica" style="margin-top: 24px; background: #F5F0E8;">
+    <h3>🎯 Brza provjera — Spoji glagol s uzorkom!</h3>
+    <div class="pitanje" style="box-shadow: none; padding: 16px 0;">
+      <p class="pitanje-tekst">"Enjoy" traži koji oblik?</p>
+      <div class="opcije">
+        <button class="opcija" onclick="checkMini(this, false, 'mf6')"><span class="opcija-slovo">A</span><span>to + infinitive</span></button>
+        <button class="opcija" onclick="checkMini(this, true, 'mf6')"><span class="opcija-slovo">B</span><span>-ing</span></button>
+        <button class="opcija" onclick="checkMini(this, false, 'mf6')"><span class="opcija-slovo">C</span><span>bare infinitive</span></button>
+      </div>
+      <div class="feedback" id="mf6"></div>
+    </div>
+    <div class="pitanje" style="box-shadow: none; padding: 16px 0;">
+      <p class="pitanje-tekst">"Make" traži koji oblik?</p>
+      <div class="opcije">
+        <button class="opcija" onclick="checkMini(this, false, 'mf6b')"><span class="opcija-slovo">A</span><span>to + infinitive</span></button>
+        <button class="opcija" onclick="checkMini(this, false, 'mf6b')"><span class="opcija-slovo">B</span><span>-ing</span></button>
+        <button class="opcija" onclick="checkMini(this, true, 'mf6b')"><span class="opcija-slovo">C</span><span>object + bare infinitive</span></button>
+      </div>
+      <div class="feedback" id="mf6b"></div>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goToSection(5)">← Nazad</button>
+    <button class="btn btn-primary" onclick="goToSection(7)">Kreni na ispit! 📝</button>
+  </div>
+</div>
+
+<!-- ===================================== -->
+<!-- CJELINA 7: ISPIT (teži) -->
+<!-- ===================================== -->
+<div class="section" id="section-7">
+  <div class="exam-header">
+    <div style="font-size: 36px; margin-bottom: 8px;">📝</div>
+    <h1 style="font-size: 28px;">Ispit: Verb Patterns</h1>
+    <p>15 pitanja — miješani tipovi <span class="difficulty-badge difficulty-hard">Teži</span></p>
+    <p style="font-size: 16px; margin-top: 8px;">Bez vremenskog ograničenja. Radi svojim tempom! 💪</p>
+  </div>
+
+  <div id="exam-questions">
+    <!-- Q1 -->
+    <div class="pitanje" id="eq-1">
+      <div class="pitanje-header">
+        <span class="pitanje-broj">Pitanje 1 / 15</span>
+        <button class="btn-sound" onclick="procitajEN('Choose the correct sentence.')">🔊</button>
+      </div>
+      <p class="pitanje-tekst">Odaberi <strong>točnu</strong> rečenicu:</p>
+      <div class="opcije">
+        <button class="opcija" onclick="examAnswer(1, this, 'A')"><span class="opcija-slovo">A</span><span>The teacher made the students to repeat the exercise.</span></button>
+        <button class="opcija" onclick="examAnswer(1, this, 'B')"><span class="opcija-slovo">B</span><span>The teacher made the students repeat the exercise.</span></button>
+        <button class="opcija" onclick="examAnswer(1, this, 'C')"><span class="opcija-slovo">C</span><span>The teacher made the students repeating the exercise.</span></button>
+        <button class="opcija" onclick="examAnswer(1, this, 'D')"><span class="opcija-slovo">D</span><span>The teacher made repeat the exercise to the students.</span></button>
+      </div>
+      <div class="feedback" id="ef-1"></div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="pitanje" id="eq-2">
+      <div class="pitanje-header">
+        <span class="pitanje-broj">Pitanje 2 / 15</span>
+        <button class="btn-sound" onclick="procitajEN('Complete the sentence: I advise blank the stadium before the match.')">🔊</button>
+      </div>
+      <p class="pitanje-tekst">Dopuni: I advise athletes _____ the stadium before the match.</p>
+      <div class="opcije">
+        <button class="opcija" onclick="examAnswer(2, this, 'A')"><span class="opcija-slovo">A</span><span>visiting</span></button>
+        <button class="opcija" onclick="examAnswer(2, this, 'B')"><span class="opcija-slovo">B</span><span>visit</span></button>
+        <button class="opcija" onclick="examAnswer(2, this, 'C')"><span class="opcija-slovo">C</span><span>to visit</span></button>
+        <button class="opcija" onclick="examAnswer(2, this, 'D')"><span class="opcija-slovo">D</span><span>to visiting</span></button>
+      </div>
+      <div class="feedback" id="ef-2"></div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="pitanje" id="eq-3">
+      <div class="pitanje-header">
+        <span class="pitanje-broj">Pitanje 3 / 15</span>
+        <button class="btn-sound" onclick="procitajEN('Which verb pattern is wrong?')">🔊</button>
+      </div>
+      <p class="pitanje-tekst">Koja rečenica je <strong>NETOČNA</strong>?</p>
+      <div class="opcije">
+        <button class="opcija" onclick="examAnswer(3, this, 'A')"><span class="opcija-slovo">A</span><span>She enjoys swimming in the sea.</span></button>
+        <button class="opcija" onclick="examAnswer(3, this, 'B')"><span class="opcija-slovo">B</span><span>He wants to become a champion.</span></button>
+        <button class="opcija" onclick="examAnswer(3, this, 'C')"><span class="opcija-slovo">C</span><span>They can't help to feel nervous.</span></button>
+        <button class="opcija" onclick="examAnswer(3, this, 'D')"><span class="opcija-slovo">D</span><span>I need to prepare for the competition.</span></button>
+      </div>
+      <div class="feedback" id="ef-3"></div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="pitanje" id="eq-4">
+      <div class="pitanje-header">
+        <span class="pitanje-broj">Pitanje 4 / 15</span>
+        <button class="btn-sound" onclick="procitajEN('Choose two correct answers.')">🔊</button>
+      </div>
+      <p class="pitanje-tekst">Koji glagoli traže <strong>-ing</strong> oblik? (odaberi DVA)</p>
+      <div class="opcije">
+        <button class="opcija" onclick="examToggle(4, this, 'A')"><span class="opcija-slovo">A</span><span>enjoy</span></button>
+        <button class="opcija" onclick="examToggle(4, this, 'B')"><span class="opcija-slovo">B</span><span>want</span></button>
+        <button class="opcija" onclick="examToggle(4, this, 'C')"><span class="opcija-slovo">C</span><span>imagine</span></button>
+        <button class="opcija" onclick="examToggle(4, this, 'D')"><span class="opcija-slovo">D</span><span>expect</span></button>
+      </div>
+      <button class="btn btn-green" onclick="examCheckMulti(4)" style="margin-top: 12px;">Potvrdi odgovor ✓</button>
+      <div class="feedback" id="ef-4"></div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="pitanje" id="eq-5">
+      <div class="pitanje-header">
+        <span class="pitanje-broj">Pitanje 5 / 15</span>
+        <button class="btn-sound" onclick="procitajEN('Complete: My parents let me blank out late.')">🔊</button>
+      </div>
+      <p class="pitanje-tekst">Dopuni: My parents let me _____ out late.</p>
+      <div class="opcije">
+        <button class="opcija" onclick="examAnswer(5, this, 'A')"><span class="opcija-slovo">A</span><span>to stay</span></button>
+        <button class="opcija" onclick="examAnswer(5, this, 'B')"><span class="opcija-slovo">B</span><span>staying</span></button>
+        <button class="opcija" onclick="examAnswer(5, this, 'C')"><span class="opcija-slovo">C</span><span>stay</span></button>
+        <button class="opcija" onclick="examAnswer(5, this, 'D')"><span class="opcija-slovo">D</span><span>stayed</span></button>
+      </div>
+      <div class="feedback" id="ef-5"></div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="pitanje" id="eq-6">
+      <div class="pitanje-header">
+        <span class="pitanje-broj">Pitanje 6 / 15</span>
+        <button class="btn-sound" onclick="procitajEN('He stopped to smoke means he stopped walking to have a cigarette. True or false?')">🔊</button>
+      </div>
+      <p class="pitanje-tekst">"He <strong>stopped to smoke</strong>" znači: Stao je kako bi zapalio cigaretu.</p>
+      <div class="opcije">
+        <button class="opcija" onclick="examAnswer(6, this, 'A')"><span class="opcija-slovo">A</span><span>Točno ✅</span></button>
+        <button class="opcija" onclick="examAnswer(6, this, 'B')"><span class="opcija-slovo">B</span><span>Netočno ❌</span></button>
+      </div>
+      <div class="feedback" id="ef-6"></div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="pitanje" id="eq-7">
+      <div class="pitanje-header">
+        <span class="pitanje-broj">Pitanje 7 / 15</span>
+        <button class="btn-sound" onclick="procitajEN('Complete: The coach forced them blank extra hours.')">🔊</button>
+      </div>
+      <p class="pitanje-tekst">Dopuni: The coach forced them _____ extra hours.</p>
+      <div class="opcije">
+        <button class="opcija" onclick="examAnswer(7, this, 'A')"><span class="opcija-slovo">A</span><span>train</span></button>
+        <button class="opcija" onclick="examAnswer(7, this, 'B')"><span class="opcija-slovo">B</span><span>to train</span></button>
+        <button class="opcija" onclick="examAnswer(7, this, 'C')"><span class="opcija-slovo">C</span><span>training</span></button>
+        <button class="opcija" onclick="examAnswer(7, this, 'D')"><span class="opcija-slovo">D</span><span>to training</span></button>
+      </div>
+      <div class="feedback" id="ef-7"></div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="pitanje" id="eq-8">
+      <div class="pitanje-header">
+        <span class="pitanje-broj">Pitanje 8 / 15</span>
+        <button class="btn-sound" onclick="procitajEN('Choose the correct sentence about tend.')">🔊</button>
+      </div>
+      <p class="pitanje-tekst">Odaberi točnu rečenicu s glagolom "tend":</p>
+      <div class="opcije">
+        <button class="opcija" onclick="examAnswer(8, this, 'A')"><span class="opcija-slovo">A</span><span>Athletes tend doing better under pressure.</span></button>
+        <button class="opcija" onclick="examAnswer(8, this, 'B')"><span class="opcija-slovo">B</span><span>Athletes tend to do better under pressure.</span></button>
+        <button class="opcija" onclick="examAnswer(8, this, 'C')"><span class="opcija-slovo">C</span><span>Athletes tend do better under pressure.</span></button>
+      </div>
+      <div class="feedback" id="ef-8"></div>
+    </div>
+
+    <!-- Q9 — Teže: prepisivanje rečenice -->
+    <div class="pitanje" id="eq-9">
+      <div class="pitanje-header">
+        <span class="pitanje-broj">Pitanje 9 / 15 <span class="difficulty-badge difficulty-hard">Teže</span></span>
+        <button class="btn-sound" onclick="procitajEN('Rewrite the sentence using the verb in brackets.')">🔊</button>
+      </div>
+      <p class="pitanje-tekst">Prepiši rečenicu koristeći glagol u zagradi:<br>
+      "The athletes relaxed." (make) → "The psychologist _____"</p>
+      <div class="opcije">
+        <button class="opcija" onclick="examAnswer(9, this, 'A')"><span class="opcija-slovo">A</span><span>The psychologist made the athletes to relax.</span></button>
+        <button class="opcija" onclick="examAnswer(9, this, 'B')"><span class="opcija-slovo">B</span><span>The psychologist made the athletes relax.</span></button>
+        <button class="opcija" onclick="examAnswer(9, this, 'C')"><span class="opcija-slovo">C</span><span>The psychologist made the athletes relaxing.</span></button>
+        <button class="opcija" onclick="examAnswer(9, this, 'D')"><span class="opcija-slovo">D</span><span>The psychologist made relax the athletes.</span></button>
+      </div>
+      <div class="feedback" id="ef-9"></div>
+    </div>
+
+    <!-- Q10 — Teže: kontekst iz teksta -->
+    <div class="pitanje" id="eq-10">
+      <div class="pitanje-header">
+        <span class="pitanje-broj">Pitanje 10 / 15 <span class="difficulty-badge difficulty-hard">Teže</span></span>
+        <button class="btn-sound" onclick="procitajEN('Complete the text about sports psychology.')">🔊</button>
+      </div>
+      <p class="pitanje-tekst">Dopuni tekst iz udžbenika:<br>
+      "I encourage athletes _____ (talk) to themselves before a big race. I force them _____ (concentrate) on the times when they won."</p>
+      <div class="opcije">
+        <button class="opcija" onclick="examAnswer(10, this, 'A')"><span class="opcija-slovo">A</span><span>talking / concentrating</span></button>
+        <button class="opcija" onclick="examAnswer(10, this, 'B')"><span class="opcija-slovo">B</span><span>to talk / to concentrate</span></button>
+        <button class="opcija" onclick="examAnswer(10, this, 'C')"><span class="opcija-slovo">C</span><span>to talk / concentrate</span></button>
+        <button class="opcija" onclick="examAnswer(10, this, 'D')"><span class="opcija-slovo">D</span><span>talk / to concentrate</span></button>
+      </div>
+      <div class="feedback" id="ef-10"></div>
+    </div>
+
+    <!-- Q11 — Teže: ispravka greške -->
+    <div class="pitanje" id="eq-11">
+      <div class="pitanje-header">
+        <span class="pitanje-broj">Pitanje 11 / 15 <span class="difficulty-badge difficulty-hard">Teže</span></span>
+        <button class="btn-sound" onclick="procitajEN('Find and correct the error in the sentence.')">🔊</button>
+      </div>
+      <p class="pitanje-tekst">Pronađi i ispravi grešku:<br>
+      "The visualisation allows athletes <strong>imagining</strong> their success."</p>
+      <div class="opcije">
+        <button class="opcija" onclick="examAnswer(11, this, 'A')"><span class="opcija-slovo">A</span><span>allows athletes imagine their success</span></button>
+        <button class="opcija" onclick="examAnswer(11, this, 'B')"><span class="opcija-slovo">B</span><span>allows athletes to imagine their success</span></button>
+        <button class="opcija" onclick="examAnswer(11, this, 'C')"><span class="opcija-slovo">C</span><span>allows athletes for imagining their success</span></button>
+        <button class="opcija" onclick="examAnswer(11, this, 'D')"><span class="opcija-slovo">D</span><span>Nema greške — rečenica je točna.</span></button>
+      </div>
+      <div class="feedback" id="ef-11"></div>
+    </div>
+
+    <!-- Q12 — Teže: razlika u značenju -->
+    <div class="pitanje" id="eq-12">
+      <div class="pitanje-header">
+        <span class="pitanje-broj">Pitanje 12 / 15 <span class="difficulty-badge difficulty-hard">Teže</span></span>
+        <button class="btn-sound" onclick="procitajEN('What is the difference in meaning?')">🔊</button>
+      </div>
+      <p class="pitanje-tekst">Koja je razlika između:<br>
+      A) "He stopped <strong>playing</strong> tennis."<br>
+      B) "He stopped <strong>to play</strong> tennis."</p>
+      <div class="opcije">
+        <button class="opcija" onclick="examAnswer(12, this, 'A')"><span class="opcija-slovo">A</span><span>A = prestao igrati; B = stao da bi igrao</span></button>
+        <button class="opcija" onclick="examAnswer(12, this, 'B')"><span class="opcija-slovo">B</span><span>Nema razlike — isto znače</span></button>
+        <button class="opcija" onclick="examAnswer(12, this, 'C')"><span class="opcija-slovo">C</span><span>A = stao da bi igrao; B = prestao igrati</span></button>
+        <button class="opcija" onclick="examAnswer(12, this, 'D')"><span class="opcija-slovo">D</span><span>Obje rečenice su netočne</span></button>
+      </div>
+      <div class="feedback" id="ef-12"></div>
+    </div>
+
+    <!-- Q13 — Teže: više uzoraka u jednoj rečenici -->
+    <div class="pitanje" id="eq-13">
+      <div class="pitanje-header">
+        <span class="pitanje-broj">Pitanje 13 / 15 <span class="difficulty-badge difficulty-hard">Teže</span></span>
+        <button class="btn-sound" onclick="procitajEN('Complete: After they spent time preparing, I helped them to understand.')">🔊</button>
+      </div>
+      <p class="pitanje-tekst">Dopuni s DVA odgovora:<br>
+      "After they spent time _____ (prepare), I helped them _____ (understand) their strengths."</p>
+      <div class="opcije">
+        <button class="opcija" onclick="examAnswer(13, this, 'A')"><span class="opcija-slovo">A</span><span>preparing / to understand</span></button>
+        <button class="opcija" onclick="examAnswer(13, this, 'B')"><span class="opcija-slovo">B</span><span>to prepare / understanding</span></button>
+        <button class="opcija" onclick="examAnswer(13, this, 'C')"><span class="opcija-slovo">C</span><span>preparing / understand</span></button>
+        <button class="opcija" onclick="examAnswer(13, this, 'D')"><span class="opcija-slovo">D</span><span>prepare / to understand</span></button>
+      </div>
+      <div class="feedback" id="ef-13"></div>
+    </div>
+
+    <!-- Q14 — Teže: prevedi -->
+    <div class="pitanje" id="eq-14">
+      <div class="pitanje-header">
+        <span class="pitanje-broj">Pitanje 14 / 15 <span class="difficulty-badge difficulty-hard">Teže</span></span>
+        <button class="btn-sound" onclick="procitajEN('Translate the sentence from Croatian to English.')">🔊</button>
+      </div>
+      <p class="pitanje-tekst">Prevedi na engleski:<br>
+      "Savjetujem ti da odspavaš dovoljno prije utakmice."</p>
+      <div class="opcije">
+        <button class="opcija" onclick="examAnswer(14, this, 'A')"><span class="opcija-slovo">A</span><span>I advise you sleeping enough before the match.</span></button>
+        <button class="opcija" onclick="examAnswer(14, this, 'B')"><span class="opcija-slovo">B</span><span>I advise you to sleep enough before the match.</span></button>
+        <button class="opcija" onclick="examAnswer(14, this, 'C')"><span class="opcija-slovo">C</span><span>I advise to sleep you enough before the match.</span></button>
+        <button class="opcija" onclick="examAnswer(14, this, 'D')"><span class="opcija-slovo">D</span><span>I advise you sleep enough before the match.</span></button>
+      </div>
+      <div class="feedback" id="ef-14"></div>
+    </div>
+
+    <!-- Q15 — Teže: kompletni tekst -->
+    <div class="pitanje" id="eq-15">
+      <div class="pitanje-header">
+        <span class="pitanje-broj">Pitanje 15 / 15 <span class="difficulty-badge difficulty-hard">Teže</span></span>
+        <button class="btn-sound" onclick="procitajEN('Choose the correct combination to complete the paragraph.')">🔊</button>
+      </div>
+      <p class="pitanje-tekst">Dopuni odlomak s TOČNOM kombinacijom:<br>
+      "Even top athletes can't help _____ (1) nervous. I let them _____ (2) about their worries. If they manage _____ (3) their nerves, they tend _____ (4) better."</p>
+      <div class="opcije">
+        <button class="opcija" onclick="examAnswer(15, this, 'A')"><span class="opcija-slovo">A</span><span>(1) feeling (2) talk (3) to control (4) to do</span></button>
+        <button class="opcija" onclick="examAnswer(15, this, 'B')"><span class="opcija-slovo">B</span><span>(1) to feel (2) to talk (3) controlling (4) doing</span></button>
+        <button class="opcija" onclick="examAnswer(15, this, 'C')"><span class="opcija-slovo">C</span><span>(1) feeling (2) to talk (3) to control (4) to do</span></button>
+        <button class="opcija" onclick="examAnswer(15, this, 'D')"><span class="opcija-slovo">D</span><span>(1) feel (2) talking (3) control (4) do</span></button>
+      </div>
+      <div class="feedback" id="ef-15"></div>
+    </div>
+  </div>
+
+  <!-- Exam result -->
+  <div id="exam-result" style="display: none;">
+    <div class="exam-score">
+      <div class="score-circle" id="score-circle">
+        <svg viewBox="0 0 140 140" width="140" height="140">
+          <circle cx="70" cy="70" r="62" fill="none" stroke="#E8E4DF" stroke-width="10"/>
+          <circle cx="70" cy="70" r="62" fill="none" stroke="var(--green)" stroke-width="10"
+                  stroke-dasharray="390" id="score-arc" stroke-dashoffset="390" stroke-linecap="round"
+                  transform="rotate(-90 70 70)" style="transition: stroke-dashoffset 1.5s ease;"/>
+        </svg>
+        <span id="score-text" style="position: absolute; font-size: 38px;">0%</span>
+      </div>
+      <h2 id="score-title" style="margin-top: 16px;">Rezultat</h2>
+      <p id="score-msg" style="font-size: 18px; color: var(--text-light);"></p>
+      <p id="score-detail" style="font-size: 16px; margin-top: 8px;"></p>
+    </div>
+  </div>
+
+  <div style="text-align: center; margin-top: 24px;">
+    <button class="btn btn-green" onclick="showExamResults()" id="btn-submit-exam" style="font-size: 20px; padding: 16px 48px;">
+      📝 Predaj ispit
+    </button>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goToSection(6)">← Nazad na lekciju</button>
+    <div></div>
+  </div>
+</div>
+
+<!-- ===== OHRABLJUJUĆA PORUKA ===== -->
+<div class="section" id="section-finish" style="display: none; text-align: center; padding: 40px 20px;">
+  <div style="font-size: 64px; margin-bottom: 16px;">🏆</div>
+  <h1>Bravo, Paulina! 🌟</h1>
+  <p style="font-size: 20px; margin-top: 16px;">Završila si lekciju o Verb Patterns!</p>
+  <p style="font-size: 18px; color: var(--text-light);">Svaki put kad vježbaš, postaješ sve bolja.</p>
+  <p style="font-size: 18px; color: var(--text-light);">Remember: practice makes perfect! 💪</p>
+  <div style="margin-top: 32px;">
+    <button class="btn btn-primary" onclick="goToSection(1)" style="margin: 8px;">🔄 Ponovi lekciju</button>
+    <button class="btn btn-green" onclick="goToSection(7)" style="margin: 8px;">📝 Pokušaj ispit ponovo</button>
+  </div>
+</div>
+
+<script>
+// === NAVIGATION ===
+const totalSections = 7;
+let currentSection = 1;
+
+function initDots() {
+  const container = document.getElementById('step-dots');
+  for (let i = 1; i <= totalSections; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'step-dot' + (i === 1 ? ' active' : '');
+    dot.textContent = i;
+    dot.onclick = () => goToSection(i);
+    dot.id = 'dot-' + i;
+    container.appendChild(dot);
+  }
+}
+
+function goToSection(n) {
+  if (n < 1 || n > totalSections) return;
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  const target = document.getElementById('section-' + n);
+  if (target) { target.classList.add('active'); target.style.display = 'block'; }
+  currentSection = n;
+  // Update progress
+  const pct = Math.round((n / totalSections) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-pct').textContent = pct + '%';
+  document.getElementById('current-step').textContent = n;
+  // Update dots
+  for (let i = 1; i <= totalSections; i++) {
+    const dot = document.getElementById('dot-' + i);
+    dot.className = 'step-dot';
+    if (i < n) dot.classList.add('done');
+    if (i === n) dot.classList.add('active');
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// === TTS ===
+function procitajEN(tekst) {
+  if (speechSynthesis.speaking) speechSynthesis.cancel();
+  const govor = new SpeechSynthesisUtterance(tekst);
+  govor.lang = 'en-GB';
+  govor.rate = 0.85;
+  speechSynthesis.speak(govor);
+}
+
+// === EXPAND ===
+function toggleExpand(id) {
+  const el = document.getElementById(id);
+  el.style.display = el.style.display === 'none' || !el.style.display ? 'block' : 'none';
+}
+
+// === MINI QUIZ ===
+function checkMini(btn, correct, feedbackId) {
+  const parent = btn.closest('.opcije');
+  parent.querySelectorAll('.opcija').forEach(o => { o.classList.add('disabled'); o.classList.remove('tocno', 'netocno'); });
+  btn.classList.add(correct ? 'tocno' : 'netocno');
+  if (!correct) {
+    parent.querySelectorAll('.opcija').forEach(o => {
+      // find the correct one — we mark it with a data attribute or just rely on the callback
+    });
+  }
+  const fb = document.getElementById(feedbackId);
+  fb.style.display = 'block';
+  fb.className = 'feedback ' + (correct ? 'tocno' : 'netocno');
+  fb.innerHTML = correct ? '✅ Točno! Bravo!' : '❌ Nije točno. Pokušaj ponovno pogledati pravilo iznad.';
+}
+
+// === EXAM ===
+const examCorrect = {
+  1: 'B', 2: 'C', 3: 'C', 4: ['A','C'], 5: 'C', 6: 'A', 7: 'B', 8: 'B',
+  9: 'B', 10: 'B', 11: 'B', 12: 'A', 13: 'A', 14: 'B', 15: 'A'
+};
+const examExplanations = {
+  1: 'Make + object + bare infinitive (bez "to"). "Made the students repeat" je ispravno.',
+  2: 'Advise + object + to infinitive. "Advise athletes to visit" je pravilan uzorak.',
+  3: '"Can\'t help" traži -ing oblik: "can\'t help feeling", NE "can\'t help to feel".',
+  4: 'Enjoy + -ing i imagine + -ing su ispravni. Want i expect traže to + infinitive.',
+  5: 'Let + object + bare infinitive (bez "to"). "Let me stay" je ispravno.',
+  6: 'Točno! "Stopped to smoke" = stao je DA BI zapalio. "Stopped smoking" bi značilo da je prestao pušiti.',
+  7: 'Force + object + to infinitive. "Forced them to train" je ispravno.',
+  8: 'Tend + to infinitive. "Tend to do" je jedini ispravan oblik.',
+  9: 'Make + object + bare infinitive. "Made the athletes relax" — bez "to"!',
+  10: 'Encourage + obj + to inf; Force + obj + to inf. Oba traže "to": "to talk" i "to concentrate".',
+  11: 'Allow + object + to infinitive. Ispravno je "allows athletes to imagine".',
+  12: '"Stopped playing" = prestao igrati (završio). "Stopped to play" = stao DA BI igrao (započeo). Različita značenja!',
+  13: '"Spent time" traži -ing (preparing). "Help" traži to inf ili bare inf (to understand). Oba su u opciji A.',
+  14: 'Advise + object + to infinitive. "I advise you to sleep" je pravilan uzorak.',
+  15: 'Can\'t help + -ing (feeling), let + obj + bare inf (talk), manage + to inf (to control), tend + to inf (to do).'
+};
+
+let examAnswers = {};
+let examMultiSelections = {};
+
+function examAnswer(q, btn, answer) {
+  if (examAnswers[q]) return;
+  examAnswers[q] = answer;
+  const correct = examCorrect[q] === answer;
+  const parent = btn.closest('.opcije');
+  parent.querySelectorAll('.opcija').forEach(o => o.classList.add('disabled'));
+  btn.classList.add(correct ? 'tocno' : 'netocno');
+  // Show correct one if wrong
+  if (!correct) {
+    const correctIdx = ['A','B','C','D'].indexOf(examCorrect[q]);
+    if (correctIdx >= 0) parent.querySelectorAll('.opcija')[correctIdx].classList.add('tocno');
+  }
+  const fb = document.getElementById('ef-' + q);
+  fb.style.display = 'block';
+  fb.className = 'feedback ' + (correct ? 'tocno' : 'netocno');
+  fb.innerHTML = (correct ? '✅ Točno!' : '❌ Netočno.') + '<br>' + examExplanations[q];
+}
+
+function examToggle(q, btn, answer) {
+  if (examAnswers[q]) return;
+  if (!examMultiSelections[q]) examMultiSelections[q] = [];
+  const idx = examMultiSelections[q].indexOf(answer);
+  if (idx > -1) {
+    examMultiSelections[q].splice(idx, 1);
+    btn.style.borderColor = '#E8E4DF';
+    btn.style.background = '#FAFAFA';
+  } else {
+    examMultiSelections[q].push(answer);
+    btn.style.borderColor = 'var(--blue)';
+    btn.style.background = 'var(--blue-light)';
+  }
+}
+
+function examCheckMulti(q) {
+  if (examAnswers[q]) return;
+  const selected = (examMultiSelections[q] || []).sort().join(',');
+  const correctArr = examCorrect[q].sort().join(',');
+  const correct = selected === correctArr;
+  examAnswers[q] = examMultiSelections[q] || [];
+  const parent = document.getElementById('eq-' + q).querySelector('.opcije');
+  parent.querySelectorAll('.opcija').forEach(o => o.classList.add('disabled'));
+  const fb = document.getElementById('ef-' + q);
+  fb.style.display = 'block';
+  fb.className = 'feedback ' + (correct ? 'tocno' : 'netocno');
+  fb.innerHTML = (correct ? '✅ Točno!' : '❌ Netočno.') + '<br>' + examExplanations[q];
+}
+
+function showExamResults() {
+  let score = 0;
+  const total = 15;
+  for (let q = 1; q <= total; q++) {
+    if (!examAnswers[q]) continue;
+    if (Array.isArray(examCorrect[q])) {
+      const sel = (examAnswers[q] || []).sort().join(',');
+      if (sel === examCorrect[q].sort().join(',')) score++;
+    } else {
+      if (examAnswers[q] === examCorrect[q]) score++;
+    }
+  }
+  const pct = Math.round((score / total) * 100);
+  document.getElementById('exam-result').style.display = 'block';
+  document.getElementById('btn-submit-exam').style.display = 'none';
+
+  // Animate score
+  const arc = document.getElementById('score-arc');
+  const offset = 390 - (390 * pct / 100);
+  setTimeout(() => { arc.style.strokeDashoffset = offset; }, 100);
+
+  document.getElementById('score-text').textContent = pct + '%';
+  document.getElementById('score-detail').textContent = score + ' od ' + total + ' točno';
+
+  let title, msg, color;
+  if (pct >= 90) { title = 'Izvrsno! ⭐⭐⭐'; msg = 'Verb patterns su ti jasni! Super rad!'; color = 'var(--green)'; confetti(); }
+  else if (pct >= 75) { title = 'Super! ⭐⭐'; msg = 'Još malo vježbe i bit će savršeno!'; color = 'var(--blue)'; }
+  else if (pct >= 60) { title = 'Dobar početak! ⭐'; msg = 'Pogledaj ponovo cjeline gdje su bile greške.'; color = 'var(--orange)'; }
+  else { title = 'Ne brini! 💪'; msg = 'Svaki pokušaj te čini jačom! Ponovi lekciju i probaj ponovo.'; color = 'var(--orange)'; }
+
+  arc.style.stroke = color;
+  document.getElementById('score-title').textContent = title;
+  document.getElementById('score-msg').textContent = msg;
+  document.getElementById('exam-result').scrollIntoView({ behavior: 'smooth' });
+}
+
+function confetti() {
+  const boje = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#F7DC6F', '#BB8FCE', '#82E0AA'];
+  for (let i = 0; i < 50; i++) {
+    const el = document.createElement('div');
+    el.style.cssText = `position:fixed;width:10px;height:10px;border-radius:50%;background:${boje[Math.floor(Math.random()*boje.length)]};left:${Math.random()*100}vw;top:-10px;animation:padaj ${1.5+Math.random()*2}s ease-out forwards;z-index:9999;`;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 4000);
+  }
+}
+
+// Init
+initDots();
+</script>
+</body>
+</html>
