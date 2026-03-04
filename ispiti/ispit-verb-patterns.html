@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>Ispit: Verb Patterns — Paulinina Učionica</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-main:#FFF8F0;--bg-card:#FFFFFF;--text-main:#3A3A3A;--text-light:#6B6B6B;
+  --blue:#4A90D9;--blue-light:#E8F4FD;--green:#5CB85C;--green-light:#E8F8E8;
+  --orange:#FF9800;--orange-light:#FFF3E0;--red:#E74C3C;--red-light:#FDE8E8;
+  --purple:#9B59B6;--purple-light:#F3E8FD;--teal:#26A69A;--teal-light:#E0F2F1;
+  --radius:16px;--shadow:0 2px 12px rgba(0,0,0,0.06);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Lexend','Verdana',sans-serif;background:var(--bg-main);color:var(--text-main);line-height:1.8;letter-spacing:0.03em;padding:20px;max-width:800px;margin:0 auto;font-size:19px;}
+h1{font-size:28px;font-weight:700;color:#2C3E50;margin-bottom:8px;line-height:1.3;}
+h2{font-size:24px;font-weight:600;color:#34495E;margin-top:20px;margin-bottom:12px;}
+h3{font-size:20px;font-weight:600;margin-bottom:10px;}
+p{margin-bottom:14px;}
+.skip-link{position:absolute;top:-40px;left:0;background:var(--blue);color:white;padding:8px 16px;z-index:100;border-radius:0 0 8px 0;font-size:16px;text-decoration:none;}
+.skip-link:focus{top:0;}
+*:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:4px;}
+*:focus:not(:focus-visible){outline:none;}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0;}
+.settings-toggle{position:fixed;top:16px;right:16px;z-index:1000;background:var(--bg-card);border:2px solid #ddd;border-radius:50%;width:48px;height:48px;font-size:22px;cursor:pointer;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:center;}
+.settings-panel{position:fixed;top:72px;right:16px;z-index:999;background:var(--bg-card);border-radius:var(--radius);padding:20px;box-shadow:0 8px 32px rgba(0,0,0,0.15);width:280px;}
+.settings-panel label{display:block;margin-bottom:8px;font-size:15px;}
+.settings-panel input[type="range"]{width:100%;margin-bottom:12px;}
+.settings-panel fieldset{border:1px solid #ddd;border-radius:8px;padding:10px;margin-bottom:12px;}
+.breathing-btn{position:fixed;bottom:20px;right:20px;z-index:998;background:#E8F8E8;border:2px solid var(--green);border-radius:40px;padding:12px 20px;font-size:16px;cursor:pointer;font-family:inherit;box-shadow:var(--shadow);}
+.breathing-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:2000;display:flex;align-items:center;justify-content:center;}
+.breathing-box{background:white;border-radius:24px;padding:40px;text-align:center;max-width:360px;}
+.breathing-circle{width:120px;height:120px;border-radius:50%;background:var(--green-light);border:4px solid var(--green);margin:20px auto;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;}
+.breathing-circle.inhale{animation:breatheIn 4s ease-in-out;}
+.breathing-circle.exhale{animation:breatheOut 4s ease-in-out;}
+@keyframes breatheIn{from{transform:scale(0.7);}to{transform:scale(1.2);}}
+@keyframes breatheOut{from{transform:scale(1.2);}to{transform:scale(0.7);}}
+.kartica{background:var(--bg-card);border-radius:var(--radius);padding:24px 28px;margin-bottom:20px;box-shadow:var(--shadow);border-left:5px solid #ddd;}
+.kartica-def{border-left-color:var(--blue);background:var(--blue-light);}
+.kartica-primjer{border-left-color:var(--green);background:var(--green-light);}
+.kartica-vazno{border-left-color:var(--orange);background:var(--orange-light);}
+.kartica-upozorenje{border-left-color:var(--red);background:var(--red-light);}
+.progress-container{background:#e0e0e0;border-radius:10px;height:12px;margin:16px 0;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--teal));border-radius:10px;transition:width 0.5s ease;}
+.step{display:none;}.step.active{display:block;animation:fadeIn 0.3s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+.btn{font-size:17px;padding:14px 28px;border-radius:12px;border:none;cursor:pointer;font-weight:600;transition:all 0.2s ease;min-height:48px;font-family:inherit;}
+.btn-primary{background:var(--blue);color:white;}.btn-primary:hover{background:#3a7bc8;}
+.btn-secondary{background:#e8e8e8;color:var(--text-main);}.btn-secondary:hover{background:#ddd;}
+.btn-green{background:var(--green);color:white;}.btn-green:hover{background:#4cae4c;}
+.btn-sm{padding:8px 16px;font-size:15px;}
+.nav-buttons{display:flex;gap:12px;margin-top:24px;justify-content:space-between;}
+.tts-btn{background:var(--blue-light);border:1px solid var(--blue);border-radius:8px;padding:6px 12px;cursor:pointer;font-size:16px;margin-left:8px;vertical-align:middle;min-width:40px;min-height:40px;}
+.tts-btn-en{background:#FFF3E0;border-color:var(--orange);}
+.quiz-option{display:block;width:100%;text-align:left;padding:14px 20px;margin-bottom:10px;background:white;border:2px solid #e0e0e0;border-radius:12px;cursor:pointer;font-size:17px;font-family:inherit;transition:all 0.2s;}
+.quiz-option:hover{border-color:var(--blue);background:var(--blue-light);}
+.quiz-option.correct{border-color:var(--green);background:var(--green-light);}
+.quiz-option.incorrect{border-color:var(--red);background:var(--red-light);}
+.quiz-option:disabled{cursor:default;opacity:0.85;}
+.quiz-feedback{padding:14px;border-radius:12px;margin-top:12px;font-size:16px;}
+.quiz-feedback.ok{background:var(--green-light);border-left:4px solid var(--green);}
+.quiz-feedback.nok{background:var(--red-light);border-left:4px solid var(--red);}
+.encouragement{text-align:center;padding:16px;margin:20px 0;background:linear-gradient(135deg,#FFF8E1,#F3E5F5);border-radius:var(--radius);font-size:18px;}
+.hint-btn{background:var(--purple-light);border:1px solid var(--purple);border-radius:8px;padding:8px 14px;cursor:pointer;font-size:15px;font-family:inherit;margin-top:8px;}
+.hint-content{padding:12px;background:var(--purple-light);border-radius:8px;margin-top:8px;border-left:3px solid var(--purple);display:none;}
+.match-container{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;}
+.match-item{padding:10px 16px;border:2px solid var(--blue);border-radius:12px;cursor:pointer;background:white;font-family:inherit;font-size:16px;transition:all 0.2s;}
+.match-item.selected{background:var(--blue-light);border-color:var(--blue);font-weight:600;}
+.match-item.matched-ok{background:var(--green-light);border-color:var(--green);}
+.match-item.matched-nok{background:var(--red-light);border-color:var(--red);}
+.match-item:disabled{cursor:default;opacity:0.7;}
+.mood-selector{display:flex;justify-content:center;gap:16px;margin:20px 0;}
+.mood-btn{font-size:36px;padding:12px;background:white;border:3px solid transparent;border-radius:16px;cursor:pointer;transition:all 0.2s;}
+.mood-btn:hover{transform:scale(1.15);border-color:var(--blue);}
+.mood-btn.selected{border-color:var(--blue);background:var(--blue-light);transform:scale(1.15);}
+.result-bar{height:24px;border-radius:12px;margin:12px 0;overflow:hidden;background:#e0e0e0;}
+.result-fill{height:100%;border-radius:12px;transition:width 1s ease;}
+.confetti-particle{position:fixed;width:10px;height:10px;z-index:3000;pointer-events:none;animation:confettiFall 2.5s ease-in forwards;}
+@keyframes confettiFall{0%{opacity:1;transform:translateY(0) rotate(0deg);}100%{opacity:0;transform:translateY(100vh) rotate(720deg);}}
+.reading-ruler{position:fixed;left:0;width:100%;height:40px;background:rgba(255,200,50,0.2);border-top:2px solid rgba(255,200,50,0.5);border-bottom:2px solid rgba(255,200,50,0.5);pointer-events:none;z-index:9990;transition:top 0.05s ease;display:none;}
+.reading-ruler.active{display:block;}
+@media(max-width:768px){body{padding:12px;font-size:17px;}.kartica{padding:16px 18px;}h1{font-size:24px;}.btn{width:100%;margin-bottom:8px;}.nav-buttons{flex-direction:column;}.settings-panel{width:calc(100% - 32px);right:16px;}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms !important;transition-duration:0.01ms !important;}.confetti-particle{display:none !important;}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Preskoči na sadržaj</a>
+<button class="settings-toggle" onclick="toggleSettings()" aria-label="Postavke prikaza" aria-expanded="false" aria-controls="settings-panel">⚙️</button>
+<div id="settings-panel" class="settings-panel" role="dialog" aria-label="Postavke prikaza" hidden>
+  <h3>Postavke prikaza</h3>
+  <label for="font-size">Veličina teksta</label>
+  <input type="range" id="font-size" min="16" max="28" value="19" oninput="updateFS(this.value)">
+  <span id="fs-val">19px</span>
+  <fieldset><legend>Pozadina</legend>
+    <label><input type="radio" name="bg" value="cream" checked onchange="updateBg('cream')"> Krem</label>
+    <label><input type="radio" name="bg" value="blue" onchange="updateBg('blue')"> Plava</label>
+    <label><input type="radio" name="bg" value="white" onchange="updateBg('white')"> Bijela</label>
+  </fieldset>
+  <label for="lh-slider">Razmak između redova</label>
+  <input type="range" id="lh-slider" min="1.5" max="2.5" step="0.1" value="1.8" oninput="document.body.style.lineHeight=this.value">
+  <label><input type="checkbox" id="rr-cb" onchange="toggleRR(this.checked)"> Reading ruler</label>
+</div>
+<button class="breathing-btn" onclick="startBreathing()" aria-label="Trebam minutu za disanje">Trebam minutu 🫁</button>
+
+<main id="main-content" role="main">
+
+<!-- INTRO -->
+<section class="step active" id="step-intro" aria-labelledby="intro-title">
+<header role="banner">
+  <p style="color:var(--text-light);font-size:15px;">📝 Engleski jezik — Ispit</p>
+  <h1 id="intro-title">🏆 Ispit: Verb Patterns & Sports Preparation</h1>
+</header>
+<div class="kartica kartica-primjer">
+  <h3>💚 Prije nego počneš...</h3>
+  <p>Ovo je prilika da pokažeš što si naučila! Nema vremenskog ograničenja. Hintovi su tu ako zatreba.</p>
+  <p><strong>12 pitanja</strong> — mix tipova: odaberi odgovor, spoji parove, nadopuni, true/false.</p>
+  <p>Duboki udah i idemo! 💚</p>
+</div>
+<div class="nav-buttons"><div></div><button class="btn btn-primary" onclick="goQ(0)">Počni ispit →</button></div>
+</section>
+
+<!-- WARM-UP Q1 -->
+<section class="step" id="q-0" aria-labelledby="q0t">
+<p style="color:var(--text-light);font-size:14px;">🔥 Zagrijavanje (ne broji se u ocjenu)</p>
+<div class="kartica"><p id="q0t"><strong>Zagrijavanje 1:</strong> Što znači <strong>"competition"</strong>? <button class="tts-btn tts-btn-en" onclick="sp('competition','en-US')">🔊</button></p>
+<div role="radiogroup" aria-label="competition"><button class="quiz-option" onclick="ans(this,0,true)">Natjecanje</button><button class="quiz-option" onclick="ans(this,0,false)">Suradnja</button><button class="quiz-option" onclick="ans(this,0,false)">Trening</button></div>
+<div id="fb-0" role="alert" aria-live="polite"></div></div>
+<div class="nav-buttons"><button class="btn btn-secondary" onclick="goQ(-1)">← Nazad</button><button class="btn btn-primary" onclick="goQ(1)">Dalje →</button></div>
+</section>
+
+<!-- WARM-UP Q2 -->
+<section class="step" id="q-1" aria-labelledby="q1t">
+<p style="color:var(--text-light);font-size:14px;">🔥 Zagrijavanje (ne broji se u ocjenu)</p>
+<div class="kartica"><p id="q1t"><strong>Zagrijavanje 2:</strong> Prevedi: <em>"Želim pobijediti."</em></p>
+<div role="radiogroup"><button class="quiz-option" onclick="ans(this,1,false)">I want winning.</button><button class="quiz-option" onclick="ans(this,1,true)">I want to win.</button><button class="quiz-option" onclick="ans(this,1,false)">I want win.</button></div>
+<div id="fb-1" role="alert" aria-live="polite"></div></div>
+<div class="encouragement">Super! Zagrijavanje gotovo — krećemo s pravim pitanjima! 💪</div>
+<div class="nav-buttons"><button class="btn btn-secondary" onclick="goQ(0)">← Nazad</button><button class="btn btn-primary" onclick="goQ(2)">Dalje →</button></div>
+</section>
+
+<!-- Q3: MC verb pattern -->
+<section class="step" id="q-2" aria-labelledby="q2t">
+<div class="progress-container"><div class="progress-fill" id="pf" style="width:10%"></div></div>
+<p style="color:var(--text-light);font-size:14px;">Pitanje 1 od 10</p>
+<div class="kartica"><p id="q2t"><strong>1.</strong> They need _____ physically before the competition. <button class="tts-btn tts-btn-en" onclick="sp('They need blank physically before the competition.','en-US')">🔊</button></p>
+<div role="radiogroup"><button class="quiz-option" onclick="ans(this,2,true)">to prepare</button><button class="quiz-option" onclick="ans(this,2,false)">preparing</button><button class="quiz-option" onclick="ans(this,2,false)">prepare</button></div>
+<div id="fb-2" role="alert" aria-live="polite"></div>
+<button class="hint-btn" onclick="showH('h2')">💡 Hint</button><div class="hint-content" id="h2">"Need" traži TO + infinitiv. Zamisli: "Trebam NEŠTO napraviti" → need to do.</div>
+</div>
+<div class="nav-buttons"><button class="btn btn-secondary" onclick="goQ(1)">← Nazad</button><button class="btn btn-primary" onclick="goQ(3)">Dalje →</button></div>
+</section>
+
+<!-- Q4: MC make/let -->
+<section class="step" id="q-3" aria-labelledby="q3t">
+<div class="progress-container"><div class="progress-fill" style="width:20%"></div></div>
+<p style="color:var(--text-light);font-size:14px;">Pitanje 2 od 10</p>
+<div class="kartica"><p id="q3t"><strong>2.</strong> The psychologist makes them _____ before the match. <button class="tts-btn tts-btn-en" onclick="sp('The psychologist makes them blank before the match.','en-US')">🔊</button></p>
+<div role="radiogroup"><button class="quiz-option" onclick="ans(this,3,false)">to relax</button><button class="quiz-option" onclick="ans(this,3,true)">relax</button><button class="quiz-option" onclick="ans(this,3,false)">relaxing</button></div>
+<div id="fb-3" role="alert" aria-live="polite"></div>
+<button class="hint-btn" onclick="showH('h3')">💡 Hint</button><div class="hint-content" id="h3">Make + osoba + infinitiv BEZ "to"! Make them relax, NE make them to relax.</div>
+</div>
+<div class="nav-buttons"><button class="btn btn-secondary" onclick="goQ(2)">← Nazad</button><button class="btn btn-primary" onclick="goQ(4)">Dalje →</button></div>
+</section>
+
+<!-- Q5: MC -ing -->
+<section class="step" id="q-4" aria-labelledby="q4t">
+<div class="progress-container"><div class="progress-fill" style="width:30%"></div></div>
+<p style="color:var(--text-light);font-size:14px;">Pitanje 3 od 10</p>
+<div class="kartica"><p id="q4t"><strong>3.</strong> Athletes should avoid _____ alcohol. <button class="tts-btn tts-btn-en" onclick="sp('Athletes should avoid blank alcohol.','en-US')">🔊</button></p>
+<div role="radiogroup"><button class="quiz-option" onclick="ans(this,4,false)">to drink</button><button class="quiz-option" onclick="ans(this,4,false)">drink</button><button class="quiz-option" onclick="ans(this,4,true)">drinking</button></div>
+<div id="fb-4" role="alert" aria-live="polite"></div>
+<button class="hint-btn" onclick="showH('h4')">💡 Hint</button><div class="hint-content" id="h4">"Avoid" traži -ING oblik. Izbjegavati NEŠTO raditi → avoid doing.</div>
+</div>
+<div class="nav-buttons"><button class="btn btn-secondary" onclick="goQ(3)">← Nazad</button><button class="btn btn-primary" onclick="goQ(5)">Dalje →</button></div>
+</section>
+
+<!-- Q6: MC obj+to -->
+<section class="step" id="q-5" aria-labelledby="q5t">
+<div class="progress-container"><div class="progress-fill" style="width:40%"></div></div>
+<p style="color:var(--text-light);font-size:14px;">Pitanje 4 od 10</p>
+<div class="encouragement">✨ Super ideš! Već si na pola puta!</div>
+<div class="kartica"><p id="q5t"><strong>4.</strong> I advise athletes _____ the stadium before the event. <button class="tts-btn tts-btn-en" onclick="sp('I advise athletes blank the stadium before the event.','en-US')">🔊</button></p>
+<div role="radiogroup"><button class="quiz-option" onclick="ans(this,5,true)">to visit</button><button class="quiz-option" onclick="ans(this,5,false)">visiting</button><button class="quiz-option" onclick="ans(this,5,false)">visit</button></div>
+<div id="fb-5" role="alert" aria-live="polite"></div>
+<button class="hint-btn" onclick="showH('h5')">💡 Hint</button><div class="hint-content" id="h5">"Advise" + osoba + to + infinitiv. Savjetujem nekoga DA NEŠTO napravi.</div>
+</div>
+<div class="nav-buttons"><button class="btn btn-secondary" onclick="goQ(4)">← Nazad</button><button class="btn btn-primary" onclick="goQ(6)">Dalje →</button></div>
+</section>
+
+<!-- Q7: True/False -->
+<section class="step" id="q-6" aria-labelledby="q6t">
+<div class="progress-container"><div class="progress-fill" style="width:50%"></div></div>
+<p style="color:var(--text-light);font-size:14px;">Pitanje 5 od 10</p>
+<div class="kartica"><p id="q6t"><strong>5. True or False:</strong> "I let them to talk about their worries" je gramatički točno. <button class="tts-btn tts-btn-en" onclick="sp('I let them to talk about their worries','en-US')">🔊</button></p>
+<div role="radiogroup"><button class="quiz-option" onclick="ans(this,6,false)">True — to je točno</button><button class="quiz-option" onclick="ans(this,6,true)">False — trebalo bi biti "I let them talk"</button></div>
+<div id="fb-6" role="alert" aria-live="polite"></div></div>
+<div class="nav-buttons"><button class="btn btn-secondary" onclick="goQ(5)">← Nazad</button><button class="btn btn-primary" onclick="goQ(7)">Dalje →</button></div>
+</section>
+
+<!-- Q8: Vocabulary -->
+<section class="step" id="q-7" aria-labelledby="q7t">
+<div class="progress-container"><div class="progress-fill" style="width:60%"></div></div>
+<p style="color:var(--text-light);font-size:14px;">Pitanje 6 od 10</p>
+<div class="kartica"><p id="q7t"><strong>6.</strong> Koja su tri područja na koja se sportski psiholog fokusira? <button class="tts-btn" onclick="sp('Koja su tri područja na koja se sportski psiholog fokusira?','hr-HR')">🔊🇭🇷</button></p>
+<div role="radiogroup">
+<button class="quiz-option" onclick="ans(this,7,false)">Prehrana, trening, spavanje</button>
+<button class="quiz-option" onclick="ans(this,7,true)">Vizualizacija, pozitivno razmišljanje, opuštanje</button>
+<button class="quiz-option" onclick="ans(this,7,false)">Fizička priprema, motivacija, natjecanje</button>
+</div>
+<div id="fb-7" role="alert" aria-live="polite"></div></div>
+<div class="nav-buttons"><button class="btn btn-secondary" onclick="goQ(6)">← Nazad</button><button class="btn btn-primary" onclick="goQ(8)">Dalje →</button></div>
+</section>
+
+<!-- Q9: Fill-in -->
+<section class="step" id="q-8" aria-labelledby="q8t">
+<div class="progress-container"><div class="progress-fill" style="width:70%"></div></div>
+<p style="color:var(--text-light);font-size:14px;">Pitanje 7 od 10</p>
+<div class="kartica"><p id="q8t"><strong>7.</strong> They spend hours _____ for the competition. <button class="tts-btn tts-btn-en" onclick="sp('They spend hours blank for the competition.','en-US')">🔊</button></p>
+<div role="radiogroup"><button class="quiz-option" onclick="ans(this,8,true)">preparing</button><button class="quiz-option" onclick="ans(this,8,false)">to prepare</button><button class="quiz-option" onclick="ans(this,8,false)">prepared</button></div>
+<div id="fb-8" role="alert" aria-live="polite"></div>
+<button class="hint-btn" onclick="showH('h8')">💡 Hint</button><div class="hint-content" id="h8">"Spend time" UVIJEK traži -ING. Spend time doing something.</div>
+</div>
+<div class="nav-buttons"><button class="btn btn-secondary" onclick="goQ(7)">← Nazad</button><button class="btn btn-primary" onclick="goQ(9)">Dalje →</button></div>
+</section>
+
+<!-- Q10: Translation -->
+<section class="step" id="q-9" aria-labelledby="q9t">
+<div class="progress-container"><div class="progress-fill" style="width:80%"></div></div>
+<p style="color:var(--text-light);font-size:14px;">Pitanje 8 od 10</p>
+<div class="encouragement">💪 Gotovo si! Još malo!</div>
+<div class="kartica"><p id="q9t"><strong>8.</strong> Prevedi na engleski: <em>"Ohrabrila sam je da pozitivno razmišlja."</em> <button class="tts-btn" onclick="sp('Ohrabrila sam je da pozitivno razmišlja.','hr-HR')">🔊🇭🇷</button></p>
+<div role="radiogroup">
+<button class="quiz-option" onclick="ans(this,9,false)">I encouraged her thinking positively.</button>
+<button class="quiz-option" onclick="ans(this,9,true)">I encouraged her to think positively.</button>
+<button class="quiz-option" onclick="ans(this,9,false)">I encouraged her think positively.</button>
+</div>
+<div id="fb-9" role="alert" aria-live="polite"></div></div>
+<div class="nav-buttons"><button class="btn btn-secondary" onclick="goQ(8)">← Nazad</button><button class="btn btn-primary" onclick="goQ(10)">Dalje →</button></div>
+</section>
+
+<!-- Q11: Wimbledon comprehension -->
+<section class="step" id="q-10" aria-labelledby="q10t">
+<div class="progress-container"><div class="progress-fill" style="width:90%"></div></div>
+<p style="color:var(--text-light);font-size:14px;">Pitanje 9 od 10</p>
+<div class="kartica"><p id="q10t"><strong>9.</strong> Zašto tenisač kaže da njegova rutina NIJE praznovjerje (superstition)? <button class="tts-btn" onclick="sp('Zašto tenisač kaže da njegova rutina nije praznovjerje?','hr-HR')">🔊🇭🇷</button></p>
+<div role="radiogroup">
+<button class="quiz-option" onclick="ans(this,10,false)">Jer nikad ne gubi.</button>
+<button class="quiz-option" onclick="ans(this,10,true)">Jer radi istu rutinu i kad pobijedi i kad izgubi.</button>
+<button class="quiz-option" onclick="ans(this,10,false)">Jer ne vjeruje u sreću.</button>
+</div>
+<div id="fb-10" role="alert" aria-live="polite"></div></div>
+<div class="nav-buttons"><button class="btn btn-secondary" onclick="goQ(9)">← Nazad</button><button class="btn btn-primary" onclick="goQ(11)">Dalje →</button></div>
+</section>
+
+<!-- Q12: Advanced -->
+<section class="step" id="q-11" aria-labelledby="q11t">
+<div class="progress-container"><div class="progress-fill" style="width:100%"></div></div>
+<p style="color:var(--text-light);font-size:14px;">Pitanje 10 od 10</p>
+<div class="kartica"><p id="q11t"><strong>10.</strong> Koja rečenica je NETOČNA? <button class="tts-btn tts-btn-en" onclick="sp('Which sentence is incorrect?','en-US')">🔊</button></p>
+<div role="radiogroup">
+<button class="quiz-option" onclick="ans(this,11,false)">I imagine winning the race.</button>
+<button class="quiz-option" onclick="ans(this,11,true)">She made me to practice every day.</button>
+<button class="quiz-option" onclick="ans(this,11,false)">He encouraged me to try again.</button>
+<button class="quiz-option" onclick="ans(this,11,false)">They expect to win the final.</button>
+</div>
+<div id="fb-11" role="alert" aria-live="polite"></div>
+<button class="hint-btn" onclick="showH('h11')">💡 Hint</button><div class="hint-content" id="h11">Sjeti se: make + osoba + infinitiv BEZ "to"! Koji glagol krši to pravilo?</div>
+</div>
+<div class="nav-buttons"><button class="btn btn-secondary" onclick="goQ(10)">← Nazad</button><button class="btn btn-green" onclick="showResults()">📊 Pogledaj rezultate</button></div>
+</section>
+
+<!-- RESULTS -->
+<section class="step" id="step-results" aria-labelledby="res-title">
+<h2 id="res-title">📊 Rezultati ispita</h2>
+<div class="kartica" style="text-align:center;">
+  <h3 id="score-text"></h3>
+  <div class="result-bar"><div class="result-fill" id="result-fill"></div></div>
+  <p id="score-msg" style="font-size:18px;margin-top:12px;"></p>
+</div>
+<div id="review-section"></div>
+<div class="kartica" style="margin-top:20px;">
+  <h3>🤔 Refleksija</h3>
+  <p>Koja pitanja su ti bila <strong>najlakša</strong>?</p>
+  <p>Koja su ti bila <strong>najteža</strong>?</p>
+</div>
+<div class="kartica" style="text-align:center;">
+  <h3>Kako se osjećaš?</h3>
+  <div class="mood-selector">
+    <button class="mood-btn" onclick="selMood(this)" aria-label="Super">😊</button>
+    <button class="mood-btn" onclick="selMood(this)" aria-label="OK">🙂</button>
+    <button class="mood-btn" onclick="selMood(this)" aria-label="Zbunjena">😕</button>
+  </div>
+</div>
+<div class="nav-buttons"><button class="btn btn-primary" onclick="location.reload()">🔄 Pokušaj ponovo</button></div>
+</section>
+
+</main>
+<div id="readingRuler" class="reading-ruler" aria-hidden="true"></div>
+<div aria-live="polite" id="step-ann" class="sr-only"></div>
+
+<script>
+const WARMUP=2, TOTAL_Q=12, SCORED_Q=10;
+let answers=new Array(TOTAL_Q).fill(null);
+let correct=new Array(TOTAL_Q).fill(null);
+const explanations=[
+  '','', // warmup
+  '"Need" traži TO + infinitiv: need to prepare.',
+  '"Make" + osoba + infinitiv BEZ to: make them relax.',
+  '"Avoid" traži -ING: avoid drinking.',
+  '"Advise" + osoba + TO + infinitiv: advise athletes to visit.',
+  '"Let" NE koristi "to": let them talk (ne: let them to talk).',
+  'Tri područja su: visualisation, positive thinking, relaxation.',
+  '"Spend time" traži -ING: spend hours preparing.',
+  '"Encourage" + osoba + TO: encouraged her to think.',
+  'Rutina nije praznovjerje jer je radi isto i kad pobijedi i kad izgubi.',
+  '"Made me to practice" je netočno — trebalo bi: made me practice (bez to).'
+];
+
+function goQ(n){
+  if(n<0){document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));document.getElementById('step-intro').classList.add('active');window.scrollTo({top:0,behavior:'smooth'});return;}
+  if(n>=TOTAL_Q){showResults();return;}
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('q-'+n).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  document.getElementById('step-ann').textContent='Pitanje '+(n+1);
+}
+
+function ans(btn,qIdx,isCorrect){
+  const p=btn.parentElement;
+  p.querySelectorAll('.quiz-option').forEach(b=>{b.disabled=true;});
+  btn.classList.add(isCorrect?'correct':'incorrect');
+  if(!isCorrect) p.querySelectorAll('.quiz-option').forEach(b=>{if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes('true'))b.classList.add('correct');});
+  answers[qIdx]=btn.textContent.trim();
+  correct[qIdx]=isCorrect;
+  const fb=document.getElementById('fb-'+qIdx);
+  if(isCorrect) fb.innerHTML='<div class="quiz-feedback ok">✅ Točno! '+explanations[qIdx]+'</div>';
+  else fb.innerHTML='<div class="quiz-feedback nok">❌ Nije baš, ali ne brini! '+explanations[qIdx]+'</div>';
+}
+
+function showResults(){
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('step-results').classList.add('active');
+  let score=0;
+  for(let i=WARMUP;i<TOTAL_Q;i++) if(correct[i]) score++;
+  const pct=Math.round((score/SCORED_Q)*100);
+  document.getElementById('score-text').textContent='Rezultat: '+score+' / '+SCORED_Q+' ('+pct+'%)';
+  const fill=document.getElementById('result-fill');
+  fill.style.width=pct+'%';
+  fill.style.background=pct>=75?'var(--green)':pct>=50?'var(--orange)':'var(--red)';
+  let msg='';
+  if(pct>=90) msg='⭐⭐⭐ Izvrsno! Tvoj trud se stvarno isplatio! 🎉';
+  else if(pct>=75) msg='⭐⭐ Super! Vidi koliko toga znaš! Još malo vježbe za savršenstvo.';
+  else if(pct>=60) msg='⭐ Dobar početak! Svaki put si bolja. Pogledajmo zajedno što ponoviti.';
+  else msg='Svaki pokušaj gradi nove putove u tvom mozgu! Ponovi lekciju i probaj ponovo — bit će lakše! 💪';
+  document.getElementById('score-msg').textContent=msg;
+  // review
+  let rv='<h3 style="margin-top:20px;">📝 Pregled odgovora</h3>';
+  for(let i=WARMUP;i<TOTAL_Q;i++){
+    const ok=correct[i];
+    rv+='<div class="kartica" style="border-left-color:'+(ok?'var(--green)':'var(--red)')+'"><p>'+(ok?'✅':'❌')+' Pitanje '+(i-WARMUP+1)+': '+(answers[i]||'Bez odgovora')+'</p><p style="font-size:15px;color:var(--text-light);">'+explanations[i]+'</p></div>';
+  }
+  document.getElementById('review-section').innerHTML=rv;
+  if(pct>=70) launchConfetti();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// Settings
+function toggleSettings(){const p=document.getElementById('settings-panel');const b=document.querySelector('.settings-toggle');p.hidden=!p.hidden;b.setAttribute('aria-expanded',!p.hidden);}
+function updateFS(v){document.body.style.fontSize=v+'px';document.getElementById('fs-val').textContent=v+'px';}
+function updateBg(t){const c={cream:'#FFF8F0',blue:'#F0F4FF',white:'#FAFAFA'};document.body.style.background=c[t];}
+function toggleRR(on){const r=document.getElementById('readingRuler');r.classList.toggle('active',on);if(on){document.addEventListener('mousemove',mR);document.addEventListener('touchmove',mRT);}else{document.removeEventListener('mousemove',mR);document.removeEventListener('touchmove',mRT);}}
+function mR(e){document.getElementById('readingRuler').style.top=(e.clientY-20)+'px';}
+function mRT(e){if(e.touches[0])document.getElementById('readingRuler').style.top=(e.touches[0].clientY-20)+'px';}
+
+// TTS
+function sp(t,l){if(speechSynthesis.speaking)speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang=l||'hr-HR';u.rate=0.85;speechSynthesis.speak(u);}
+
+// Hints
+function showH(id){const el=document.getElementById(id);el.style.display=el.style.display==='block'?'none':'block';}
+
+// Breathing
+function startBreathing(){const ov=document.createElement('div');ov.className='breathing-overlay';ov.onclick=e=>{if(e.target===ov)ov.remove();};ov.innerHTML='<div class="breathing-box"><h3>Vježba disanja 🫁</h3><p>Udahni... zadrži... izdahni...</p><div class="breathing-circle" id="bc">4</div><p id="bt">Pripremi se...</p><button class="btn btn-secondary" onclick="this.closest(\'.breathing-overlay\').remove()" style="margin-top:16px;">Zatvori</button></div>';document.body.appendChild(ov);const c=ov.querySelector('#bc'),t=ov.querySelector('#bt');let ph=0;const phs=[{l:'Udahni...',c:'inhale'},{l:'Zadrži...',c:''},{l:'Izdahni...',c:'exhale'}];function go(){if(!document.body.contains(ov))return;const p=phs[ph%3];t.textContent=p.l;c.className='breathing-circle '+p.c;let n=4;c.textContent=n;const iv=setInterval(()=>{n--;if(n<=0){clearInterval(iv);ph++;if(ph<9)setTimeout(go,200);else{t.textContent='Bravo! 💚';c.textContent='✓';}}else c.textContent=n;},1000);}setTimeout(go,1000);}
+
+// Mood
+function selMood(b){document.querySelectorAll('.mood-btn').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');}
+
+// Confetti
+function launchConfetti(){if(window.matchMedia('(prefers-reduced-motion:reduce)').matches)return;const cols=['#FF6B6B','#4ECDC4','#45B7D1','#96CEB4','#FFEAA7','#DDA0DD','#FF9800'];for(let i=0;i<30;i++){const p=document.createElement('div');p.className='confetti-particle';p.style.left=Math.random()*100+'vw';p.style.top='-10px';p.style.background=cols[Math.floor(Math.random()*cols.length)];p.style.borderRadius=Math.random()>0.5?'50%':'2px';p.style.width=(6+Math.random()*8)+'px';p.style.height=(6+Math.random()*8)+'px';p.style.animationDelay=(Math.random()*0.5)+'s';document.body.appendChild(p);setTimeout(()=>p.remove(),3000);}}
+
+// Keyboard
+document.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&e.target.classList.contains('quiz-option')&&!e.target.disabled){e.preventDefault();e.target.click();}if(e.key==='Escape'){const sp=document.getElementById('settings-panel');if(!sp.hidden){sp.hidden=true;document.querySelector('.settings-toggle').setAttribute('aria-expanded','false');}}});
+</script>
+</body>
+</html>
