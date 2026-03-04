@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Talijanski — Unità 2: Tempo libero — Paulinina Učionica</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #FFF8F0;
+      --bg-card: #FFFFFF;
+      --text-main: #3A3A3A;
+      --text-light: #6B6B6B;
+      --blue: #4A90D9;
+      --blue-light: #E8F4FD;
+      --green: #5CB85C;
+      --green-light: #E8F8E8;
+      --orange: #FF9800;
+      --orange-light: #FFF3E0;
+      --red: #E74C3C;
+      --red-light: #FDE8E8;
+      --purple: #9B59B6;
+      --purple-light: #F3E8FD;
+      --teal: #26A69A;
+      --teal-light: #E0F2F1;
+      --radius: 16px;
+      --shadow: 0 2px 12px rgba(0,0,0,0.06);
+      --shadow-hover: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Lexend', 'Verdana', sans-serif;
+      background: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.8;
+      letter-spacing: 0.03em;
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      font-size: 19px;
+    }
+    h1 { font-size: 32px; font-weight: 700; color: #2C3E50; margin-bottom: 8px; line-height: 1.3; }
+    h2 { font-size: 26px; font-weight: 600; color: #34495E; margin-top: 24px; margin-bottom: 16px; }
+    h3 { font-size: 22px; font-weight: 600; margin-bottom: 12px; }
+    p { margin-bottom: 16px; }
+
+    .header-section {
+      text-align: center;
+      padding: 32px 20px;
+      background: linear-gradient(135deg, #E8F4FD 0%, #F3E8FD 100%);
+      border-radius: var(--radius);
+      margin-bottom: 28px;
+    }
+    .header-section .emoji-big { font-size: 48px; margin-bottom: 12px; }
+    .header-section .subtitle { color: var(--text-light); font-size: 17px; }
+
+    /* Progress */
+    .progress-wrapper { margin-bottom: 28px; position: sticky; top: 0; z-index: 100; background: var(--bg-main); padding: 12px 0 8px; }
+    .progress-labels { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 16px; color: var(--text-light); }
+    .progress-bar { height: 12px; background: #E8E4DF; border-radius: 6px; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--blue), var(--teal)); border-radius: 6px; transition: width 0.4s ease; }
+
+    /* Step dots */
+    .step-dots { display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+    .step-dot {
+      width: 40px; height: 40px; border-radius: 50%; border: 2px solid #DDD;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 600; font-size: 16px; cursor: pointer; transition: all 0.2s;
+      background: white; color: var(--text-light);
+    }
+    .step-dot.active { border-color: var(--blue); background: var(--blue); color: white; }
+    .step-dot.done { border-color: var(--green); background: var(--green-light); color: var(--green); }
+
+    /* Cards */
+    .kartica {
+      background: var(--bg-card); border-radius: var(--radius);
+      padding: 24px 28px; margin-bottom: 20px;
+      box-shadow: var(--shadow); border-left: 5px solid transparent;
+    }
+    .kartica-naslov { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 18px; margin-bottom: 12px; }
+    .kartica-ikona { font-size: 24px; }
+    .kartica-definicija { border-left-color: var(--blue); background: var(--blue-light); }
+    .kartica-primjer { border-left-color: var(--green); background: var(--green-light); }
+    .kartica-vazno { border-left-color: var(--orange); background: var(--orange-light); }
+    .kartica-upozorenje { border-left-color: var(--red); background: var(--red-light); }
+    .kartica-savjet { border-left-color: var(--purple); background: var(--purple-light); }
+    .kartica-formula { border-left-color: var(--teal); background: var(--teal-light); }
+
+    /* Section */
+    .section { display: none; }
+    .section.active { display: block; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Vocab grid */
+    .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; margin: 20px 0; }
+    .vocab-card {
+      background: white; border-radius: 14px; padding: 18px; text-align: center;
+      box-shadow: var(--shadow); cursor: pointer; transition: all 0.3s;
+      border: 2px solid transparent;
+    }
+    .vocab-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); border-color: var(--blue); }
+    .vocab-card .vocab-emoji { font-size: 36px; margin-bottom: 8px; }
+    .vocab-card .vocab-it { font-weight: 600; font-size: 18px; color: var(--blue); margin-bottom: 4px; }
+    .vocab-card .vocab-hr { font-size: 16px; color: var(--text-light); }
+    .vocab-card.flipped { background: var(--blue-light); border-color: var(--blue); }
+
+    /* Number table */
+    .number-table { width: 100%; border-collapse: separate; border-spacing: 0; margin: 16px 0; border-radius: 12px; overflow: hidden; }
+    .number-table th { background: var(--blue); color: white; padding: 12px 16px; font-weight: 600; font-size: 17px; text-align: left; }
+    .number-table td { padding: 10px 16px; font-size: 18px; border-bottom: 1px solid #EEE; }
+    .number-table tr:nth-child(even) td { background: #FAFAFA; }
+    .number-table .num { font-weight: 700; color: var(--blue); font-size: 20px; min-width: 60px; }
+
+    /* Clock */
+    .clock-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin: 20px 0; }
+    .clock-card {
+      background: white; border-radius: 14px; padding: 20px; text-align: center;
+      box-shadow: var(--shadow); cursor: pointer; transition: all 0.3s;
+    }
+    .clock-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+    .clock-face { font-size: 48px; margin-bottom: 8px; }
+    .clock-it { font-weight: 600; font-size: 17px; color: var(--teal); }
+    .clock-hr { font-size: 15px; color: var(--text-light); margin-top: 4px; }
+    .clock-card .answer { display: none; }
+    .clock-card.revealed .answer { display: block; }
+
+    /* House rooms */
+    .room-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; margin: 20px 0; }
+    .room-card {
+      background: white; border-radius: 14px; padding: 16px; text-align: center;
+      box-shadow: var(--shadow); border: 2px solid transparent; transition: all 0.2s;
+    }
+    .room-card .room-emoji { font-size: 32px; margin-bottom: 6px; }
+    .room-card .room-it { font-weight: 600; color: var(--purple); font-size: 17px; }
+    .room-card .room-hr { font-size: 15px; color: var(--text-light); margin-top: 2px; }
+
+    /* Quiz */
+    .pitanje { background: var(--bg-card); border-radius: var(--radius); padding: 28px; margin-bottom: 24px; box-shadow: var(--shadow); }
+    .pitanje-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .pitanje-broj { font-size: 14px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-light); font-weight: 600; }
+    .btn-sound { background: none; border: 2px solid #DDD; border-radius: 50%; width: 40px; height: 40px; font-size: 20px; cursor: pointer; transition: all 0.2s; }
+    .btn-sound:hover { border-color: var(--blue); background: var(--blue-light); }
+    .pitanje-tekst { font-size: 20px; font-weight: 500; margin-bottom: 20px; }
+    .opcije { display: flex; flex-direction: column; gap: 10px; }
+    .opcija {
+      display: flex; align-items: center; gap: 14px; padding: 16px 20px;
+      background: #FAFAFA; border: 2px solid #E8E4DF; border-radius: 12px;
+      cursor: pointer; font-size: 18px; text-align: left; transition: all 0.2s;
+      font-family: inherit;
+    }
+    .opcija:hover:not(.disabled) { border-color: var(--blue); background: var(--blue-light); }
+    .opcija-slovo {
+      width: 36px; height: 36px; border-radius: 50%; background: var(--blue);
+      color: white; display: flex; align-items: center; justify-content: center;
+      font-weight: 700; flex-shrink: 0;
+    }
+    .opcija.tocno { border-color: var(--green); background: var(--green-light); }
+    .opcija.tocno .opcija-slovo { background: var(--green); }
+    .opcija.netocno { border-color: var(--red); background: var(--red-light); }
+    .opcija.netocno .opcija-slovo { background: var(--red); }
+    .opcija.disabled { pointer-events: none; opacity: 0.7; }
+    .feedback { margin-top: 16px; padding: 16px 20px; border-radius: 12px; font-size: 17px; line-height: 1.7; display: none; }
+    .feedback.tocno { background: var(--green-light); border-left: 4px solid var(--green); }
+    .feedback.netocno { background: var(--orange-light); border-left: 4px solid var(--orange); }
+
+    /* Fill-in */
+    .fill-input {
+      font-family: inherit; font-size: 18px; padding: 8px 14px;
+      border: 2px solid #DDD; border-radius: 10px; width: 180px;
+      transition: all 0.2s; background: white;
+    }
+    .fill-input:focus { border-color: var(--blue); outline: none; }
+    .fill-input.correct { border-color: var(--green); background: var(--green-light); }
+    .fill-input.incorrect { border-color: var(--red); background: var(--red-light); }
+    .check-btn {
+      font-family: inherit; font-size: 16px; padding: 8px 18px;
+      border-radius: 10px; border: none; background: var(--blue); color: white;
+      cursor: pointer; font-weight: 600; margin-left: 8px; transition: all 0.2s;
+    }
+    .check-btn:hover { background: #3A7BC8; }
+
+    /* Matching */
+    .match-area { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin: 16px 0; }
+    .match-col { display: flex; flex-direction: column; gap: 10px; }
+    .match-item {
+      padding: 12px 20px; border-radius: 12px; cursor: pointer;
+      font-size: 17px; font-weight: 500; transition: all 0.2s; text-align: center; min-width: 140px;
+    }
+    .match-left { background: var(--blue-light); border: 2px solid var(--blue); color: var(--blue); }
+    .match-right { background: var(--purple-light); border: 2px solid var(--purple); color: var(--purple); }
+    .match-item.selected { transform: scale(1.05); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    .match-item.matched { opacity: 0.5; pointer-events: none; background: var(--green-light); border-color: var(--green); color: var(--green); }
+
+    /* Nav */
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 32px; gap: 12px; }
+    .btn {
+      font-family: inherit; font-size: 18px; padding: 14px 32px; border-radius: 12px;
+      border: none; cursor: pointer; font-weight: 600; transition: all 0.2s; min-height: 52px;
+    }
+    .btn-primary { background: var(--blue); color: white; }
+    .btn-primary:hover { background: #3A7BC8; transform: translateY(-1px); }
+    .btn-secondary { background: white; color: var(--text-main); border: 2px solid #DDD; }
+    .btn-secondary:hover { border-color: var(--blue); }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* Result */
+    .rezultat { text-align: center; padding: 40px 20px; }
+    .rezultat-krug { position: relative; width: 140px; height: 140px; margin: 0 auto 20px; }
+    .rezultat-krug svg { width: 100%; height: 100%; }
+    .rezultat-postotak { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 32px; font-weight: 700; color: var(--text-main); }
+    .rezultat-naslov { font-size: 28px; margin-bottom: 12px; }
+    .rezultat-poruka { font-size: 18px; color: var(--text-light); }
+
+    /* Expand */
+    .expand-toggle { cursor: pointer; color: var(--purple); font-weight: 500; display: flex; align-items: center; gap: 6px; margin: 10px 0; }
+    .expand-content { display: none; padding: 14px 18px; background: var(--purple-light); border-radius: 12px; margin-top: 8px; border-left: 4px solid var(--purple); }
+
+    /* Exam section */
+    .exam-banner { background: linear-gradient(135deg, #FF9800 0%, #E74C3C 100%); color: white; border-radius: var(--radius); padding: 28px; text-align: center; margin-bottom: 24px; }
+    .exam-banner h2 { color: white; margin: 0; }
+    .exam-banner p { color: rgba(255,255,255,0.9); margin-top: 8px; }
+
+    /* Confetti */
+    @keyframes padaj { to { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      body { padding: 12px; }
+      .kartica { padding: 16px; }
+      h1 { font-size: 24px; }
+      p, li { font-size: 17px; }
+      .btn { width: 100%; margin-bottom: 8px; padding: 14px 20px; }
+      .nav-buttons { flex-direction: column; }
+      .vocab-grid { grid-template-columns: repeat(2, 1fr); }
+      .clock-grid { grid-template-columns: repeat(2, 1fr); }
+      .match-area { flex-direction: column; align-items: center; }
+      .fill-input { width: 140px; }
+      .step-dot { width: 34px; height: 34px; font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header-section">
+  <div class="emoji-big">🇮🇹</div>
+  <h1>Unità 2: Tempo libero</h1>
+  <p class="subtitle">Talijanski jezik — Slobodno vrijeme, brojevi, sat i kuća</p>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-wrapper">
+  <div class="progress-labels">
+    <span>Cjelina <strong id="current-step">1</strong> od <strong id="total-steps">7</strong></span>
+    <span id="progress-pct">14%</span>
+  </div>
+  <div class="progress-bar">
+    <div class="progress-fill" id="progress-fill" style="width: 14%"></div>
+  </div>
+  <div class="step-dots" id="step-dots"></div>
+</div>
+
+<!-- ===================== CJELINA 1: Aktivnosti u slobodno vrijeme ===================== -->
+<div class="section active" id="section-1">
+  <h2>🎨 1. Što radiš u slobodno vrijeme?</h2>
+  <p>Nauči kako se na talijanskom kaže što radiš kad si slobodan/slobodna.</p>
+
+  <div class="kartica kartica-definicija">
+    <div class="kartica-naslov"><span class="kartica-ikona">📘</span><span>Tempo libero = Slobodno vrijeme</span></div>
+    <p>To je vrijeme kad ne učiš i ne radiš. Možeš raditi što želiš!</p>
+    <button class="btn-sound" onclick="procitaj('Tempo libero znači slobodno vrijeme')">🔊</button>
+  </div>
+
+  <p><strong>Klikni kartice</strong> da vidiš prijevod:</p>
+
+  <div class="vocab-grid">
+    <div class="vocab-card" onclick="flipCard(this)">
+      <div class="vocab-emoji">📖</div>
+      <div class="vocab-it">leggere un libro</div>
+      <div class="vocab-hr" style="display:none">čitati knjigu</div>
+    </div>
+    <div class="vocab-card" onclick="flipCard(this)">
+      <div class="vocab-emoji">🎸</div>
+      <div class="vocab-it">suonare uno strumento</div>
+      <div class="vocab-hr" style="display:none">svirati instrument</div>
+    </div>
+    <div class="vocab-card" onclick="flipCard(this)">
+      <div class="vocab-emoji">🎬</div>
+      <div class="vocab-it">andare al cinema</div>
+      <div class="vocab-hr" style="display:none">ići u kino</div>
+    </div>
+    <div class="vocab-card" onclick="flipCard(this)">
+      <div class="vocab-emoji">🎭</div>
+      <div class="vocab-it">andare a teatro</div>
+      <div class="vocab-hr" style="display:none">ići u kazalište</div>
+    </div>
+    <div class="vocab-card" onclick="flipCard(this)">
+      <div class="vocab-emoji">🎵</div>
+      <div class="vocab-it">ascoltare musica</div>
+      <div class="vocab-hr" style="display:none">slušati glazbu</div>
+    </div>
+    <div class="vocab-card" onclick="flipCard(this)">
+      <div class="vocab-emoji">📺</div>
+      <div class="vocab-it">guardare la televisione</div>
+      <div class="vocab-hr" style="display:none">gledati televiziju</div>
+    </div>
+    <div class="vocab-card" onclick="flipCard(this)">
+      <div class="vocab-emoji">🎮</div>
+      <div class="vocab-it">giocare con i videogiochi</div>
+      <div class="vocab-hr" style="display:none">igrati videoigre</div>
+    </div>
+    <div class="vocab-card" onclick="flipCard(this)">
+      <div class="vocab-emoji">🏋️</div>
+      <div class="vocab-it">andare in palestra</div>
+      <div class="vocab-hr" style="display:none">ići u teretanu</div>
+    </div>
+    <div class="vocab-card" onclick="flipCard(this)">
+      <div class="vocab-emoji">💃</div>
+      <div class="vocab-it">ballare</div>
+      <div class="vocab-hr" style="display:none">plesati</div>
+    </div>
+    <div class="vocab-card" onclick="flipCard(this)">
+      <div class="vocab-emoji">🖼️</div>
+      <div class="vocab-it">andare in galleria</div>
+      <div class="vocab-hr" style="display:none">ići u galeriju</div>
+    </div>
+  </div>
+
+  <div class="kartica kartica-savjet">
+    <div class="kartica-naslov"><span class="kartica-ikona">💡</span><span>Savjet</span></div>
+    <p><strong>andare</strong> = ići. Koristi se s: <strong>al</strong> (cinema, teatro), <strong>in</strong> (palestra, galleria), <strong>a</strong> (teatro).</p>
+  </div>
+
+  <!-- Mini kviz cjelina 1 -->
+  <div class="kartica" style="border-left-color: var(--teal);">
+    <h3>🎯 Brza provjera</h3>
+    <div class="pitanje" id="mini-q1">
+      <p class="pitanje-tekst">Kako se kaže "slušati glazbu"?</p>
+      <div class="opcije">
+        <button class="opcija" onclick="miniKviz(this, false, 'mini-fb1')"><span class="opcija-slovo">A</span><span>guardare musica</span></button>
+        <button class="opcija" onclick="miniKviz(this, true, 'mini-fb1')"><span class="opcija-slovo">B</span><span>ascoltare musica</span></button>
+        <button class="opcija" onclick="miniKviz(this, false, 'mini-fb1')"><span class="opcija-slovo">C</span><span>leggere musica</span></button>
+      </div>
+      <div class="feedback" id="mini-fb1"></div>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <div></div>
+    <button class="btn btn-primary" onclick="goTo(2)">Dalje →</button>
+  </div>
+</div>
+
+<!-- ===================== CJELINA 2: Cosa fai nel tempo libero? ===================== -->
+<div class="section" id="section-2">
+  <h2>💬 2. Cosa fai nel tempo libero?</h2>
+  <p>Nauči pitati i odgovoriti: <strong>"Što radiš u slobodno vrijeme?"</strong></p>
+
+  <div class="kartica kartica-definicija">
+    <div class="kartica-naslov"><span class="kartica-ikona">📘</span><span>Pitanje</span></div>
+    <p style="font-size: 22px; color: var(--blue);"><strong>Cosa fai nel tempo libero?</strong></p>
+    <p>= Što radiš u slobodno vrijeme?</p>
+    <button class="btn-sound" onclick="procitaj('Cosa fai nel tempo libero?')">🔊</button>
+  </div>
+
+  <div class="kartica kartica-primjer">
+    <div class="kartica-naslov"><span class="kartica-ikona">🟢</span><span>Primjeri odgovora</span></div>
+    <p>🧑 <strong>Giorgio:</strong> <em>"Nel tempo libero gioco a calcio e ascolto musica."</em></p>
+    <p style="color: var(--text-light);">= U slobodno vrijeme igram nogomet i slušam glazbu.</p>
+    <br>
+    <p>👩 <strong>Martina:</strong> <em>"Nel tempo libero suono il pianoforte e vado in piscina."</em></p>
+    <p style="color: var(--text-light);">= U slobodno vrijeme sviram klavir i idem na bazen.</p>
+    <br>
+    <p>👩 <strong>Francesca:</strong> <em>"Vado a teatro e a un corso di tango. Vengono amici a casa e mangiamo una pizza insieme."</em></p>
+    <p style="color: var(--text-light);">= Idem u kazalište i na tečaj tanga. Prijatelji dolaze kući i jedemo pizzu zajedno.</p>
+  </div>
+
+  <div class="kartica kartica-vazno">
+    <div class="kartica-naslov"><span class="kartica-ikona">⚠️</span><span>Važni glagoli</span></div>
+    <p><strong>giocare</strong> = igrati (se) — <em>Gioco a calcio.</em></p>
+    <p><strong>andare</strong> = ići — <em>Vado al cinema.</em></p>
+    <p><strong>suonare</strong> = svirati — <em>Suono la chitarra.</em></p>
+    <p><strong>ascoltare</strong> = slušati — <em>Ascolto musica.</em></p>
+    <p><strong>guardare</strong> = gledati — <em>Guardo la TV.</em></p>
+    <p><strong>leggere</strong> = čitati — <em>Leggo un libro.</em></p>
+    <p><strong>mangiare</strong> = jesti — <em>Mangiamo una pizza.</em></p>
+  </div>
+
+  <div class="expand-toggle" onclick="toggleExpand('expand-verbi')">💡 Klikni za konjugaciju u prezentu ▶</div>
+  <div class="expand-content" id="expand-verbi">
+    <p><strong>-ARE glagoli</strong> (guardare): guard<strong>o</strong>, guard<strong>i</strong>, guard<strong>a</strong>, guard<strong>iamo</strong>, guard<strong>ate</strong>, guard<strong>ano</strong></p>
+    <p><strong>-ERE glagoli</strong> (leggere): legg<strong>o</strong>, legg<strong>i</strong>, legg<strong>e</strong>, legg<strong>iamo</strong>, legg<strong>ete</strong>, legg<strong>ono</strong></p>
+    <p><strong>-IRE glagoli</strong> (dormire): dorm<strong>o</strong>, dorm<strong>i</strong>, dorm<strong>e</strong>, dorm<strong>iamo</strong>, dorm<strong>ite</strong>, dorm<strong>ono</strong></p>
+  </div>
+
+  <!-- Mini kviz -->
+  <div class="kartica" style="border-left-color: var(--teal); margin-top: 20px;">
+    <h3>🎯 Brza provjera</h3>
+    <div class="pitanje">
+      <p class="pitanje-tekst">Dovrši: "Nel tempo libero _____ un libro." (ja čitam)</p>
+      <div class="opcije">
+        <button class="opcija" onclick="miniKviz(this, false, 'mini-fb2')"><span class="opcija-slovo">A</span><span>leggi</span></button>
+        <button class="opcija" onclick="miniKviz(this, true, 'mini-fb2')"><span class="opcija-slovo">B</span><span>leggo</span></button>
+        <button class="opcija" onclick="miniKviz(this, false, 'mini-fb2')"><span class="opcija-slovo">C</span><span>legge</span></button>
+      </div>
+      <div class="feedback" id="mini-fb2"></div>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTo(1)">← Nazad</button>
+    <button class="btn btn-primary" onclick="goTo(3)">Dalje →</button>
+  </div>
+</div>
+
+<!-- ===================== CJELINA 3: Brojevi 30–2000 ===================== -->
+<div class="section" id="section-3">
+  <h2>🔢 3. I numeri da 30 a 2.000</h2>
+  <p>Nauči brojeve na talijanskom od 30 do 2.000.</p>
+
+  <div class="kartica kartica-definicija">
+    <div class="kartica-naslov"><span class="kartica-ikona">📘</span><span>Desice (30–100)</span></div>
+    <table class="number-table">
+      <tr><th>Broj</th><th>Talijanski</th><th>Izgovori</th></tr>
+      <tr><td class="num">30</td><td>trenta</td><td><button class="btn-sound" onclick="procitaj('trenta')">🔊</button></td></tr>
+      <tr><td class="num">40</td><td>quaranta</td><td><button class="btn-sound" onclick="procitaj('quaranta')">🔊</button></td></tr>
+      <tr><td class="num">50</td><td>cinquanta</td><td><button class="btn-sound" onclick="procitaj('cinquanta')">🔊</button></td></tr>
+      <tr><td class="num">60</td><td>sessanta</td><td><button class="btn-sound" onclick="procitaj('sessanta')">🔊</button></td></tr>
+      <tr><td class="num">70</td><td>settanta</td><td><button class="btn-sound" onclick="procitaj('settanta')">🔊</button></td></tr>
+      <tr><td class="num">80</td><td>ottanta</td><td><button class="btn-sound" onclick="procitaj('ottanta')">🔊</button></td></tr>
+      <tr><td class="num">90</td><td>novanta</td><td><button class="btn-sound" onclick="procitaj('novanta')">🔊</button></td></tr>
+      <tr><td class="num">100</td><td>cento</td><td><button class="btn-sound" onclick="procitaj('cento')">🔊</button></td></tr>
+    </table>
+  </div>
+
+  <div class="kartica kartica-primjer">
+    <div class="kartica-naslov"><span class="kartica-ikona">🟢</span><span>Stotice i tisuće</span></div>
+    <table class="number-table">
+      <tr><th>Broj</th><th>Talijanski</th></tr>
+      <tr><td class="num">200</td><td>duecento</td></tr>
+      <tr><td class="num">300</td><td>trecento</td></tr>
+      <tr><td class="num">400</td><td>quattrocento</td></tr>
+      <tr><td class="num">500</td><td>cinquecento</td></tr>
+      <tr><td class="num">600</td><td>seicento</td></tr>
+      <tr><td class="num">700</td><td>settecento</td></tr>
+      <tr><td class="num">800</td><td>ottocento</td></tr>
+      <tr><td class="num">900</td><td>novecento</td></tr>
+      <tr><td class="num">1.000</td><td>mille</td></tr>
+      <tr><td class="num">2.000</td><td>duemila</td></tr>
+    </table>
+  </div>
+
+  <div class="kartica kartica-savjet">
+    <div class="kartica-naslov"><span class="kartica-ikona">💡</span><span>Pravilo</span></div>
+    <p><strong>31</strong> = trent<strong>uno</strong>, <strong>32</strong> = trent<strong>adue</strong>, <strong>33</strong> = trent<strong>atré</strong>...</p>
+    <p>Dodaješ broj (1-9) na kraj desice. Isto za sve desice!</p>
+    <p><strong>1.000</strong> = mille, ali <strong>2.000</strong> = due<strong>mila</strong> (mila, ne mille!)</p>
+  </div>
+
+  <!-- Mini kviz -->
+  <div class="kartica" style="border-left-color: var(--teal); margin-top: 20px;">
+    <h3>🎯 Brza provjera</h3>
+    <div class="pitanje">
+      <p class="pitanje-tekst">Kako se kaže 70 na talijanskom?</p>
+      <div class="opcije">
+        <button class="opcija" onclick="miniKviz(this, false, 'mini-fb3')"><span class="opcija-slovo">A</span><span>sessanta</span></button>
+        <button class="opcija" onclick="miniKviz(this, true, 'mini-fb3')"><span class="opcija-slovo">B</span><span>settanta</span></button>
+        <button class="opcija" onclick="miniKviz(this, false, 'mini-fb3')"><span class="opcija-slovo">C</span><span>cinquanta</span></button>
+      </div>
+      <div class="feedback" id="mini-fb3"></div>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTo(2)">← Nazad</button>
+    <button class="btn btn-primary" onclick="goTo(4)">Dalje →</button>
+  </div>
+</div>
+
+<!-- ===================== CJELINA 4: Redni brojevi ===================== -->
+<div class="section" id="section-4">
+  <h2>🏅 4. I numeri ordinali</h2>
+  <p>Redni brojevi ti govore <strong>redoslijed</strong>: prvi, drugi, treći...</p>
+
+  <div class="kartica kartica-definicija">
+    <div class="kartica-naslov"><span class="kartica-ikona">📘</span><span>Prvih 10 rednih brojeva</span></div>
+    <table class="number-table">
+      <tr><th>Redni br.</th><th>Talijanski (m)</th><th>Hrvatski</th></tr>
+      <tr><td class="num">1°</td><td>primo</td><td>prvi</td></tr>
+      <tr><td class="num">2°</td><td>secondo</td><td>drugi</td></tr>
+      <tr><td class="num">3°</td><td>terzo</td><td>treći</td></tr>
+      <tr><td class="num">4°</td><td>quarto</td><td>četvrti</td></tr>
+      <tr><td class="num">5°</td><td>quinto</td><td>peti</td></tr>
+      <tr><td class="num">6°</td><td>sesto</td><td>šesti</td></tr>
+      <tr><td class="num">7°</td><td>settimo</td><td>sedmi</td></tr>
+      <tr><td class="num">8°</td><td>ottavo</td><td>osmi</td></tr>
+      <tr><td class="num">9°</td><td>nono</td><td>deveti</td></tr>
+      <tr><td class="num">10°</td><td>decimo</td><td>deseti</td></tr>
+    </table>
+  </div>
+
+  <div class="kartica kartica-vazno">
+    <div class="kartica-naslov"><span class="kartica-ikona">⚠️</span><span>Važno pravilo</span></div>
+    <p>Od <strong>11. nadalje</strong>, svi redni brojevi završavaju na <strong>-esimo</strong>.</p>
+    <p>11° = undic<strong>esimo</strong>, 12° = dodic<strong>esimo</strong>, 20° = vent<strong>esimo</strong>...</p>
+    <p>Ženski rod: promijeni <strong>-o</strong> u <strong>-a</strong> → prima, seconda, terza...</p>
+  </div>
+
+  <div class="kartica kartica-primjer">
+    <div class="kartica-naslov"><span class="kartica-ikona">🟢</span><span>Primjer upotrebe</span></div>
+    <p><em>Abito al <strong>terzo</strong> piano.</em> = Živim na <strong>trećem</strong> katu.</p>
+    <p><em>È la <strong>prima</strong> volta.</em> = To je <strong>prvi</strong> put.</p>
+  </div>
+
+  <!-- Mini kviz -->
+  <div class="kartica" style="border-left-color: var(--teal); margin-top: 20px;">
+    <h3>🎯 Brza provjera</h3>
+    <div class="pitanje">
+      <p class="pitanje-tekst">Kako se na talijanskom kaže "peti"?</p>
+      <div class="opcije">
+        <button class="opcija" onclick="miniKviz(this, false, 'mini-fb4')"><span class="opcija-slovo">A</span><span>quarto</span></button>
+        <button class="opcija" onclick="miniKviz(this, true, 'mini-fb4')"><span class="opcija-slovo">B</span><span>quinto</span></button>
+        <button class="opcija" onclick="miniKviz(this, false, 'mini-fb4')"><span class="opcija-slovo">C</span><span>sesto</span></button>
+      </div>
+      <div class="feedback" id="mini-fb4"></div>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTo(3)">← Nazad</button>
+    <button class="btn btn-primary" onclick="goTo(5)">Dalje →</button>
+  </div>
+</div>
+
+<!-- ===================== CJELINA 5: Che ora è? ===================== -->
+<div class="section" id="section-5">
+  <h2>🕐 5. Che ora è? — Koliko je sati?</h2>
+  <p>Nauči pitati i reći koliko je sati na talijanskom.</p>
+
+  <div class="kartica kartica-definicija">
+    <div class="kartica-naslov"><span class="kartica-ikona">📘</span><span>Kako pitamo?</span></div>
+    <p style="font-size: 22px;"><strong>Che ora è?</strong> ili <strong>Che ore sono?</strong></p>
+    <p>= Koliko je sati?</p>
+    <button class="btn-sound" onclick="procitaj('Che ora è? Che ore sono?')">🔊</button>
+  </div>
+
+  <div class="kartica kartica-vazno">
+    <div class="kartica-naslov"><span class="kartica-ikona">⚠️</span><span>Pravila</span></div>
+    <p>Za <strong>1:00</strong> → <strong>È l'una</strong> (jednina!)</p>
+    <p>Za <strong>12:00</strong> → <strong>È mezzogiorno</strong> (podne)</p>
+    <p>Za <strong>00:00</strong> → <strong>È mezzanotte</strong> (ponoć)</p>
+    <p>Za sve ostale sate → <strong>Sono le + broj</strong></p>
+  </div>
+
+  <p><strong>Primjeri</strong> — klikni za prijevod:</p>
+
+  <div class="clock-grid">
+    <div class="clock-card" onclick="this.classList.toggle('revealed')">
+      <div class="clock-face">🕐</div>
+      <div class="clock-it">È l'una</div>
+      <div class="answer clock-hr">1:00 — Jedan je sat</div>
+    </div>
+    <div class="clock-card" onclick="this.classList.toggle('revealed')">
+      <div class="clock-face">🕑</div>
+      <div class="clock-it">Sono le due</div>
+      <div class="answer clock-hr">2:00 — Dva su sata</div>
+    </div>
+    <div class="clock-card" onclick="this.classList.toggle('revealed')">
+      <div class="clock-face">🕒</div>
+      <div class="clock-it">Sono le tre e venti</div>
+      <div class="answer clock-hr">3:20 — Tri i dvadeset</div>
+    </div>
+    <div class="clock-card" onclick="this.classList.toggle('revealed')">
+      <div class="clock-face">🕕</div>
+      <div class="clock-it">Sono le sei e un quarto</div>
+      <div class="answer clock-hr">6:15 — Šest i petnaest</div>
+    </div>
+    <div class="clock-card" onclick="this.classList.toggle('revealed')">
+      <div class="clock-face">🕖</div>
+      <div class="clock-it">Sono le sette e mezzo</div>
+      <div class="answer clock-hr">7:30 — Pola osam</div>
+    </div>
+    <div class="clock-card" onclick="this.classList.toggle('revealed')">
+      <div class="clock-face">🕗</div>
+      <div class="clock-it">Sono le otto meno un quarto</div>
+      <div class="answer clock-hr">7:45 — Petnaest do osam</div>
+    </div>
+  </div>
+
+  <div class="kartica kartica-savjet">
+    <div class="kartica-naslov"><span class="kartica-ikona">💡</span><span>Korisni izrazi</span></div>
+    <p><strong>e mezzo</strong> = i pol (30 min)</p>
+    <p><strong>e un quarto</strong> = i četvrt (15 min)</p>
+    <p><strong>meno un quarto</strong> = manje četvrt (do punog sata)</p>
+    <p><strong>e cinque / e dieci / e venti</strong> = i 5 / i 10 / i 20</p>
+  </div>
+
+  <!-- Mini kviz -->
+  <div class="kartica" style="border-left-color: var(--teal); margin-top: 20px;">
+    <h3>🎯 Brza provjera</h3>
+    <div class="pitanje">
+      <p class="pitanje-tekst">Kako kažeš 12:00 (podne)?</p>
+      <div class="opcije">
+        <button class="opcija" onclick="miniKviz(this, false, 'mini-fb5')"><span class="opcija-slovo">A</span><span>Sono le dodici</span></button>
+        <button class="opcija" onclick="miniKviz(this, true, 'mini-fb5')"><span class="opcija-slovo">B</span><span>È mezzogiorno</span></button>
+        <button class="opcija" onclick="miniKviz(this, false, 'mini-fb5')"><span class="opcija-slovo">C</span><span>È mezzanotte</span></button>
+      </div>
+      <div class="feedback" id="mini-fb5"></div>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTo(4)">← Nazad</button>
+    <button class="btn btn-primary" onclick="goTo(6)">Dalje →</button>
+  </div>
+</div>
+
+<!-- ===================== CJELINA 6: L'appartamento ===================== -->
+<div class="section" id="section-6">
+  <h2>🏠 6. L'appartamento — Stan</h2>
+  <p>Nauči nazive prostorija u stanu na talijanskom.</p>
+
+  <div class="room-grid">
+    <div class="room-card"><div class="room-emoji">🛋️</div><div class="room-it">il soggiorno</div><div class="room-hr">dnevni boravak</div></div>
+    <div class="room-card"><div class="room-emoji">🛏️</div><div class="room-it">la camera da letto</div><div class="room-hr">spavaća soba</div></div>
+    <div class="room-card"><div class="room-emoji">🍳</div><div class="room-it">la cucina</div><div class="room-hr">kuhinja</div></div>
+    <div class="room-card"><div class="room-emoji">🚿</div><div class="room-it">il bagno</div><div class="room-hr">kupaonica</div></div>
+    <div class="room-card"><div class="room-emoji">📚</div><div class="room-it">lo studio</div><div class="room-hr">radna soba</div></div>
+    <div class="room-card"><div class="room-emoji">🚪</div><div class="room-it">l'ingresso</div><div class="room-hr">ulaz / hodnik</div></div>
+    <div class="room-card"><div class="room-emoji">🌿</div><div class="room-it">il balcone</div><div class="room-hr">balkon</div></div>
+    <div class="room-card"><div class="room-emoji">🚗</div><div class="room-it">il garage</div><div class="room-hr">garaža</div></div>
+  </div>
+
+  <div class="kartica kartica-primjer">
+    <div class="kartica-naslov"><span class="kartica-ikona">🟢</span><span>Primjeri rečenica</span></div>
+    <p><em>Il mio appartamento ha un <strong>soggiorno</strong> grande.</em></p>
+    <p style="color: var(--text-light);">= Moj stan ima veliki dnevni boravak.</p>
+    <br>
+    <p><em>La <strong>cucina</strong> è piccola ma moderna.</em></p>
+    <p style="color: var(--text-light);">= Kuhinja je mala ali moderna.</p>
+  </div>
+
+  <div class="kartica kartica-vazno">
+    <div class="kartica-naslov"><span class="kartica-ikona">⚠️</span><span>Pridjevi za opis</span></div>
+    <p><strong>grande</strong> = velik/a, <strong>piccolo/a</strong> = mali/a</p>
+    <p><strong>moderno/a</strong> = moderan, <strong>luminoso/a</strong> = svijetao</p>
+    <p><strong>nuovo/a</strong> = nov/a, <strong>vecchio/a</strong> = star/a</p>
+  </div>
+
+  <!-- Mini kviz -->
+  <div class="kartica" style="border-left-color: var(--teal); margin-top: 20px;">
+    <h3>🎯 Brza provjera</h3>
+    <div class="pitanje">
+      <p class="pitanje-tekst">Što znači "la camera da letto"?</p>
+      <div class="opcije">
+        <button class="opcija" onclick="miniKviz(this, false, 'mini-fb6')"><span class="opcija-slovo">A</span><span>kupaonica</span></button>
+        <button class="opcija" onclick="miniKviz(this, false, 'mini-fb6')"><span class="opcija-slovo">B</span><span>kuhinja</span></button>
+        <button class="opcija" onclick="miniKviz(this, true, 'mini-fb6')"><span class="opcija-slovo">C</span><span>spavaća soba</span></button>
+      </div>
+      <div class="feedback" id="mini-fb6"></div>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goTo(5)">← Nazad</button>
+    <button class="btn btn-primary" onclick="goTo(7)">Na ispit! 📝</button>
+  </div>
+</div>
+
+<!-- ===================== CJELINA 7: ISPIT (TEŽI) ===================== -->
+<div class="section" id="section-7">
+  <div class="exam-banner">
+    <h2>📝 Ispit — Unità 2: Tempo libero</h2>
+    <p>15 pitanja — malo teža verzija! Sretno! 💪</p>
+  </div>
+
+  <div id="exam-questions">
+
+    <!-- P1 -->
+    <div class="pitanje" id="ep-1">
+      <div class="pitanje-header"><span class="pitanje-broj">Pitanje 1 / 15</span><button class="btn-sound" onclick="procitaj('Kako se kaže igrati videoigre na talijanskom?')">🔊</button></div>
+      <p class="pitanje-tekst">Kako se kaže "igrati videoigre" na talijanskom?</p>
+      <div class="opcije">
+        <button class="opcija" onclick="examOdgovor(1, this, 'A')"><span class="opcija-slovo">A</span><span>giocare con i videogiochi</span></button>
+        <button class="opcija" onclick="examOdgovor(1, this, 'B')"><span class="opcija-slovo">B</span><span>guardare i videogiochi</span></button>
+        <button class="opcija" onclick="examOdgovor(1, this, 'C')"><span class="opcija-slovo">C</span><span>ascoltare i videogiochi</span></button>
+        <button class="opcija" onclick="examOdgovor(1, this, 'D')"><span class="opcija-slovo">D</span><span>leggere i videogiochi</span></button>
+      </div>
+      <div class="feedback" id="exam-fb-1"></div>
+    </div>
+
+    <!-- P2 -->
+    <div class="pitanje" id="ep-2">
+      <div class="pitanje-header"><span class="pitanje-broj">Pitanje 2 / 15</span></div>
+      <p class="pitanje-tekst">Dovrši rečenicu: "Nel tempo libero, Maria _____ la televisione." (gledati, 3. lice jed.)</p>
+      <div class="opcije">
+        <button class="opcija" onclick="examOdgovor(2, this, 'A')"><span class="opcija-slovo">A</span><span>guardo</span></button>
+        <button class="opcija" onclick="examOdgovor(2, this, 'B')"><span class="opcija-slovo">B</span><span>guardi</span></button>
+        <button class="opcija" onclick="examOdgovor(2, this, 'C')"><span class="opcija-slovo">C</span><span>guarda</span></button>
+        <button class="opcija" onclick="examOdgovor(2, this, 'D')"><span class="opcija-slovo">D</span><span>guardano</span></button>
+      </div>
+      <div class="feedback" id="exam-fb-2"></div>
+    </div>
+
+    <!-- P3 -->
+    <div class="pitanje" id="ep-3">
+      <div class="pitanje-header"><span class="pitanje-broj">Pitanje 3 / 15</span></div>
+      <p class="pitanje-tekst">Koji broj je "quattrocento"?</p>
+      <div class="opcije">
+        <button class="opcija" onclick="examOdgovor(3, this, 'A')"><span class="opcija-slovo">A</span><span>40</span></button>
+        <button class="opcija" onclick="examOdgovor(3, this, 'B')"><span class="opcija-slovo">B</span><span>400</span></button>
+        <button class="opcija" onclick="examOdgovor(3, this, 'C')"><span class="opcija-slovo">C</span><span>4.000</span></button>
+        <button class="opcija" onclick="examOdgovor(3, this, 'D')"><span class="opcija-slovo">D</span><span>14</span></button>
+      </div>
+      <div class="feedback" id="exam-fb-3"></div>
+    </div>
+
+    <!-- P4 -->
+    <div class="pitanje" id="ep-4">
+      <div class="pitanje-header"><span class="pitanje-broj">Pitanje 4 / 15</span></div>
+      <p class="pitanje-tekst">Kako se kaže 7:30?</p>
+      <div class="opcije">
+        <button class="opcija" onclick="examOdgovor(4, this, 'A')"><span class="opcija-slovo">A</span><span>Sono le sette e un quarto</span></button>
+        <button class="opcija" onclick="examOdgovor(4, this, 'B')"><span class="opcija-slovo">B</span><span>Sono le sette meno mezzo</span></button>
+        <button class="opcija" onclick="examOdgovor(4, this, 'C')"><span class="opcija-slovo">C</span><span>Sono le sette e mezzo</span></button>
+        <button class="opcija" onclick="examOdgovor(4, this, 'D')"><span class="opcija-slovo">D</span><span>Sono le sette e trenta</span></button>
+      </div>
+      <div class="feedback" id="exam-fb-4"></div>
+    </div>
+
+    <!-- P5 -->
+    <div class="pitanje" id="ep-5">
+      <div class="pitanje-header"><span class="pitanje-broj">Pitanje 5 / 15</span></div>
+      <p class="pitanje-tekst">Koji redni broj je "settimo"?</p>
+      <div class="opcije">
+        <button class="opcija" onclick="examOdgovor(5, this, 'A')"><span class="opcija-slovo">A</span><span>6.</span></button>
+        <button class="opcija" onclick="examOdgovor(5, this, 'B')"><span class="opcija-slovo">B</span><span>7.</span></button>
+        <button class="opcija" onclick="examOdgovor(5, this, 'C')"><span class="opcija-slovo">C</span><span>8.</span></button>
+        <button class="opcija" onclick="examOdgovor(5, this, 'D')"><span class="opcija-slovo">D</span><span>17.</span></button>
+      </div>
+      <div class="feedback" id="exam-fb-5"></div>
+    </div>
+
+    <!-- P6 -->
+    <div class="pitanje" id="ep-6">
+      <div class="pitanje-header"><span class="pitanje-broj">Pitanje 6 / 15</span></div>
+      <p class="pitanje-tekst">Što znači "il bagno"?</p>
+      <div class="opcije">
+        <button class="opcija" onclick="examOdgovor(6, this, 'A')"><span class="opcija-slovo">A</span><span>balkon</span></button>
+        <button class="opcija" onclick="examOdgovor(6, this, 'B')"><span class="opcija-slovo">B</span><span>kupaonica</span></button>
+        <button class="opcija" onclick="examOdgovor(6, this, 'C')"><span class="opcija-slovo">C</span><span>dnevni boravak</span></button>
+        <button class="opcija" onclick="examOdgovor(6, this, 'D')"><span class="opcija-slovo">D</span><span>kuhinja</span></button>
+      </div>
+      <div class="feedback" id="exam-fb-6"></div>
+    </div>
+
+    <!-- P7 - harder: combined knowledge -->
+    <div class="pitanje" id="ep-7">
+      <div class="pitanje-header"><span class="pitanje-broj">Pitanje 7 / 15</span></div>
+      <p class="pitanje-tekst">Prevedi na talijanski: "U slobodno vrijeme čitamo knjige." (mi = noi)</p>
+      <div class="opcije">
+        <button class="opcija" onclick="examOdgovor(7, this, 'A')"><span class="opcija-slovo">A</span><span>Nel tempo libero leggiamo libri.</span></button>
+        <button class="opcija" onclick="examOdgovor(7, this, 'B')"><span class="opcija-slovo">B</span><span>Nel tempo libero leggono libri.</span></button>
+        <button class="opcija" onclick="examOdgovor(7, this, 'C')"><span class="opcija-slovo">C</span><span>Nel tempo libero leggo libri.</span></button>
+        <button class="opcija" onclick="examOdgovor(7, this, 'D')"><span class="opcija-slovo">D</span><span>Nel tempo libero leggete libri.</span></button>
+      </div>
+      <div class="feedback" id="exam-fb-7"></div>
+    </div>
+
+    <!-- P8 - harder: tricky number -->
+    <div class="pitanje" id="ep-8">
+      <div class="pitanje-header"><span class="pitanje-broj">Pitanje 8 / 15</span></div>
+      <p class="pitanje-tekst">Kako se piše broj 1.900 na talijanskom?</p>
+      <div class="opcije">
+        <button class="opcija" onclick="examOdgovor(8, this, 'A')"><span class="opcija-slovo">A</span><span>millenovecentro</span></button>
+        <button class="opcija" onclick="examOdgovor(8, this, 'B')"><span class="opcija-slovo">B</span><span>millenovecento</span></button>
+        <button class="opcija" onclick="examOdgovor(8, this, 'C')"><span class="opcija-slovo">C</span><span>duemilanovecento</span></button>
+        <button class="opcija" onclick="examOdgovor(8, this, 'D')"><span class="opcija-slovo">D</span><span>novecentomille</span></button>
+      </div>
+      <div class="feedback" id="exam-fb-8"></div>
+    </div>
+
+    <!-- P9 - harder: time meno -->
+    <div class="pitanje" id="ep-9">
+      <div class="pitanje-header"><span class="pitanje-broj">Pitanje 9 / 15</span></div>
+      <p class="pitanje-tekst">Što znači "Sono le otto meno un quarto"?</p>
+      <div class="opcije">
+        <button class="opcija" onclick="examOdgovor(9, this, 'A')"><span class="opcija-slovo">A</span><span>8:15</span></button>
+        <button class="opcija" onclick="examOdgovor(9, this, 'B')"><span class="opcija-slovo">B</span><span>7:45</span></button>
+        <button class="opcija" onclick="examOdgovor(9, this, 'C')"><span class="opcija-slovo">C</span><span>8:45</span></button>
+        <button class="opcija" onclick="examOdgovor(9, this, 'D')"><span class="opcija-slovo">D</span><span>7:15</span></button>
+      </div>
+      <div class="feedback" id="exam-fb-9"></div>
+    </div>
+
+    <!-- P10 - harder: ordinal female -->
+    <div class="pitanje" id="ep-10">
+      <div class="pitanje-header"><span class="pitanje-broj">Pitanje 10 / 15</span></div>
+      <p class="pitanje-tekst">Kako se kaže "druga" (ženski rod) na talijanskom?</p>
+      <div class="opcije">
+        <button class="opcija" onclick="examOdgovor(10, this, 'A')"><span class="opcija-slovo">A</span><span>secondo</span></button>
+        <button class="opcija" onclick="examOdgovor(10, this, 'B')"><span class="opcija-slovo">B</span><span>seconda</span></button>
+        <button class="opcija" onclick="examOdgovor(10, this, 'C')"><span class="opcija-slovo">C</span><span>secondi</span></button>
+        <button class="opcija" onclick="examOdgovor(10, this, 'D')"><span class="opcija-slovo">D</span><span>terza</span></button>
+      </div>
+      <div class="feedback" id="exam-fb-10"></div>
+    </div>
+
+    <!-- P11 - harder: andare + preposition -->
+    <div class="pitanje" id="ep-11">
+      <div class="pitanje-header"><span class="pitanje-broj">Pitanje 11 / 15</span></div>
+      <p class="pitanje-tekst">Koja je ispravna prijedložna veza? "Vado _____ cinema."</p>
+      <div class="opcije">
+        <button class="opcija" onclick="examOdgovor(11, this, 'A')"><span class="opcija-slovo">A</span><span>al</span></button>
+        <button class="opcija" onclick="examOdgovor(11, this, 'B')"><span class="opcija-slovo">B</span><span>in</span></button>
+        <button class="opcija" onclick="examOdgovor(11, this, 'C')"><span class="opcija-slovo">C</span><span>a</span></button>
+        <button class="opcija" onclick="examOdgovor(11, this, 'D')"><span class="opcija-slovo">D</span><span>nel</span></button>
+      </div>
+      <div class="feedback" id="exam-fb-11"></div>
+    </div>
+
+    <!-- P12 - harder: describe apartment -->
+    <div class="pitanje" id="ep-12">
+      <div class="pitanje-header"><span class="pitanje-broj">Pitanje 12 / 15</span></div>
+      <p class="pitanje-tekst">Prevedi: "Kuhinja je mala." → "La cucina è _____."</p>
+      <div class="opcije">
+        <button class="opcija" onclick="examOdgovor(12, this, 'A')"><span class="opcija-slovo">A</span><span>grande</span></button>
+        <button class="opcija" onclick="examOdgovor(12, this, 'B')"><span class="opcija-slovo">B</span><span>piccolo</span></button>
+        <button class="opcija" onclick="examOdgovor(12, this, 'C')"><span class="opcija-slovo">C</span><span>piccola</span></button>
+        <button class="opcija" onclick="examOdgovor(12, this, 'D')"><span class="opcija-slovo">D</span><span>nuova</span></button>
+      </div>
+      <div class="feedback" id="exam-fb-12"></div>
+    </div>
+
+    <!-- P13 - harder: verb conjugation -ere -->
+    <div class="pitanje" id="ep-13">
+      <div class="pitanje-header"><span class="pitanje-broj">Pitanje 13 / 15</span></div>
+      <p class="pitanje-tekst">Dovrši: "Loro (oni) _____ un libro." (čitati)</p>
+      <div class="opcije">
+        <button class="opcija" onclick="examOdgovor(13, this, 'A')"><span class="opcija-slovo">A</span><span>leggiamo</span></button>
+        <button class="opcija" onclick="examOdgovor(13, this, 'B')"><span class="opcija-slovo">B</span><span>leggete</span></button>
+        <button class="opcija" onclick="examOdgovor(13, this, 'C')"><span class="opcija-slovo">C</span><span>leggono</span></button>
+        <button class="opcija" onclick="examOdgovor(13, this, 'D')"><span class="opcija-slovo">D</span><span>leggo</span></button>
+      </div>
+      <div class="feedback" id="exam-fb-13"></div>
+    </div>
+
+    <!-- P14 - harder: combined time + ordinal -->
+    <div class="pitanje" id="ep-14">
+      <div class="pitanje-header"><span class="pitanje-broj">Pitanje 14 / 15</span></div>
+      <p class="pitanje-tekst">Kako se kaže 00:00 (ponoć)?</p>
+      <div class="opcije">
+        <button class="opcija" onclick="examOdgovor(14, this, 'A')"><span class="opcija-slovo">A</span><span>È mezzogiorno</span></button>
+        <button class="opcija" onclick="examOdgovor(14, this, 'B')"><span class="opcija-slovo">B</span><span>Sono le zero</span></button>
+        <button class="opcija" onclick="examOdgovor(14, this, 'C')"><span class="opcija-slovo">C</span><span>È mezzanotte</span></button>
+        <button class="opcija" onclick="examOdgovor(14, this, 'D')"><span class="opcija-slovo">D</span><span>Sono le dodici</span></button>
+      </div>
+      <div class="feedback" id="exam-fb-14"></div>
+    </div>
+
+    <!-- P15 - hardest: full sentence production -->
+    <div class="pitanje" id="ep-15">
+      <div class="pitanje-header"><span class="pitanje-broj">Pitanje 15 / 15</span></div>
+      <p class="pitanje-tekst">Koja rečenica ispravno kaže: "Živim na petom katu."?</p>
+      <div class="opcije">
+        <button class="opcija" onclick="examOdgovor(15, this, 'A')"><span class="opcija-slovo">A</span><span>Abito al quinto piano.</span></button>
+        <button class="opcija" onclick="examOdgovor(15, this, 'B')"><span class="opcija-slovo">B</span><span>Abito al cinque piano.</span></button>
+        <button class="opcija" onclick="examOdgovor(15, this, 'C')"><span class="opcija-slovo">C</span><span>Abito al quarto piano.</span></button>
+        <button class="opcija" onclick="examOdgovor(15, this, 'D')"><span class="opcija-slovo">D</span><span>Abito al quintesimo piano.</span></button>
+      </div>
+      <div class="feedback" id="exam-fb-15"></div>
+    </div>
+
+  </div>
+
+  <!-- Result -->
+  <div id="exam-result" style="display:none;">
+    <div class="rezultat">
+      <div class="rezultat-krug">
+        <svg viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r="54" fill="none" stroke="#E8E4DF" stroke-width="8"/>
+          <circle id="result-circle" cx="60" cy="60" r="54" fill="none" stroke="var(--green)" stroke-width="8"
+                  stroke-dasharray="339" stroke-dashoffset="339" stroke-linecap="round"
+                  transform="rotate(-90 60 60)"/>
+        </svg>
+        <span class="rezultat-postotak" id="result-pct">0%</span>
+      </div>
+      <h2 class="rezultat-naslov" id="result-title"></h2>
+      <p class="rezultat-poruka" id="result-msg"></p>
+    </div>
+    <div style="text-align:center; margin-top: 20px;">
+      <button class="btn btn-primary" onclick="goTo(1)" style="display:inline-block; width: auto;">↩️ Vrati se na lekciju</button>
+    </div>
+  </div>
+
+  <div class="nav-buttons" id="exam-nav">
+    <button class="btn btn-secondary" onclick="goTo(6)">← Nazad na lekciju</button>
+    <button class="btn btn-primary" id="exam-submit-btn" onclick="zavrsiIspit()" disabled>Završi ispit ✅</button>
+  </div>
+</div>
+
+<!-- ===================== JAVASCRIPT ===================== -->
+<script>
+  const TOTAL = 7;
+  let currentSection = 1;
+
+  // Exam answers
+  const examAnswers = {
+    1:'A', 2:'C', 3:'B', 4:'C', 5:'B', 6:'B', 7:'A', 8:'B',
+    9:'B', 10:'B', 11:'A', 12:'C', 13:'C', 14:'C', 15:'A'
+  };
+  const examExplanations = {
+    1: {t:'Bravo! "Giocare con i videogiochi" = igrati videoigre. 🎮', f:'Glagol za igrati je "giocare", ne "guardare" (gledati) ili "ascoltare" (slušati).'},
+    2: {t:'Točno! "Guarda" je 3. lice jednine glagola "guardare". ✅', f:'"Guardare" u 3. licu jednine je "guarda" (lei/lui guarda).'},
+    3: {t:'Super! Quattrocento = 400. 🔢', f:'Quattro = 4, cento = 100. Quattrocento = 4 × 100 = 400.'},
+    4: {t:'Točno! "E mezzo" znači pola sata, dakle 7:30. 🕖', f:'Za :30 koristimo "e mezzo". Sono le sette e mezzo = 7:30.'},
+    5: {t:'Bravo! Settimo = sedmi. 🏅', f:'Settimo dolazi od sette (7), dakle settimo = 7.'},
+    6: {t:'Točno! Il bagno = kupaonica. 🚿', f:'Il bagno = kupaonica. Zapamti: bagno ima veze s kupanjem!'},
+    7: {t:'Odlično! "Leggiamo" je 1. lice množine (mi/noi). 📚', f:'"Mi čitamo" = noi leggiamo. -ERE glagoli u 1. licu mn. imaju nastavak -iamo.'},
+    8: {t:'Točno! Millenovecento = 1.900 (mille + novecento). 🎯', f:'1.900 = mille (1.000) + novecento (900) = millenovecento.'},
+    9: {t:'Super! "Meno un quarto" = minus 15 min. 8 - 0:15 = 7:45. 🕗', f:'"Meno un quarto" znači "manje četvrt". Le otto meno un quarto = 8:00 - 0:15 = 7:45.'},
+    10:{t:'Odlično! Seconda = druga (ž.r.). O→A za ženski rod. 👩', f:'Ženski rod: secondo → seconda. Mijenjamo -o u -a.'},
+    11:{t:'Točno! "Al cinema" — al = a + il (član). 🎬', f:'Ispravno je "al cinema" jer je al = a + il. Cinema je muški rod s članom "il".'},
+    12:{t:'Super! "Piccola" jer je cucina ženskog roda. 🍳', f:'Cucina je ženskog roda (la cucina), pa pridjev mora biti u ženskom rodu: piccola.'},
+    13:{t:'Bravo! "Leggono" = oni čitaju (3. lice mn.). 📖', f:'"Loro" (oni) + leggere = leggono. Nastavak za 3. lice množine -ERE glagola je -ono.'},
+    14:{t:'Točno! Mezzanotte = ponoć, mezzogiorno = podne. 🌙', f:'Ponoć = mezzanotte (mezza notte = pola noći). Podne = mezzogiorno (mezzo giorno = pola dana).'},
+    15:{t:'Odlično! "Quinto piano" — peti kat s rednim brojem. 🏢', f:'"Peti" = quinto (ne cinque!). S katovima koristimo redne brojeve: primo, secondo, terzo, quarto, quinto...'}
+  };
+  let examScore = 0;
+  let examAnswered = 0;
+
+  // Init step dots
+  function initDots() {
+    const container = document.getElementById('step-dots');
+    const labels = ['🎨','💬','🔢','🏅','🕐','🏠','📝'];
+    for (let i = 1; i <= TOTAL; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'step-dot' + (i === 1 ? ' active' : '');
+      dot.textContent = labels[i-1];
+      dot.title = 'Cjelina ' + i;
+      dot.onclick = () => goTo(i);
+      dot.id = 'dot-' + i;
+      container.appendChild(dot);
+    }
+  }
+
+  function goTo(n) {
+    document.getElementById('section-' + currentSection).classList.remove('active');
+    document.getElementById('section-' + n).classList.add('active');
+    // Update dots
+    for (let i = 1; i <= TOTAL; i++) {
+      const d = document.getElementById('dot-' + i);
+      d.classList.remove('active');
+      if (i < n) d.classList.add('done');
+    }
+    document.getElementById('dot-' + n).classList.add('active');
+    currentSection = n;
+    // Update progress
+    const pct = Math.round((n / TOTAL) * 100);
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-pct').textContent = pct + '%';
+    document.getElementById('current-step').textContent = n;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Flip vocab card
+  function flipCard(el) {
+    el.classList.toggle('flipped');
+    const hr = el.querySelector('.vocab-hr');
+    hr.style.display = hr.style.display === 'none' ? 'block' : 'none';
+  }
+
+  // Mini quiz
+  function miniKviz(btn, correct, fbId) {
+    const parent = btn.closest('.opcije');
+    parent.querySelectorAll('.opcija').forEach(o => o.classList.add('disabled'));
+    const fb = document.getElementById(fbId);
+    if (correct) {
+      btn.classList.add('tocno');
+      fb.className = 'feedback tocno';
+      fb.innerHTML = '✅ Točno! Bravo! ⭐';
+    } else {
+      btn.classList.add('netocno');
+      fb.className = 'feedback netocno';
+      fb.innerHTML = '🟠 Nije točno. Pokušaj zapamtiti — vratit ćeš se na ovo!';
+      // Show correct
+      parent.querySelectorAll('.opcija').forEach(o => {
+        if (!o.classList.contains('netocno')) {
+          // find correct by checking all
+        }
+      });
+    }
+    fb.style.display = 'block';
+  }
+
+  // Exam
+  function examOdgovor(qNum, btn, choice) {
+    const parent = btn.closest('.opcije');
+    if (parent.querySelector('.disabled')) return;
+    parent.querySelectorAll('.opcija').forEach(o => o.classList.add('disabled'));
+    const correct = examAnswers[qNum] === choice;
+    const fb = document.getElementById('exam-fb-' + qNum);
+    const expl = examExplanations[qNum];
+    if (correct) {
+      btn.classList.add('tocno');
+      fb.className = 'feedback tocno';
+      fb.innerHTML = '✅ ' + expl.t;
+      examScore++;
+    } else {
+      btn.classList.add('netocno');
+      fb.className = 'feedback netocno';
+      fb.innerHTML = '🟠 ' + expl.f;
+      // Highlight correct
+      const opts = parent.querySelectorAll('.opcija');
+      opts.forEach(o => {
+        const letter = o.querySelector('.opcija-slovo').textContent;
+        if (letter === examAnswers[qNum]) o.classList.add('tocno');
+      });
+    }
+    fb.style.display = 'block';
+    examAnswered++;
+    if (examAnswered >= 15) {
+      document.getElementById('exam-submit-btn').disabled = false;
+    }
+  }
+
+  function zavrsiIspit() {
+    document.getElementById('exam-nav').style.display = 'none';
+    const pct = Math.round((examScore / 15) * 100);
+    document.getElementById('result-pct').textContent = pct + '%';
+    // Animate circle
+    const offset = 339 - (339 * pct / 100);
+    document.getElementById('result-circle').style.strokeDashoffset = offset;
+    if (pct >= 80) document.getElementById('result-circle').style.stroke = 'var(--green)';
+    else if (pct >= 50) document.getElementById('result-circle').style.stroke = 'var(--orange)';
+    else document.getElementById('result-circle').style.stroke = 'var(--red)';
+
+    let title, msg;
+    if (pct >= 90) { title = 'Fantastico! 🌟🌟🌟'; msg = 'Odlično vladaš ovim gradivom! Bravissima!'; confetti(); }
+    else if (pct >= 75) { title = 'Molto bene! ⭐⭐'; msg = 'Jako dobar rezultat! Još malo ponavljanja i bit će savršeno!'; }
+    else if (pct >= 50) { title = 'Bene! ⭐'; msg = 'Dobar početak! Pogledaj ponovo cjeline gdje si pogriješila.'; }
+    else { title = 'Non mollare! 💪'; msg = 'Svaki pokušaj te čini jačom! Vrati se na lekciju i probaj ponovo.'; }
+
+    document.getElementById('result-title').textContent = title;
+    document.getElementById('result-msg').textContent = msg;
+    document.getElementById('exam-result').style.display = 'block';
+    document.getElementById('exam-result').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // Expand/Collapse
+  function toggleExpand(id) {
+    const el = document.getElementById(id);
+    const toggle = el.previousElementSibling;
+    if (el.style.display === 'block') {
+      el.style.display = 'none';
+      toggle.innerHTML = toggle.innerHTML.replace('▼', '▶');
+    } else {
+      el.style.display = 'block';
+      toggle.innerHTML = toggle.innerHTML.replace('▶', '▼');
+    }
+  }
+
+  // TTS
+  function procitaj(tekst) {
+    if (speechSynthesis.speaking) speechSynthesis.cancel();
+    const govor = new SpeechSynthesisUtterance(tekst);
+    govor.lang = 'it-IT';
+    govor.rate = 0.8;
+    govor.pitch = 1.0;
+    speechSynthesis.speak(govor);
+  }
+
+  // Confetti
+  function confetti() {
+    const boje = ['#FF6B6B','#4ECDC4','#45B7D1','#F7DC6F','#BB8FCE','#82E0AA'];
+    for (let i = 0; i < 50; i++) {
+      const el = document.createElement('div');
+      el.style.cssText = `position:fixed;width:10px;height:10px;border-radius:50%;background:${boje[Math.floor(Math.random()*boje.length)]};left:${Math.random()*100}vw;top:-10px;animation:padaj ${1.5+Math.random()*2}s ease-out forwards;z-index:9999;`;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 4000);
+    }
+  }
+
+  // Init
+  initDots();
+</script>
+
+</body>
+</html>
