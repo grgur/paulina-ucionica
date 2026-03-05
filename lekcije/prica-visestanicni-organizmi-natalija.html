@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Priča o životu: Kako su stanice naučile surađivati</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-main: #FFF8F0;
+            --bg-card: #FFFBF7;
+            --text-primary: #2C2C2C;
+            --text-secondary: #5A5A5A;
+            --accent-warm: #E8956D;
+            --accent-coral: #E87560;
+            --accent-light: #F5D5C8;
+            --border-color: #E8D5C8;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        body.dark-mode {
+            --bg-main: #1A1A1A;
+            --bg-card: #2D2D2D;
+            --text-primary: #F5F5F5;
+            --text-secondary: #B0B0B0;
+            --accent-warm: #E8956D;
+            --accent-coral: #E87560;
+            --accent-light: #3D3D3D;
+            --border-color: #3A3A3A;
+        }
+
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.8;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-warm), var(--accent-coral));
+            width: 0%;
+            z-index: 1000;
+            transition: width 0.3s ease;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--accent-warm), var(--accent-coral));
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+
+        header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            margin-bottom: 1rem;
+        }
+
+        .reading-time {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        button {
+            background: rgba(255, 255, 255, 0.25);
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-family: 'Lexend', sans-serif;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Settings Panel */
+        .settings-panel {
+            position: fixed;
+            right: -300px;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--bg-card);
+            border-left: 1px solid var(--border-color);
+            padding: 2rem 1.5rem;
+            z-index: 200;
+            transition: right 0.3s;
+            overflow-y: auto;
+            box-shadow: -4px 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .settings-panel.open {
+            right: 0;
+        }
+
+        .settings-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: transparent;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .settings-group {
+            margin-bottom: 2rem;
+            margin-top: 2rem;
+        }
+
+        .settings-group label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        .font-size-control {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .font-size-control button {
+            background: var(--accent-light);
+            color: var(--text-primary);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            flex: 1;
+            font-size: 0.85rem;
+        }
+
+        .font-size-control button.active {
+            background: var(--accent-warm);
+            color: white;
+        }
+
+        .color-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+        }
+
+        .color-option {
+            padding: 1rem;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .color-option.active {
+            border-color: var(--accent-warm);
+        }
+
+        .toggle-switch {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+        }
+
+        .switch input {
+            display: none;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.3s;
+            border-radius: 26px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--accent-warm);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Navigation */
+        .chapter-nav {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 3rem 0;
+            padding: 0 1rem;
+        }
+
+        .chapter-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: var(--shadow);
+        }
+
+        .chapter-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+            border-color: var(--accent-warm);
+        }
+
+        .chapter-card h3 {
+            color: var(--accent-coral);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .chapter-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Chapter */
+        .chapter {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+        }
+
+        .chapter h2 {
+            color: var(--accent-coral);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            border-bottom: 3px solid var(--accent-light);
+            padding-bottom: 1rem;
+        }
+
+        .chapter-number {
+            display: inline-block;
+            background: var(--accent-warm);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .chapter p {
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            font-size: 1.05rem;
+            text-align: justify;
+        }
+
+        .pull-quote {
+            background: var(--accent-light);
+            border-left: 4px solid var(--accent-coral);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-style: italic;
+        }
+
+        .fact-box {
+            background: linear-gradient(135deg, rgba(232, 149, 109, 0.1), rgba(232, 117, 96, 0.1));
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--accent-warm);
+        }
+
+        .fact-box strong {
+            color: var(--accent-coral);
+        }
+
+        .tts-button {
+            background: var(--accent-warm);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 1rem 0;
+            font-family: 'Lexend', sans-serif;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tts-button:hover {
+            background: var(--accent-coral);
+            transform: scale(1.05);
+        }
+
+        .tts-button.playing {
+            background: var(--accent-coral);
+        }
+
+        /* Navigation between chapters */
+        .chapter-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: var(--accent-warm);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-family: 'Lexend', sans-serif;
+            font-weight: 600;
+            transition: all 0.3s;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .nav-btn:hover {
+            background: var(--accent-coral);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            background: var(--border-color);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* SVG Illustrations */
+        svg {
+            width: 100%;
+            max-width: 500px;
+            margin: 2rem auto;
+            display: block;
+        }
+
+        /* Intro Section */
+        .intro {
+            text-align: center;
+            padding: 3rem 1.5rem;
+            background: linear-gradient(135deg, var(--accent-light), rgba(232, 149, 109, 0.1));
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .intro h2 {
+            color: var(--accent-coral);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .intro p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Responsiveness */
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            .chapter {
+                padding: 2rem 1.5rem;
+            }
+
+            .chapter h2 {
+                font-size: 1.5rem;
+            }
+
+            .chapter-nav {
+                grid-template-columns: 1fr;
+            }
+
+            .settings-panel {
+                width: 100%;
+                right: -100%;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Settings Panel -->
+    <div class="settings-panel" id="settingsPanel">
+        <button class="settings-close" onclick="toggleSettings()">✕</button>
+
+        <div class="settings-group">
+            <label>Veličina fonta</label>
+            <div class="font-size-control">
+                <button class="active" onclick="setFontSize('normal')">Manja</button>
+                <button onclick="setFontSize('large')">Veća</button>
+                <button onclick="setFontSize('xlarge')">Ogromna</button>
+            </div>
+        </div>
+
+        <div class="settings-group">
+            <label>Boja pozadine</label>
+            <div class="color-options">
+                <div class="color-option active" style="background: #FFF8F0; color: #2C2C2C;" onclick="setTheme('light')">Topla</div>
+                <div class="color-option" style="background: #F5F0E8; color: #2C2C2C;" onclick="setTheme('neutral')">Neutralna</div>
+                <div class="color-option" style="background: #E8F4F8; color: #2C2C2C;" onclick="setTheme('cool')">Hladna</div>
+                <div class="color-option" style="background: #1A1A1A; color: #F5F5F5;" onclick="toggleDarkMode()">🌙 Noć</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <h1>🧬 Priča o životu</h1>
+        <p>Kako su stanice naučile surađivati</p>
+        <small style="display: block; margin-bottom: 1rem;">Inspirirana knjigom "Kratka povijest gotovo svega" — Bill Bryson</small>
+        <div class="reading-time">⏱️ Čitanja: ~25 minuta</div>
+        <div class="controls">
+            <button onclick="toggleSettings()">⚙️ Postavke</button>
+            <button onclick="scrollToChapters()">📖 Poglavlja</button>
+            <button onclick="scrollToTop()">⬆️ Na početak</button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+
+        <!-- Intro -->
+        <div class="intro">
+            <h2>Gdje počinje priča?</h2>
+            <p>Zemlja ima 4.5 milijardi godina. To je nevjerojatna količina vremena — toliko da je teško razumjeti. Ali ako smatraš da je cijela povijest Zemlje sat od 24 sata, tada se čitava ljudska civilizacija zbiva u zadnjih nekoliko sekundi prije nego što sat otkuca ponoć. A životinjski svijet? Životinje se pojavljuju tek nekoliko minuta prije kraja dana.</p>
+            <p style="margin-top: 1.5rem; font-size: 1rem; font-style: italic;">Hajde da izvučemo tu fascinantnu priču iz tjemeljnog primala...</p>
+        </div>
+
+        <!-- Chapter Navigation -->
+        <div class="chapter-nav" id="chapterNav"></div>
+
+        <!-- Chapters Container -->
+        <div id="chaptersContainer"></div>
+
+        <!-- Footer -->
+        <div style="text-align: center; margin-top: 4rem; padding: 2rem; color: var(--text-secondary);">
+            <p>🌍 Napisano za: Nataliju (16 godina)</p>
+            <p style="font-size: 0.9rem; margin-top: 1rem;">Utemeljena na poglavlju 3.3-3.4: Pojava višestaničnih organizama</p>
+        </div>
+    </div>
+
+    <script>
+        // Chapters Data
+        const chapters = [
+            {
+                title: "Umorni milijarde godina",
+                emoji: "😴",
+                number: 1,
+                content: `
+                    <p>Zamislite da se čitava povijest Zemlje zbiva u samo 24 sata. Sunce se pojavljuje u ponoć. Planeta je bila peklo — vatra, stijena, i apsolutni kaos. A onda, nakon nekoliko minuta (što je u stvarnosti milijardi godina), hladi se dovoljno da se može formirati voda. Pojavljuju se prvi oceani.</p>
+
+                    <p>Ali — i to je važno — <strong>ništa zanimljivo se nije dogaćalo</strong>.</p>
+
+                    <p>Otprilike 4 sata nakon kraja svijeta (3.8 milijardi godina u stvarnom vremenu), pojavljuje se prvi oblik života. Jednostavne, jednostaničnih organizama. Bakterije. Jako nezanimljive bakterije koje su samo — sitnicom rečeno — jele i dijelile se. Jela. Podijelila se. Jela. Podijelila se. Ponavljalo se to... danima. Tjednima. Milijunima godina.</p>
+
+                    <div class="pull-quote">✨ Najduža епоха u povijesti Zemlje — više od milijardu godina — najbolje je opisati kao "Dosadno Godinu".</div>
+
+                    <p>Biologi ju zovu <strong>"The Boring Billion"</strong> — Dosadan Milijard. U tom vremenu, jedina se stvar na Zemlji prema bilo čem mijenjala: temperatura, sastav oceana, količina plinova u atmosferi. Ali život? Život je bio... pa, dosadan. Jednostavni, jednostaničnih организam koji su se samo reproducirali, bez puno toga što se dešava.</p>
+
+                    <p>Nijedan problem nije mogao biti riješen. Nijedna životinja nije mogla pojesti drugu. Nije bilo borbi za resurse, jer je resursa bilo dovoljno. Nije bilo ljubavi, nije bilo rata, nije bilo priče. Samo — bakterije. Milijarde i milijarde bakterija, u oceanima, radi istoga iz dana u dan.</p>
+
+                    <p>Čini se dosadno? Je. Ali čekaj. Nešto nevjerojatno je bilo o dođi...</p>
+
+                    <div class="fact-box">
+                        <strong>📊 Činjenica:</strong> U prvom milijardu godina života na Zemlji, živih organizama je bilo samo jednostaničnih. Nema životinja. Nema biljaka. Nema gljiva. Samo bakterije koje su se ponavljale.
+                    </div>
+                `
+            },
+            {
+                title: "Kad su bakterije stvorile otrov",
+                emoji: "☢️",
+                number: 2,
+                content: `
+                    <p>Negdje oko 3.5 milijardi godina, dogodila se mala revolucija. Grupa bakterija — <strong>cijanobakterije</strong> — razvila je sposobnost da koristi sunčevu energiju. To je bio fotosinteza. Genijalno je bilo, jer to znači da ne trebaju više čekati da nasumce padne neka hrana — mogli su sami hraniti sebe koristeći energiju sunca.</p>
+
+                    <p>To je bila najbolja ideja koju je bilo koja bakterija imala... do trenutka kad se shvatilo što je fotosinteza stvarala kao nusprodukt.</p>
+
+                    <p><strong>Kisik.</strong></p>
+
+                    <div class="pull-quote">💔 Kisik je bio otrov — pravi, stvarni otrov — za gotovo sav postojeći život na Zemlji.</div>
+
+                    <p>Vidjeti, za bakterije koje su živjele bez kisika (anaerobne bakterije), kisik je bio smrtonosan. Bilo je kao da bi mi izgradili vrijeme masine koje puhaju toksični plin u cijelu atmosferu. Osim što su to bakterije slučajno radile tijekom stotina milijuna godina. </p>
+
+                    <p>Predstavljate li si? Cijeli planet je bio hladan od jednog plina — od ostatka cijanobakterija koja su nastavila da rade svoj "posao" i fotosintetiziraju. Dogodio se što scientists zovu <strong>Great Oxidation Event</strong> — Veliki Oksidacijski Događaj — prije oko 2.4 milijardi godina.</p>
+
+                    <p>To je bila najveća katastrofa u povijesti života na Zemlji. Može biti premda da su izgubili više vrsta nego što je ikada izgubljeno tijekom bilo kojeg masovnog izumiranja koje je dogodilo kasnije — uključujući onaj koji je uništio dinosaure. Većina postojećeg života je bila <strong>mrtva</strong>.</p>
+
+                    <div class="fact-box">
+                        <strong>🧪 Ironija kemije:</strong> Kisik je pravi otrov — toliko otrovan da ga koriste naše vlastite stanice kao oružje protiv bakterija! Vaš imunosni sustav koristi reaktivni kisik kako bi ubio patogene. Znači, gas koji nam omogućava da živimo također je gas koji koristimo kao kemiјsku bombu.
+                    </div>
+
+                    <p>Ali — i ovo je ključno — <strong>neke bakterije su se prilagodile</strong>. Prije nego što bi se sve moglo umrijeti, neke bakterije su evoluirale da koriste kisik. Nisu ga samo tolerirali — počele su ga koristiti kao izvor energije. I što su otkrile? Kisik je zapravo... nevjerojatno koristan. Korištenjem kisika za respiraciju, mogle su dobiti <strong>puno, puno više energije</strong> nego bilo koju drugu metodu.</p>
+
+                    <p>Što se dogadilo potom je zamjena svega.</p>
+                `
+            },
+            {
+                title: "Bakterije koje je zarobljene",
+                emoji: "🔗",
+                number: 3,
+                content: `
+                    <p>Sad trebam te upoznati sa jednom od najčudnijih, a najgenialnih ideas u biologiji — ideom koju je prva predložila Lynn Margulis, biologinja koja je bila <strong>suđena</strong> za tu teoriju tijekom godina.</p>
+
+                    <p>Njezina ideja? <strong>Mitohondriji su zapravo stare bakterije — zarobljene unutar naših stanica.</strong></p>
+
+                    <p>Zvuči kao znanstvena fantastika. Ali čekaj — To je točno. Sada.</p>
+
+                    <p>Evo kako se dogodilo: prije oko 2 milijardi godina, velika bakterija je pojela — ili je pokušala pojesti — manju bakteriju. Ali umjesto što će je probaviti, manja bakterija je preživjela. Čak i više: obje bakterije su otkrile da mogu živjeti zajedno. Velika bakterija je pružala zaštitu i resurse. Manja bakterija je pružala energiju — koristim kisik za proizvodnju energije koju je velika bakterija mogla koristiti.</p>
+
+                    <p>To je bila savršena veza. Obje su išle nekako. Generacija nakon generacije, generacija. S vremenom, manja bakterija je postala tako integrirani dio većeg organizma da je izgubila mogućnost da živi sama. Postala je — organ. Митохондрион.</p>
+
+                    <svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <style>
+                                .cell-text { font-size: 12px; font-weight: bold; fill: #2C2C2C; }
+                                .arrow-text { font-size: 11px; fill: #5A5A5A; }
+                            </style>
+                        </defs>
+
+                        <!-- Step 1: Large cell approaching small cell -->
+                        <g>
+                            <circle cx="60" cy="100" r="35" fill="#FFD700" stroke="#E8956D" stroke-width="2"/>
+                            <text x="60" y="110" text-anchor="middle" class="cell-text">Velika</text>
+                            <circle cx="130" cy="85" r="20" fill="#87CEEB" stroke="#E8956D" stroke-width="2"/>
+                            <text x="130" y="90" text-anchor="middle" class="cell-text" font-size="10">Manja</text>
+                            <path d="M 90 100 L 110 87" stroke="#E8956D" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+                        </g>
+
+                        <!-- Step 2: Engulfment -->
+                        <g>
+                            <circle cx="60" cy="200" r="45" fill="#FFD700" stroke="#E8956D" stroke-width="2"/>
+                            <circle cx="60" cy="200" r="25" fill="#87CEEB" stroke="#E87560" stroke-width="2"/>
+                            <text x="30" y="210" text-anchor="middle" class="cell-text">→ Glava</text>
+                            <text x="60" y="205" text-anchor="middle" class="cell-text" font-size="10">Manja</text>
+                            <text x="60" y="260" text-anchor="middle" class="arrow-text">Enggulfment!</text>
+                        </g>
+
+                        <!-- Step 3: Mitochondrion -->
+                        <g>
+                            <circle cx="280" cy="150" r="50" fill="#FFD700" stroke="#E8956D" stroke-width="2"/>
+                            <ellipse cx="280" cy="130" rx="18" ry="25" fill="none" stroke="#87CEEB" stroke-width="2"/>
+                            <ellipse cx="270" cy="150" rx="18" ry="25" fill="none" stroke="#87CEEB" stroke-width="2"/>
+                            <ellipse cx="290" cy="150" rx="18" ry="25" fill="none" stroke="#87CEEB" stroke-width="2"/>
+                            <ellipse cx="280" cy="170" rx="18" ry="25" fill="none" stroke="#87CEEB" stroke-width="2"/>
+                            <text x="220" y="150" text-anchor="middle" class="arrow-text">Vrijeme</text>
+                            <text x="220" y="165" text-anchor="middle" class="arrow-text">prolazak</text>
+                            <text x="280" y="230" text-anchor="middle" class="cell-text">Mitohondrij</text>
+                        </g>
+
+                        <!-- Arrow connecting -->
+                        <path d="M 150 150 L 220 150" stroke="#E8956D" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+
+                        <defs>
+                            <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                                <polygon points="0 0, 10 3, 0 6" fill="#E8956D"/>
+                            </marker>
+                        </defs>
+
+                        <text x="200" y="320" text-anchor="middle" class="arrow-text" font-size="13" font-weight="bold">Endosymbioza: kako su bakterije postale dijelovi naših stanica!</text>
+                    </svg>
+
+                    <div class="pull-quote">🎯 Mitohondriji su energetska elektrana naših stanica — ali oni su doslovno strane bakterije koje su ostale.</div>
+
+                    <p>Lynn Margulis je bila u pravu — i to je jedan od najvećih ideja u biologiji. Očeve biologije tu nisu bili sretan. "To je glupo", rekli su. "Bakterije ne mogu biti dijelovi stanica." Ali onda je dokazala:</p>
+
+                    <div class="fact-box">
+                        <strong>🔬 Dokazi:</strong>
+                        <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                            <li>Mitohondriji imaju svoju vlastitu DNA — zasebnu od stanice!</li>
+                            <li>Mitohondriji se reproduciraju sami, kao bakterije</li>
+                            <li>Mitohondriji imaju vlastite ribosoma — kao bakterije!</li>
+                            <li>DNK u mitohondrijima ima sličnosti sa DNK cianobakterija</li>
+                        </ul>
+                    </div>
+
+                    <p>To je bila revolucija u razumijevanju. I tek tada znanstvenici su shvatili: ako je to moglo zato teorija, što drugo je moglo biti zarobljeno?</p>
+
+                    <p>Odgovor? <strong>Kloroplasti</strong> — organeli koji obavljaju fotosintezu u biljnim stanicama — su izgenijalni stare fotosintetske bakterije, zarobljene na isti način! </p>
+
+                    <p>To znači da je većina životinjskog i biljnog života na Zemlji — sveho što vidiš — izgrađeno od dijelova mikroskopskih bakterija zarobljenih kao energetske elektrane i fabrike.</p>
+
+                    <p>Nije to čudno? Nije li to nevjerojatno? <strong>Ti si zapravo kolonija bakterija koje se pretvaraju da su jedna stvar.</strong></p>
+                `
+            },
+            {
+                title: "Prva suradnja — Volvox",
+                emoji: "🔮",
+                number: 4,
+                content: `
+                    <p>Sada imamo bakterije sa mitohondriji — stanice sa moći. Stanice su postale moćnije. Ali i dalje — sve je bilo jednostaničko. Jedan organizam, jedan организ. Ni jedan nije sarađivao sa drugim na neko smisleni način.</p>
+
+                    <p>A onda se dogodilo nešto čudno.</p>
+
+                    <p>Jedne od najjednostavnije algi koje su postojale — klasa zvanog zelenije algae — počele su stvarati nešto novo. Umjesto da budu sami za se, počele su se dijeliti... ali ne sasvim. Ostale su spojene. Između 500 i 50,000 stanica, spojenih zajedno, tvoreći sferu.</p>
+
+                    <p>To je stvorenje se zove <strong>Volvox</strong>.</p>
+
+                    <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="200" cy="200" r="180" fill="none" stroke="#87CEEB" stroke-width="3" stroke-dasharray="5,5"/>
+
+                        <!-- Inner circles (cells) -->
+                        <g id="cells">
+                            <!-- Generate circles around the sphere -->
+                            <circle cx="200" cy="40" r="8" fill="#FFD700" stroke="#E8956D" stroke-width="1.5"/>
+                            <circle cx="275" cy="75" r="8" fill="#FFD700" stroke="#E8956D" stroke-width="1.5"/>
+                            <circle cx="330" cy="150" r="8" fill="#FFD700" stroke="#E8956D" stroke-width="1.5"/>
+                            <circle cx="360" cy="235" r="8" fill="#FFD700" stroke="#E8956D" stroke-width="1.5"/>
+                            <circle cx="330" cy="320" r="8" fill="#FFD700" stroke="#E8956D" stroke-width="1.5"/>
+                            <circle cx="240" cy="360" r="8" fill="#FFD700" stroke="#E8956D" stroke-width="1.5"/>
+                            <circle cx="160" cy="370" r="8" fill="#FFD700" stroke="#E8956D" stroke-width="1.5"/>
+                            <circle cx="70" cy="350" r="8" fill="#FFD700" stroke="#E8956D" stroke-width="1.5"/>
+                            <circle cx="35" cy="280" r="8" fill="#FFD700" stroke="#E8956D" stroke-width="1.5"/>
+                            <circle cx="30" cy="200" r="8" fill="#FFD700" stroke="#E8956D" stroke-width="1.5"/>
+                            <circle cx="40" cy="100" r="8" fill="#FFD700" stroke="#E8956D" stroke-width="1.5"/>
+                            <circle cx="120" cy="50" r="8" fill="#FFD700" stroke="#E8956D" stroke-width="1.5"/>
+                            <circle cx="200" cy="200" r="6" fill="#E87560"/>
+                            <!-- More cells for fullness -->
+                            <circle cx="280" cy="200" r="8" fill="#FFD700" stroke="#E8956D" stroke-width="1.5"/>
+                            <circle cx="200" cy="280" r="8" fill="#FFD700" stroke="#E8956D" stroke-width="1.5"/>
+                            <circle cx="120" cy="200" r="8" fill="#FFD700" stroke="#E8956D" stroke-width="1.5"/>
+                            <circle cx="200" cy="120" r="8" fill="#FFD700" stroke="#E8956D" stroke-width="1.5"/>
+                        </g>
+
+                        <!-- Connections -->
+                        <line x1="200" y1="200" x2="200" y2="40" stroke="#B0B0B0" stroke-width="1" opacity="0.5"/>
+                        <line x1="200" y1="200" x2="275" y2="75" stroke="#B0B0B0" stroke-width="1" opacity="0.5"/>
+                        <line x1="200" y1="200" x2="330" y2="150" stroke="#B0B0B0" stroke-width="1" opacity="0.5"/>
+                        <line x1="200" y1="200" x2="280" y2="200" stroke="#B0B0B0" stroke-width="1" opacity="0.5"/>
+
+                        <!-- Labels -->
+                        <text x="200" y="390" text-anchor="middle" font-size="14" font-weight="bold" fill="#2C2C2C">Volvox: Kolonija od 500-50,000 stanica</text>
+                        <text x="200" y="410" text-anchor="middle" font-size="12" fill="#5A5A5A">Svaka stanica ima bič — zajedno plivaju!</text>
+                    </svg>
+
+                    <p>Zamislite: <strong>prvi put u povijesti, više stanica radi isto zajedno.</strong> Nema konkurencije. Nema neprijatnosća. Jednostavno — suradnja.</p>
+
+                    <p>Svaka stanica u sferi Volvox-a ima mali flagel — mali bič — koji joj omogućuje da se kreće. Kad svih 50,000 bijeva strijel u istom tempu, cijela sfera počinje plivati. Zajedno. Kao jedan organizm. Ali nije jedan organizm — to je 50,000 pojedinačnih stanica koje su odlučile sarađivati.</p>
+
+                    <div class="pull-quote">💚 Volvox je prva prava suradnja u povijesti života — i to je označit početak svega što je doista.</div>
+
+                    <p>Sada možda misliš: "Ok, to je čudno, ali... što je velika stvar?" Velika je stvar što se događa: Volvox je pokazao da stanice mogu biti bolje zajedno nego odvojeno. Sfera može plivati brže, može se bolje brinuti za sebe, može preživjeti bolje nego pojedinačna stanica. To je bio prvi ugovor — prvi razlog da bude suradnje umjesto konkurencije.</p>
+
+                    <p>I nakon što je prvi put uvjerendeno da je suradnja funkcionira... kemijsi je počela razmisljati: "Što ako bi to moglo funkcionirati čak i više?""</p>
+
+                    <div class="fact-box">
+                        <strong>🌊 Cinjenica:</strong> Volvox je još uvijek oko nas! Možeš ga vidjeti kroz mikroskop ako pogledaš jezersku vodu. Postoji u istim oblicima kao što su postojali prije milijuni godina.
+                    </div>
+                `
+            },
+            {
+                title: "Ediacari — čudna bića",
+                emoji: "👾",
+                number: 5,
+                content: `
+                    <p>Trebam te prenijeti u vrijeme — prije 600 milijuna godina. U najistoka dijelove Zemlje, u plitkim oceanima, nešto neobično je počelo da raste na morskom dnu.</p>
+
+                    <p>Nisu bila životinje kako ih poznajemo. Nisu imala očima, nisu imala mozga, nisu imala ousta — ali su bila... živa. Čudna. Spora. Mekana. </p>
+
+                    <p>To su bila <strong>ediacara bića</strong>, i pronađena su prvi put u Ediacari, u Australiji. Kad su ih prvi put pronašli paleontolozi, nisu znali što su. "Nisu životinje", rekli su. "Ali nisu niti biljke niti gljive." Što su bila?</p>
+
+                    <p>Bila su — jednostavno — <strong>nešto novo.</strong></p>
+
+                    <svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Ocean floor -->
+                        <rect x="0" y="150" width="500" height="150" fill="#8B7355"/>
+                        <!-- Water -->
+                        <rect x="0" y="0" width="500" height="150" fill="#B0E0E6"/>
+
+                        <!-- Ediacaran creatures - stylized -->
+                        <!-- Creature 1: Frond-like -->
+                        <path d="M 80 150 Q 70 130 80 110 Q 85 120 80 100 Q 90 115 85 95 Q 95 110 90 90 Q 100 105 95 85" fill="none" stroke="#E8956D" stroke-width="3" stroke-linecap="round"/>
+                        <text x="80" y="180" text-anchor="middle" font-size="11" fill="#2C2C2C">Dickinsonia</text>
+
+                        <!-- Creature 2: Circular -->
+                        <circle cx="200" cy="130" r="20" fill="none" stroke="#87CEEB" stroke-width="2"/>
+                        <circle cx="200" cy="130" r="15" fill="none" stroke="#87CEEB" stroke-width="1"/>
+                        <circle cx="200" cy="130" r="10" fill="none" stroke="#87CEEB" stroke-width="1"/>
+                        <text x="200" y="180" text-anchor="middle" font-size="11" fill="#2C2C2C">Cyclomedusa</text>
+
+                        <!-- Creature 3: Jellyfish-like -->
+                        <circle cx="330" cy="120" r="18" fill="none" stroke="#E87560" stroke-width="2"/>
+                        <path d="M 325 138 Q 320 160 322 180" fill="none" stroke="#E87560" stroke-width="2"/>
+                        <path d="M 330 138 Q 330 165 330 185" fill="none" stroke="#E87560" stroke-width="2"/>
+                        <path d="M 335 138 Q 340 160 338 180" fill="none" stroke="#E87560" stroke-width="2"/>
+                        <text x="330" y="180" text-anchor="middle" font-size="11" fill="#2C2C2C">Medusa</text>
+
+                        <!-- Creature 4: Frond-like other -->
+                        <path d="M 420 150 L 420 110 M 410 120 L 430 120 M 410 130 L 430 130 M 410 140 L 430 140" stroke="#FFD700" stroke-width="2" stroke-linecap="round"/>
+                        <text x="420" y="180" text-anchor="middle" font-size="11" fill="#2C2C2C">Charnia</text>
+
+                        <text x="250" y="280" text-anchor="middle" font-size="13" font-weight="bold" fill="#2C2C2C">Ediacarski životinjski svijet (600 milijuna godina)</text>
+                    </svg>
+
+                    <p>Ova bića su bila revolucionarna — bila su pravi, komplicirani organizmi sa <strong>više od jedne stanice</strong> — tijela s organima, ali nisu bila slična nijednom životu koji je postojao prije. Nisu imala zubе, nisu imala školjke, nisu imala guste dijelove. Svi su bili mekani, spori, čudni.</p>
+
+                    <p>Bilo je oko 30 milijuna godina ediacarskog vremena gdje su ta bića dominirala Zemljom. Ali onda se dogadilo nešto...</p>
+
+                    <div class="pull-quote">🌊 Ediacara bića su bila pokus — prvi pokus životnog univerzalnog da živi kao komplicirane, višestaničkе organizme. Ali nisu preživjeli.</div>
+
+                    <p>Kad su prvi hit od Kambrija počeo (prije oko 541 milijuna godina), ediacari su nestali. Većina ih je bila mrtva. Niko ne zna sigurno zašto — bilo je promjena u oceanima, bilo je nove konkurencije, bilo je nešto drugo — ali ediacari su bili kratko poglavlje u dugoj knizi.</p>
+
+                    <p>Ali — i to je važno — pokazali su nešto ključno: <strong>životi može biti komplicirani. Biti može biti više od jedne stanice. Biti mogu biti velika, čudna, i uspješna.</strong> </p>
+
+                    <p>To je bila praksa utrkivanja. A pravi koncert bio je samo što dolazi.</p>
+                `
+            },
+            {
+                title: "Kambriјska eksplozija — veliki prasak biologije",
+                emoji: "💥",
+                number: 6,
+                content: `
+                    <p>Trebam da se vratim na vremensku liniju ponovno. 541 milijun godina prije danas — samo trenutak nakon ediacara.</p>
+
+                    <p>Dogodila se nešto što je paleontolozi trebali vijek da razumiju: <strong>najednom, gotovo svaki oblik komplicirane životinjskog tijela se pojavio u fosilnom zapisu</strong>. U relativno kratkom vremenu — samo nekoliko milijun godina, što je kratko u geološkim smislima — živu se je eksplodirala u tisuće novih oblika.</p>
+
+                    <p>To je zvano <strong>Kambrijska eksplozija</strong>, i to je bio, doslovno, veliki prasak biologije.</p>
+
+                    <svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Timeline base -->
+                        <line x1="50" y1="320" x2="450" y2="320" stroke="#B0B0B0" stroke-width="3"/>
+
+                        <!-- Pre-Cambrian -->
+                        <rect x="50" y="340" width="80" height="30" fill="#D3D3D3" stroke="#999" stroke-width="1" rx="4"/>
+                        <text x="90" y="362" text-anchor="middle" font-size="11" font-weight="bold" fill="#2C2C2C">Pre-Kambrijum</text>
+                        <text x="90" y="315" text-anchor="middle" font-size="9" fill="#5A5A5A">Malo života</text>
+
+                        <!-- Cambrian -->
+                        <rect x="135" y="240" width="120" height="110" fill="#FFB6C1" stroke="#E87560" stroke-width="2" rx="4"/>
+                        <text x="195" y="300" text-anchor="middle" font-size="12" font-weight="bold" fill="#2C2C2C">Kambrijum</text>
+                        <text x="195" y="220" text-anchor="middle" font-size="10" fill="#E87560" font-weight="bold">EKSPLOZIJA!</text>
+
+                        <!-- Ordovician -->
+                        <rect x="260" y="270" width="80" height="80" fill="#ADD8E6" stroke="#87CEEB" stroke-width="2" rx="4"/>
+                        <text x="300" y="320" text-anchor="middle" font-size="11" font-weight="bold" fill="#2C2C2C">Ordovik</text>
+
+                        <!-- Silurian onwards -->
+                        <rect x="345" y="280" width="80" height="70" fill="#90EE90" stroke="#008000" stroke-width="1" rx="4"/>
+                        <text x="385" y="325" text-anchor="middle" font-size="10" font-weight="bold" fill="#2C2C2C">Kasnije</text>
+
+                        <!-- Creatures silhouettes -->
+                        <!-- Trilobite -->
+                        <ellipse cx="160" cy="280" rx="15" ry="10" fill="#333"/>
+                        <circle cx="160" cy="270" r="5" fill="#333"/>
+
+                        <!-- Anomalocaris -->
+                        <path d="M 200 290 Q 210 295 220 290 L 215 285 Q 210 282 200 285" fill="#444"/>
+
+                        <!-- Opabinia -->
+                        <path d="M 240 300 L 260 305 L 255 295 L 240 295" fill="#555"/>
+
+                        <!-- Hallucigenia -->
+                        <path d="M 180 310 L 190 315 L 185 305 L 175 300" fill="#666" stroke="#666" stroke-width="2"/>
+
+                        <!-- Legend -->
+                        <text x="50" y="380" font-size="11" fill="#2C2C2C">Pre-kambrijum: Malo životinjskog života</text>
+                        <text x="50" y="395" font-size="11" fill="#2C2C2C">Kambrijum (541-485 Mya): Tisuće novih vrsta se pojavljuju!</text>
+                    </svg>
+
+                    <p>Prije Kambrija, život je bio — s izuzetkom ediacara — primitivne i jednostavne. Ali <strong>u Kambriju, gotovo svi glavni tipovi životinjskog tijela su se pojavio</strong>. Iznenada (po geološkim standardima) — mekari (kao lignje), članci (kao rakovi i insekti), ehinodermati (kao morske zvijezde), te mnogo, mnogo više.</p>
+
+                    <p>Bila je to gotovo kao da je netko proslavio sve matematičke formule za životinjsko tijelo, a onda ih je ispisao kao eksperimente. "Što ako bismo imali 100 nogu?" "Što ako bismo imali jaki oklop od kalcija?" "Što ako bismo imali velike oči?" "Što ako bismo imali čudne tenkice sa zubima?"</p>
+
+                    <div class="fact-box">
+                        <strong>🦐 Neka čudna kambrijska bića:</strong>
+                        <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                            <li><strong>Anomalocaris</strong> — kao alijenski hoover, sa rukama oko usta</li>
+                            <li><strong>Opabinia</strong> — 5 očiju, mali dodaci, kao nešto iz noćne more</li>
+                            <li><strong>Hallucigenia</strong> — čudne noge i šiljci — izgledao kao je netko nasumice crtao</li>
+                            <li><strong>Trilobiti</strong> — članci sa три dijela — preživjeli milijun godina!</li>
+                        </ul>
+                    </div>
+
+                    <p>Stephen Jay Gould je napisao čitavu knjigу o Kambrijskoj eksploziji, zvanoj "Čudno Žuvanje Burgess Prijedloga" — i njegov zaključak je bio revolucionaran: <strong>većina tih čudnih bića je bila eksperimentalna — samo pokusi nature koja bi vidjela što radi.</strong> Većina nije preživjela. Ali neka jesu, i njihovim potomcima su bili svi životnjaci koje vidimo danas.</p>
+
+                    <p>Znači što je uzrokovalo Kambrijsku eksploziju? Bilo je nekoliko faktora:</p>
+
+                    <div class="pull-quote">🔬 Tri ključna stvara se dogodila u kambriju: više kisika u oceanima, evolucija tvrdog oklopa (moguće zato što je imalo više kalcija), i nove predatorske strategije.</div>
+
+                    <p>Predatori su bili revolucionarni — prvi put u povijest, životinje su mogle jednu drugu pojesti. To je stvorilo novu vrstu pritiska: ako si mali, trebas brzi ili oklop. Ako si predator, trebas biti brzi ili pametnije. To je počela ozbiljnog doslovna evolucijska utrka, i rezultat je bio nevjerojatna raznolikost.</p>
+
+                    <p>Kambrijuma je značio završetak jednoga vremena — vremena gdje je životinjski svijet bio jednostavan, spora, i ne-specifičan. Nakon kambrija, sve je bilo — zauvijek — komplicirano, brzo, i boriti se za preživeće.</p>
+                `
+            },
+            {
+                title: "Kako su stanice naučile biti specijalizirane",
+                emoji: "🏭",
+                number: 7,
+                content: `
+                    <p>Sada razumijevamo kako su stanice počele sarađivati — Volvox je pokazao da je suradnja moguća, Kambrij je pokazao da je komplicirano biti moguće. Ali kako su stanice — obične, jednostavne stanice — postale tako različitih?</p>
+
+                    <p>To je jedno od najvećih pitanja biologije: ako svaka stanica ima istu DNK, kako mogu biti tako različitih? Kako je neka stanica mogu biti stanica očima, neka mogu biti stanica mozga, neka mogu biti stanica mišićne?</p>
+
+                    <p>Odgovor je — i to je čudno — da <strong>nije sva DNK je uključena u svakој stanici.</strong></p>
+
+                    <p>Zamislite da je svaka stanica ima cijelu enciklopediju — sve upute kako biti bilo šta — ali svaka stanica je čitala samo dio enciklopedije koji joj je trebao. Stanica oka čita poglavlje "kako biti oko". Stanica mozga čita poglavlje "kako biti mozak". Stanica srca čita poglavlje "kako biti srce".</p>
+
+                    <div class="pull-quote">🔑 To se zove "diferencijacija" ili specijalizacija — svaka stanica koristi samo dio svoje DNK koja joj je trebala.</div>
+
+                    <p>Ali kako stanice znaju koji dio DNK trebaju čitati? Odgovor: <strong>signali iz drugih stanica</strong> — kemijski poruke koje govore: "Hej, trebam te da budeš stanica oka", ili "Trebam te da budeš stanica srca".</p>
+
+                    <p>Tijekom razvoja, stanice su na beskonačne kemijski poruke — signale od drugih stanica, kemikalije u okruženju, položaj gdje je stanica u tijelu — i sve te poruke su zajedno rekli stanici: "Evo što trebas biti." Stanica je onda čitala samo dio DNK koja joj je trebala za taj posao.</p>
+
+                    <div class="fact-box">
+                        <strong>🧬 Činjenica:</strong> Svi tipovi stanica u tvom tijelu — oko, mozak, srce, kost — imaju točno iste DNA! Ali samo različiti dijelovi DNK su "uključeni" (izraženi) u svakoj stanici. To je moć regulacije gena.
+                    </div>
+
+                    <p>To je zadivljujuće — jer to znači da je specijalizacija nije znači bitka — nije znači da je stanica oka ima drugu DNK od stanice mozga. Samo znači da su različiti dijelovi DNK su bili uključeni. To je kao da bi neki udžbenik bio drugačit u svakoj sobi knjižnice, čak i ako je sve knjige napisane od istog autora.</p>
+
+                    <p>Ali to je dovelo do nečega još nevjerojatnije: <strong>organela — sustavi od specijaliziranih stanica koji su radili zajedno.</strong></p>
+
+                    <p>Stanice oka se nisu mogla sami — trebale su stanice za pročitavanje svjetla, stanice za odbijanje signala, stanice za pojačanje signala. Zajedno su činili organ — oko. Srce je trebalo stanice za bušenje, stanice za sažimanje, stanice za signaliziranje. Zajedno su činili organ — srce.</p>
+
+                    <p>Prvi put što su stanice naučile što različito biti i raditi zajedno — to je bilo na što je čekao — to je bilo prvi pravi višestanični organizmi.</p>
+                `
+            },
+            {
+                title: "Odlazak na kopno — najveća avantura",
+                emoji: "🌱",
+                number: 8,
+                content: `
+                    <p>Ok, sada trebam da te vratim u vrijeme ponovno. Tekao je vrijeme. Kambrij je bio prije 541 milijun godina. Životinjski svijet se razvijao — ribе su se pojavile, amfibije su nastale iz riba, a onda — iznenadjujuće — neki organizmi su počeli razmisljati nešto čudno.</p>
+
+                    <p>"Što ako bi mi otišli <strong>na kopno</strong>?"</p>
+
+                    <p>To je bila čudna ideja. Kopno je bilo neprijateljski — nema vode za plivanje, nema zaštite od sunca, nema mjesta da se sakrije. Ali neki organizmi su riskantno. Prije oko 470 milijun godina, <strong>biljke su počele da rastu na kopnu</strong> — primeiro kao male, bezlistne stvari, a onda kao sve složeniji organizmi.</p>
+
+                    <p>Ali gdje su biljke trebali da žive na kopnu, trebali su biti strukturirani. Trebali su tkiva — sustavi od stanica koji su zajedno radili. Trebali su <strong>vaskularni sistem</strong> — cijevi — kako bi transportirali vodu od korjena do vrhova biljke.</p>
+
+                    <svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Sky -->
+                        <rect x="0" y="0" width="400" height="200" fill="#87CEEB"/>
+                        <!-- Ground -->
+                        <rect x="0" y="200" width="400" height="300" fill="#8B7355"/>
+
+                        <!-- Early plant (simple) -->
+                        <g>
+                            <line x1="80" y1="220" x2="80" y2="130" stroke="#90EE90" stroke-width="3"/>
+                            <line x1="70" y1="150" x2="60" y2="140" stroke="#90EE90" stroke-width="2"/>
+                            <line x1="90" y1="150" x2="100" y2="140" stroke="#90EE90" stroke-width="2"/>
+                            <text x="80" y="100" text-anchor="middle" font-size="11" fill="#2C2C2C">420 Mya</text>
+                            <text x="80" y="350" text-anchor="middle" font-size="10" fill="#2C2C2C">Jednostavna</text>
+                        </g>
+
+                        <!-- Middle plant (more complex) -->
+                        <g>
+                            <line x1="200" y1="240" x2="200" y2="50" stroke="#228B22" stroke-width="4"/>
+                            <line x1="180" y1="120" x2="160" y2="100" stroke="#90EE90" stroke-width="3"/>
+                            <line x1="220" y1="120" x2="240" y2="100" stroke="#90EE90" stroke-width="3"/>
+                            <line x1="185" y1="150" x2="170" y2="140" stroke="#90EE90" stroke-width="2"/>
+                            <line x1="215" y1="150" x2="230" y2="140" stroke="#90EE90" stroke-width="2"/>
+                            <!-- Vascular tissue -->
+                            <line x1="198" y1="240" x2="198" y2="50" stroke="#8B4513" stroke-width="2" stroke-dasharray="3,3"/>
+                            <text x="200" y="20" text-anchor="middle" font-size="11" fill="#2C2C2C">350 Mya</text>
+                            <text x="200" y="350" text-anchor="middle" font-size="10" fill="#2C2C2C">Sa vaskularnim</text>
+                        </g>
+
+                        <!-- Modern plant (flower) -->
+                        <g>
+                            <line x1="320" y1="250" x2="320" y2="50" stroke="#2F4F2F" stroke-width="5"/>
+                            <!-- Leaves -->
+                            <ellipse cx="295" cy="100" rx="15" ry="8" fill="#228B22" transform="rotate(-30 295 100)"/>
+                            <ellipse cx="345" cy="100" rx="15" ry="8" fill="#228B22" transform="rotate(30 345 100)"/>
+                            <ellipse cx="290" cy="150" rx="15" ry="8" fill="#228B22" transform="rotate(-35 290 150)"/>
+                            <ellipse cx="350" cy="150" rx="15" ry="8" fill="#228B22" transform="rotate(35 350 150)"/>
+                            <!-- Flower -->
+                            <circle cx="320" cy="30" r="12" fill="#FF69B4"/>
+                            <ellipse cx="315" cy="20" rx="4" ry="8" fill="#FFB6C1"/>
+                            <ellipse cx="325" cy="20" rx="4" ry="8" fill="#FFB6C1"/>
+                            <ellipse cx="310" cy="30" rx="4" ry="8" fill="#FFB6C1"/>
+                            <ellipse cx="330" cy="30" rx="4" ry="8" fill="#FFB6C1"/>
+                            <!-- Roots -->
+                            <line x1="320" y1="250" x2="300" y2="300" stroke="#654321" stroke-width="3"/>
+                            <line x1="320" y1="250" x2="340" y2="300" stroke="#654321" stroke-width="3"/>
+                            <text x="320" y="20" text-anchor="middle" font-size="11" fill="#2C2C2C">150 Mya</text>
+                            <text x="320" y="350" text-anchor="middle" font-size="10" fill="#2C2C2C">Sa cvijetovima</text>
+                        </g>
+
+                        <!-- Timeline -->
+                        <line x1="50" y1="370" x2="350" y2="370" stroke="#B0B0B0" stroke-width="2"/>
+                        <text x="200" y="400" text-anchor="middle" font-size="12" font-weight="bold" fill="#2C2C2C">Evolucija biljaka na kopnu</text>
+                    </svg>
+
+                    <p>Ali to nije bilo dovoljno. Ako su biljke trebale biti uspješne na kopnu, trebale su više od samo cijevi. Trebale su tijela — strukturirane dijelove sa posebnim funkcijama. Trebale su <strong>list</strong> — s fotosintezom, <strong>korijen</strong> — za vodu, <strong>deblo</strong> — za podrške.</p>
+
+                    <p>A onda, prije oko 200 milijun godina, dogodilo se nešto što je ponovo promijenilo sve — <strong>razvoj cviјeta.</strong></p>
+
+                    <div class="pull-quote">🌸 Cviјeće je bio один од najvećih bioloških inovacija — to je bio sustav koji je radi životinjski svijet da bi pomogao biljkama.</div>
+
+                    <p>Prije cviјeta, biljke su se reproduciralo sa sporama i vjetrom. Ali cviјeće je bilo matematički bolji. Cviјeće je privlačilo životinjе — pčele, leteće insekte, ptice — i kad bi te životinje posjetile cviјeće, dolazile bi sa polenom od jedne biljke do druge. To je bila suradnja — biljka je dala životinjе nektara (hrana), a životinja je prenijela polen (reproduciranje).</p>
+
+                    <p>To je bio dogovor — prvi takav dogovor između biljaka i životinjа u većem mjerilu.</p>
+
+                    <div class="fact-box">
+                        <strong>🐝 Činjenica:</strong> Većina biljaka koje vidimo ostrvo — većina voća i povrća — nisu mogla da se reproducira bez životinja! Banan, jabuka, magarac, narandžica — svi trebaju pčele ili ptice da prenese polen. Bez životinja, ne bi bilo hrane kako je znamo.
+                    </div>
+
+                    <p>A kako su biljke postale sve komplicinije — sa tkivima, sa cviјetovima, sa raznovrsnim organima — bila je jasan trend: <strong>više specijalizacije, više suradnje, više kompleksnosti.</strong></p>
+
+                    <p>Biljke je trebalo biti sa fotosintezom (list), sa vaporom (deblo), sa vodom dopravicom (korijen). Sve su bile trebale biti dio jedne organizacije — jedne cijele biljke. I to je točno što se dogodilo.</p>
+
+                    <p>Sada trebam da te vratim na životinjski svijet — jer njih je čekala ista priča...</p>
+                `
+            },
+            {
+                title: "Kako tvoje tijelo drži sve u balansu",
+                emoji: "⚖️",
+                number: 9,
+                content: `
+                    <p>Sada ćemo govoriti o nečem što je baš kao nevjerojatno kao anything što smo dosad čuli — i to se čini kao broja fizike, ali nije. To se zove <strong>homeostaza</strong>.</p>
+
+                    <p>Homeostaza je ideја da tvoje tijelo — i zapravo, sveho živo na Zemlji — pokušava zadržati sve u savršenom balansu. Temperatura. PH vrijednost. Količina vode. Količina soli. Količina kisika. Količina šećera u krvi. Sve.</p>
+
+                    <p>Znači što je čudno u tome? To je što je <strong>Svijet pokušava uvijek biti drugačiji od tog balansa.</strong> Ako je toplo, tvoje tijelo trebam da se ohladi. Ako je hladno, trebam da se zagriješ. Ako piješ previše vode, trebam da je izbacuješ. Ako imaš premalo vode, trebam da zadržiš što više možeš.</p>
+
+                    <p>Tvoje tijelo je gotovo kao kontrolni centar koji pokušava zadržati sve u savršenoj liniji — ni previše vruće, ni previše hladno. Ni previše vode, ni previše suho. Ni previše šećera, ni previše malo.</p>
+
+                    <svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Central body -->
+                        <ellipse cx="250" cy="200" rx="80" ry="120" fill="#FFD700" stroke="#E8956D" stroke-width="2"/>
+
+                        <!-- Brain/Control center -->
+                        <circle cx="250" cy="100" r="25" fill="#FFB6C1" stroke="#E87560" stroke-width="2"/>
+                        <text x="250" y="105" text-anchor="middle" font-size="11" font-weight="bold" fill="#2C2C2C">Mozak</text>
+
+                        <!-- Temperature regulation -->
+                        <g>
+                            <path d="M 350 180 Q 380 180 380 160" stroke="#E87560" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+                            <text x="400" y="175" font-size="11" fill="#2C2C2C">Rashlade se</text>
+                            <text x="400" y="190" font-size="9" fill="#5A5A5A">(znoj)</text>
+                        </g>
+
+                        <g>
+                            <path d="M 350 220 Q 380 220 380 240" stroke="#87CEEB" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+                            <text x="400" y="240" font-size="11" fill="#2C2C2C">Zagriješ se</text>
+                            <text x="400" y="255" font-size="9" fill="#5A5A5A">(mišići)</text>
+                        </g>
+
+                        <!-- Water regulation -->
+                        <g>
+                            <path d="M 150 180 Q 120 180 120 160" stroke="#87CEEB" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+                            <text x="50" y="175" font-size="11" fill="#2C2C2C">Pij vodu</text>
+                            <text x="50" y="190" font-size="9" fill="#5A5A5A">(žeđ)</text>
+                        </g>
+
+                        <g>
+                            <path d="M 150 220 Q 120 220 120 240" stroke="#87CEEB" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+                            <text x="30" y="240" font-size="11" fill="#2C2C2C">Izbaci vodu</text>
+                            <text x="30" y="255" font-size="9" fill="#5A5A5A">(urin)</text>
+                        </g>
+
+                        <!-- Feedback loops -->
+                        <text x="250" y="320" text-anchor="middle" font-size="12" font-weight="bold" fill="#2C2C2C">Povratne petlje - sve radi zajedno</text>
+                        <text x="250" y="350" text-anchor="middle" font-size="11" fill="#5A5A5A">Kada je toplo → znojim se → hlađim se</text>
+                        <text x="250" y="370" text-anchor="middle" font-size="11" fill="#5A5A5A">Kada sam žedan → pijem vodu → ponos se normalizira</text>
+
+                        <defs>
+                            <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                                <polygon points="0 0, 10 3, 0 6" fill="#E8956D"/>
+                            </marker>
+                        </defs>
+                    </svg>
+
+                    <p>Kako se to dogodi? Kroz <strong>povratne petlje</strong> — sustave gdje je informacija ide od tijela do mozga, mozak donosi odluku, a onda tijelo to izvršava. Onda se ponavljam.</p>
+
+                    <p>Primjer: Primjećuješ da si vruć. Senzori u tvojoj koži pošalju poruku mozgu: "Hej, puno je toplote!" Mozak prima poruku i donosi odluku: "Ok, trebam da se rashladim." Mozak šalje poruke mišićima: "Počni znojiti!" Znoj isparava sa tvoje kože i hladi te. Temperatura se smanjuje. Senzori to primjećuju i pošalju novu poruku mozgu: "Ok, sada je bolje." Mozak kreira novu odluku: "Prestani znojiti." Znojenje se zaustavlja. Sve se ponavljam.</p>
+
+                    <div class="pull-quote">🎯 Homeostaza je kao termostat — ako je toplo, hladi se; ako je hladno, zagriješ se. Ali za razliku od termistatskog, tvoje tijelo radi to bez da razmislim o tome!</div>
+
+                    <p>Ali homeostaza nije samo o temperaturi. To je o svemu što drži tijelo živim:</p>
+
+                    <div class="fact-box">
+                        <strong>🧬 Homeostaza regulira:</strong>
+                        <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                            <li>Temperaturу (37°C je "idealno")</li>
+                            <li>pH vrijednost krvi (trebam biti ni previše kisela, ni previše bazična)</li>
+                            <li>Količinu šećera u krvi (glukoza)</li>
+                            <li>Količinu vode (osjećaj žeđe je jasan signal)</li>
+                            <li>Količinu kisika (disanje je automatsko)</li>
+                            <li>Tlak krvi (srce se prilagođava)</li>
+                        </ul>
+                    </div>
+
+                    <p>Evo što je čudno: sve te stvari su trebale razviti kao posebni sustavi — hormonski sustav za kemijske signale, živčani sustav za električne signale, kardiovaskularne sustave za transport, respiratorne sustava za kisik. Ali svi sustavi su trebali biti connection — trebali su trebali biti dio jedne, kohezivne organizacije.</p>
+
+                    <p>To je ono što znači biti višestanični organizam. To nije samo čitav broj stanica. To je koordinirano, strukturirano, organizirano sustav gdje je sve radi zajedno za jedan cilj: da drži cijelo tijelo živo.</p>
+
+                    <p>A kako si dosad mogao vidjeti, to je nevjerojatna dostignuće. To je rezultat milijardi godina evolucije, od jednostavnih bakterija do komplicirane životinjskog — poput tebe.</p>
+                `
+            },
+            {
+                title: "Zaključak: Iz bakterija do tebe",
+                emoji: "🚀",
+                number: 10,
+                content: `
+                    <p>Ok, hajde da sumiramo što smo naučili na ovoj putovanja kroz vrijeme.</p>
+
+                    <p>Počeli smo sa Zemljom prije 4.5 milijardi godina — planeta vatra i stijena. Onda je došlo do voda. Onda do prvog života — jednostavne bakterije koje su se samo reproducirali. Za prvi milijard godina, ništa se nije dogodilo. Samo bakterije. Dosadno.</p>
+
+                    <p>Onda su cijanobakterije izumile fotosinteza i slučajno otrovale cijelu planet sa kisikom — ono što je bila najveća katastrofa do tog vremena. Ali neke bakterije su se prilagodile. Trebale su kisika. I tog je bio početka svega.</p>
+
+                    <p>Onda se dogodila endosymbioza — bakterije su zarobljene u drugim bakterijama, postajući mitohondriji i kloroplasti. To je bilo genijalno, i to je stvorilo novu vrstu stanice — eukariota — sa jezgrom i organelama.</p>
+
+                    <p>Volvox je pokazao da stanice mogu sarađivati — da mogu biti bolje zajedno nego odvojeno. Ediacara bića su pokazala da komplicirani, višestanični organizmi mogli biti uspješni. Kambrijska eksplozija je pokazala što je moguće — tisuće novih oblika, novih strategija, novih života.</p>
+
+                    <div class="pull-quote">✨ Ključni pokazivač: Suradnja. Od mitohondrija do organa do cijelog tijela — sve je o tome što različite dijelove surađuju za jedan cilj.</div>
+
+                    <p>Biljke su došle na kopno i razvojila su tkiva, vazkularne sustava, i cviјeće. Životinjе su slijedile, a te su postali sve komplicinije — od riba do amfibija do gmazova do ptica do sesatih životinja. I onda...</p>
+
+                    <p>...pa, onda su došli люди. A to je čitava druga priča.</p>
+
+                    <p>Ali što je važno razumjeti — što je suština ove cijele priče — to je: <strong>ti nisi samo jedna stanica. Niti si jednostavna masa nezorganiziranih stanica. Ti si nevjerojatno komplicirani, organiziran, koordinirani sustav od oko 37 triliona stanica</strong> — što je više stanica nego što su zvijezda u većini galaksija — svi radeći zajedno, svi sporazumijevati se, svi surađujući da te drže živa.</p>
+
+                    <p>Svaka stanica u tvom tijelu je potomak od bakterije iz oceana prije 3.8 milijardi godina. Svaki mitohondrij u tvojim stanicama je diskendant od bakterije koja je zarobljena prije 2 milijardi godina. Mitohondrij u tvojim stanicama je zapravo — doslovno — bakterija.</p>
+
+                    <p>Znači što je sljedeće vrijeme kada razmisliš da si sama — znaš li što? Nisi sama. Imaš triliona kompanije. Trilijna čestica koje se kombiniraju da bi bili ti.</p>
+
+                    <div class="pull-quote">💚 Priča o životu je priča o suradnji — o tome kako su pojedinac brzo ostvarili da su bolje zajedno. To je priča od početka do kraja.</div>
+
+                    <p>A to je kraj naše priče o životu. Nadam se da si sada gledao na svijet drugačije — kao sustav nevjerojatnog komplicirane koordijacije, kao priče od nevjerojatnog inovacije, kao... pa, kao što je bio nevjerojatno. Jer je zaista jesu.</p>
+
+                    <p>Sada znaš — tvoje tijelo je nije samo tvoje. To je civilizacija od stanica. A to je najnobličnije.</p>
+
+                    <p style="margin-top: 3rem; text-align: center; font-style: italic; color: var(--text-secondary);">— Napisano sa divljenjem prema biološkom svijetu i prema tebi, najčudnijem organizmu na Zemlji.</p>
+                `
+            }
+        ];
+
+        // Initialize
+        let currentChapter = 0;
+        let fontSizeLevel = 'normal';
+        let isDarkMode = false;
+
+        function initializeChapters() {
+            const container = document.getElementById('chaptersContainer');
+            const navContainer = document.getElementById('chapterNav');
+
+            chapters.forEach((chapter, index) => {
+                // Navigation card
+                const navCard = document.createElement('a');
+                navCard.href = '#';
+                navCard.className = 'chapter-card';
+                navCard.onclick = (e) => {
+                    e.preventDefault();
+                    goToChapter(index);
+                };
+                navCard.innerHTML = `
+                    <h3>${chapter.emoji} ${chapter.title}</h3>
+                    <p>Poglavlje ${chapter.number}</p>
+                `;
+                navContainer.appendChild(navCard);
+
+                // Chapter content
+                const chapterDiv = document.createElement('div');
+                chapterDiv.className = 'chapter hidden';
+                chapterDiv.id = `chapter-${index}`;
+                chapterDiv.innerHTML = `
+                    <div class="chapter-number">Poglavlje ${chapter.number}</div>
+                    <h2>${chapter.emoji} ${chapter.title}</h2>
+                    <div id="content-${index}">${chapter.content}</div>
+                    <button class="tts-button" onclick="speakChapter(${index})">🔊 Čitaj naglas</button>
+                    <div class="chapter-navigation">
+                        <button class="nav-btn" onclick="previousChapter()" ${index === 0 ? 'disabled' : ''}>← Prethodno poglavlje</button>
+                        <button class="nav-btn" onclick="nextChapter()" ${index === chapters.length - 1 ? 'disabled' : ''}>Sljedeće poglavlje →</button>
+                    </div>
+                `;
+                container.appendChild(chapterDiv);
+            });
+
+            showChapter(0);
+        }
+
+        function goToChapter(index) {
+            currentChapter = Math.max(0, Math.min(index, chapters.length - 1));
+            showChapter(currentChapter);
+            scrollToChapter();
+        }
+
+        function showChapter(index) {
+            chapters.forEach((_, i) => {
+                const chapter = document.getElementById(`chapter-${i}`);
+                if (chapter) {
+                    chapter.classList.toggle('hidden', i !== index);
+                }
+            });
+            currentChapter = index;
+            updateProgressBar();
+            window.scrollTo(0, 0);
+        }
+
+        function nextChapter() {
+            if (currentChapter < chapters.length - 1) {
+                goToChapter(currentChapter + 1);
+            }
+        }
+
+        function previousChapter() {
+            if (currentChapter > 0) {
+                goToChapter(currentChapter - 1);
+            }
+        }
+
+        function scrollToChapter() {
+            const chapter = document.getElementById(`chapter-${currentChapter}`);
+            if (chapter) {
+                chapter.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function scrollToChapters() {
+            document.getElementById('chapterNav').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateProgressBar() {
+            const progress = ((currentChapter + 1) / chapters.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function toggleSettings() {
+            document.getElementById('settingsPanel').classList.toggle('open');
+        }
+
+        function setFontSize(size) {
+            fontSizeLevel = size;
+            const body = document.body;
+            body.style.fontSize = {
+                'normal': '16px',
+                'large': '18px',
+                'xlarge': '20px'
+            }[size];
+
+            // Update active button
+            document.querySelectorAll('.font-size-control button').forEach((btn, i) => {
+                btn.classList.toggle('active',
+                    (i === 0 && size === 'normal') ||
+                    (i === 1 && size === 'large') ||
+                    (i === 2 && size === 'xlarge')
+                );
+            });
+        }
+
+        function setTheme(theme) {
+            const themes = {
+                'light': { '--bg-main': '#FFF8F0', '--accent-warm': '#E8956D', '--accent-coral': '#E87560' },
+                'neutral': { '--bg-main': '#F5F0E8', '--accent-warm': '#D4A574', '--accent-coral': '#C17B5F' },
+                'cool': { '--bg-main': '#E8F4F8', '--accent-warm': '#6BA3C8', '--accent-coral': '#5B88B8' }
+            };
+
+            if (themes[theme]) {
+                Object.entries(themes[theme]).forEach(([key, value]) => {
+                    document.documentElement.style.setProperty(key, value);
+                });
+            }
+
+            // Update active button
+            document.querySelectorAll('.color-option').forEach((btn, i) => {
+                btn.classList.toggle('active',
+                    (i === 0 && theme === 'light') ||
+                    (i === 1 && theme === 'neutral') ||
+                    (i === 2 && theme === 'cool')
+                );
+            });
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            isDarkMode = document.body.classList.contains('dark-mode');
+            document.querySelectorAll('.color-option').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelectorAll('.color-option')[3].classList.add('active');
+        }
+
+        function speakChapter(index) {
+            const content = document.getElementById(`content-${index}`);
+            if (!content) return;
+
+            // Extract text from HTML
+            const text = content.innerText;
+
+            if ('speechSynthesis' in window) {
+                // Cancel any ongoing speech
+                speechSynthesis.cancel();
+
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'hr-HR';
+                utterance.rate = 0.9;
+                utterance.pitch = 1;
+
+                const button = event.target;
+                button.classList.add('playing');
+                button.textContent = '⏸️ Zaustavi čitanje';
+
+                utterance.onend = () => {
+                    button.classList.remove('playing');
+                    button.textContent = '🔊 Čitaj naglas';
+                };
+
+                speechSynthesis.speak(utterance);
+            } else {
+                alert('Tvoj browser ne podržava čitanje naglas.');
+            }
+        }
+
+        // Update progress bar on scroll
+        window.addEventListener('scroll', () => {
+            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrolled = (window.scrollY / scrollHeight) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        });
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', initializeChapters);
+    </script>
+</body>
+</html>

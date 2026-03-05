@@ -1,0 +1,2335 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ispit: Višestanični organizmi — Od jedne stanice do složenog organizma</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-main: #FFF8F0;
+            --bg-card: #FFFFFF;
+            --text-main: #3A3A3A;
+            --blue: #4A90D9;
+            --green: #5CB85C;
+            --orange: #FF9800;
+            --red: #E74C3C;
+            --purple: #9B59B6;
+            --teal: #26A69A;
+            --radius: 12px;
+            --shadow: 0 2px 12px rgba(0,0,0,0.06);
+            --font-size-base: 16px;
+            --bg-light: #F5F5F5;
+        }
+
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-size: var(--font-size-base);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            --bg-main: #2A2A2A;
+            --bg-card: #3A3A3A;
+            --text-main: #F0F0F0;
+            --bg-light: #4A4A4A;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* === HEADER === */
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px 0;
+        }
+
+        header h1 {
+            font-size: clamp(1.5rem, 5vw, 2.2rem);
+            margin-bottom: 10px;
+            color: var(--blue);
+        }
+
+        header p {
+            color: var(--text-main);
+            opacity: 0.8;
+            margin-bottom: 15px;
+        }
+
+        /* === ANTI-ANXIETY SECTION === */
+        .welcome-section {
+            background: linear-gradient(135deg, rgba(74, 144, 217, 0.1) 0%, rgba(155, 89, 182, 0.1) 100%);
+            border-left: 5px solid var(--blue);
+            padding: 20px;
+            border-radius: var(--radius);
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+        }
+
+        .welcome-section h2 {
+            color: var(--blue);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .welcome-section p {
+            margin-bottom: 12px;
+            opacity: 0.9;
+        }
+
+        .breathing-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: var(--radius);
+            font-family: 'Lexend', sans-serif;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .btn-breathing {
+            background-color: var(--teal);
+            color: white;
+        }
+
+        .btn-breathing:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(38, 166, 154, 0.3);
+        }
+
+        .btn-settings {
+            background-color: var(--purple);
+            color: white;
+        }
+
+        .btn-settings:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(155, 89, 182, 0.3);
+        }
+
+        /* === SETTINGS PANEL === */
+        .settings-panel {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .settings-panel.active {
+            display: flex;
+        }
+
+        .settings-content {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: var(--radius);
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .settings-content h3 {
+            margin-bottom: 20px;
+            color: var(--blue);
+        }
+
+        .setting-group {
+            margin-bottom: 20px;
+        }
+
+        .setting-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .setting-group input[type="range"] {
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .setting-group button {
+            padding: 8px 16px;
+            margin: 5px;
+            border: 2px solid var(--text-main);
+            background: transparent;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-family: 'Lexend', sans-serif;
+        }
+
+        .setting-group button.active {
+            background: var(--blue);
+            color: white;
+            border-color: var(--blue);
+        }
+
+        .btn-close-settings {
+            background-color: var(--red);
+            color: white;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        /* === PROGRESS BAR === */
+        .progress-container {
+            margin-bottom: 25px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--bg-light);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--blue), var(--purple));
+            transition: width 0.3s;
+            border-radius: 10px;
+        }
+
+        /* === QUESTION CARD === */
+        .question-card {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .question-card.active {
+            display: block;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .question-number {
+            display: inline-block;
+            background: var(--blue);
+            color: white;
+            padding: 6px 12px;
+            border-radius: var(--radius);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .question-number.warmup {
+            background: var(--orange);
+        }
+
+        .question-difficulty {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            background: var(--bg-light);
+            border-radius: var(--radius);
+        }
+
+        .difficulty-easy {
+            color: var(--green);
+        }
+
+        .difficulty-medium {
+            color: var(--orange);
+        }
+
+        .difficulty-hard {
+            color: var(--red);
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-main);
+            line-height: 1.4;
+        }
+
+        .tts-button {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            margin-left: 10px;
+            padding: 5px;
+            transition: transform 0.2s;
+        }
+
+        .tts-button:hover {
+            transform: scale(1.2);
+        }
+
+        /* === QUESTION TYPES === */
+        .options {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .option {
+            padding: 15px;
+            border: 2px solid var(--bg-light);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.3s;
+            background: var(--bg-card);
+            font-family: 'Lexend', sans-serif;
+        }
+
+        .option:hover {
+            border-color: var(--blue);
+            background: rgba(74, 144, 217, 0.05);
+        }
+
+        .option input[type="radio"] {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .option.selected {
+            border-color: var(--blue);
+            background: rgba(74, 144, 217, 0.1);
+        }
+
+        .option.correct {
+            border-color: var(--green);
+            background: rgba(92, 184, 92, 0.1);
+        }
+
+        .option.incorrect {
+            border-color: var(--red);
+            background: rgba(231, 76, 60, 0.1);
+        }
+
+        /* === MATCH PAIRS === */
+        .match-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .match-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .match-column {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .match-item {
+            padding: 12px;
+            border: 2px solid var(--bg-light);
+            border-radius: var(--radius);
+            cursor: move;
+            background: var(--bg-card);
+            transition: all 0.3s;
+            user-select: none;
+        }
+
+        .match-item:hover {
+            border-color: var(--blue);
+            transform: translateY(-2px);
+        }
+
+        .match-item.matched {
+            border-color: var(--green);
+            background: rgba(92, 184, 92, 0.1);
+        }
+
+        .match-item.matched.incorrect {
+            border-color: var(--red);
+            background: rgba(231, 76, 60, 0.1);
+        }
+
+        .match-drop-zone {
+            min-height: 150px;
+            border: 2px dashed var(--bg-light);
+            border-radius: var(--radius);
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.02);
+            transition: all 0.3s;
+        }
+
+        .match-drop-zone.drag-over {
+            border-color: var(--blue);
+            background: rgba(74, 144, 217, 0.1);
+        }
+
+        /* === ORDER STEPS === */
+        .order-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .order-item {
+            padding: 15px;
+            background: var(--bg-light);
+            border-radius: var(--radius);
+            cursor: move;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+            user-select: none;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .order-item:hover {
+            border-color: var(--blue);
+        }
+
+        .order-item.drag-item {
+            opacity: 0.5;
+        }
+
+        .order-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            background: var(--blue);
+            color: white;
+            border-radius: 50%;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* === FILL IN BLANK === */
+        .fill-blank-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .fill-blank-select {
+            padding: 8px 12px;
+            border: 2px solid var(--bg-light);
+            border-radius: var(--radius);
+            font-family: 'Lexend', sans-serif;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .fill-blank-select:focus {
+            outline: none;
+            border-color: var(--blue);
+        }
+
+        /* === TRUE/FALSE === */
+        .true-false-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .tf-button {
+            padding: 15px;
+            border: 2px solid var(--bg-light);
+            border-radius: var(--radius);
+            background: var(--bg-card);
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-family: 'Lexend', sans-serif;
+        }
+
+        .tf-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .tf-button.true-btn:hover {
+            border-color: var(--green);
+        }
+
+        .tf-button.false-btn:hover {
+            border-color: var(--red);
+        }
+
+        .tf-button.selected.true-btn {
+            border-color: var(--green);
+            background: rgba(92, 184, 92, 0.1);
+        }
+
+        .tf-button.selected.false-btn {
+            border-color: var(--red);
+            background: rgba(231, 76, 60, 0.1);
+        }
+
+        .explanation-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--bg-light);
+            border-radius: var(--radius);
+            font-family: 'Lexend', sans-serif;
+            resize: vertical;
+            min-height: 80px;
+            font-size: 0.95rem;
+        }
+
+        .explanation-input:focus {
+            outline: none;
+            border-color: var(--blue);
+        }
+
+        /* === DIAGRAM LABELING === */
+        .diagram-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .diagram-svg {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        .diagram-labels {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .label-item {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .label-item input {
+            padding: 8px;
+            border: 2px solid var(--bg-light);
+            border-radius: var(--radius);
+            font-family: 'Lexend', sans-serif;
+        }
+
+        /* === HINTS === */
+        .hint-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid var(--bg-light);
+        }
+
+        .hint-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .btn-hint {
+            padding: 8px 16px;
+            background: var(--orange);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-family: 'Lexend', sans-serif;
+            font-weight: 500;
+        }
+
+        .btn-hint:hover {
+            opacity: 0.9;
+        }
+
+        .btn-hint:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .hint-content {
+            background: rgba(255, 152, 0, 0.1);
+            padding: 12px;
+            border-left: 4px solid var(--orange);
+            border-radius: var(--radius);
+            display: none;
+        }
+
+        .hint-content.visible {
+            display: block;
+        }
+
+        /* === FEEDBACK === */
+        .feedback {
+            padding: 15px;
+            border-radius: var(--radius);
+            margin-top: 20px;
+            display: none;
+        }
+
+        .feedback.show {
+            display: block;
+            animation: slideIn 0.3s;
+        }
+
+        .feedback-correct {
+            background: rgba(92, 184, 92, 0.15);
+            border-left: 4px solid var(--green);
+            color: var(--text-main);
+        }
+
+        .feedback-incorrect {
+            background: rgba(231, 76, 60, 0.15);
+            border-left: 4px solid var(--red);
+            color: var(--text-main);
+        }
+
+        .feedback-icon {
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }
+
+        /* === BUTTONS === */
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .btn-submit {
+            flex: 1;
+            min-width: 150px;
+            padding: 12px 24px;
+            background: var(--blue);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Lexend', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(74, 144, 217, 0.3);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-next {
+            flex: 1;
+            min-width: 150px;
+            padding: 12px 24px;
+            background: var(--green);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Lexend', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .btn-next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(92, 184, 92, 0.3);
+        }
+
+        .btn-skip {
+            flex: 1;
+            min-width: 150px;
+            padding: 12px 24px;
+            background: transparent;
+            color: var(--blue);
+            border: 2px solid var(--blue);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Lexend', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .btn-skip:hover {
+            background: var(--blue);
+            color: white;
+        }
+
+        /* === ENCOURAGEMENT === */
+        .encouragement {
+            text-align: center;
+            padding: 15px;
+            margin: 20px 0;
+            background: rgba(155, 89, 182, 0.1);
+            border-radius: var(--radius);
+            border-left: 4px solid var(--purple);
+            display: none;
+            animation: slideIn 0.3s;
+        }
+
+        .encouragement.show {
+            display: block;
+        }
+
+        .encouragement p {
+            font-weight: 500;
+            color: var(--purple);
+        }
+
+        /* === CONFETTI === */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            pointer-events: none;
+            animation: confetti-fall 3s linear forwards;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* === REFLECTION SECTION === */
+        .reflection-section {
+            background: var(--bg-card);
+            padding: 25px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+            display: none;
+        }
+
+        .reflection-section.active {
+            display: block;
+            animation: slideIn 0.3s;
+        }
+
+        .reflection-section h3 {
+            color: var(--blue);
+            margin-bottom: 15px;
+        }
+
+        .reflection-questions {
+            display: grid;
+            gap: 15px;
+        }
+
+        .reflection-item {
+            padding: 15px;
+            background: var(--bg-light);
+            border-radius: var(--radius);
+        }
+
+        .reflection-item label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .reflection-item textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid var(--bg-light);
+            border-radius: var(--radius);
+            font-family: 'Lexend', sans-serif;
+            resize: vertical;
+            min-height: 60px;
+            font-size: 0.95rem;
+        }
+
+        .reflection-item textarea:focus {
+            outline: none;
+            border-color: var(--blue);
+        }
+
+        /* === RESULTS SECTION === */
+        .results-section {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            display: none;
+            text-align: center;
+            animation: slideIn 0.3s;
+        }
+
+        .results-section.active {
+            display: block;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--blue), var(--purple));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 3rem;
+            font-weight: 700;
+        }
+
+        .results-section h2 {
+            color: var(--blue);
+            margin-bottom: 10px;
+        }
+
+        .results-message {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .detailed-review {
+            text-align: left;
+            margin-top: 30px;
+        }
+
+        .detailed-review h3 {
+            color: var(--blue);
+            margin-bottom: 15px;
+        }
+
+        .review-item {
+            background: var(--bg-light);
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: var(--radius);
+            border-left: 4px solid var(--bg-light);
+        }
+
+        .review-item.correct {
+            border-left-color: var(--green);
+            background: rgba(92, 184, 92, 0.05);
+        }
+
+        .review-item.incorrect {
+            border-left-color: var(--red);
+            background: rgba(231, 76, 60, 0.05);
+        }
+
+        .review-item.skipped {
+            border-left-color: var(--orange);
+            background: rgba(255, 152, 0, 0.05);
+        }
+
+        .review-question {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        .review-answer {
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+            color: var(--text-main);
+            opacity: 0.9;
+        }
+
+        .review-status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+
+        .review-status.correct {
+            background: var(--green);
+            color: white;
+        }
+
+        .review-status.incorrect {
+            background: var(--red);
+            color: white;
+        }
+
+        .review-status.skipped {
+            background: var(--orange);
+            color: white;
+        }
+
+        .review-explanation {
+            background: white;
+            padding: 10px;
+            border-radius: var(--radius);
+            margin-top: 8px;
+            font-size: 0.9rem;
+            opacity: 0.85;
+        }
+
+        .repeat-section {
+            background: rgba(255, 152, 0, 0.1);
+            border-left: 4px solid var(--orange);
+            padding: 20px;
+            border-radius: var(--radius);
+            margin-top: 25px;
+            text-align: left;
+        }
+
+        .repeat-section h3 {
+            color: var(--orange);
+            margin-bottom: 15px;
+        }
+
+        .repeat-topics {
+            list-style: none;
+            padding: 0;
+        }
+
+        .repeat-topics li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .repeat-topics li:before {
+            content: "📚";
+            position: absolute;
+            left: 0;
+        }
+
+        .btn-restart {
+            background: var(--blue);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-family: 'Lexend', sans-serif;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+
+        .btn-restart:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(74, 144, 217, 0.3);
+        }
+
+        /* === BREATHING EXERCISE === */
+        .breathing-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .breathing-modal.active {
+            display: flex;
+        }
+
+        .breathing-content {
+            background: var(--bg-card);
+            padding: 40px;
+            border-radius: var(--radius);
+            text-align: center;
+            max-width: 400px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .breathing-content h3 {
+            color: var(--teal);
+            margin-bottom: 20px;
+        }
+
+        .breathing-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--teal);
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            animation: breathing-animation 8s infinite;
+        }
+
+        @keyframes breathing-animation {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+            50% {
+                transform: scale(1.3);
+                opacity: 1;
+            }
+        }
+
+        .breathing-text {
+            margin-bottom: 20px;
+            color: var(--text-main);
+        }
+
+        .btn-close-breathing {
+            background: var(--teal);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-family: 'Lexend', sans-serif;
+            font-weight: 500;
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            .question-card {
+                padding: 20px;
+            }
+
+            .match-container {
+                grid-template-columns: 1fr;
+            }
+
+            .true-false-container {
+                grid-template-columns: 1fr;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn-submit, .btn-next, .btn-skip {
+                width: 100%;
+            }
+
+            .settings-content {
+                width: 95%;
+            }
+
+            :root {
+                --font-size-base: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header>
+            <h1>🧬 Ispit: Višestanični organizmi</h1>
+            <p>Od jedne stanice do složenog organizma</p>
+            <p style="font-size: 0.9rem; opacity: 0.7;">Natalija, sretno na ispitu! Nema vremenskog ograničenja — radi u svom ritmu.</p>
+        </header>
+
+        <!-- WELCOME SECTION -->
+        <div class="welcome-section">
+            <h2>👋 Prije nego što počneš...</h2>
+            <p>Ovaj ispit je izazovan, ali savladljiv! Prikaži što znadeš — nije potrebno da znadeš sve savršeno.</p>
+            <p><strong>Savjet:</strong> Čitaj svaku pitanju pažljivo, koristi savjete ako trebаš, i ne stezni se ako neko pitanje preskočiš.</p>
+            <div class="breathing-container">
+                <button class="btn btn-breathing" id="breathingBtn" aria-label="Vježba dišanja">🫁 Vježba dišanja (4-4-4)</button>
+                <button class="btn btn-settings" id="settingsBtn" aria-label="Postavke">⚙️ Postavke</button>
+            </div>
+        </div>
+
+        <!-- SETTINGS PANEL -->
+        <div class="settings-panel" id="settingsPanel" role="dialog" aria-labelledby="settingsTitle">
+            <div class="settings-content">
+                <h3 id="settingsTitle">⚙️ Postavke</h3>
+
+                <div class="setting-group">
+                    <label for="fontSizeSlider">Veličina fonta:</label>
+                    <input type="range" id="fontSizeSlider" min="12" max="20" value="16">
+                    <div style="text-align: center; font-size: 0.9rem; margin-top: 5px;">
+                        <span id="fontSizeValue">16</span>px
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <label>Pozadina:</label>
+                    <button class="theme-btn active" data-theme="light">☀️ Svjetla</button>
+                    <button class="theme-btn" data-theme="dark">🌙 Tamna</button>
+                </div>
+
+                <button class="btn btn-close-settings" id="closeSettingsBtn">Zatvori</button>
+            </div>
+        </div>
+
+        <!-- BREATHING MODAL -->
+        <div class="breathing-modal" id="breathingModal" role="dialog" aria-labelledby="breathingTitle">
+            <div class="breathing-content">
+                <h3 id="breathingTitle">🫁 Vježba dišanja</h3>
+                <p style="margin-bottom: 20px; font-size: 0.9rem;">Slijedi ritam za smirenu dušu:</p>
+                <div class="breathing-circle" id="breathingCircle">
+                    <span id="breathingText">UDAHNITE</span>
+                </div>
+                <p class="breathing-text">4 sekunde udisanja, 4 sekunde zadržavanja, 4 sekunde izdisanja</p>
+                <button class="btn-close-breathing" id="closeBreathingBtn">Gotovo</button>
+            </div>
+        </div>
+
+        <!-- PROGRESS BAR -->
+        <div class="progress-container">
+            <div class="progress-info">
+                <span id="progressText">Pitanje 1 od 17</span>
+                <span id="scorePreview">Rezultat: 0/17</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <!-- QUESTIONS SECTION -->
+        <div id="questionsContainer"></div>
+
+        <!-- REFLECTION SECTION -->
+        <div class="reflection-section" id="reflectionSection">
+            <h3>🤔 Metacognitivna refleksija</h3>
+            <div class="reflection-questions">
+                <div class="reflection-item">
+                    <label for="reflectionEasiest">Koja pitanja su ti bila NAJLAKŠA? Zašto?</label>
+                    <textarea id="reflectionEasiest" placeholder="Napišite svoju refleksiju..."></textarea>
+                </div>
+                <div class="reflection-item">
+                    <label for="reflectionHardest">Koja pitanja su ti bila NAJTEŽA? Koji koncept trebam ponoviti?</label>
+                    <textarea id="reflectionHardest" placeholder="Napišite svoju refleksiju..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- RESULTS SECTION -->
+        <div class="results-section" id="resultsSection">
+            <div class="score-circle" id="scoreCircle">0%</div>
+            <h2>Hvala što si dao/dala sve od sebe!</h2>
+            <div class="results-message" id="resultsMessage"></div>
+
+            <div class="detailed-review">
+                <h3>📋 Pregled svih odgovora:</h3>
+                <div id="detailedReview"></div>
+            </div>
+
+            <div class="repeat-section" id="repeatSection">
+                <h3>📚 Što trebao/trebala bi ponoviti?</h3>
+                <ul class="repeat-topics" id="repeatTopics"></ul>
+            </div>
+
+            <button class="btn-restart" id="restartBtn">🔄 Ponovi ispit</button>
+        </div>
+    </div>
+
+    <script>
+        // ===== EXAM DATA =====
+        const examQuestions = [
+            // WARM-UP QUESTIONS (2)
+            {
+                id: 1,
+                type: 'mc',
+                warmup: true,
+                difficulty: 'easy',
+                question: 'Što je stanica?',
+                ttsText: 'Što je stanica?',
+                options: [
+                    'Najmanja jedinica života',
+                    'Dio cvijeća',
+                    'Vrsta organizma',
+                    'Kemijski element'
+                ],
+                correct: 0,
+                explanation: 'Stanica je osnovna jedinica svih živih bića. Sve žive stvari sastavljene su od jedne ili više stanica.',
+                hints: [
+                    'Razmisli o najmanjoj dobro poznatoj živoj stvari.',
+                    'Svi organizmi — od bakterija do čovjeka — sadrže ovo.',
+                    'To je kao "Lego blok" na kojem je građeno sve živo.'
+                ]
+            },
+            {
+                id: 2,
+                type: 'tf',
+                warmup: true,
+                difficulty: 'easy',
+                question: 'Svi organizmi na Zemlji trebaju kisik za preživljavanje.',
+                ttsText: 'Svi organizmi na Zemlji trebaju kisik za preživljavanje. Istina ili netočno?',
+                correct: false,
+                explanation: 'NETOČNO — Mnogi organizmi (kao što su neke bakterije) žive BEZ kisika i koriste anaerobni metabolizam. Kisik je za njih čak otrovan!',
+                hints: [
+                    'Razmisli o bakterijama u mulju ili blatu.',
+                    'Prije nego što je bilo kisika u atmosferi, znate li što je živjelo?',
+                    'Aerobni = s kisikom. Anaerobni = bez kisika.'
+                ]
+            },
+
+            // MAIN EXAM QUESTIONS (15)
+            {
+                id: 3,
+                type: 'mc',
+                difficulty: 'easy',
+                question: 'Koji organizam predstavlja prijelazni oblik između jednostaničnih i višestaničnih organizama?',
+                ttsText: 'Koji organizam predstavlja prijelazni oblik između jednostaničnih i višestaničnih organizama?',
+                options: [
+                    'Volvox',
+                    'Amoeba (Ameba)',
+                    'E. coli (Escherichia coli)',
+                    'Paramecium (Paramecij)'
+                ],
+                correct: 0,
+                explanation: 'Volvox je alga koja se sastoji od 500-50,000 stanica organiziranih u sferni kolonijalnih obliku. Predstavlja idealan primjer prijelaza: svaka stanica može preživjeti sama, ali zajedno stvaraju funkcionirajući organizam.',
+                hints: [
+                    'To je zelena alga koja se nalazi u vodenim sredinama.',
+                    'Svoje koloniјe čine oblikom kao miniјaturne zelene kugle.',
+                    'Počinje s "Vol-..."'
+                ]
+            },
+
+            {
+                id: 4,
+                type: 'mc',
+                difficulty: 'medium',
+                question: 'Što je Kambrijska eksplozija?',
+                ttsText: 'Što je Kambrijska eksplozija?',
+                options: [
+                    'Nagla pojava velikog broja novih životinjskih vrsta prije oko 541 milijun godina',
+                    'Ekspanzija bjelančevina u kambrijanskom razdoblju',
+                    'Vulkanski izboj koji je pokrenuo evoluciju',
+                    'Nagla smrt dinosaura'
+                ],
+                correct: 0,
+                explanation: 'Kambrijska eksplozija je razdoblje brze diversifikacije životinjskih vrsta prije oko 541 milijun godina, praćeno povećanjem dostupnog kisika u atmosferi i oceanima. To je omogućilo razvoj većih, kompleksnijih tela.',
+                hints: [
+                    'Veže se na Kambrijsko razdoblje u geološkoj vremenskoj skali.',
+                    'Razmisli o broju i raznolikosti novih životinjskih oblika.',
+                    'Kisik je imao važnu ulogu.'
+                ]
+            },
+
+            {
+                id: 5,
+                type: 'mc',
+                difficulty: 'medium',
+                question: 'Koji metabolizam oslobađa VIŠE energije iz jedne molekule glukoze?',
+                ttsText: 'Koji metabolizam oslobađa VIŠE energije iz jedne molekule glukoze?',
+                options: [
+                    'Aerobni metabolizam (s kisikom)',
+                    'Anaerobni metabolizam (bez kisika)',
+                    'Oba oslobađaju istu energiju',
+                    'Fotosinteza'
+                ],
+                correct: 0,
+                explanation: 'Aerobni metabolizam oslobađa ~30-32 ATP molekule po glukozi, dok anaerobni (fermentacija) oslobađa samo 2 ATP. Zato su aerobni organizmi "energetski bogatiji" — kisik je odličan elektronski akceptor!',
+                hints: [
+                    'Razmisli što je bolji "gorivo" — s kisikom ili bez?',
+                    'ATP je energetska valuta stanice.',
+                    'Brojevi: 2 ATP vs 30 ATP'
+                ]
+            },
+
+            {
+                id: 6,
+                type: 'match',
+                difficulty: 'easy',
+                question: 'Spoji TKIVO s jeho FUNKCIJOM:',
+                ttsText: 'Spoji tkivo s njegovom funkcijom. Pokrovno tkivo je za zaštitu, provodeno tkivo je za transport, potporno tkivo je za mehaničku podršku, a tvorno tkivo je za rast.',
+                matches: [
+                    { left: 'Pokrovno tkivo', right: 'Zaštita od okolice' },
+                    { left: 'Provodeno tkivo', right: 'Transport vode i hranjiva' },
+                    { left: 'Potporno tkivo', right: 'Mehanička podrška i čvrstoća' },
+                    { left: 'Tvorno tkivo', right: 'Rast i tvorba novih stanica' }
+                ],
+                correct: [0, 1, 2, 3],
+                explanation: 'Biljno tkivo je speciјalizirano za različite funkcije: epidermis štiti, floem i ksilem transportiraju, sklerenhim podržava, a meristem raste. Ovo je osnovna specijalizacija biljnih stanica!',
+                hints: [
+                    'Razmisli koje tkivo se nalazi na površini lišća.',
+                    'Koje tkivo "vuče" vodu od korijena?',
+                    'Crvene punoline su primjer čvrstog tkiva.'
+                ]
+            },
+
+            {
+                id: 7,
+                type: 'order',
+                difficulty: 'easy',
+                question: 'Poredaj RAZINE ORGANIZACIJE od NAJJEDNOSTAVNIJE do NAJSLOŽENIJE:',
+                ttsText: 'Poredaj razine organizacije od najjednostavnije do najsloženije: stanica, organ, tkivo, organizam, organskim sustav.',
+                steps: [
+                    'Stanica',
+                    'Tkivo',
+                    'Organ',
+                    'Organskim sustav',
+                    'Organizam'
+                ],
+                correct: [0, 1, 2, 3, 4],
+                explanation: 'Organizacija je slojna kao Ruska lutka (matrjoška): stanica → nekoliko stanica = tkivo → nekoliko tkiva = organ → nekoliko organa = org. sustav → svi sustavi = organizam!',
+                hints: [
+                    'Počni s najmanjom jedinkom.',
+                    'Nekoliko stanica istog tipa stvara tkivo.',
+                    'Organizam je završna, najveća razina.'
+                ]
+            },
+
+            {
+                id: 8,
+                type: 'tf',
+                difficulty: 'medium',
+                question: 'Edijakarijski organizmi su imali tvrdi kostur od kalcija, što ih je zaštitilo od grabežljivaca.',
+                ttsText: 'Edijakarijski organizmi su imali tvrdi kostur od kalcija, što ih je zaštitilo od grabežljivaca. Istina ili netočno?',
+                correct: false,
+                explanation: 'NETOČNO — Edijakarijski organizmi su imali MEKA TIJELA bez tvrdih dijelova. Nisu imali ni kostur niti ljusku. To su bili čudni, mehkusti oblici života koji su živjeli prije Kambrijske eksplozije.',
+                hints: [
+                    'Razmisli o vremenu prije nego što su se razvile ljuske i kosti.',
+                    '"-karijski" dolazi od lokacije gdje su pronađeni — Ediacara u Australiji.',
+                    'Bili su mehkusti kao današnje meduze.'
+                ]
+            },
+
+            {
+                id: 9,
+                type: 'tf',
+                difficulty: 'medium',
+                question: 'Kisik je ODUVIJEK bio koristan za žive organizme i nikada nije predstavljao problem.',
+                ttsText: 'Kisik je oduvijek bio koristan za žive organizme i nikada nije predstavljao problem. Istina ili netočno?',
+                correct: false,
+                explanation: 'NETOČNO — Kisik je bio TOKSIČAN za rane anaerobne organizme! Kada je kisik počeo nakupljati se u atmosferi prije 2,4 milijarde godina, izazvao je veliku stanicu ("Veliki oksigenacijski događaj"). Samo organizmi koji su razvili načine za rad s kisikom preživjeli su.',
+                hints: [
+                    'Razmisli — koja životinja se boji rđe? To je oksidacija.',
+                    'Старе bakterije nisu imale enzime za rukovanje kisikom.',
+                    '"Veliki oksigenacijski događaj" je bio kao otrov za tadašnje živote.'
+                ]
+            },
+
+            {
+                id: 10,
+                type: 'fill',
+                difficulty: 'easy',
+                question: 'Proces kojim biljke proizvode vlastitu hranu pomoću sunčeve svjetlosti naziva se:',
+                ttsText: 'Proces kojim biljke proizvode vlastitu hranu pomoću sunčeve svjetlosti naziva se___.',
+                options: [
+                    'Fotosinteza',
+                    'Fermentacija',
+                    'Disanje',
+                    'Transpiracija'
+                ],
+                correct: 0,
+                explanation: 'Fotosinteza je proces u kojem biljke koriste solarnu energiju da prerade CO₂ i vodu u glukozu i O₂. To je osnova većine lanaca ishrane na Zemlji!',
+                hints: [
+                    'Grč. "foto" = svjetlo, "sinteza" = pravljenje.',
+                    'To je ono što zelene biljke čine s sunčevom svjetlošću.',
+                    'Proizvodi se kisik koji dišemo.'
+                ]
+            },
+
+            {
+                id: 11,
+                type: 'mc',
+                difficulty: 'medium',
+                question: 'Koji organ biljke je PRIMARNO odgovoran za spolno razmnožavanje?',
+                ttsText: 'Koji organ biljke je primarno odgovoran za spolno razmnožavanje?',
+                options: [
+                    'Cvijet',
+                    'List',
+                    'Korijen',
+                    'Stabljika'
+                ],
+                correct: 0,
+                explanation: 'Cvijet je reproduktivni organ. Sadrži prašnike (muški — proizvodnja peludi) i plodnicu/tučak (ženski — proizvodnja sjemenki nakon oprašivanja). List, korijen i stabljika su vegetativni organi.',
+                hints: [
+                    'Razmisli što ima prašnike i pločicu.',
+                    'To je privlačno za pčele i leteće kukce.',
+                    'Iz njega se razvija plod i sjemenke.'
+                ]
+            },
+
+            {
+                id: 12,
+                type: 'fill',
+                difficulty: 'easy',
+                question: 'Ženski spolni organ cvijeta, kojи proizvodi sjemenke, naziva se:',
+                ttsText: 'Ženski spolni organ cvijeta, koji proizvodi sjemenke, naziva se___.',
+                options: [
+                    'Plodnica (Tučak)',
+                    'Prašnik',
+                    'Latica',
+                    'Čašični list'
+                ],
+                correct: 0,
+                explanation: 'Plodnica (ili tučak) je ženski dio cvijeta. Sadrži jajnice u kojima se razvijaju sjemenke nakon što spermiji iz peludи dostignu jajnu stanicu.',
+                hints: [
+                    'Nalazi se u sredini cvijeta, često je zelena ili sjajnih boja.',
+                    'Iz nje se kasnije razvija plod.',
+                    'Počinje s "Plo..."'
+                ]
+            },
+
+            {
+                id: 13,
+                type: 'match',
+                difficulty: 'medium',
+                question: 'Spoji VRSTU OPRAŠIVANJA s PRIMARNIM VEKTOROM (prenosioca):',
+                ttsText: 'Spoji vrstu oprašivanja s primarnim vektorom: vjetrom za trave, kukcima za orhideje, pticama za tropske biljke, vodom za morske alge.',
+                matches: [
+                    { left: 'Anemohilija (vjetar)', right: 'Trave, žitarice, neki cvjetovi' },
+                    { left: 'Entomohilija (kukci)', right: 'Orhideje, ruže, jasno obojene biljke' },
+                    { left: 'Ornitohilija (ptice)', right: 'Tropske biljke, crveni cvjetovi' },
+                    { left: 'Hidrofil (voda)', right: 'Morske alge, morske trave' }
+                ],
+                correct: [0, 1, 2, 3],
+                explanation: 'Različite biljke razvile su specijalizacije za različite oprašivače: vjetar može biti nasumičan pa trava proizvodi brojnu peludu, insekti vole boje i aromu, ptice vole crvenu boju, a voda je idealna za vodene organizme.',
+                hints: [
+                    'Razmisli — koje se biljke ne trebaju insekta?',
+                    'Crveni cvjetovi često primjećuju određene životinje.',
+                    'Trava se opraši kada vjetar duva - zato toliko peludи!'
+                ]
+            },
+
+            {
+                id: 14,
+                type: 'mc',
+                difficulty: 'medium',
+                question: 'Što je homeostaza?',
+                ttsText: 'Što je homeostaza?',
+                options: [
+                    'Sposobnost održavanja stabilnih unutarnjih uvjeta (temperatura, pH, voda)',
+                    'Proces rasta i razvoja',
+                    'Vrsta respiracije',
+                    'Proteinski enzim'
+                ],
+                correct: 0,
+                explanation: 'Homeostaza je sposobnost organizama da održavaju stabilne unutarne uvjete bez obzira na vanjske promjene. Primjeri: održavanje temperature tela, ravnoteže vode, pH-a. To je ključno za preživljavanje!',
+                hints: [
+                    'Grč. "homo" = isti, "stasis" = položaj/stanje.',
+                    'Tvoje tijelo radi JAKO da održi temperaturu od 37°C.',
+                    'To je kao "unutarni balans" organizma.'
+                ]
+            },
+
+            {
+                id: 15,
+                type: 'tf',
+                difficulty: 'medium',
+                question: 'Vegetativnim razmnožavanjem (npr. stolonima ili gomolji) nastaju genetski IDENTIČNE biljke — klonovi originalne biljke.',
+                ttsText: 'Vegetativnim razmnožavanjem, na primjer stolonima ili gomolji, nastaju genetski identične biljke — klonovi originalne biljke. Istina ili netočno?',
+                correct: true,
+                explanation: 'ISTINA — Vegetativno razmnožavanje je aseksualno: nema spajanja gameta pa su sve nove biljke genetske kopije roditelja. To je korisno jer očuva uspješne kombinacije gena, ali nema genetske raznolikosti koju daje spolna reprodukcija.',
+                hints: [
+                    'Razmisli o jagodama koje se šire stolonima — jesu li sve jednake?',
+                    'Nema sperme i jajne stanice, nema miješanja gena.',
+                    'Genetska identičnost = klon.'
+                ]
+            },
+
+            {
+                id: 16,
+                type: 'order',
+                difficulty: 'hard',
+                question: 'Poredaj KORAKE OPRAŠIVANJA I OPLODNJE od POČETKA do KRAJA:',
+                ttsText: 'Poredaj korake oprašivanja i oplodnje od početka do kraja: oplodnja, razvoj sjemenke i ploda, prijenos peludи na ženske dijelove, rast bebinog embrija, tvorba zametka.',
+                steps: [
+                    'Prijenos peludи na ženske dijelove (stigmu)',
+                    'Rast peludine cijevi prema jajniku',
+                    'Oplodnja — spajanje muške i ženske gamete',
+                    'Razvoj embrija u sjemenku',
+                    'Razvoj cijelog ploda'
+                ],
+                correct: [0, 1, 2, 3, 4],
+                explanation: 'Oprašivanje je fizički prijenos peludи, a oplodnja je genetsko spajanje. Taj redoslijed je kritičan: prvo se peluда mora dostati do ženske plodnice, zatim raste tuba prema jajnoj stanici, kombiniraju se gamete (oplodnja), te se razvija sjemenka i plod.',
+                hints: [
+                    'Počni s nečim što se prebacuje vjetrom ili kukcima.',
+                    'Peludinа tuba je kao mali "tunelski most".',
+                    'Embrij se razvija NAKON što se spoje muški i ženski dijelovi.'
+                ]
+            },
+
+            {
+                id: 17,
+                type: 'mc',
+                difficulty: 'hard',
+                question: 'Zašto je ENDOSIMBIOTSKA TEORIJA važna za razumijevanje eukariotske stanice?',
+                ttsText: 'Zašto je endosimbiotska teorija važna za razumijevanje eukariotske stanice?',
+                options: [
+                    'Objašnjava kako su mitohondriji i kloroplasti postali dijelovi eukariotske stanice — sporom je bakterija pohvatala drugu bakteriju',
+                    'Objašnjava kako se ribosomi tvorе u jezgri',
+                    'Opisuje kako stanica dijeli DNA tijekom mitoze',
+                    'Dokazuje da su svi organizmi nastali iz zraka'
+                ],
+                correct: 0,
+                explanation: 'Endosimbiotska teorija (Lynn Margulis) predlaže da su mitohondriji i kloroplasti nekada bili slobodno živeće bakterije koje su "pohvatane" većim stanicama. Imaju vlastitu DNA, ribosime i membrane — dokazi "crvenih zatvorenika"! To objašnjava gdje eukariotske stanice dobivaju veliku moć.',
+                hints: [
+                    'Razmisli — mitohondriji ima vlastitu DNA, baš kao bakterija.',
+                    '"Endo" = unutar, "simbioza" = zajedno',
+                    'To je kao kada bi manji organizam živio UNUTAR većeg, vječno.'
+                ]
+            }
+        ];
+
+        // ===== STATE =====
+        let currentQuestionIndex = 0;
+        let answers = {};
+        let scores = {};
+        let reflectionData = {};
+        let examStarted = false;
+
+        // ===== INITIALIZATION =====
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeExam();
+            setupEventListeners();
+        });
+
+        function initializeExam() {
+            renderQuestions();
+            updateProgress();
+            setupBreathingExercise();
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            examQuestions.forEach((q, idx) => {
+                const card = createQuestionCard(q, idx);
+                container.appendChild(card);
+            });
+
+            // Show first question
+            if (examQuestions.length > 0) {
+                activateQuestion(0);
+            }
+        }
+
+        function createQuestionCard(question, index) {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.id = `question-${index}`;
+            card.setAttribute('data-question-id', question.id);
+
+            let questionContent = '';
+            const warmupBadge = question.warmup ? '<span class="question-number warmup">Zagrijavanje — ne broji se</span>' : `<span class="question-number">Pitanje ${index + 1}</span>`;
+            const difficultyClass = `difficulty-${question.difficulty}`;
+
+            questionContent += `
+                <div class="question-header">
+                    ${warmupBadge}
+                    <span class="question-difficulty ${difficultyClass}">${getDifficultyLabel(question.difficulty)}</span>
+                </div>
+                <div style="display: flex; align-items: start; gap: 10px;">
+                    <div class="question-text">${question.question}</div>
+                    <button class="tts-button" data-question-index="${index}" aria-label="Čitaj naglas">🔊</button>
+                </div>
+            `;
+
+            // Render based on type
+            switch(question.type) {
+                case 'mc':
+                    questionContent += renderMCOptions(question, index);
+                    break;
+                case 'tf':
+                    questionContent += renderTFOptions(question, index);
+                    break;
+                case 'match':
+                    questionContent += renderMatchOptions(question, index);
+                    break;
+                case 'order':
+                    questionContent += renderOrderOptions(question, index);
+                    break;
+                case 'fill':
+                    questionContent += renderFillOptions(question, index);
+                    break;
+            }
+
+            // Hints
+            if (question.hints) {
+                questionContent += renderHints(question, index);
+            }
+
+            // Feedback
+            questionContent += `<div class="feedback" id="feedback-${index}"></div>`;
+
+            // Buttons
+            questionContent += `
+                <div class="button-group">
+                    <button class="btn-submit" data-question-index="${index}" id="submit-${index}">
+                        ${question.type === 'tf' ? 'Provjeri odgovor' : 'Provjeri odgovor'}
+                    </button>
+                    <button class="btn-skip" data-question-index="${index}">Preskoči</button>
+                </div>
+            `;
+
+            card.innerHTML = questionContent;
+            return card;
+        }
+
+        function renderMCOptions(question, index) {
+            let html = '<div class="options">';
+            question.options.forEach((option, optIdx) => {
+                const id = `option-${index}-${optIdx}`;
+                html += `
+                    <label class="option">
+                        <input type="radio" name="q${index}" value="${optIdx}" id="${id}">
+                        <span>${option}</span>
+                    </label>
+                `;
+            });
+            html += '</div>';
+            return html;
+        }
+
+        function renderTFOptions(question, index) {
+            let html = `
+                <div class="true-false-container">
+                    <button class="tf-button true-btn" data-question-index="${index}" data-answer="true">✅ ISTINA</button>
+                    <button class="tf-button false-btn" data-question-index="${index}" data-answer="false">❌ NETOČNO</button>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label for="explanation-${index}" style="display: block; margin-bottom: 8px; font-weight: 500;">Objasni zašto:</label>
+                    <textarea id="explanation-${index}" class="explanation-input" placeholder="Napišи svoje objašnjenje..."></textarea>
+                </div>
+            `;
+            return html;
+        }
+
+        function renderMatchOptions(question, index) {
+            let html = '<div class="match-container">';
+            html += '<div class="match-column"><h4 style="text-align: center; margin-bottom: 10px;">Pojmovi</h4>';
+            question.matches.forEach((pair, pIdx) => {
+                html += `
+                    <div class="match-item draggable-item"
+                         data-question-index="${index}"
+                         data-pair-index="${pIdx}"
+                         data-type="left"
+                         draggable="true"
+                         tabindex="0">
+                        ${pair.left}
+                    </div>
+                `;
+            });
+            html += '</div>';
+            html += '<div class="match-column"><h4 style="text-align: center; margin-bottom: 10px;">Definicije</h4>';
+            question.matches.forEach((pair, pIdx) => {
+                html += `
+                    <div class="match-drop-zone"
+                         data-question-index="${index}"
+                         data-pair-index="${pIdx}"
+                         data-type="right">
+                        ${pair.right}
+                        <input type="hidden" class="match-value" value="">
+                    </div>
+                `;
+            });
+            html += '</div></div>';
+            return html;
+        }
+
+        function renderOrderOptions(question, index) {
+            let html = '<div class="order-list" data-question-index="' + index + '">';
+            question.steps.forEach((step, sIdx) => {
+                html += `
+                    <div class="order-item draggable-item"
+                         data-step-index="${sIdx}"
+                         draggable="true"
+                         tabindex="0">
+                        <span class="order-number">${sIdx + 1}</span>
+                        <span>${step}</span>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            return html;
+        }
+
+        function renderFillOptions(question, index) {
+            let html = '<div class="fill-blank-container">';
+            html += '<span>Odgovor:</span>';
+            html += `<select class="fill-blank-select" data-question-index="${index}">`;
+            html += '<option value="">-- Odaberi --</option>';
+            question.options.forEach((opt, optIdx) => {
+                html += `<option value="${optIdx}">${opt}</option>`;
+            });
+            html += '</select></div>';
+            return html;
+        }
+
+        function renderHints(question, index) {
+            let html = `<div class="hint-section">
+                <div class="hint-buttons">`;
+            for (let i = 0; i < question.hints.length; i++) {
+                html += `<button class="btn-hint" data-hint-level="${i + 1}" data-question-index="${index}">Savjet ${i + 1}</button>`;
+            }
+            html += '</div>';
+            question.hints.forEach((hint, hIdx) => {
+                html += `
+                    <div class="hint-content" data-hint-level="${hIdx + 1}" data-question-index="${index}">
+                        <strong>💡 Savjet ${hIdx + 1}:</strong> ${hint}
+                    </div>
+                `;
+            });
+            html += '</div>';
+            return html;
+        }
+
+        function getDifficultyLabel(difficulty) {
+            switch(difficulty) {
+                case 'easy': return '⭐ Lako';
+                case 'medium': return '⭐⭐ Srednje';
+                case 'hard': return '⭐⭐⭐ Teško';
+                default: return 'Nepoznato';
+            }
+        }
+
+        function setupEventListeners() {
+            // TTS buttons
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('tts-button')) {
+                    const idx = parseInt(e.target.dataset.questionIndex);
+                    speakQuestion(idx);
+                }
+            });
+
+            // Submit buttons
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('btn-submit')) {
+                    const idx = parseInt(e.target.dataset.questionIndex);
+                    submitAnswer(idx);
+                }
+            });
+
+            // Skip buttons
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('btn-skip')) {
+                    const idx = parseInt(e.target.dataset.questionIndex);
+                    skipQuestion(idx);
+                }
+            });
+
+            // Hint buttons
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('btn-hint')) {
+                    const level = parseInt(e.target.dataset.hintLevel);
+                    const qIdx = parseInt(e.target.dataset.questionIndex);
+                    showHint(qIdx, level);
+                }
+            });
+
+            // T/F buttons
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('tf-button')) {
+                    const qIdx = parseInt(e.target.dataset.questionIndex);
+                    const answer = e.target.dataset.answer === 'true';
+                    selectTF(qIdx, answer, e.target);
+                }
+            });
+
+            // Breathing button
+            document.getElementById('breathingBtn').addEventListener('click', openBreathingModal);
+            document.getElementById('closeBreathingBtn').addEventListener('click', closeBreathingModal);
+
+            // Settings
+            document.getElementById('settingsBtn').addEventListener('click', openSettings);
+            document.getElementById('closeSettingsBtn').addEventListener('click', closeSettings);
+
+            // Font size
+            document.getElementById('fontSizeSlider').addEventListener('input', function(e) {
+                const size = e.target.value;
+                document.documentElement.style.setProperty('--font-size-base', size + 'px');
+                document.getElementById('fontSizeValue').textContent = size;
+            });
+
+            // Theme buttons
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    if (this.dataset.theme === 'dark') {
+                        document.body.classList.add('dark-mode');
+                    } else {
+                        document.body.classList.remove('dark-mode');
+                    }
+                });
+            });
+
+            // Drag and drop for matching
+            document.addEventListener('dragstart', handleDragStart);
+            document.addEventListener('dragover', handleDragOver);
+            document.addEventListener('drop', handleDrop);
+            document.addEventListener('dragend', handleDragEnd);
+
+            // Restart button
+            document.addEventListener('click', function(e) {
+                if (e.target.id === 'restartBtn') {
+                    location.reload();
+                }
+            });
+        }
+
+        function speakQuestion(index) {
+            const question = examQuestions[index];
+            const text = question.ttsText || question.question;
+
+            if ('speechSynthesis' in window) {
+                speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'hr-HR';
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        function selectTF(qIdx, answer, btn) {
+            document.querySelectorAll(`[data-question-index="${qIdx}"].tf-button`).forEach(b => {
+                b.classList.remove('selected');
+            });
+            btn.classList.add('selected');
+            answers[qIdx] = answer;
+        }
+
+        function showHint(qIdx, level) {
+            const hint = document.querySelector(`[data-hint-level="${level}"][data-question-index="${qIdx}"].hint-content`);
+            if (hint) {
+                hint.classList.toggle('visible');
+            }
+        }
+
+        function submitAnswer(qIdx) {
+            const question = examQuestions[qIdx];
+            let isCorrect = false;
+            let userAnswer = null;
+
+            switch(question.type) {
+                case 'mc':
+                    const selected = document.querySelector(`input[name="q${qIdx}"]:checked`);
+                    if (!selected) {
+                        alert('Molim odaberi odgovor prije nego što pritisnеš Provjeri!');
+                        return;
+                    }
+                    userAnswer = parseInt(selected.value);
+                    isCorrect = userAnswer === question.correct;
+                    break;
+
+                case 'tf':
+                    if (answers[qIdx] === undefined) {
+                        alert('Molim odaberi ISTINA ili NETOČNO!');
+                        return;
+                    }
+                    const explanation = document.getElementById(`explanation-${qIdx}`).value.trim();
+                    if (!explanation) {
+                        alert('Molim napišი objašnjenje!');
+                        return;
+                    }
+                    userAnswer = { answer: answers[qIdx], explanation: explanation };
+                    isCorrect = answers[qIdx] === question.correct;
+                    break;
+
+                case 'fill':
+                    const select = document.querySelector(`[data-question-index="${qIdx}"].fill-blank-select`);
+                    userAnswer = parseInt(select.value);
+                    if (userAnswer === '') {
+                        alert('Molim odaberi odgovor!');
+                        return;
+                    }
+                    isCorrect = userAnswer === question.correct;
+                    break;
+
+                case 'match':
+                    // Check all matches
+                    const zones = document.querySelectorAll(`[data-question-index="${qIdx}"][data-type="right"]`);
+                    isCorrect = true;
+                    userAnswer = [];
+                    zones.forEach((zone, idx) => {
+                        const hidden = zone.querySelector('.match-value');
+                        if (hidden.value === '') {
+                            isCorrect = false;
+                        }
+                        userAnswer.push({ pair: idx, matched: parseInt(hidden.value) || -1 });
+                    });
+                    break;
+
+                case 'order':
+                    // Check order
+                    const items = document.querySelectorAll(`[data-question-index="${qIdx}"].order-item`);
+                    isCorrect = true;
+                    userAnswer = [];
+                    items.forEach((item, idx) => {
+                        const stepIdx = parseInt(item.dataset.stepIndex);
+                        userAnswer.push(stepIdx);
+                        if (stepIdx !== idx) isCorrect = false;
+                    });
+                    break;
+            }
+
+            // Record answer
+            answers[qIdx] = userAnswer;
+            scores[qIdx] = isCorrect;
+
+            // Show feedback
+            showFeedback(qIdx, isCorrect, question);
+
+            // Disable submit button
+            document.getElementById(`submit-${qIdx}`).disabled = true;
+
+            // Play confetti if correct
+            if (isCorrect && !question.warmup) {
+                playConfetti();
+            }
+
+            // Show encouragement every 3-4 questions
+            if (isCorrect && (qIdx + 1) % 3 === 0 && !question.warmup) {
+                showEncouragement(qIdx);
+            }
+        }
+
+        function showFeedback(qIdx, isCorrect, question) {
+            const feedbackDiv = document.getElementById(`feedback-${qIdx}`);
+            const className = isCorrect ? 'feedback-correct' : 'feedback-incorrect';
+            const icon = isCorrect ? '✅' : '❌';
+
+            feedbackDiv.className = `feedback ${className} show`;
+            feedbackDiv.innerHTML = `
+                <div style="display: flex; gap: 10px;">
+                    <div class="feedback-icon">${icon}</div>
+                    <div>
+                        <strong>${isCorrect ? 'Točno!' : 'Nije točno, ali bez brige!'}</strong>
+                        <p style="margin-top: 8px;">${question.explanation}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showEncouragement(qIdx) {
+            const encouragements = [
+                '💪 Odličan rad! Nastavi s tom energijom!',
+                '🌟 Bravo! Pokazuješ stvarnu znanja!',
+                '🚀 Odličan odgovor! Imaš to!',
+                '🎯 Precizno! Baš kako treba!'
+            ];
+            const msg = encouragements[Math.floor(Math.random() * encouragements.length)];
+
+            const enc = document.createElement('div');
+            enc.className = 'encouragement show';
+            enc.innerHTML = `<p>${msg}</p>`;
+            document.querySelector(`#question-${qIdx}`).appendChild(enc);
+
+            setTimeout(() => enc.remove(), 5000);
+        }
+
+        function skipQuestion(qIdx) {
+            scores[qIdx] = 'skipped';
+            nextQuestion();
+        }
+
+        function playConfetti() {
+            for (let i = 0; i < 30; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8'];
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                document.body.appendChild(confetti);
+
+                setTimeout(() => confetti.remove(), 3500);
+            }
+        }
+
+        function activateQuestion(idx) {
+            document.querySelectorAll('.question-card').forEach(card => card.classList.remove('active'));
+            document.getElementById(`question-${idx}`).classList.add('active');
+            updateProgress();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < examQuestions.length - 1) {
+                currentQuestionIndex++;
+                activateQuestion(currentQuestionIndex);
+            } else {
+                finishExam();
+            }
+        }
+
+        function updateProgress() {
+            const total = examQuestions.length;
+            const answered = Object.keys(scores).length;
+            const percent = (currentQuestionIndex + 1) / total * 100;
+
+            document.getElementById('progressFill').style.width = percent + '%';
+            document.getElementById('progressText').textContent = `Pitanje ${currentQuestionIndex + 1} od ${total}`;
+            document.getElementById('scorePreview').textContent = `Odgovoren: ${answered}/${total}`;
+        }
+
+        function finishExam() {
+            // Show reflection
+            document.getElementById('reflectionSection').classList.add('active');
+            document.querySelector('html').scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Breathing exercise
+        function openBreathingModal() {
+            document.getElementById('breathingModal').classList.add('active');
+        }
+
+        function closeBreathingModal() {
+            document.getElementById('breathingModal').classList.remove('active');
+        }
+
+        function setupBreathingExercise() {
+            const circle = document.getElementById('breathingCircle');
+            const text = document.getElementById('breathingText');
+            let stage = 0;
+            const stages = [
+                { text: 'UDAHNITE', duration: 4 },
+                { text: 'ZADRŽITE', duration: 4 },
+                { text: 'IZDAHNITE', duration: 4 }
+            ];
+
+            setInterval(() => {
+                if (document.getElementById('breathingModal').classList.contains('active')) {
+                    text.textContent = stages[stage].text;
+                    stage = (stage + 1) % stages.length;
+                }
+            }, 4000);
+        }
+
+        // Settings
+        function openSettings() {
+            document.getElementById('settingsPanel').classList.add('active');
+        }
+
+        function closeSettings() {
+            document.getElementById('settingsPanel').classList.remove('active');
+        }
+
+        // Drag & Drop for matching and ordering
+        let draggedElement = null;
+
+        function handleDragStart(e) {
+            if (e.target.classList.contains('draggable-item')) {
+                draggedElement = e.target;
+                e.target.style.opacity = '0.5';
+            }
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            if (e.target.classList.contains('match-drop-zone')) {
+                e.target.classList.add('drag-over');
+            }
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            if (e.target.classList.contains('match-drop-zone') && draggedElement) {
+                const qIdx = parseInt(e.target.dataset.questionIndex);
+                const pairIdx = parseInt(e.target.dataset.pairIndex);
+                const draggedPairIdx = parseInt(draggedElement.dataset.pairIndex);
+
+                if (draggedPairIdx === pairIdx) {
+                    const hidden = e.target.querySelector('.match-value');
+                    hidden.value = draggedPairIdx;
+                    e.target.classList.add('matched');
+                    draggedElement.classList.add('matched');
+                }
+                e.target.classList.remove('drag-over');
+            }
+        }
+
+        function handleDragEnd(e) {
+            e.target.style.opacity = '1';
+        }
+
+        // Results
+        function calculateResults() {
+            const mainQuestions = examQuestions.filter(q => !q.warmup);
+            let correctCount = 0;
+            mainQuestions.forEach(q => {
+                const idx = q.id - 1;
+                if (scores[idx] === true) correctCount++;
+            });
+
+            const percent = (correctCount / mainQuestions.length) * 100;
+            return { correctCount, total: mainQuestions.length, percent: Math.round(percent) };
+        }
+
+        // Show results
+        document.addEventListener('click', function(e) {
+            if (e.target.textContent.includes('Nastavi na rezultate')) {
+                reflectionData.easiest = document.getElementById('reflectionEasiest').value;
+                reflectionData.hardest = document.getElementById('reflectionHardest').value;
+
+                showResults();
+                document.getElementById('reflectionSection').classList.remove('active');
+            }
+        });
+
+        function showResults() {
+            const { correctCount, total, percent } = calculateResults();
+            const resultsDiv = document.getElementById('resultsSection');
+
+            resultsDiv.classList.add('active');
+            document.getElementById('scoreCircle').textContent = percent + '%';
+
+            let message = '';
+            if (percent >= 90) {
+                message = '🌟 Fenomenalno! Pokazao/a si izvanredno razumijevanje višestaničnih organizama. Nastavi s tom razinom znanja!';
+            } else if (percent >= 75) {
+                message = '👏 Odličan rezultat! Ima jasno razumijevanja većine koncepata. Malo više vježbanja i biti ćeš savršen/a!';
+            } else if (percent >= 60) {
+                message = '💪 Dobar pokušaj! Prepoznao/a si glavne koncepte, ali trebao/trebala bi pojačati znanja iz nekih dijelova. To je sasvim normalno — samo nastavi s učenjem!';
+            } else {
+                message = '🔍 Bilo je izazivno, ali to je OK! Nema brige — sad znaš gdje trebati fokusa. Pregled ispod će ti pomoći da se bolje pripremiš!';
+            }
+
+            document.getElementById('resultsMessage').innerHTML = `
+                <p>${message}</p>
+                <p style="margin-top: 15px; font-size: 0.95rem; opacity: 0.8;">
+                    Odgovorio/a si točno na ${correctCount} od ${total} glavnih pitanja.
+                </p>
+            `;
+
+            // Detailed review
+            const reviewDiv = document.getElementById('detailedReview');
+            reviewDiv.innerHTML = '';
+
+            examQuestions.forEach((q, idx) => {
+                if (q.warmup) return;
+
+                const status = scores[idx];
+                let statusText = '';
+                let statusClass = '';
+
+                if (status === 'skipped') {
+                    statusText = 'Preskočeno';
+                    statusClass = 'skipped';
+                } else if (status === true) {
+                    statusText = 'Točno';
+                    statusClass = 'correct';
+                } else if (status === false) {
+                    statusText = 'Netočno';
+                    statusClass = 'incorrect';
+                }
+
+                const reviewItem = document.createElement('div');
+                reviewItem.className = `review-item ${statusClass}`;
+                reviewItem.innerHTML = `
+                    <div class="review-question">${q.question}</div>
+                    <div class="review-answer"><strong>Objašnjenje:</strong> ${q.explanation}</div>
+                    <span class="review-status ${statusClass}">${statusText}</span>
+                `;
+                reviewDiv.appendChild(reviewItem);
+            });
+
+            // Repeat section
+            const repeatTopics = [
+                '📚 Volvox i prijelazni organizmi',
+                '📚 Kambrijska eksplozija i oksigenacijski događaj',
+                '📚 Razine organizacije stanica',
+                '📚 Homeostaza i regulacija',
+                '📚 Struktura i funkcija biljnih organa',
+                '📚 Oprašivanje i oplodnja',
+                '📚 Vegetativno vs spolno razmnožavanje',
+                '📚 Endosimbiotska teorija'
+            ];
+            const repeatList = document.getElementById('repeatTopics');
+            repeatTopics.forEach(topic => {
+                const li = document.createElement('li');
+                li.textContent = topic;
+                repeatList.appendChild(li);
+            });
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Add button to finish reflection and show results
+        const reflectionSection = document.getElementById('reflectionSection');
+        const continueButton = document.createElement('button');
+        continueButton.className = 'btn-submit';
+        continueButton.textContent = '→ Nastavi na rezultate';
+        continueButton.style.marginTop = '20px';
+
+        document.addEventListener('click', function(e) {
+            if (currentQuestionIndex === examQuestions.length - 1 && !document.querySelector('.btn-submit').disabled) {
+                // After last question answered
+            }
+        });
+
+        // Add continue button to reflection after questions are done
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('btn-skip') || e.target.classList.contains('btn-next')) {
+                if (currentQuestionIndex >= examQuestions.length - 1) {
+                    // Last question
+                    const refSection = document.getElementById('reflectionSection');
+                    if (!refSection.querySelector('.btn-continue')) {
+                        const btn = document.createElement('button');
+                        btn.className = 'btn-submit btn-continue';
+                        btn.textContent = '→ Nastavi na rezultate';
+                        btn.style.marginTop = '20px';
+                        btn.addEventListener('click', function() {
+                            reflectionData.easiest = document.getElementById('reflectionEasiest').value;
+                            reflectionData.hardest = document.getElementById('reflectionHardest').value;
+                            showResults();
+                            refSection.classList.remove('active');
+                        });
+                        refSection.appendChild(btn);
+                    }
+                }
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight') {
+                nextQuestion();
+            } else if (e.key === 'ArrowLeft') {
+                if (currentQuestionIndex > 0) {
+                    currentQuestionIndex--;
+                    activateQuestion(currentQuestionIndex);
+                }
+            }
+        });
+
+        // Add continue button when reflection section shows
+        document.addEventListener('click', function(e) {
+            if (e.target.id === 'reflectionSection') {
+                const refSection = document.getElementById('reflectionSection');
+                if (!refSection.querySelector('.btn-continue')) {
+                    const btn = document.createElement('button');
+                    btn.className = 'btn-submit btn-continue';
+                    btn.textContent = '→ Nastavi na rezultate';
+                    btn.style.marginTop = '20px';
+                    btn.addEventListener('click', function() {
+                        reflectionData.easiest = document.getElementById('reflectionEasiest').value;
+                        reflectionData.hardest = document.getElementById('reflectionHardest').value;
+                        showResults();
+                        refSection.classList.remove('active');
+                    });
+                    refSection.appendChild(btn);
+                }
+            }
+        });
+
+        // Add continue button to reflection section once it's active
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.target.id === 'reflectionSection' && mutation.target.classList.contains('active')) {
+                    if (!mutation.target.querySelector('.btn-continue')) {
+                        const btn = document.createElement('button');
+                        btn.className = 'btn-submit btn-continue';
+                        btn.textContent = '→ Nastavi na rezultate';
+                        btn.style.marginTop = '20px';
+                        btn.addEventListener('click', function() {
+                            reflectionData.easiest = document.getElementById('reflectionEasiest').value;
+                            reflectionData.hardest = document.getElementById('reflectionHardest').value;
+                            showResults();
+                            mutation.target.classList.remove('active');
+                        });
+                        mutation.target.appendChild(btn);
+                    }
+                }
+            });
+        });
+
+        observer.observe(document.getElementById('reflectionSection'), { attributes: true });
+
+        // Initialize - add next button functionality to question cards
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('btn-skip')) {
+                nextQuestion();
+            }
+        });
+
+        // Also make regular "next" buttons work
+        document.addEventListener('click', function(e) {
+            if (e.target.textContent.includes('Sljedeće') || e.target.textContent.includes('Dalje')) {
+                nextQuestion();
+            }
+        });
+
+        // Handle reflection submission via Enter
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && e.ctrlKey) {
+                const btn = document.querySelector('.btn-continue');
+                if (btn) btn.click();
+            }
+        });
+    </script>
+</body>
+</html>
