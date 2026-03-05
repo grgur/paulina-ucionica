@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>Biologija — Ponavljanje gradiva | Natalijina Učionica</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-main: #F0F9F4;
+  --bg-card: #FFFFFF;
+  --text-main: #2D3436;
+  --text-light: #636E72;
+  --green: #00B894;
+  --green-light: #E0F9F1;
+  --green-dark: #00856A;
+  --teal: #00CEC9;
+  --teal-light: #E0FFFE;
+  --blue: #0984E3;
+  --blue-light: #E3F2FD;
+  --orange: #FDCB6E;
+  --orange-light: #FFF9E6;
+  --red: #E17055;
+  --red-light: #FDE8E2;
+  --purple: #A29BFE;
+  --purple-light: #F0EEFF;
+  --pink: #FD79A8;
+  --radius: 14px;
+  --shadow: 0 2px 12px rgba(0,0,0,0.06);
+  --shadow-hover: 0 6px 24px rgba(0,0,0,0.12);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Lexend', 'Verdana', sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+  line-height: 1.8;
+  letter-spacing: 0.02em;
+  padding: 12px;
+  padding-bottom: 80px;
+  margin: 0 auto;
+  font-size: 17px;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+}
+h1 { font-size: 24px; font-weight: 700; color: #00856A; margin-bottom: 8px; line-height: 1.3; }
+h2 { font-size: 20px; font-weight: 600; color: #2D3436; margin-top: 20px; margin-bottom: 12px; }
+h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; color: #00856A; }
+p { margin-bottom: 12px; }
+.skip-link {
+  position: absolute; left: -999px; top: auto;
+  background: var(--green); color: #fff; padding: 12px 20px;
+  z-index: 9999; border-radius: 0 0 var(--radius) 0;
+  font-weight: 600; text-decoration: none;
+}
+.skip-link:focus { left: 0; top: 0; }
+.settings-toggle {
+  position: fixed; top: 12px; right: 12px; z-index: 1000;
+  width: 48px; height: 48px; border-radius: 50%; border: none;
+  font-size: 22px; background: var(--bg-card); box-shadow: var(--shadow);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-pauza {
+  position: fixed; bottom: 16px; right: 12px; z-index: 1000;
+  padding: 10px 16px; border-radius: 24px; border: none;
+  font-size: 15px; font-weight: 600; background: var(--green-dark);
+  color: white; box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+  min-height: 48px;
+}
+.settings-panel {
+  position: fixed; inset: 0; z-index: 2000;
+  background: var(--bg-main); padding: 20px;
+  overflow-y: auto; -webkit-overflow-scrolling: touch;
+}
+.settings-panel h2 { margin-top: 0; }
+.settings-panel label { display: block; margin: 12px 0 4px; font-weight: 500; }
+.settings-panel input[type=range], .settings-panel select {
+  width: 100%; padding: 8px; font-size: 16px;
+  border: 2px solid #e0e0e0; border-radius: 8px;
+}
+.settings-close {
+  background: var(--green); color: #fff; border: none;
+  padding: 12px 24px; border-radius: var(--radius);
+  font-size: 16px; font-weight: 600; cursor: pointer;
+  width: 100%; margin-top: 16px; min-height: 48px;
+}
+button, .btn, [role="button"] {
+  min-height: 48px; min-width: 48px; padding: 12px 16px;
+  font-size: 16px; font-family: 'Lexend', sans-serif;
+  touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+}
+.btn {
+  display: block; width: 100%; padding: 14px 20px;
+  border: none; border-radius: var(--radius);
+  font-size: 17px; font-weight: 600; cursor: pointer;
+  text-align: center; margin-bottom: 10px;
+}
+.btn-primary { background: var(--green); color: #fff; }
+.btn-primary:hover { background: var(--green-dark); }
+.btn-secondary { background: var(--bg-card); color: var(--green-dark); border: 2px solid var(--green); }
+.kartica {
+  background: var(--bg-card); border-radius: var(--radius);
+  padding: 16px; margin-bottom: 16px; box-shadow: var(--shadow);
+  width: 100%; border-left: 4px solid var(--green);
+}
+.kartica-def { border-left-color: var(--blue); background: var(--blue-light); }
+.kartica-example { border-left-color: var(--orange); background: var(--orange-light); }
+.kartica-quiz { border-left-color: var(--purple); background: var(--purple-light); }
+.nav-buttons { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+.progress-bar-container { width: 100%; margin: 8px 0; }
+.progress-bar {
+  width: 100%; height: 8px; border-radius: 4px;
+  background: #E0E0E0; overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%; background: linear-gradient(90deg, var(--green), var(--teal));
+  border-radius: 4px; transition: width 0.4s ease;
+}
+.progress-text { font-size: 14px; color: var(--text-light); text-align: center; margin-top: 4px; }
+.tts-btn {
+  background: none; border: 1px solid #ddd; border-radius: 8px;
+  padding: 4px 10px; font-size: 18px; cursor: pointer;
+  margin-left: 8px; vertical-align: middle; min-height: 36px; min-width: 36px;
+}
+.tts-btn:hover { background: var(--green-light); }
+.section-card { display: none; }
+.section-card.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.concept-card {
+  background: var(--bg-card); border-radius: var(--radius);
+  padding: 16px; margin-bottom: 16px; box-shadow: var(--shadow);
+  border-left: 4px solid var(--green);
+}
+.concept-term { font-weight: 700; color: var(--green-dark); font-size: 18px; margin-bottom: 6px; }
+.concept-def { margin-bottom: 8px; padding: 10px; background: var(--blue-light); border-radius: 8px; }
+.concept-example { padding: 10px; background: var(--orange-light); border-radius: 8px; font-style: italic; }
+.concept-example::before { content: "💡 "; }
+.quiz-container { margin-top: 20px; }
+.quiz-q { font-weight: 600; font-size: 17px; margin-bottom: 12px; }
+.quiz-option {
+  display: block; width: 100%; padding: 14px 16px; margin-bottom: 10px;
+  border: 2px solid #E0E0E0; border-radius: var(--radius);
+  background: var(--bg-card); font-size: 16px; text-align: left;
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+  min-height: 48px; font-family: 'Lexend', sans-serif;
+  transition: all 0.2s;
+}
+.quiz-option:hover { border-color: var(--green); background: var(--green-light); }
+.quiz-option.correct { border-color: var(--green); background: var(--green-light); }
+.quiz-option.incorrect { border-color: var(--red); background: var(--red-light); }
+.quiz-option.disabled { pointer-events: none; opacity: 0.7; }
+.quiz-explain {
+  padding: 12px; border-radius: 8px; margin-top: 8px;
+  display: none; font-size: 15px;
+}
+.quiz-explain.show { display: block; animation: fadeIn 0.3s ease; }
+.quiz-explain.correct-explain { background: var(--green-light); border-left: 4px solid var(--green); }
+.quiz-explain.incorrect-explain { background: var(--red-light); border-left: 4px solid var(--red); }
+.checklist { list-style: none; padding: 0; }
+.checklist li {
+  padding: 10px 12px; margin-bottom: 6px; border-radius: 8px;
+  background: var(--bg-card); display: flex; align-items: center; gap: 10px;
+  cursor: pointer; border: 1px solid #eee; min-height: 48px;
+}
+.checklist li.completed { background: var(--green-light); text-decoration: line-through; color: var(--text-light); }
+.checklist li .check-icon { font-size: 20px; }
+.self-check {
+  background: var(--teal-light); padding: 16px; border-radius: var(--radius);
+  margin: 16px 0; text-align: center;
+}
+.self-check-btns { display: flex; gap: 10px; justify-content: center; margin-top: 10px; flex-wrap: wrap; }
+.self-check-btn {
+  padding: 10px 20px; border-radius: 20px; border: 2px solid var(--teal);
+  background: #fff; cursor: pointer; font-weight: 600; font-size: 15px;
+  min-height: 48px; font-family: 'Lexend', sans-serif;
+}
+.self-check-btn:hover, .self-check-btn.selected { background: var(--teal); color: #fff; }
+.encouragement {
+  background: linear-gradient(135deg, var(--green-light), var(--teal-light));
+  padding: 16px; border-radius: var(--radius); text-align: center;
+  font-size: 18px; font-weight: 600; margin: 16px 0;
+  display: none;
+}
+.encouragement.show { display: block; animation: fadeIn 0.5s ease; }
+.recap-card {
+  background: linear-gradient(135deg, #E0F9F1, #E3F2FD);
+  padding: 20px; border-radius: var(--radius); margin: 20px 0;
+}
+.mood-selector { text-align: center; margin: 20px 0; }
+.mood-btn {
+  font-size: 32px; border: none; background: none; cursor: pointer;
+  padding: 8px; min-width: 56px; min-height: 56px;
+  border-radius: 50%; transition: transform 0.2s;
+}
+.mood-btn:hover, .mood-btn.selected { transform: scale(1.3); background: var(--green-light); }
+.breathing-overlay {
+  position: fixed; inset: 0; z-index: 3000;
+  display: none; align-items: center; justify-content: center;
+  flex-direction: column; background: rgba(0,180,148,0.95);
+  color: #fff;
+}
+.breathing-overlay.show { display: flex; }
+.breathing-circle {
+  width: 120px; height: 120px; border-radius: 50%;
+  background: rgba(255,255,255,0.3); animation: breathe 8s infinite ease-in-out;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; font-weight: 600;
+}
+@keyframes breathe {
+  0%, 100% { transform: scale(1); } 25% { transform: scale(1.4); }
+  50% { transform: scale(1.4); } 75% { transform: scale(1); }
+}
+.reading-ruler {
+  position: fixed; left: 0; right: 0; height: 40px;
+  border-top: 3px solid rgba(0,184,148,0.4);
+  border-bottom: 3px solid rgba(0,184,148,0.4);
+  background: rgba(0,184,148,0.08);
+  pointer-events: none; z-index: 500; display: none;
+}
+#confetti-container {
+  position: fixed; inset: 0; pointer-events: none; z-index: 4000;
+}
+*:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; border-radius: 4px; }
+*:focus:not(:focus-visible) { outline: none; }
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border-width: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important; animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important; scroll-behavior: auto !important;
+  }
+}
+@media (min-width: 600px) {
+  body { padding: 20px; font-size: 18px; max-width: 720px; }
+  h1 { font-size: 28px; } h2 { font-size: 24px; }
+  .kartica, .concept-card { padding: 20px; }
+  .btn { width: auto; display: inline-block; min-width: 180px; }
+  .nav-buttons { flex-direction: row; justify-content: space-between; }
+  .settings-panel {
+    inset: auto; top: 60px; right: 16px; width: 360px;
+    max-height: 80vh; border-radius: var(--radius); box-shadow: var(--shadow-hover);
+  }
+}
+@media (min-width: 900px) {
+  body { padding: 32px; font-size: 19px; max-width: 820px; }
+  h1 { font-size: 32px; }
+}
+@supports (padding: env(safe-area-inset-bottom)) {
+  .btn-pauza { bottom: calc(16px + env(safe-area-inset-bottom)); }
+  body {
+    padding-left: calc(12px + env(safe-area-inset-left));
+    padding-right: calc(12px + env(safe-area-inset-right));
+  }
+}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Preskoči na sadržaj</a>
+<button class="settings-toggle" onclick="toggleSettings()" aria-label="Postavke prikaza" aria-expanded="false" aria-controls="settings-panel">⚙️</button>
+<button class="btn-pauza" onclick="pokaziDisanje()" aria-label="Trebam pauzu za disanje">🫁 Pauza</button>
+
+<div id="settings-panel" class="settings-panel" role="dialog" aria-label="Postavke prikaza" hidden>
+  <h2>⚙️ Postavke</h2>
+  <label for="font-size-range">Veličina fonta: <span id="font-size-val">17px</span></label>
+  <input type="range" id="font-size-range" min="14" max="28" value="17" oninput="changeFontSize(this.value)">
+  <label for="bg-select">Pozadina:</label>
+  <select id="bg-select" onchange="changeBg(this.value)">
+    <option value="#F0F9F4">Zelena (zadano)</option>
+    <option value="#FFF8F0">Krem</option>
+    <option value="#FFFFF0">Žuta</option>
+    <option value="#F0F0FF">Lavanda</option>
+    <option value="#FFFFFF">Bijela</option>
+    <option value="#2D3436">Tamna</option>
+  </select>
+  <label for="line-height-range">Razmak redova: <span id="lh-val">1.8</span></label>
+  <input type="range" id="line-height-range" min="1.4" max="3.0" step="0.1" value="1.8" oninput="changeLH(this.value)">
+  <label><input type="checkbox" id="ruler-toggle" onchange="toggleRuler(this.checked)"> Ravnalo za čitanje</label>
+  <button class="settings-close" onclick="toggleSettings()">Zatvori postavke</button>
+</div>
+
+<div id="readingRuler" class="reading-ruler" aria-hidden="true"></div>
+
+<div id="breathing-overlay" class="breathing-overlay" role="dialog" aria-label="Vježba disanja">
+  <div class="breathing-circle" id="breathText">Udahni</div>
+  <p style="margin-top:20px;font-size:18px;">4 sekunde udahni — 4 sekunde zadrži — 4 sekunde izdahni</p>
+  <button onclick="zatvoriDisanje()" style="margin-top:24px;padding:12px 32px;border-radius:24px;border:2px solid #fff;background:transparent;color:#fff;font-size:16px;font-weight:600;cursor:pointer;min-height:48px;">Nastavi s lekcijom</button>
+</div>
+
+<div id="confetti-container"></div>
+<div aria-live="polite" aria-atomic="true" id="live-feedback" class="sr-only"></div>
+
+<header role="banner">
+  <h1>🧬 Biologija — Ponavljanje gradiva</h1>
+  <p style="color:var(--text-light);">Za Nataliju | 1. razred srednje škole</p>
+  <div class="progress-bar-container">
+    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="main-progress">
+      <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+    <div class="progress-text" id="progress-text">Cjelina 0 / 6</div>
+  </div>
+</header>
+
+<main id="main-content" role="main">
+
+<!-- ADVANCE ORGANIZER -->
+<section class="section-card active" id="section-intro">
+  <div class="kartica">
+    <h2>📋 Plan ponavljanja</h2>
+    <p>Danas ćemo ponoviti <strong>6 velikih cjelina</strong> iz biologije. Nakon ove lekcije moći ćeš objasniti sve ključne koncepte iz 1. razreda!</p>
+    <p style="color:var(--text-light);font-size:15px;">⏱ Procijenjeno vrijeme: 35-45 minuta. Radi svojim tempom!</p>
+    <ul class="checklist" id="checklist">
+      <li id="check-voda" onclick="goToSection(1)" tabindex="0" role="button" aria-label="Idi na cjelinu: Voda za život"><span class="check-icon">⬜</span> 💧 Voda za život</li>
+      <li id="check-nastanak" onclick="goToSection(2)" tabindex="0" role="button" aria-label="Idi na cjelinu: Nastanak života na Zemlji"><span class="check-icon">⬜</span> 🌍 Nastanak života na Zemlji</li>
+      <li id="check-prokarioti" onclick="goToSection(3)" tabindex="0" role="button" aria-label="Idi na cjelinu: Prokarioti — bakterije i arheje"><span class="check-icon">⬜</span> 🦠 Prokarioti — bakterije i arheje</li>
+      <li id="check-euk-stanica" onclick="goToSection(4)" tabindex="0" role="button" aria-label="Idi na cjelinu: Eukariotska stanica"><span class="check-icon">⬜</span> 🔬 Eukariotska stanica</li>
+      <li id="check-tkiva" onclick="goToSection(5)" tabindex="0" role="button" aria-label="Idi na cjelinu: Tkiva i organi biljaka"><span class="check-icon">⬜</span> 🌿 Tkiva i organi biljaka</li>
+      <li id="check-sjemenjace" onclick="goToSection(6)" tabindex="0" role="button" aria-label="Idi na cjelinu: Sjemenače i razmnožavanje biljaka"><span class="check-icon">⬜</span> 🌸 Sjemenače i razmnožavanje biljaka</li>
+    </ul>
+    <div class="nav-buttons">
+      <button class="btn btn-primary" onclick="goToSection(1)">Počnimo! 🚀</button>
+    </div>
+  </div>
+</section>
+
+<section class="section-card" id="section-voda" aria-label="Voda za život">
+  <div class="kartica" style="border-left-color:var(--green-dark);">
+    <h2>💧 Cjelina 1: Voda za život
+    <button class="tts-btn" onclick="speak(this.closest('.kartica').querySelector('h2').textContent)" aria-label="Čitaj naslov naglas">🔊</button></h2>
+  </div>
+  <div class="concept-card">
+    <div class="concept-term">Polarna molekula <button class="tts-btn" onclick="speak('Polarna molekula. Voda (H₂O) ima neravnomjerno raspoređen naboj — kisik privlači elektrone jače od vodika, pa je jedna strana molekule blago negativna, a druga blago pozitivna.')" aria-label="Čitaj definiciju naglas">🔊</button></div>
+    <div class="concept-def"><strong>📖 Definicija:</strong> Voda (H₂O) ima neravnomjerno raspoređen naboj — kisik privlači elektrone jače od vodika, pa je jedna strana molekule blago negativna, a druga blago pozitivna.</div>
+    <div class="concept-example">Zamisli magnet — ima + i - stranu. Voda je "mini magnet" koji privlači druge polarne molekule.</div>
+  </div>
+  <div class="concept-card">
+    <div class="concept-term">Kohezija i adhezija <button class="tts-btn" onclick="speak('Kohezija i adhezija. Kohezija je privlačna sila među molekulama iste tvari (voda-voda). Adhezija je privlačna sila među molekulama različitih tvari (voda-staklo).')" aria-label="Čitaj definiciju naglas">🔊</button></div>
+    <div class="concept-def"><strong>📖 Definicija:</strong> Kohezija je privlačna sila među molekulama iste tvari (voda-voda). Adhezija je privlačna sila među molekulama različitih tvari (voda-staklo).</div>
+    <div class="concept-example">Kad kišna kap klizi niz prozor — kohezija drži kap na okupu, adhezija je "lijepi" za staklo.</div>
+  </div>
+  <div class="concept-card">
+    <div class="concept-term">Kapilarnost <button class="tts-btn" onclick="speak('Kapilarnost. Kretanje vode u uskim prostorima naviše, zahvaljujući zajedničkom djelovanju kohezije i adhezije.')" aria-label="Čitaj definiciju naglas">🔊</button></div>
+    <div class="concept-def"><strong>📖 Definicija:</strong> Kretanje vode u uskim prostorima naviše, zahvaljujući zajedničkom djelovanju kohezije i adhezije.</div>
+    <div class="concept-example">Stavi bijeli cvijet u obojenu vodu — boja se penje kroz stabljiku do latica!</div>
+  </div>
+  <div class="encouragement show" style="display:block;">
+    Super ideš, Natalija! 🌟
+  </div>
+  <div class="concept-card">
+    <div class="concept-term">Površinska napetost <button class="tts-btn" onclick="speak('Površinska napetost. Sila koja nastaje na površini vode jer se molekule vode na površini privlače samo prema unutra i bočno.')" aria-label="Čitaj definiciju naglas">🔊</button></div>
+    <div class="concept-def"><strong>📖 Definicija:</strong> Sila koja nastaje na površini vode jer se molekule vode na površini privlače samo prema unutra i bočno.</div>
+    <div class="concept-example">Vodeni pauk može hodati po vodi jer površinska napetost stvara "opnu" na površini.</div>
+  </div>
+  <div class="concept-card">
+    <div class="concept-term">Specifični toplinski kapacitet <button class="tts-btn" onclick="speak('Specifični toplinski kapacitet. Količina topline koja treba za zagrijavanje 1 kg tvari za 1°C. Voda ima visok STC (4,18 kJ) — sporo se zagrijava i hladi.')" aria-label="Čitaj definiciju naglas">🔊</button></div>
+    <div class="concept-def"><strong>📖 Definicija:</strong> Količina topline koja treba za zagrijavanje 1 kg tvari za 1°C. Voda ima visok STC (4,18 kJ) — sporo se zagrijava i hladi.</div>
+    <div class="concept-example">More ljeti je hladnije od zraka, a zimi toplije — zato Split ima blagu zimu!</div>
+  </div>
+  <div class="concept-card">
+    <div class="concept-term">Voda kao otapalo <button class="tts-btn" onclick="speak('Voda kao otapalo. Voda otapa polarne tvari (hidrofilne: šećer, sol) ali NE otapa nepolarne (hidrofobne: ulje, masti).')" aria-label="Čitaj definiciju naglas">🔊</button></div>
+    <div class="concept-def"><strong>📖 Definicija:</strong> Voda otapa polarne tvari (hidrofilne: šećer, sol) ali NE otapa nepolarne (hidrofobne: ulje, masti).</div>
+    <div class="concept-example">Sol se otapa u vodi jer su i sol i voda polarne. Ulje pluta jer je nepolarno — "bježi" od vode.</div>
+  </div>
+  <div class="encouragement show" style="display:block;">
+    Super ideš, Natalija! 🌟
+  </div>
+  <div class="concept-card">
+    <div class="concept-term">pH vrijednost <button class="tts-btn" onclick="speak('pH vrijednost. Mjera kiselosti/lužnatosti otopine. Skala 0-14. pH 7 = neutralno (čista voda). Manje od 7 = kiselo. Više od 7 = lužnato.')" aria-label="Čitaj definiciju naglas">🔊</button></div>
+    <div class="concept-def"><strong>📖 Definicija:</strong> Mjera kiselosti/lužnatosti otopine. Skala 0-14. pH 7 = neutralno (čista voda). Manje od 7 = kiselo. Više od 7 = lužnato.</div>
+    <div class="concept-example">Limunov sok ima pH oko 2 (jako kiselo), sapun oko 10 (lužnato), čista voda = 7.</div>
+  </div>
+  <div class="self-check">
+    <p><strong>🤔 Razumiješ li ovu cjelinu?</strong></p>
+    <div class="self-check-btns">
+      <button class="self-check-btn" onclick="selfCheck(this,'da')">✅ Da, razumijem!</button>
+      <button class="self-check-btn" onclick="selfCheck(this,'djelomicno')">🤷 Djelomično</button>
+      <button class="self-check-btn" onclick="selfCheck(this,'ne')">❓ Trebam ponoviti</button>
+    </div>
+  </div>
+  <div class="kartica kartica-quiz">
+    <h3>🧪 Mini kviz — Voda za život</h3>
+    <p style="font-size:14px;color:var(--text-light);">Ne ocjenjuje se! Samo da provjeriš razumijevanje.</p>
+    <div class="quiz-container" id="q-voda-0-container">
+      <p class="quiz-q">1. Što je kohezija? <button class="tts-btn" onclick="speak('Što je kohezija?')" aria-label="Čitaj pitanje naglas">🔊</button></p>
+      <button class="quiz-option" onclick="checkAnswer('q-voda-0',0,0)" data-qid="q-voda-0">A) Privlačna sila među molekulama iste tvari</button>
+      <button class="quiz-option" onclick="checkAnswer('q-voda-0',1,0)" data-qid="q-voda-0">B) Privlačna sila među molekulama različitih tvari</button>
+      <button class="quiz-option" onclick="checkAnswer('q-voda-0',2,0)" data-qid="q-voda-0">C) Odbojnost među molekulama vode</button>
+      <button class="quiz-option" onclick="checkAnswer('q-voda-0',3,0)" data-qid="q-voda-0">D) Kretanje vode u uskim cijevima</button>
+      <div class="quiz-explain" id="q-voda-0-explain-correct" class="correct-explain">✅ Točno! Kohezija = iste tvari (ko- = zajedno). Adhezija = različite tvari (ad- = prema).</div>
+      <div class="quiz-explain" id="q-voda-0-explain-incorrect" class="incorrect-explain">❌ Kohezija = iste tvari (ko- = zajedno). Adhezija = različite tvari (ad- = prema).</div>
+    </div>
+    <div class="quiz-container" id="q-voda-1-container">
+      <p class="quiz-q">2. Čista voda ima pH vrijednost: <button class="tts-btn" onclick="speak('Čista voda ima pH vrijednost:')" aria-label="Čitaj pitanje naglas">🔊</button></p>
+      <button class="quiz-option" onclick="checkAnswer('q-voda-1',0,1)" data-qid="q-voda-1">A) 0</button>
+      <button class="quiz-option" onclick="checkAnswer('q-voda-1',1,1)" data-qid="q-voda-1">B) 7</button>
+      <button class="quiz-option" onclick="checkAnswer('q-voda-1',2,1)" data-qid="q-voda-1">C) 14</button>
+      <button class="quiz-option" onclick="checkAnswer('q-voda-1',3,1)" data-qid="q-voda-1">D) 4,18</button>
+      <div class="quiz-explain" id="q-voda-1-explain-correct" class="correct-explain">✅ Točno! pH 7 je neutralno. Ispod 7 je kiselo, iznad 7 je lužnato.</div>
+      <div class="quiz-explain" id="q-voda-1-explain-incorrect" class="incorrect-explain">❌ pH 7 je neutralno. Ispod 7 je kiselo, iznad 7 je lužnato.</div>
+    </div>
+    <div class="quiz-container" id="q-voda-2-container">
+      <p class="quiz-q">3. Zašto voda ima visok specifični toplinski kapacitet? <button class="tts-btn" onclick="speak('Zašto voda ima visok specifični toplinski kapacitet?')" aria-label="Čitaj pitanje naglas">🔊</button></p>
+      <button class="quiz-option" onclick="checkAnswer('q-voda-2',0,1)" data-qid="q-voda-2">A) Jer je nepolarna molekula</button>
+      <button class="quiz-option" onclick="checkAnswer('q-voda-2',1,1)" data-qid="q-voda-2">B) Jer ima jake vodikove veze među molekulama</button>
+      <button class="quiz-option" onclick="checkAnswer('q-voda-2',2,1)" data-qid="q-voda-2">C) Jer ima nisku gustoću</button>
+      <button class="quiz-option" onclick="checkAnswer('q-voda-2',3,1)" data-qid="q-voda-2">D) Jer je dobro otapalo</button>
+      <div class="quiz-explain" id="q-voda-2-explain-correct" class="correct-explain">✅ Točno! Vodikove veze među molekulama vode zahtijevaju puno energije za kidanje — zato se voda sporo zagrijava.</div>
+      <div class="quiz-explain" id="q-voda-2-explain-incorrect" class="incorrect-explain">❌ Vodikove veze među molekulama vode zahtijevaju puno energije za kidanje — zato se voda sporo zagrijava.</div>
+    </div>
+  </div>
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goToSection(0)">⬅️ Natrag</button>
+    <button class="btn btn-primary" onclick="goToSection(2)">Dalje ➡️</button>
+  </div>
+</section>
+
+<section class="section-card" id="section-nastanak" aria-label="Nastanak života na Zemlji">
+  <div class="kartica" style="border-left-color:var(--green-dark);">
+    <h2>🌍 Cjelina 2: Nastanak života na Zemlji
+    <button class="tts-btn" onclick="speak(this.closest('.kartica').querySelector('h2').textContent)" aria-label="Čitaj naslov naglas">🔊</button></h2>
+  </div>
+  <div class="concept-card">
+    <div class="concept-term">Biogeneza vs abiogeneza <button class="tts-btn" onclick="speak('Biogeneza vs abiogeneza. Biogeneza = život nastaje samo iz prethodnog živog organizma. Abiogeneza (spontana generacija) = stara, opovrgnuta ideja da živi organizmi nastaju iz nežive tvari.')" aria-label="Čitaj definiciju naglas">🔊</button></div>
+    <div class="concept-def"><strong>📖 Definicija:</strong> Biogeneza = život nastaje samo iz prethodnog živog organizma. Abiogeneza (spontana generacija) = stara, opovrgnuta ideja da živi organizmi nastaju iz nežive tvari.</div>
+    <div class="concept-example">Ljudi su nekad mislili da muhe nastaju iz mesa — Francesco Redi je 1668. dokazao da nije tako!</div>
+  </div>
+  <div class="concept-card">
+    <div class="concept-term">Redijev eksperiment (1668) <button class="tts-btn" onclick="speak('Redijev eksperiment (1668). Francesco Redi je stavio meso u 3 tegle: otvorenu, pokrivenu gazom i zatvorenu. Muhe su se razvile samo u otvorenoj tegli. Zaključak: muhe nastaju iz jaja, ne iz mesa.')" aria-label="Čitaj definiciju naglas">🔊</button></div>
+    <div class="concept-def"><strong>📖 Definicija:</strong> Francesco Redi je stavio meso u 3 tegle: otvorenu, pokrivenu gazom i zatvorenu. Muhe su se razvile samo u otvorenoj tegli. Zaključak: muhe nastaju iz jaja, ne iz mesa.</div>
+    <div class="concept-example">Pokrivena tegla = muhe ne mogu položiti jaja = nema ličinki. Dokaz biogeneze!</div>
+  </div>
+  <div class="concept-card">
+    <div class="concept-term">Pasteurov eksperiment (1861) <button class="tts-btn" onclick="speak('Pasteurov eksperiment (1861). Louis Pasteur koristio tikvice sa savijenim grlom — zrak ulazi ali mikroorganizmi ne. Juha ostaje sterilna. Zaključak: mikroorganizmi dolaze iz zraka, ne nastaju spontano.')" aria-label="Čitaj definiciju naglas">🔊</button></div>
+    <div class="concept-def"><strong>📖 Definicija:</strong> Louis Pasteur koristio tikvice sa savijenim grlom — zrak ulazi ali mikroorganizmi ne. Juha ostaje sterilna. Zaključak: mikroorganizmi dolaze iz zraka, ne nastaju spontano.</div>
+    <div class="concept-example">Kad otvoriš juhu, pokvari se jer mikrobi uđu iz zraka. Pasteurova tikvica je to spriječila.</div>
+  </div>
+  <div class="encouragement show" style="display:block;">
+    Odlično napreduješ! Tvoj mozak upija znanje! 🧠✨
+  </div>
+  <div class="concept-card">
+    <div class="concept-term">Oparin-Haldane hipoteza <button class="tts-btn" onclick="speak('Oparin-Haldane hipoteza. Rana Zemljina atmosfera bila je reducirana: malo O₂, puno H₂, CH₄, NH₃, vodena para. Izvori energije: UV zračenje, vulkani, munje. Organske molekule nastale su spontano i skupile se u "primordijalni ocean".')" aria-label="Čitaj definiciju naglas">🔊</button></div>
+    <div class="concept-def"><strong>📖 Definicija:</strong> Rana Zemljina atmosfera bila je reducirana: malo O₂, puno H₂, CH₄, NH₃, vodena para. Izvori energije: UV zračenje, vulkani, munje. Organske molekule nastale su spontano i skupile se u "primordijalni ocean".</div>
+    <div class="concept-example">Zamisli Zemlju prije 4 milijarde godina: vulkani, munje, vrući ocean — i u tom "kemijskom laboratoriju" nastale su prve organske molekule.</div>
+  </div>
+  <div class="concept-card">
+    <div class="concept-term">Miller-Urey eksperiment (1953) <button class="tts-btn" onclick="speak('Miller-Urey eksperiment (1953). Stanley Miller i Harold Urey simulirali ranu atmosferu u laboratoriju. Miješali H₂O, CH₄, NH₃, H₂ + električni izboji. Rezultat: nastale aminokiseline i druge organske molekule!')" aria-label="Čitaj definiciju naglas">🔊</button></div>
+    <div class="concept-def"><strong>📖 Definicija:</strong> Stanley Miller i Harold Urey simulirali ranu atmosferu u laboratoriju. Miješali H₂O, CH₄, NH₃, H₂ + električni izboji. Rezultat: nastale aminokiseline i druge organske molekule!</div>
+    <div class="concept-example">Napravili su "mini Zemlju" u boci i dokazali da se organske molekule MOGU nastati iz jednostavnih spojeva.</div>
+  </div>
+  <div class="concept-card">
+    <div class="concept-term">Koraci kemijske evolucije <button class="tts-btn" onclick="speak('Koraci kemijske evolucije. 1. Organski monomeri (aminokiseline) → 2. Organski polimeri (proteini) → 3. Protobionti (nakupine organskih tvari s membranom) → 4. Prve stanice')" aria-label="Čitaj definiciju naglas">🔊</button></div>
+    <div class="concept-def"><strong>📖 Definicija:</strong> 1. Organski monomeri (aminokiseline) → 2. Organski polimeri (proteini) → 3. Protobionti (nakupine organskih tvari s membranom) → 4. Prve stanice</div>
+    <div class="concept-example">Kao da gradiš kuću: prvo cigle (monomeri), pa zidovi (polimeri), pa prostorije (protobionti), pa cijela kuća (stanica).</div>
+  </div>
+  <div class="self-check">
+    <p><strong>🤔 Razumiješ li ovu cjelinu?</strong></p>
+    <div class="self-check-btns">
+      <button class="self-check-btn" onclick="selfCheck(this,'da')">✅ Da, razumijem!</button>
+      <button class="self-check-btn" onclick="selfCheck(this,'djelomicno')">🤷 Djelomično</button>
+      <button class="self-check-btn" onclick="selfCheck(this,'ne')">❓ Trebam ponoviti</button>
+    </div>
+  </div>
+  <div class="kartica kartica-quiz">
+    <h3>🧪 Mini kviz — Nastanak života na Zemlji</h3>
+    <p style="font-size:14px;color:var(--text-light);">Ne ocjenjuje se! Samo da provjeriš razumijevanje.</p>
+    <div class="quiz-container" id="q-nastanak-0-container">
+      <p class="quiz-q">1. Tko je eksperimentalno dokazao da mikroorganizmi ne nastaju spontano? <button class="tts-btn" onclick="speak('Tko je eksperimentalno dokazao da mikroorganizmi ne nastaju spontano?')" aria-label="Čitaj pitanje naglas">🔊</button></p>
+      <button class="quiz-option" onclick="checkAnswer('q-nastanak-0',0,1)" data-qid="q-nastanak-0">A) Francesco Redi</button>
+      <button class="quiz-option" onclick="checkAnswer('q-nastanak-0',1,1)" data-qid="q-nastanak-0">B) Louis Pasteur</button>
+      <button class="quiz-option" onclick="checkAnswer('q-nastanak-0',2,1)" data-qid="q-nastanak-0">C) Stanley Miller</button>
+      <button class="quiz-option" onclick="checkAnswer('q-nastanak-0',3,1)" data-qid="q-nastanak-0">D) Aleksandar Oparin</button>
+      <div class="quiz-explain" id="q-nastanak-0-explain-correct" class="correct-explain">✅ Točno! Pasteur je koristio tikvice sa savijenim grlom i dokazao da mikrobi dolaze iz okoline, ne nastaju spontano.</div>
+      <div class="quiz-explain" id="q-nastanak-0-explain-incorrect" class="incorrect-explain">❌ Pasteur je koristio tikvice sa savijenim grlom i dokazao da mikrobi dolaze iz okoline, ne nastaju spontano.</div>
+    </div>
+    <div class="quiz-container" id="q-nastanak-1-container">
+      <p class="quiz-q">2. Koji plinovi su bili u Miller-Urey eksperimentu? <button class="tts-btn" onclick="speak('Koji plinovi su bili u Miller-Urey eksperimentu?')" aria-label="Čitaj pitanje naglas">🔊</button></p>
+      <button class="quiz-option" onclick="checkAnswer('q-nastanak-1',0,1)" data-qid="q-nastanak-1">A) O₂, N₂, CO₂, H₂O</button>
+      <button class="quiz-option" onclick="checkAnswer('q-nastanak-1',1,1)" data-qid="q-nastanak-1">B) H₂O, CH₄, NH₃, H₂</button>
+      <button class="quiz-option" onclick="checkAnswer('q-nastanak-1',2,1)" data-qid="q-nastanak-1">C) O₂, H₂, He, Ne</button>
+      <button class="quiz-option" onclick="checkAnswer('q-nastanak-1',3,1)" data-qid="q-nastanak-1">D) CO₂, O₂, N₂, Ar</button>
+      <div class="quiz-explain" id="q-nastanak-1-explain-correct" class="correct-explain">✅ Točno! Miller i Urey simulirali su reduciranu atmosferu: vodena para, metan, amonijak i vodik.</div>
+      <div class="quiz-explain" id="q-nastanak-1-explain-incorrect" class="incorrect-explain">❌ Miller i Urey simulirali su reduciranu atmosferu: vodena para, metan, amonijak i vodik.</div>
+    </div>
+    <div class="quiz-container" id="q-nastanak-2-container">
+      <p class="quiz-q">3. Koji je točan redoslijed kemijske evolucije? <button class="tts-btn" onclick="speak('Koji je točan redoslijed kemijske evolucije?')" aria-label="Čitaj pitanje naglas">🔊</button></p>
+      <button class="quiz-option" onclick="checkAnswer('q-nastanak-2',0,1)" data-qid="q-nastanak-2">A) Stanice → polimeri → monomeri → protobionti</button>
+      <button class="quiz-option" onclick="checkAnswer('q-nastanak-2',1,1)" data-qid="q-nastanak-2">B) Monomeri → polimeri → protobionti → stanice</button>
+      <button class="quiz-option" onclick="checkAnswer('q-nastanak-2',2,1)" data-qid="q-nastanak-2">C) Protobionti → monomeri → stanice → polimeri</button>
+      <button class="quiz-option" onclick="checkAnswer('q-nastanak-2',3,1)" data-qid="q-nastanak-2">D) Polimeri → stanice → monomeri → protobionti</button>
+      <div class="quiz-explain" id="q-nastanak-2-explain-correct" class="correct-explain">✅ Točno! Od najjednostavnijeg prema složenijem: monomeri → polimeri → protobionti → stanice.</div>
+      <div class="quiz-explain" id="q-nastanak-2-explain-incorrect" class="incorrect-explain">❌ Od najjednostavnijeg prema složenijem: monomeri → polimeri → protobionti → stanice.</div>
+    </div>
+  </div>
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goToSection(1)">⬅️ Natrag</button>
+    <button class="btn btn-primary" onclick="goToSection(3)">Dalje ➡️</button>
+  </div>
+</section>
+
+<section class="section-card" id="section-prokarioti" aria-label="Prokarioti — bakterije i arheje">
+  <div class="kartica" style="border-left-color:var(--green-dark);">
+    <h2>🦠 Cjelina 3: Prokarioti — bakterije i arheje
+    <button class="tts-btn" onclick="speak(this.closest('.kartica').querySelector('h2').textContent)" aria-label="Čitaj naslov naglas">🔊</button></h2>
+  </div>
+  <div class="concept-card">
+    <div class="concept-term">Obilježja živih bića <button class="tts-btn" onclick="speak('Obilježja živih bića. Sva živa bića su: organizirana, izmjenjuju tvari i energiju, odgovaraju na podražaje, razmnožavaju se, prenose nasljedna svojstva, mijenjaju se i prilagođavaju.')" aria-label="Čitaj definiciju naglas">🔊</button></div>
+    <div class="concept-def"><strong>📖 Definicija:</strong> Sva živa bića su: organizirana, izmjenjuju tvari i energiju, odgovaraju na podražaje, razmnožavaju se, prenose nasljedna svojstva, mijenjaju se i prilagođavaju.</div>
+    <div class="concept-example">I bakterija i slon imaju SVE ove osobine — razlika je u složenosti, ne u "živosti".</div>
+  </div>
+  <div class="concept-card">
+    <div class="concept-term">Prokarioti <button class="tts-btn" onclick="speak('Prokarioti. Prvi organizmi na Zemlji. Veličina 0,1-5 μm. Nemaju oblikovanu jezgru — DNA je slobodna u citoplazmi. Razmnožavaju se dvojnom diobom. Podložni mutacijama.')" aria-label="Čitaj definiciju naglas">🔊</button></div>
+    <div class="concept-def"><strong>📖 Definicija:</strong> Prvi organizmi na Zemlji. Veličina 0,1-5 μm. Nemaju oblikovanu jezgru — DNA je slobodna u citoplazmi. Razmnožavaju se dvojnom diobom. Podložni mutacijama.</div>
+    <div class="concept-example">"Pro" = prije, "karyon" = jezgra. Prokarioti su doslovno "prije-jezgreni" — stariji i jednostavniji od eukariota.</div>
+  </div>
+  <div class="concept-card">
+    <div class="concept-term">Građa prokariota <button class="tts-btn" onclick="speak('Građa prokariota. Zajedničko za arheje i bakterije: stanična membrana, citoplazma, DNA, RNA, ribosomi. Neki imaju i: staničnu stijenku, kapsulu, bičeve.')" aria-label="Čitaj definiciju naglas">🔊</button></div>
+    <div class="concept-def"><strong>📖 Definicija:</strong> Zajedničko za arheje i bakterije: stanična membrana, citoplazma, DNA, RNA, ribosomi. Neki imaju i: staničnu stijenku, kapsulu, bičeve.</div>
+    <div class="concept-example">Zamišljaj prokariota kao sobu bez ormara — sve je "rasuto" po sobi (citoplazmi), uključujući i DNA.</div>
+  </div>
+  <div class="encouragement show" style="display:block;">
+    Bravo! Svaka cjelina te čini jačom! 💪
+  </div>
+  <div class="concept-card">
+    <div class="concept-term">Arheje — ekstremofili <button class="tts-btn" onclick="speak('Arheje — ekstremofili. Arheje žive u ekstremnim uvjetima. Termofili (vrući izvori), halofili (slana jezera), acidofili (kisele vode), metanogeni (bez kisika, proizvode metan).')" aria-label="Čitaj definiciju naglas">🔊</button></div>
+    <div class="concept-def"><strong>📖 Definicija:</strong> Arheje žive u ekstremnim uvjetima. Termofili (vrući izvori), halofili (slana jezera), acidofili (kisele vode), metanogeni (bez kisika, proizvode metan).</div>
+    <div class="concept-example">Arheje žive na mjestima gdje nijedan drugi organizam ne bi preživio — vulkanski izvori, Mrtvo more, kisele rude.</div>
+  </div>
+  <div class="concept-card">
+    <div class="concept-term">Cijanobakterije i fotosinteza <button class="tts-btn" onclick="speak('Cijanobakterije i fotosinteza. Cijanobakterije su prve koje su provodile oksigeničnu fotosintezu. Obogatile su atmosferu kisikom → omogućile aerobni metabolizam. Stvaraju stromatolite.')" aria-label="Čitaj definiciju naglas">🔊</button></div>
+    <div class="concept-def"><strong>📖 Definicija:</strong> Cijanobakterije su prve koje su provodile oksigeničnu fotosintezu. Obogatile su atmosferu kisikom → omogućile aerobni metabolizam. Stvaraju stromatolite.</div>
+    <div class="concept-example">Svaki udah kisika koji udahneš možeš zahvaliti cijanobakterijama koje su "napunile" atmosferu kisikom prije 2,5 milijardi godina!</div>
+  </div>
+  <div class="concept-card">
+    <div class="concept-term">Stromatoliti <button class="tts-btn" onclick="speak('Stromatoliti. Slojevite strukture nastale taloženjem minerala koje tvore cijanobakterije. Najstariji fosili živih bića na Zemlji (3,5 milijardi godina).')" aria-label="Čitaj definiciju naglas">🔊</button></div>
+    <div class="concept-def"><strong>📖 Definicija:</strong> Slojevite strukture nastale taloženjem minerala koje tvore cijanobakterije. Najstariji fosili živih bića na Zemlji (3,5 milijardi godina).</div>
+    <div class="concept-example">Stromatoliti i danas postoje u Australiji (Shark Bay) — živi fosili koji izgledaju kao kamene "glave kupusa".</div>
+  </div>
+  <div class="self-check">
+    <p><strong>🤔 Razumiješ li ovu cjelinu?</strong></p>
+    <div class="self-check-btns">
+      <button class="self-check-btn" onclick="selfCheck(this,'da')">✅ Da, razumijem!</button>
+      <button class="self-check-btn" onclick="selfCheck(this,'djelomicno')">🤷 Djelomično</button>
+      <button class="self-check-btn" onclick="selfCheck(this,'ne')">❓ Trebam ponoviti</button>
+    </div>
+  </div>
+  <div class="kartica kartica-quiz">
+    <h3>🧪 Mini kviz — Prokarioti — bakterije i arheje</h3>
+    <p style="font-size:14px;color:var(--text-light);">Ne ocjenjuje se! Samo da provjeriš razumijevanje.</p>
+    <div class="quiz-container" id="q-prokarioti-0-container">
+      <p class="quiz-q">1. Što prokarioti NEMAJU? <button class="tts-btn" onclick="speak('Što prokarioti NEMAJU?')" aria-label="Čitaj pitanje naglas">🔊</button></p>
+      <button class="quiz-option" onclick="checkAnswer('q-prokarioti-0',0,2)" data-qid="q-prokarioti-0">A) DNA</button>
+      <button class="quiz-option" onclick="checkAnswer('q-prokarioti-0',1,2)" data-qid="q-prokarioti-0">B) Ribosme</button>
+      <button class="quiz-option" onclick="checkAnswer('q-prokarioti-0',2,2)" data-qid="q-prokarioti-0">C) Oblikovanu jezgru</button>
+      <button class="quiz-option" onclick="checkAnswer('q-prokarioti-0',3,2)" data-qid="q-prokarioti-0">D) Staničnu membranu</button>
+      <div class="quiz-explain" id="q-prokarioti-0-explain-correct" class="correct-explain">✅ Točno! Prokarioti imaju DNA, ali ona NIJE zaštićena jezgrinom ovojnicom — slobodna je u citoplazmi.</div>
+      <div class="quiz-explain" id="q-prokarioti-0-explain-incorrect" class="incorrect-explain">❌ Prokarioti imaju DNA, ali ona NIJE zaštićena jezgrinom ovojnicom — slobodna je u citoplazmi.</div>
+    </div>
+    <div class="quiz-container" id="q-prokarioti-1-container">
+      <p class="quiz-q">2. Koje su organizmi prvi obogatili atmosferu kisikom? <button class="tts-btn" onclick="speak('Koje su organizmi prvi obogatili atmosferu kisikom?')" aria-label="Čitaj pitanje naglas">🔊</button></p>
+      <button class="quiz-option" onclick="checkAnswer('q-prokarioti-1',0,1)" data-qid="q-prokarioti-1">A) Arheje</button>
+      <button class="quiz-option" onclick="checkAnswer('q-prokarioti-1',1,1)" data-qid="q-prokarioti-1">B) Cijanobakterije</button>
+      <button class="quiz-option" onclick="checkAnswer('q-prokarioti-1',2,1)" data-qid="q-prokarioti-1">C) Gljive</button>
+      <button class="quiz-option" onclick="checkAnswer('q-prokarioti-1',3,1)" data-qid="q-prokarioti-1">D) Biljke</button>
+      <div class="quiz-explain" id="q-prokarioti-1-explain-correct" class="correct-explain">✅ Točno! Cijanobakterije su provodile oksigeničnu fotosintezu i ispuštale O₂ u atmosferu.</div>
+      <div class="quiz-explain" id="q-prokarioti-1-explain-incorrect" class="incorrect-explain">❌ Cijanobakterije su provodile oksigeničnu fotosintezu i ispuštale O₂ u atmosferu.</div>
+    </div>
+    <div class="quiz-container" id="q-prokarioti-2-container">
+      <p class="quiz-q">3. Termofili su arheje koje žive u: <button class="tts-btn" onclick="speak('Termofili su arheje koje žive u:')" aria-label="Čitaj pitanje naglas">🔊</button></p>
+      <button class="quiz-option" onclick="checkAnswer('q-prokarioti-2',0,2)" data-qid="q-prokarioti-2">A) Slanim jezerima</button>
+      <button class="quiz-option" onclick="checkAnswer('q-prokarioti-2',1,2)" data-qid="q-prokarioti-2">B) Kiselim vodama</button>
+      <button class="quiz-option" onclick="checkAnswer('q-prokarioti-2',2,2)" data-qid="q-prokarioti-2">C) Vrućim izvorima</button>
+      <button class="quiz-option" onclick="checkAnswer('q-prokarioti-2',3,2)" data-qid="q-prokarioti-2">D) Hladnim oceanima</button>
+      <div class="quiz-explain" id="q-prokarioti-2-explain-correct" class="correct-explain">✅ Točno! Termo = toplina, fil = ljubav. Termofili "vole toplinu" — žive u vrućim izvorima.</div>
+      <div class="quiz-explain" id="q-prokarioti-2-explain-incorrect" class="incorrect-explain">❌ Termo = toplina, fil = ljubav. Termofili "vole toplinu" — žive u vrućim izvorima.</div>
+    </div>
+  </div>
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goToSection(2)">⬅️ Natrag</button>
+    <button class="btn btn-primary" onclick="goToSection(4)">Dalje ➡️</button>
+  </div>
+</section>
+
+<section class="section-card" id="section-euk-stanica" aria-label="Eukariotska stanica">
+  <div class="kartica" style="border-left-color:var(--green-dark);">
+    <h2>🔬 Cjelina 4: Eukariotska stanica
+    <button class="tts-btn" onclick="speak(this.closest('.kartica').querySelector('h2').textContent)" aria-label="Čitaj naslov naglas">🔊</button></h2>
+  </div>
+  <div class="concept-card">
+    <div class="concept-term">Jezgra <button class="tts-btn" onclick="speak('Jezgra. "Mozak" stanice. Sadrži DNA (nasljedni materijal). Okružena jezgrinom ovojnicom s porama. Unutra je jezgrica koja proizvodi ribosome.')" aria-label="Čitaj definiciju naglas">🔊</button></div>
+    <div class="concept-def"><strong>📖 Definicija:</strong> "Mozak" stanice. Sadrži DNA (nasljedni materijal). Okružena jezgrinom ovojnicom s porama. Unutra je jezgrica koja proizvodi ribosome.</div>
+    <div class="concept-example">Jezgra je kao server soba u tvrtki — čuva sve podatke (DNA) i šalje upute (RNA) ostatku stanice.</div>
+  </div>
+  <div class="concept-card">
+    <div class="concept-term">Mitohondriji <button class="tts-btn" onclick="speak('Mitohondriji. "Elektrane" stanice. Provode stanično disanje — pretvaraju hranu (glukozu) u energiju (ATP). Imaju VLASTITU DNA! (Dokaz endosimbiotske teorije)')" aria-label="Čitaj definiciju naglas">🔊</button></div>
+    <div class="concept-def"><strong>📖 Definicija:</strong> "Elektrane" stanice. Provode stanično disanje — pretvaraju hranu (glukozu) u energiju (ATP). Imaju VLASTITU DNA! (Dokaz endosimbiotske teorije)</div>
+    <div class="concept-example">Mitohondrij je kao baterija u mobitelu — bez njega stanica nema energije za rad.</div>
+  </div>
+  <div class="concept-card">
+    <div class="concept-term">Endomembranski sustav <button class="tts-btn" onclick="speak('Endomembranski sustav. Sustav membrana unutar stanice: hrapavi ER (ima ribosome → sinteza proteina), glatki ER (sinteza lipida), Golgijev aparat (pakiranje i slanje), lizosomi (razgradnja).')" aria-label="Čitaj definiciju naglas">🔊</button></div>
+    <div class="concept-def"><strong>📖 Definicija:</strong> Sustav membrana unutar stanice: hrapavi ER (ima ribosome → sinteza proteina), glatki ER (sinteza lipida), Golgijev aparat (pakiranje i slanje), lizosomi (razgradnja).</div>
+    <div class="concept-example">Kao poštanski sustav: hrapavi ER = tvornica, Golgi = pošta za pakiranje, lizosomi = reciklažno dvorište.</div>
+  </div>
+  <div class="encouragement show" style="display:block;">
+    Fantastično! Već si prešla pola! 🎯
+  </div>
+  <div class="concept-card">
+    <div class="concept-term">Razlike biljna vs životinjska <button class="tts-btn" onclick="speak('Razlike biljna vs životinjska. BILJNA stanica IMA: vakuolu (skladište vode), kloroplaste (fotosinteza), staničnu stijenku (čvrstoća), plazmodezme (veze među stanicama). ŽIVOTINJSKA stanica IMA: centriole i centrosom (stanična dioba).')" aria-label="Čitaj definiciju naglas">🔊</button></div>
+    <div class="concept-def"><strong>📖 Definicija:</strong> BILJNA stanica IMA: vakuolu (skladište vode), kloroplaste (fotosinteza), staničnu stijenku (čvrstoća), plazmodezme (veze među stanicama). ŽIVOTINJSKA stanica IMA: centriole i centrosom (stanična dioba).</div>
+    <div class="concept-example">Biljna stanica je kao kuća s podrumom (vakuola), solarnim panelima (kloroplasti) i čvrstim zidovima (stanična stijenka). Životinjska je fleksibilnija — kao šator.</div>
+  </div>
+  <div class="concept-card">
+    <div class="concept-term">Endosimbiotska teorija <button class="tts-btn" onclick="speak('Endosimbiotska teorija. Mitohondriji i kloroplasti su nekad bili slobodni prokarioti koji su "ušli" u veću stanicu i počeli živjeti u simbiozi. Dokazi: imaju vlastitu DNA, dvostruku membranu, vlastite ribosome.')" aria-label="Čitaj definiciju naglas">🔊</button></div>
+    <div class="concept-def"><strong>📖 Definicija:</strong> Mitohondriji i kloroplasti su nekad bili slobodni prokarioti koji su "ušli" u veću stanicu i počeli živjeti u simbiozi. Dokazi: imaju vlastitu DNA, dvostruku membranu, vlastite ribosome.</div>
+    <div class="concept-example">Prije 1,5-2 milijarde godina, velika stanica je "progutala" malu bakteriju — ali umjesto da je probavi, bakterija je ostala i postala mitohondrij!</div>
+  </div>
+  <div class="concept-card">
+    <div class="concept-term">Omjer P/V (površina/volumen) <button class="tts-btn" onclick="speak('Omjer P/V (površina/volumen). Što je stanica veća, P/V omjer je manji → manja površina za razmjenu tvari u odnosu na volumen. Zato su stanice male!')" aria-label="Čitaj definiciju naglas">🔊</button></div>
+    <div class="concept-def"><strong>📖 Definicija:</strong> Što je stanica veća, P/V omjer je manji → manja površina za razmjenu tvari u odnosu na volumen. Zato su stanice male!</div>
+    <div class="concept-example">Zamijeni veliku kocku leda s mnogo malih — male kockice se brže otope jer imaju veću ukupnu površinu.</div>
+  </div>
+  <div class="self-check">
+    <p><strong>🤔 Razumiješ li ovu cjelinu?</strong></p>
+    <div class="self-check-btns">
+      <button class="self-check-btn" onclick="selfCheck(this,'da')">✅ Da, razumijem!</button>
+      <button class="self-check-btn" onclick="selfCheck(this,'djelomicno')">🤷 Djelomično</button>
+      <button class="self-check-btn" onclick="selfCheck(this,'ne')">❓ Trebam ponoviti</button>
+    </div>
+  </div>
+  <div class="kartica kartica-quiz">
+    <h3>🧪 Mini kviz — Eukariotska stanica</h3>
+    <p style="font-size:14px;color:var(--text-light);">Ne ocjenjuje se! Samo da provjeriš razumijevanje.</p>
+    <div class="quiz-container" id="q-euk-stanica-0-container">
+      <p class="quiz-q">1. Koji organel ima VLASTITU DNA? <button class="tts-btn" onclick="speak('Koji organel ima VLASTITU DNA?')" aria-label="Čitaj pitanje naglas">🔊</button></p>
+      <button class="quiz-option" onclick="checkAnswer('q-euk-stanica-0',0,2)" data-qid="q-euk-stanica-0">A) Lizosomi</button>
+      <button class="quiz-option" onclick="checkAnswer('q-euk-stanica-0',1,2)" data-qid="q-euk-stanica-0">B) Golgijev aparat</button>
+      <button class="quiz-option" onclick="checkAnswer('q-euk-stanica-0',2,2)" data-qid="q-euk-stanica-0">C) Mitohondriji</button>
+      <button class="quiz-option" onclick="checkAnswer('q-euk-stanica-0',3,2)" data-qid="q-euk-stanica-0">D) Ribosomi</button>
+      <div class="quiz-explain" id="q-euk-stanica-0-explain-correct" class="correct-explain">✅ Točno! Mitohondriji (i kloroplasti) imaju vlastitu DNA — dokaz endosimbiotske teorije.</div>
+      <div class="quiz-explain" id="q-euk-stanica-0-explain-incorrect" class="incorrect-explain">❌ Mitohondriji (i kloroplasti) imaju vlastitu DNA — dokaz endosimbiotske teorije.</div>
+    </div>
+    <div class="quiz-container" id="q-euk-stanica-1-container">
+      <p class="quiz-q">2. Što ima biljna stanica, a životinjska NEMA? <button class="tts-btn" onclick="speak('Što ima biljna stanica, a životinjska NEMA?')" aria-label="Čitaj pitanje naglas">🔊</button></p>
+      <button class="quiz-option" onclick="checkAnswer('q-euk-stanica-1',0,2)" data-qid="q-euk-stanica-1">A) Jezgru</button>
+      <button class="quiz-option" onclick="checkAnswer('q-euk-stanica-1',1,2)" data-qid="q-euk-stanica-1">B) Staničnu membranu</button>
+      <button class="quiz-option" onclick="checkAnswer('q-euk-stanica-1',2,2)" data-qid="q-euk-stanica-1">C) Kloroplaste</button>
+      <button class="quiz-option" onclick="checkAnswer('q-euk-stanica-1',3,2)" data-qid="q-euk-stanica-1">D) Ribosome</button>
+      <div class="quiz-explain" id="q-euk-stanica-1-explain-correct" class="correct-explain">✅ Točno! Kloroplasti, vakuola i stanična stijenka su specifični za biljne stanice.</div>
+      <div class="quiz-explain" id="q-euk-stanica-1-explain-incorrect" class="incorrect-explain">❌ Kloroplasti, vakuola i stanična stijenka su specifični za biljne stanice.</div>
+    </div>
+    <div class="quiz-container" id="q-euk-stanica-2-container">
+      <p class="quiz-q">3. Glatki ER služi za: <button class="tts-btn" onclick="speak('Glatki ER služi za:')" aria-label="Čitaj pitanje naglas">🔊</button></p>
+      <button class="quiz-option" onclick="checkAnswer('q-euk-stanica-2',0,1)" data-qid="q-euk-stanica-2">A) Sintezu proteina</button>
+      <button class="quiz-option" onclick="checkAnswer('q-euk-stanica-2',1,1)" data-qid="q-euk-stanica-2">B) Sintezu lipida</button>
+      <button class="quiz-option" onclick="checkAnswer('q-euk-stanica-2',2,1)" data-qid="q-euk-stanica-2">C) Razgradnju starog materijala</button>
+      <button class="quiz-option" onclick="checkAnswer('q-euk-stanica-2',3,1)" data-qid="q-euk-stanica-2">D) Proizvodnju ribosoma</button>
+      <div class="quiz-explain" id="q-euk-stanica-2-explain-correct" class="correct-explain">✅ Točno! Glatki ER (nema ribosome) sintetizira lipide. Hrapavi ER (ima ribosome) sintetizira proteine.</div>
+      <div class="quiz-explain" id="q-euk-stanica-2-explain-incorrect" class="incorrect-explain">❌ Glatki ER (nema ribosome) sintetizira lipide. Hrapavi ER (ima ribosome) sintetizira proteine.</div>
+    </div>
+  </div>
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goToSection(3)">⬅️ Natrag</button>
+    <button class="btn btn-primary" onclick="goToSection(5)">Dalje ➡️</button>
+  </div>
+</section>
+
+<section class="section-card" id="section-tkiva" aria-label="Tkiva i organi biljaka">
+  <div class="kartica" style="border-left-color:var(--green-dark);">
+    <h2>🌿 Cjelina 5: Tkiva i organi biljaka
+    <button class="tts-btn" onclick="speak(this.closest('.kartica').querySelector('h2').textContent)" aria-label="Čitaj naslov naglas">🔊</button></h2>
+  </div>
+  <div class="concept-card">
+    <div class="concept-term">Homeostaza <button class="tts-btn" onclick="speak('Homeostaza. Stanje stabilnih fizikalnih i kemijskih uvjeta unutar organizma. Osigurava uravnotežen rad stanica, tkiva, organa i organskih sustava.')" aria-label="Čitaj definiciju naglas">🔊</button></div>
+    <div class="concept-def"><strong>📖 Definicija:</strong> Stanje stabilnih fizikalnih i kemijskih uvjeta unutar organizma. Osigurava uravnotežen rad stanica, tkiva, organa i organskih sustava.</div>
+    <div class="concept-example">Kad ti je vruće, znojiš se. Kad ti je hladno, drhtaš. Tijelo uvijek pokušava održati stabilno stanje — to je homeostaza.</div>
+  </div>
+  <div class="concept-card">
+    <div class="concept-term">Biljna tkiva <button class="tts-btn" onclick="speak('Biljna tkiva. Dva osnovna tipa: TVORNA (meristemska) — stanice se dijele, omogućuju rast. TRAJNA — stanice su diferencirane, obavljaju specifične funkcije.')" aria-label="Čitaj definiciju naglas">🔊</button></div>
+    <div class="concept-def"><strong>📖 Definicija:</strong> Dva osnovna tipa: TVORNA (meristemska) — stanice se dijele, omogućuju rast. TRAJNA — stanice su diferencirane, obavljaju specifične funkcije.</div>
+    <div class="concept-example">Meristemi su kao matične stanice u biljci — mogu postati bilo što. Trajna tkiva su "odrasla" — svako ima svoj posao.</div>
+  </div>
+  <div class="concept-card">
+    <div class="concept-term">Meristemi <button class="tts-btn" onclick="speak('Meristemi. Vršni meristemi (vrh stabljike i korijena) → rast u duljinu. Bočni meristem (kambij) → rast u širinu (godovi).')" aria-label="Čitaj definiciju naglas">🔊</button></div>
+    <div class="concept-def"><strong>📖 Definicija:</strong> Vršni meristemi (vrh stabljike i korijena) → rast u duljinu. Bočni meristem (kambij) → rast u širinu (godovi).</div>
+    <div class="concept-example">Vrh bambusa raste 90 cm dnevno zahvaljujući vršnom meristemu! Stablo hrasta postaje deblje svake godine zahvaljujući kambiju.</div>
+  </div>
+  <div class="encouragement show" style="display:block;">
+    Samo naprijed! Blizu si cilja! 🏆
+  </div>
+  <div class="concept-card">
+    <div class="concept-term">Provodno tkivo <button class="tts-btn" onclick="speak('Provodno tkivo. KSILEM: provodi vodu i minerale OD korijena PREMA listovima. Građen od mrtvih stanica. FLOEM: provodi organske tvari (šećere) OD listova PREMA ostatku biljke. Građen od živih stanica.')" aria-label="Čitaj definiciju naglas">🔊</button></div>
+    <div class="concept-def"><strong>📖 Definicija:</strong> KSILEM: provodi vodu i minerale OD korijena PREMA listovima. Građen od mrtvih stanica. FLOEM: provodi organske tvari (šećere) OD listova PREMA ostatku biljke. Građen od živih stanica.</div>
+    <div class="concept-example">Ksilem = vodovod (voda ide gore). Floem = dostava hrane (šećer ide dolje). Zajedno čine "krvotok" biljke.</div>
+  </div>
+  <div class="concept-card">
+    <div class="concept-term">Potporno tkivo <button class="tts-btn" onclick="speak('Potporno tkivo. KOLENHIM: žive stanice, elastične, nalaze se u mladim dijelovima biljke. SKLERENHIM: mrtve stanice, čvrste, lignificirane — nalaze se u stabljici, plodovima.')" aria-label="Čitaj definiciju naglas">🔊</button></div>
+    <div class="concept-def"><strong>📖 Definicija:</strong> KOLENHIM: žive stanice, elastične, nalaze se u mladim dijelovima biljke. SKLERENHIM: mrtve stanice, čvrste, lignificirane — nalaze se u stabljici, plodovima.</div>
+    <div class="concept-example">Kolenhim = gumeni brisač (savitljiv). Sklerenhim = ljuska oraha (tvrd i nepopustljiv).</div>
+  </div>
+  <div class="concept-card">
+    <div class="concept-term">Biljni organi <button class="tts-btn" onclick="speak('Biljni organi. Vegetativni: korijen (učvršćivanje, apsorpcija), stabljika (potpora, provođenje), list (fotosinteza). Generativni: cvijet (razmnožavanje), plod (zaštita i rasprostiranje sjemenki).')" aria-label="Čitaj definiciju naglas">🔊</button></div>
+    <div class="concept-def"><strong>📖 Definicija:</strong> Vegetativni: korijen (učvršćivanje, apsorpcija), stabljika (potpora, provođenje), list (fotosinteza). Generativni: cvijet (razmnožavanje), plod (zaštita i rasprostiranje sjemenki).</div>
+    <div class="concept-example">Vegetativni organi = "tijelo" biljke (preživljavanje). Generativni organi = "reproduktivni sustav" (razmnožavanje).</div>
+  </div>
+  <div class="self-check">
+    <p><strong>🤔 Razumiješ li ovu cjelinu?</strong></p>
+    <div class="self-check-btns">
+      <button class="self-check-btn" onclick="selfCheck(this,'da')">✅ Da, razumijem!</button>
+      <button class="self-check-btn" onclick="selfCheck(this,'djelomicno')">🤷 Djelomično</button>
+      <button class="self-check-btn" onclick="selfCheck(this,'ne')">❓ Trebam ponoviti</button>
+    </div>
+  </div>
+  <div class="kartica kartica-quiz">
+    <h3>🧪 Mini kviz — Tkiva i organi biljaka</h3>
+    <p style="font-size:14px;color:var(--text-light);">Ne ocjenjuje se! Samo da provjeriš razumijevanje.</p>
+    <div class="quiz-container" id="q-tkiva-0-container">
+      <p class="quiz-q">1. Ksilem provodi: <button class="tts-btn" onclick="speak('Ksilem provodi:')" aria-label="Čitaj pitanje naglas">🔊</button></p>
+      <button class="quiz-option" onclick="checkAnswer('q-tkiva-0',0,1)" data-qid="q-tkiva-0">A) Šećere od listova prema korijenu</button>
+      <button class="quiz-option" onclick="checkAnswer('q-tkiva-0',1,1)" data-qid="q-tkiva-0">B) Vodu i minerale od korijena prema listovima</button>
+      <button class="quiz-option" onclick="checkAnswer('q-tkiva-0',2,1)" data-qid="q-tkiva-0">C) Kisik iz zraka u biljku</button>
+      <button class="quiz-option" onclick="checkAnswer('q-tkiva-0',3,1)" data-qid="q-tkiva-0">D) CO₂ iz tla u listove</button>
+      <div class="quiz-explain" id="q-tkiva-0-explain-correct" class="correct-explain">✅ Točno! Ksilem = voda i minerali GORE. Floem = organske tvari (šećeri) DOLJE.</div>
+      <div class="quiz-explain" id="q-tkiva-0-explain-incorrect" class="incorrect-explain">❌ Ksilem = voda i minerali GORE. Floem = organske tvari (šećeri) DOLJE.</div>
+    </div>
+    <div class="quiz-container" id="q-tkiva-1-container">
+      <p class="quiz-q">2. Koji meristem omogućuje rast stabla u širinu? <button class="tts-btn" onclick="speak('Koji meristem omogućuje rast stabla u širinu?')" aria-label="Čitaj pitanje naglas">🔊</button></p>
+      <button class="quiz-option" onclick="checkAnswer('q-tkiva-1',0,1)" data-qid="q-tkiva-1">A) Vršni meristem</button>
+      <button class="quiz-option" onclick="checkAnswer('q-tkiva-1',1,1)" data-qid="q-tkiva-1">B) Kambij (bočni meristem)</button>
+      <button class="quiz-option" onclick="checkAnswer('q-tkiva-1',2,1)" data-qid="q-tkiva-1">C) Kolenhim</button>
+      <button class="quiz-option" onclick="checkAnswer('q-tkiva-1',3,1)" data-qid="q-tkiva-1">D) Parenhim</button>
+      <div class="quiz-explain" id="q-tkiva-1-explain-correct" class="correct-explain">✅ Točno! Kambij (bočni meristem) dodaje nove slojeve drva i lika — zato stablo postaje deblje svake godine (godovi!).</div>
+      <div class="quiz-explain" id="q-tkiva-1-explain-incorrect" class="incorrect-explain">❌ Kambij (bočni meristem) dodaje nove slojeve drva i lika — zato stablo postaje deblje svake godine (godovi!).</div>
+    </div>
+    <div class="quiz-container" id="q-tkiva-2-container">
+      <p class="quiz-q">3. Sklerenhim je građen od: <button class="tts-btn" onclick="speak('Sklerenhim je građen od:')" aria-label="Čitaj pitanje naglas">🔊</button></p>
+      <button class="quiz-option" onclick="checkAnswer('q-tkiva-2',0,1)" data-qid="q-tkiva-2">A) Živih, elastičnih stanica</button>
+      <button class="quiz-option" onclick="checkAnswer('q-tkiva-2',1,1)" data-qid="q-tkiva-2">B) Mrtvih, lignificiranih stanica</button>
+      <button class="quiz-option" onclick="checkAnswer('q-tkiva-2',2,1)" data-qid="q-tkiva-2">C) Stanica koje se dijele</button>
+      <button class="quiz-option" onclick="checkAnswer('q-tkiva-2',3,1)" data-qid="q-tkiva-2">D) Stanica s kloroplastima</button>
+      <div class="quiz-explain" id="q-tkiva-2-explain-correct" class="correct-explain">✅ Točno! Sklerenhim = mrtve, čvrste, lignificirane stanice. Kolenhim = žive, elastične stanice.</div>
+      <div class="quiz-explain" id="q-tkiva-2-explain-incorrect" class="incorrect-explain">❌ Sklerenhim = mrtve, čvrste, lignificirane stanice. Kolenhim = žive, elastične stanice.</div>
+    </div>
+  </div>
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goToSection(4)">⬅️ Natrag</button>
+    <button class="btn btn-primary" onclick="goToSection(6)">Dalje ➡️</button>
+  </div>
+</section>
+
+<section class="section-card" id="section-sjemenjace" aria-label="Sjemenače i razmnožavanje biljaka">
+  <div class="kartica" style="border-left-color:var(--green-dark);">
+    <h2>🌸 Cjelina 6: Sjemenače i razmnožavanje biljaka
+    <button class="tts-btn" onclick="speak(this.closest('.kartica').querySelector('h2').textContent)" aria-label="Čitaj naslov naglas">🔊</button></h2>
+  </div>
+  <div class="concept-card">
+    <div class="concept-term">Golosjemenjače <button class="tts-btn" onclick="speak('Golosjemenjače. Evolucijski primitivnije sjemenjače. Sjemeni zametci su OTVORENI (nisu u plodnici). Oprašuju se vjetrom. Primjeri: bor, smreka, jela, tisa, čempres, ginko.')" aria-label="Čitaj definiciju naglas">🔊</button></div>
+    <div class="concept-def"><strong>📖 Definicija:</strong> Evolucijski primitivnije sjemenjače. Sjemeni zametci su OTVORENI (nisu u plodnici). Oprašuju se vjetrom. Primjeri: bor, smreka, jela, tisa, čempres, ginko.</div>
+    <div class="concept-example">Bor ima čunjeve ("šišarke") — sjemenke su na ljuskama čunja, nezaštićene. Zato se zovu GOLO-sjemenjače.</div>
+  </div>
+  <div class="concept-card">
+    <div class="concept-term">Kritosjemenjače <button class="tts-btn" onclick="speak('Kritosjemenjače. Evolucijski NAPREDNIJE. Sjemeni zametak je ZAŠTIĆEN u plodnici tučka. Imaju pravi cvijet. Najraznovrsnija skupina biljaka danas.')" aria-label="Čitaj definiciju naglas">🔊</button></div>
+    <div class="concept-def"><strong>📖 Definicija:</strong> Evolucijski NAPREDNIJE. Sjemeni zametak je ZAŠTIĆEN u plodnici tučka. Imaju pravi cvijet. Najraznovrsnija skupina biljaka danas.</div>
+    <div class="concept-example">Jabuka, ruža, pšenica — sve su kritosjemenjače. Sjemenka je "skrivena" (krito = skriveno) unutar ploda.</div>
+  </div>
+  <div class="concept-card">
+    <div class="concept-term">Građa cvijeta <button class="tts-btn" onclick="speak('Građa cvijeta. Prašnici (muški: proizvode pelud) + Tučak (ženski: njuška, vrat, plodnica sa sjemenim zametcima) + Latice + Čaška + Cvjetna stapka.')" aria-label="Čitaj definiciju naglas">🔊</button></div>
+    <div class="concept-def"><strong>📖 Definicija:</strong> Prašnici (muški: proizvode pelud) + Tučak (ženski: njuška, vrat, plodnica sa sjemenim zametcima) + Latice + Čaška + Cvjetna stapka.</div>
+    <div class="concept-example">Cvijet je "reproduktivni organ" biljke. Prašnici = očevi, tučak = majka, latice = "reklama" za oprašivače.</div>
+  </div>
+  <div class="encouragement show" style="display:block;">
+    Završavaš kao prava znanstvenica! 🔬⭐
+  </div>
+  <div class="concept-card">
+    <div class="concept-term">Oprašivanje <button class="tts-btn" onclick="speak('Oprašivanje. Prenošenje peluda s prašnika na njušku tučka. Samooprašivanje = isti cvijet. Stranoprašivanje = različiti cvijetovi. Oprašivači: kukci (entomofilija), vjetar (anemofilija), ptice (ornitofilija), voda (hidrofilija).')" aria-label="Čitaj definiciju naglas">🔊</button></div>
+    <div class="concept-def"><strong>📖 Definicija:</strong> Prenošenje peluda s prašnika na njušku tučka. Samooprašivanje = isti cvijet. Stranoprašivanje = različiti cvijetovi. Oprašivači: kukci (entomofilija), vjetar (anemofilija), ptice (ornitofilija), voda (hidrofilija).</div>
+    <div class="concept-example">Pčela slijeće na cvijet po nektar → pelud se zalijepi na njeno tijelo → prenese na drugi cvijet = oprašivanje!</div>
+  </div>
+  <div class="concept-card">
+    <div class="concept-term">Dvostruka oplodnja <button class="tts-btn" onclick="speak('Dvostruka oplodnja. Specifična za kritosjemenjače! Peludno zrno klija u peludnu mješinicu s 2 spermalne stanice: 1. spermalna + jajna stanica = ZIGOTA (2n) → embrio. 2. spermalna + središnja jezgra = ENDOSPERM (3n) → hrana za embrio.')" aria-label="Čitaj definiciju naglas">🔊</button></div>
+    <div class="concept-def"><strong>📖 Definicija:</strong> Specifična za kritosjemenjače! Peludno zrno klija u peludnu mješinicu s 2 spermalne stanice: 1. spermalna + jajna stanica = ZIGOTA (2n) → embrio. 2. spermalna + središnja jezgra = ENDOSPERM (3n) → hrana za embrio.</div>
+    <div class="concept-example">Jedna spermalna stanica pravi bebu (embrio), druga pravi hranu za bebu (endosperm). Dvostruko efikasno!</div>
+  </div>
+  <div class="concept-card">
+    <div class="concept-term">Vegetativno razmnožavanje <button class="tts-btn" onclick="speak('Vegetativno razmnožavanje. Razmnožavanje BEZ spolnih stanica — iz dijelova biljke nastaje nova biljka. Načini: korijenom, stabljikom (rizomi, podanci, gomolji, lukovice), listom, fragmentacijom.')" aria-label="Čitaj definiciju naglas">🔊</button></div>
+    <div class="concept-def"><strong>📖 Definicija:</strong> Razmnožavanje BEZ spolnih stanica — iz dijelova biljke nastaje nova biljka. Načini: korijenom, stabljikom (rizomi, podanci, gomolji, lukovice), listom, fragmentacijom.</div>
+    <div class="concept-example">Jagoda šalje "ogranke" (stolone) koji se ukorijene i nastane nova biljka — klon majke! Krumpir je gomolj — svako "oko" može izrasti u novu biljku.</div>
+  </div>
+  <div class="self-check">
+    <p><strong>🤔 Razumiješ li ovu cjelinu?</strong></p>
+    <div class="self-check-btns">
+      <button class="self-check-btn" onclick="selfCheck(this,'da')">✅ Da, razumijem!</button>
+      <button class="self-check-btn" onclick="selfCheck(this,'djelomicno')">🤷 Djelomično</button>
+      <button class="self-check-btn" onclick="selfCheck(this,'ne')">❓ Trebam ponoviti</button>
+    </div>
+  </div>
+  <div class="kartica kartica-quiz">
+    <h3>🧪 Mini kviz — Sjemenače i razmnožavanje biljaka</h3>
+    <p style="font-size:14px;color:var(--text-light);">Ne ocjenjuje se! Samo da provjeriš razumijevanje.</p>
+    <div class="quiz-container" id="q-sjemenjace-0-container">
+      <p class="quiz-q">1. Što je specifično za dvostruku oplodnju kritosjemenjača? <button class="tts-btn" onclick="speak('Što je specifično za dvostruku oplodnju kritosjemenjača?')" aria-label="Čitaj pitanje naglas">🔊</button></p>
+      <button class="quiz-option" onclick="checkAnswer('q-sjemenjace-0',0,1)" data-qid="q-sjemenjace-0">A) Nastaje samo zigota</button>
+      <button class="quiz-option" onclick="checkAnswer('q-sjemenjace-0',1,1)" data-qid="q-sjemenjace-0">B) Nastaju zigota I endosperm</button>
+      <button class="quiz-option" onclick="checkAnswer('q-sjemenjace-0',2,1)" data-qid="q-sjemenjace-0">C) Oprašivanje vjetrom</button>
+      <button class="quiz-option" onclick="checkAnswer('q-sjemenjace-0',3,1)" data-qid="q-sjemenjace-0">D) Otvoreni sjemeni zametci</button>
+      <div class="quiz-explain" id="q-sjemenjace-0-explain-correct" class="correct-explain">✅ Točno! Dvostruka oplodnja = 1. spermalna + jajna → zigota (embrio) + 2. spermalna + središnja jezgra → endosperm (3n, hrana).</div>
+      <div class="quiz-explain" id="q-sjemenjace-0-explain-incorrect" class="incorrect-explain">❌ Dvostruka oplodnja = 1. spermalna + jajna → zigota (embrio) + 2. spermalna + središnja jezgra → endosperm (3n, hrana).</div>
+    </div>
+    <div class="quiz-container" id="q-sjemenjace-1-container">
+      <p class="quiz-q">2. Golosjemenjače se oprašuju pomoću: <button class="tts-btn" onclick="speak('Golosjemenjače se oprašuju pomoću:')" aria-label="Čitaj pitanje naglas">🔊</button></p>
+      <button class="quiz-option" onclick="checkAnswer('q-sjemenjace-1',0,2)" data-qid="q-sjemenjace-1">A) Kukaca</button>
+      <button class="quiz-option" onclick="checkAnswer('q-sjemenjace-1',1,2)" data-qid="q-sjemenjace-1">B) Ptica</button>
+      <button class="quiz-option" onclick="checkAnswer('q-sjemenjace-1',2,2)" data-qid="q-sjemenjace-1">C) Vjetra</button>
+      <button class="quiz-option" onclick="checkAnswer('q-sjemenjace-1',3,2)" data-qid="q-sjemenjace-1">D) Vode</button>
+      <div class="quiz-explain" id="q-sjemenjace-1-explain-correct" class="correct-explain">✅ Točno! Golosjemenjače (četinjače) nemaju šarene cvjetove — oprašuju se vjetrom. Proizvode ogromne količine peluda.</div>
+      <div class="quiz-explain" id="q-sjemenjace-1-explain-incorrect" class="incorrect-explain">❌ Golosjemenjače (četinjače) nemaju šarene cvjetove — oprašuju se vjetrom. Proizvode ogromne količine peluda.</div>
+    </div>
+    <div class="quiz-container" id="q-sjemenjace-2-container">
+      <p class="quiz-q">3. Vegetativno razmnožavanje proizvodi: <button class="tts-btn" onclick="speak('Vegetativno razmnožavanje proizvodi:')" aria-label="Čitaj pitanje naglas">🔊</button></p>
+      <button class="quiz-option" onclick="checkAnswer('q-sjemenjace-2',0,1)" data-qid="q-sjemenjace-2">A) Genetski raznolike potomke</button>
+      <button class="quiz-option" onclick="checkAnswer('q-sjemenjace-2',1,1)" data-qid="q-sjemenjace-2">B) Klonove roditeljske biljke</button>
+      <button class="quiz-option" onclick="checkAnswer('q-sjemenjace-2',2,1)" data-qid="q-sjemenjace-2">C) Samo sjemenke</button>
+      <button class="quiz-option" onclick="checkAnswer('q-sjemenjace-2',3,1)" data-qid="q-sjemenjace-2">D) Samo spore</button>
+      <div class="quiz-explain" id="q-sjemenjace-2-explain-correct" class="correct-explain">✅ Točno! Vegetativno razmnožavanje = bez spolnih stanica = potomci su genetski identični roditelju = klonovi.</div>
+      <div class="quiz-explain" id="q-sjemenjace-2-explain-incorrect" class="incorrect-explain">❌ Vegetativno razmnožavanje = bez spolnih stanica = potomci su genetski identični roditelju = klonovi.</div>
+    </div>
+  </div>
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goToSection(5)">⬅️ Natrag</button>
+    <button class="btn btn-primary" onclick="goToSection(99)">Završi! 🎉</button>
+  </div>
+</section>
+
+<section class="section-card" id="section-recap" aria-label="Završetak">
+  <div class="recap-card">
+    <h2>🏆 Bravo, Natalija! Ponovila si SVE!</h2>
+    <p>Evo što smo danas prošli:</p>
+    <ul style="list-style:none;padding:0;">
+      <li style="padding:6px 0;">✅ 💧 Voda za život</li>
+      <li style="padding:6px 0;">✅ 🌍 Nastanak života na Zemlji</li>
+      <li style="padding:6px 0;">✅ 🦠 Prokarioti — bakterije i arheje</li>
+      <li style="padding:6px 0;">✅ 🔬 Eukariotska stanica</li>
+      <li style="padding:6px 0;">✅ 🌿 Tkiva i organi biljaka</li>
+      <li style="padding:6px 0;">✅ 🌸 Sjemenače i razmnožavanje biljaka</li>
+    </ul>
+    <p style="margin-top:16px;font-weight:600;color:var(--green-dark);">Svaki put kad ponoviš gradivo, tvoj mozak stvara jače veze između neurona. Ti postaneš pametnija — doslovno! 🧠✨</p>
+  </div>
+
+  <div class="mood-selector">
+    <h3>Kako se osjećaš nakon ponavljanja?</h3>
+    <div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:10px;">
+      <button class="mood-btn" onclick="selectMood(this,'super')" aria-label="Osjećam se super">😄</button>
+      <button class="mood-btn" onclick="selectMood(this,'ok')" aria-label="OK sam">🙂</button>
+      <button class="mood-btn" onclick="selectMood(this,'umorna')" aria-label="Umorna sam">😴</button>
+      <button class="mood-btn" onclick="selectMood(this,'zbunjena')" aria-label="Zbunjena sam">🤔</button>
+    </div>
+    <p id="mood-response" style="margin-top:12px;font-weight:600;display:none;"></p>
+  </div>
+
+  <div class="nav-buttons" style="margin-top:24px;">
+    <button class="btn btn-secondary" onclick="goToSection(0)">⬅️ Natrag na plan</button>
+  </div>
+</section>
+
+</main>
+
+<script>
+// --- State ---
+let currentSection = 0;
+const totalSections = 6;
+let quizScore = 0;
+let breathInterval = null;
+
+// --- Navigation ---
+function goToSection(idx) {
+  document.querySelectorAll('.section-card').forEach(s => s.classList.remove('active'));
+  if (idx === 0) {
+    document.getElementById('section-intro').classList.add('active');
+    currentSection = 0;
+  } else if (idx === 99) {
+    document.getElementById('section-recap').classList.add('active');
+    currentSection = totalSections + 1;
+    showConfetti();
+  } else {
+    const sectionIds = ["voda","nastanak","prokarioti","euk-stanica","tkiva","sjemenjace"];
+    if (idx >= 1 && idx <= totalSections) {
+      document.getElementById('section-' + sectionIds[idx-1]).classList.add('active');
+      currentSection = idx;
+      // Mark previous as completed
+      if (idx > 1) {
+        const prevId = sectionIds[idx-2];
+        const li = document.getElementById('check-' + prevId);
+        if (li) { li.classList.add('completed'); li.querySelector('.check-icon').textContent = '✅'; }
+      }
+    }
+  }
+  updateProgress();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+  document.getElementById('live-feedback').textContent = 'Cjelina ' + idx + ' od ' + totalSections;
+}
+
+function updateProgress() {
+  const pct = Math.round((Math.min(currentSection, totalSections) / totalSections) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('main-progress').setAttribute('aria-valuenow', pct);
+  document.getElementById('progress-text').textContent = 'Cjelina ' + Math.min(currentSection, totalSections) + ' / ' + totalSections;
+}
+
+// --- Quiz ---
+function checkAnswer(qid, selected, correct) {
+  const btns = document.querySelectorAll('[data-qid="' + qid + '"]');
+  btns.forEach((b, i) => {
+    b.classList.add('disabled');
+    if (i === correct) b.classList.add('correct');
+    if (i === selected && selected !== correct) b.classList.add('incorrect');
+  });
+  const explainEl = selected === correct
+    ? document.getElementById(qid + '-explain-correct')
+    : document.getElementById(qid + '-explain-incorrect');
+  if (explainEl) {
+    explainEl.classList.add('show');
+    explainEl.classList.add(selected === correct ? 'correct-explain' : 'incorrect-explain');
+    explainEl.style.display = 'block';
+  }
+  if (selected === correct) quizScore++;
+}
+
+// --- TTS ---
+function speak(text) {
+  if ('speechSynthesis' in window) {
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'hr-HR'; u.rate = 0.9;
+    speechSynthesis.speak(u);
+  }
+}
+
+// --- Settings ---
+function toggleSettings() {
+  const p = document.getElementById('settings-panel');
+  const btn = document.querySelector('.settings-toggle');
+  const isHidden = p.hidden;
+  p.hidden = !isHidden;
+  btn.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+  if (isHidden) p.querySelector('h2').focus();
+}
+function changeFontSize(v) {
+  document.body.style.fontSize = v + 'px';
+  document.getElementById('font-size-val').textContent = v + 'px';
+}
+function changeBg(v) {
+  document.body.style.background = v;
+  if (v === '#2D3436') { document.body.style.color = '#F0F0F0'; }
+  else { document.body.style.color = ''; }
+}
+function changeLH(v) {
+  document.body.style.lineHeight = v;
+  document.getElementById('lh-val').textContent = v;
+}
+function toggleRuler(on) {
+  document.getElementById('readingRuler').style.display = on ? 'block' : 'none';
+}
+document.addEventListener('mousemove', e => {
+  const r = document.getElementById('readingRuler');
+  if (r.style.display === 'block') r.style.top = (e.clientY - 20) + 'px';
+});
+
+// --- Breathing ---
+function pokaziDisanje() {
+  document.getElementById('breathing-overlay').classList.add('show');
+  const el = document.getElementById('breathText');
+  const phases = ['Udahni...', 'Zadrži...', 'Izdahni...', 'Zadrži...'];
+  let i = 0;
+  el.textContent = phases[0];
+  breathInterval = setInterval(() => { i = (i + 1) % 4; el.textContent = phases[i]; }, 4000);
+}
+function zatvoriDisanje() {
+  document.getElementById('breathing-overlay').classList.remove('show');
+  if (breathInterval) clearInterval(breathInterval);
+}
+
+// --- Self Check ---
+function selfCheck(btn, val) {
+  btn.parentElement.querySelectorAll('.self-check-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  const msgs = {
+    da: '💚 Odlično! Samopouzdano dalje!',
+    djelomicno: '💛 OK! Možeš se vratiti na ovu cjelinu kad god poželiš.',
+    ne: '🧡 Nema problema! Pročitaj cjelinu još jednom polako, ili pitaj za pomoć.'
+  };
+  const fb = document.getElementById('live-feedback');
+  fb.textContent = msgs[val] || '';
+}
+
+// --- Mood ---
+function selectMood(btn, mood) {
+  document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  const msgs = {
+    super: '🌟 Bravo! Sjajno je osjećati se samopouzdano nakon učenja!',
+    ok: '👍 Dobro je! Svako ponavljanje čini gradivo lakšim.',
+    umorna: '😴 Odmori se! Mozak obrađuje informacije i kad spavaš.',
+    zbunjena: '🤔 To je normalno! Zbunjenost znači da tvoj mozak radi na razumijevanju.'
+  };
+  const r = document.getElementById('mood-response');
+  r.textContent = msgs[mood]; r.style.display = 'block';
+}
+
+// --- Confetti ---
+function showConfetti() {
+  const c = document.getElementById('confetti-container');
+  for (let i = 0; i < 60; i++) {
+    const p = document.createElement('div');
+    p.style.cssText = `position:fixed;width:10px;height:10px;border-radius:50%;
+      left:${Math.random()*100}%;top:-10px;z-index:4000;pointer-events:none;
+      background:${['#00B894','#0984E3','#FDCB6E','#FD79A8','#A29BFE','#00CEC9'][i%6]};
+      animation:confettiFall ${1.5+Math.random()*2}s ease-out forwards;
+      animation-delay:${Math.random()*0.5}s;`;
+    c.appendChild(p);
+  }
+  setTimeout(() => { c.innerHTML = ''; }, 4000);
+}
+// Add confetti keyframes
+const style = document.createElement('style');
+style.textContent = '@keyframes confettiFall { to { transform: translateY(100vh) rotate(720deg); opacity: 0; } }';
+document.head.appendChild(style);
+
+// --- Keyboard Navigation ---
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    const sp = document.getElementById('settings-panel');
+    if (!sp.hidden) toggleSettings();
+    const bo = document.getElementById('breathing-overlay');
+    if (bo.classList.contains('show')) zatvoriDisanje();
+  }
+});
+</script>
+</body>
+</html>
