@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📝 Ispit — Kako je nastao život na Zemlji</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F1F8E9;--card:#fff;--green:#2E7D32;--green-l:#C8E6C9;--blue:#1565C0;--blue-l:#BBDEFB;--amber:#FF6F00;--amber-l:#FFE0B2;--red:#C62828;--red-l:#FFCDD2;--purple:#6A1B9A;--purple-l:#E1BEE7;--radius:14px;--shadow:0 2px 12px rgba(0,0,0,0.07)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Lexend',sans-serif;background:var(--bg);color:#2E2E2E;line-height:1.8;padding:12px;font-size:17px;overflow-x:hidden}
+h1{font-size:24px;font-weight:700;color:var(--green);margin-bottom:8px}
+h2{font-size:20px;font-weight:600;color:#1B5E20;margin:20px 0 12px}
+h3{font-size:18px;font-weight:600;margin-bottom:10px}
+.card{background:var(--card);border-radius:var(--radius);padding:18px;margin-bottom:16px;box-shadow:var(--shadow)}
+.card-q{border-left:4px solid var(--blue)}
+.card-warm{border-left:4px solid var(--amber);background:#FFFDE7}
+.btn{display:block;width:100%;padding:14px 20px;border:none;border-radius:var(--radius);font-size:17px;font-weight:600;cursor:pointer;text-align:center;margin-bottom:10px;font-family:inherit;transition:all .2s;min-height:48px}
+.btn-green{background:var(--green);color:#fff}
+.btn-green:hover{background:#1B5E20}
+.btn-blue{background:var(--blue);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--green);color:var(--green)}
+.opt{display:block;width:100%;padding:14px 16px;margin-bottom:10px;border:2px solid #E0E0E0;border-radius:var(--radius);background:var(--card);font-size:16px;text-align:left;cursor:pointer;font-family:inherit;transition:all .15s;min-height:48px}
+.opt:hover{border-color:var(--green);background:var(--green-l)}
+.opt.correct{border-color:var(--green);background:var(--green-l)}
+.opt.wrong{border-color:var(--red);background:var(--red-l)}
+.opt:disabled{cursor:default;opacity:.85}
+.match-area{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.match-item{padding:12px;border:2px solid #E0E0E0;border-radius:10px;text-align:center;cursor:pointer;transition:all .15s;min-height:48px;font-size:15px;font-family:inherit}
+.match-item.selected{border-color:var(--blue);background:var(--blue-l)}
+.match-item.matched{border-color:var(--green);background:var(--green-l);cursor:default}
+.match-item.wrong-match{border-color:var(--red);background:var(--red-l)}
+.order-item{padding:12px;border:2px solid #E0E0E0;border-radius:10px;margin-bottom:8px;cursor:grab;font-size:15px;background:var(--card);user-select:none;display:flex;align-items:center;gap:8px;min-height:48px}
+.order-item .num{width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600}
+.fill-input{width:100%;padding:12px;border:2px solid #E0E0E0;border-radius:10px;font-size:16px;font-family:inherit;margin:8px 0}
+.fill-input:focus{border-color:var(--blue);outline:none}
+.feedback{padding:12px;border-radius:10px;margin:10px 0;font-weight:500;display:none}
+.feedback.show{display:block;animation:fadeIn .3s}
+.feedback.ok{background:var(--green-l);color:#1B5E20}
+.feedback.no{background:var(--red-l);color:var(--red)}
+.hint-btn{background:var(--amber-l);color:var(--amber);border:1px solid var(--amber);padding:6px 14px;border-radius:20px;font-size:14px;cursor:pointer;font-family:inherit;margin-top:6px}
+.hint-box{background:#FFF8E1;padding:10px;border-radius:8px;margin-top:6px;font-size:14px;display:none;border-left:3px solid var(--amber)}
+.hint-box.show{display:block}
+.score-bar{height:12px;background:#E0E0E0;border-radius:6px;overflow:hidden;margin:8px 0}
+.score-fill{height:100%;background:linear-gradient(90deg,var(--green),#4CAF50);border-radius:6px;transition:width .5s}
+.q-badge{display:inline-block;background:var(--blue);color:#fff;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:600;margin-bottom:8px}
+.q-badge.hard{background:var(--purple)}
+.q-badge.medium{background:var(--amber)}
+.breathing-overlay{position:fixed;inset:0;z-index:3000;display:none;align-items:center;justify-content:center;flex-direction:column;background:rgba(0,80,40,0.92)}
+.breathing-overlay.active{display:flex}
+.breathing-circle{width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,0.3);animation:breathe 8s infinite ease-in-out}
+@keyframes breathe{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.5);opacity:1}}
+.btn-pauza{position:fixed;bottom:16px;right:12px;z-index:1000;padding:10px 16px;border-radius:24px;border:none;font-size:15px;font-weight:600;background:#00695C;color:white;box-shadow:0 2px 8px rgba(0,0,0,0.15);cursor:pointer}
+.confetti-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:5000;overflow:hidden}
+.confetti{position:absolute;width:10px;height:10px;opacity:0;animation:confettiFall 2s ease-out forwards}
+@keyframes confettiFall{0%{transform:translateY(-10px) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.tf-btns{display:flex;gap:10px;margin:8px 0}
+.tf-btn{flex:1;padding:12px;border:2px solid #E0E0E0;border-radius:10px;font-size:16px;cursor:pointer;font-family:inherit;background:var(--card);text-align:center;min-height:48px}
+.tf-btn:hover{border-color:var(--blue)}
+.tf-btn.correct{border-color:var(--green);background:var(--green-l)}
+.tf-btn.wrong{border-color:var(--red);background:var(--red-l)}
+@media(min-width:600px){body{max-width:750px;margin:0 auto;padding:20px}h1{font-size:28px}.match-area{grid-template-columns:1fr 1fr}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<button class="btn-pauza" onclick="document.getElementById('breathO').classList.add('active')">🫁 Pauza</button>
+<div class="breathing-overlay" id="breathO">
+  <div class="breathing-circle"></div>
+  <p style="color:#fff;font-size:20px;margin-top:20px">Udahni... polako izdahni... 🌿</p>
+  <button onclick="document.getElementById('breathO').classList.remove('active')" style="margin-top:30px;padding:12px 24px;border:2px solid #fff;background:transparent;color:#fff;border-radius:20px;font-size:16px;cursor:pointer;font-family:inherit">Natrag</button>
+</div>
+<div class="confetti-container" id="confC"></div>
+
+<!-- WARM-UP -->
+<div id="warmup">
+  <h1>📝 Ispit: Kako je nastao život na Zemlji</h1>
+  <div class="card card-warm">
+    <h3>🌟 Prije nego počnemo...</h3>
+    <p>Ovo NIJE test inteligencije. Ovo je provjera koliko si zapamtila iz lekcije. Ako nešto ne znaš — super, to znači da znaš što još ponoviti! 💪</p>
+    <p>Ispit ima <strong>15 pitanja</strong> raznih tipova. Nema vremenskog ograničenja. Koristi gumb 🫁 za pauzu kad god trebaš.</p>
+    <p style="text-align:center;margin-top:12px">
+      <strong>Spreman/na? Duboki udah...</strong>
+    </p>
+    <button class="btn btn-green" onclick="document.getElementById('warmup').style.display='none';document.getElementById('examBody').style.display='block'">Započni ispit! 🚀</button>
+  </div>
+</div>
+
+<!-- EXAM BODY -->
+<div id="examBody" style="display:none">
+  <div style="position:sticky;top:0;z-index:100;background:var(--bg);padding:8px 0">
+    <div class="score-bar"><div class="score-fill" id="scoreFill" style="width:0%"></div></div>
+    <p style="font-size:13px;color:#5A5A5A;text-align:center" id="scoreText">0 / 15 pitanja</p>
+  </div>
+
+  <!-- Q1: MC - Basic -->
+  <div class="card card-q" id="Q1">
+    <span class="q-badge">Osnovno</span>
+    <p><strong>1.</strong> Koji proces je PRETHODIO biološkoj evoluciji?</p>
+    <button class="opt" onclick="mc(this,'Q1',false)">a) Genetska evolucija</button>
+    <button class="opt" onclick="mc(this,'Q1',true)">b) Kemijska evolucija</button>
+    <button class="opt" onclick="mc(this,'Q1',false)">c) Spontana generacija</button>
+    <button class="opt" onclick="mc(this,'Q1',false)">d) Biogeneza</button>
+    <div class="feedback ok" id="Q1ok">✅ Točno! Kemijska evolucija je prethodila biološkoj — najprije su nastale organske molekule, pa tek onda živi organizmi.</div>
+    <div class="feedback no" id="Q1no">❌ Netočno. Odgovor je kemijska evolucija — proces nastanka organskih molekula iz anorganskih.</div>
+  </div>
+
+  <!-- Q2: True/False -->
+  <div class="card card-q" id="Q2">
+    <span class="q-badge">Osnovno</span>
+    <p><strong>2.</strong> Točno ili netočno: Praatmosfera Zemlje sadržavala je kisik.</p>
+    <div class="tf-btns">
+      <button class="tf-btn" onclick="tf(this,'Q2',false)">TOČNO</button>
+      <button class="tf-btn" onclick="tf(this,'Q2',true)">NETOČNO</button>
+    </div>
+    <div class="feedback ok" id="Q2ok">✅ Točno! Praatmosfera NIJE sadržavala slobodni kisik — bila je reducirana (H₂O, CH₄, NH₃, H₂).</div>
+    <div class="feedback no" id="Q2no">❌ Praatmosfera NIJE sadržavala kisik! Kisik se pojavio tek nakon nastanka fotosintetskih organizama.</div>
+  </div>
+
+  <!-- Q3: MC - Medium -->
+  <div class="card card-q" id="Q3">
+    <span class="q-badge medium">Srednje</span>
+    <p><strong>3.</strong> U Miller-Ureyevom eksperimentu, električne iskre su simulirale:</p>
+    <button class="opt" onclick="mc(this,'Q3',false)">a) Vulkanske erupcije</button>
+    <button class="opt" onclick="mc(this,'Q3',true)">b) Munje u praatmosferi</button>
+    <button class="opt" onclick="mc(this,'Q3',false)">c) UV zračenje Sunca</button>
+    <button class="opt" onclick="mc(this,'Q3',false)">d) Radioaktivno zračenje iz tla</button>
+    <div class="feedback ok" id="Q3ok">✅ Točno! Iskre = munje, tikvica s vodom = praocean, plinovi = praatmosfera.</div>
+    <div class="feedback no" id="Q3no">❌ Električne iskre simulirale su munje. Munje su davale energiju za sintezu organskih molekula.</div>
+  </div>
+
+  <!-- Q4: Fill in blank -->
+  <div class="card card-q" id="Q4">
+    <span class="q-badge">Osnovno</span>
+    <p><strong>4.</strong> Nadopuni: Miller-Ureyev eksperiment potvrdio je hipotezu znanstvenikā _________ i _________.</p>
+    <input class="fill-input" id="Q4input" placeholder="Upiši dva prezimena odvojena zarezom...">
+    <button class="btn btn-blue" onclick="checkFill('Q4')">Provjeri ✓</button>
+    <button class="hint-btn" onclick="document.getElementById('Q4hint').classList.add('show')">💡 Hint</button>
+    <div class="hint-box" id="Q4hint">Jedan je bio ruski biokemičar, a drugi britanski znanstvenik. Oba su radila 1920-ih.</div>
+    <div class="feedback ok" id="Q4ok">✅ Točno! Oparin i Haldane (ili obrnuto) — dvojica koji su predvidjeli da se organske molekule mogu sintetizirati iz praatmosfere.</div>
+    <div class="feedback no" id="Q4no">❌ Odgovor: Oparin i Haldane. Oni su 1920-ih predložili hipotezu o kemijskoj evoluciji.</div>
+  </div>
+
+  <!-- Q5: Ordering -->
+  <div class="card card-q" id="Q5">
+    <span class="q-badge medium">Srednje</span>
+    <p><strong>5.</strong> Poredaj korake kemijske evolucije od najjednostavnijeg do najsloženijeg (klikni brojevima 1-4):</p>
+    <div id="Q5items">
+      <div class="order-item" data-correct="3" onclick="orderClick(this,'Q5')"><span class="num" id="Q5n_0">?</span> Protostanice</div>
+      <div class="order-item" data-correct="1" onclick="orderClick(this,'Q5')"><span class="num" id="Q5n_1">?</span> Organski monomeri</div>
+      <div class="order-item" data-correct="4" onclick="orderClick(this,'Q5')"><span class="num" id="Q5n_2">?</span> Stanice</div>
+      <div class="order-item" data-correct="2" onclick="orderClick(this,'Q5')"><span class="num" id="Q5n_3">?</span> Organski polimeri</div>
+    </div>
+    <button class="btn btn-blue" onclick="checkOrder('Q5')" id="Q5check" style="margin-top:10px">Provjeri redoslijed ✓</button>
+    <div class="feedback ok" id="Q5ok">✅ Točno! Monomeri(1) → Polimeri(2) → Protostanice(3) → Stanice(4)</div>
+    <div class="feedback no" id="Q5no">❌ Točan redoslijed: Monomeri(1) → Polimeri(2) → Protostanice(3) → Stanice(4). Od jednostavnog prema složenom!</div>
+  </div>
+
+  <!-- Q6: MC - Medium -->
+  <div class="card card-q" id="Q6">
+    <span class="q-badge medium">Srednje</span>
+    <p><strong>6.</strong> Protostanice se razlikuju od pravih stanica jer:</p>
+    <button class="opt" onclick="mc(this,'Q6',false)">a) Nemaju membranu</button>
+    <button class="opt" onclick="mc(this,'Q6',true)">b) Nemaju metabolizam, nasljedne upute ni enzime</button>
+    <button class="opt" onclick="mc(this,'Q6',false)">c) Sastoje se samo od vode</button>
+    <button class="opt" onclick="mc(this,'Q6',false)">d) Previše su velike da bi bile stanice</button>
+    <div class="feedback ok" id="Q6ok">✅ Točno! Protostanice IMAJU membranu, ali nemaju metabolizam, DNA ni enzime — zato nisu prave stanice.</div>
+    <div class="feedback no" id="Q6no">❌ Protostanice imaju membranu, ali ne i metabolizam, nasljedne upute ni enzime.</div>
+  </div>
+
+  <!-- Q7: True/False -->
+  <div class="card card-q" id="Q7">
+    <span class="q-badge">Osnovno</span>
+    <p><strong>7.</strong> Točno ili netočno: Pasteur je dokazao teoriju spontane generacije.</p>
+    <div class="tf-btns">
+      <button class="tf-btn" onclick="tf(this,'Q7',true)">TOČNO</button>
+      <button class="tf-btn" onclick="tf(this,'Q7',false)">NETOČNO</button>
+    </div>
+    <div class="feedback ok" id="Q7ok">❌ Zapravo, NETOČNO! Pasteur je OPOVRGNUO spontanu generaciju i dokazao biogenezu.</div>
+    <div class="feedback no" id="Q7no">✅ Točno prepoznaješ! Pasteur je OPOVRGNUO spontanu generaciju i dokazao biogenezu ("život nastaje iz života").</div>
+  </div>
+
+  <!-- Q8: MC - Hard -->
+  <div class="card card-q" id="Q8">
+    <span class="q-badge hard">Napredno</span>
+    <p><strong>8.</strong> Zašto je ugljik osnova svih organskih molekula?</p>
+    <button class="opt" onclick="mc(this,'Q8',false)">a) Jer je najlakši element u periodnom sustavu</button>
+    <button class="opt" onclick="mc(this,'Q8',false)">b) Jer je najčešći element na Zemlji</button>
+    <button class="opt" onclick="mc(this,'Q8',true)">c) Jer ima 4 valentna elektrona i može tvoriti 4 kovalentne veze s različitim atomima</button>
+    <button class="opt" onclick="mc(this,'Q8',false)">d) Jer se otapa u vodi bolje od drugih elemenata</button>
+    <div class="feedback ok" id="Q8ok">✅ Točno! Četverovalentnost ugljika omogućuje mu stvaranje ogromne raznolikosti molekula.</div>
+    <div class="feedback no" id="Q8no">❌ Ugljik ima 4 valentna elektrona, što mu omogućuje stvaranje 4 kovalentne veze i nevjerojatnu raznolikost molekula.</div>
+  </div>
+
+  <!-- Q9: Matching -->
+  <div class="card card-q" id="Q9">
+    <span class="q-badge medium">Srednje</span>
+    <p><strong>9.</strong> Spoji biomolekulu s njenom ulogom (klikni lijevo, pa desno):</p>
+    <div class="match-area" id="Q9match">
+      <div>
+        <div class="match-item" data-pair="A" onclick="matchClick(this,'Q9','left')">Fosfolipidi</div>
+        <div class="match-item" data-pair="B" onclick="matchClick(this,'Q9','left')">Hemoglobin</div>
+        <div class="match-item" data-pair="C" onclick="matchClick(this,'Q9','left')">DNA</div>
+        <div class="match-item" data-pair="D" onclick="matchClick(this,'Q9','left')">Glukoza</div>
+      </div>
+      <div>
+        <div class="match-item" data-pair="D" onclick="matchClick(this,'Q9','right')">Izvor energije</div>
+        <div class="match-item" data-pair="A" onclick="matchClick(this,'Q9','right')">Gradnja membrane</div>
+        <div class="match-item" data-pair="C" onclick="matchClick(this,'Q9','right')">Nasljedne upute</div>
+        <div class="match-item" data-pair="B" onclick="matchClick(this,'Q9','right')">Prijenos kisika</div>
+      </div>
+    </div>
+    <div class="feedback ok" id="Q9ok">✅ Sve parove si točno spojila!</div>
+    <div class="feedback no" id="Q9no">Neki parovi nisu točni. Fosfolipidi=membrana, Hemoglobin=kisik, DNA=nasljedne upute, Glukoza=energija.</div>
+  </div>
+
+  <!-- Q10: MC -->
+  <div class="card card-q" id="Q10">
+    <span class="q-badge">Osnovno</span>
+    <p><strong>10.</strong> "Omne vivum ex vivo" znači:</p>
+    <button class="opt" onclick="mc(this,'Q10',false)">a) Sve živo nastaje iz nežive tvari</button>
+    <button class="opt" onclick="mc(this,'Q10',true)">b) Sve živo nastaje iz živoga</button>
+    <button class="opt" onclick="mc(this,'Q10',false)">c) Sve živo jednom umire</button>
+    <button class="opt" onclick="mc(this,'Q10',false)">d) Život je vječan</button>
+    <div class="feedback ok" id="Q10ok">✅ Točno! To je načelo biogeneze koje je Pasteur dokazao.</div>
+    <div class="feedback no" id="Q10no">❌ "Omne vivum ex vivo" = "Sve živo nastaje iz živoga" — načelo biogeneze.</div>
+  </div>
+
+  <!-- Q11: Fill -->
+  <div class="card card-q" id="Q11">
+    <span class="q-badge medium">Srednje</span>
+    <p><strong>11.</strong> Nadopuni: Polimeri aminokiselina zovu se __________.</p>
+    <input class="fill-input" id="Q11input" placeholder="Upiši odgovor...">
+    <button class="btn btn-blue" onclick="checkFill('Q11')">Provjeri ✓</button>
+    <div class="feedback ok" id="Q11ok">✅ Točno! Proteini su polimeri aminokiselina.</div>
+    <div class="feedback no" id="Q11no">❌ Odgovor: proteini. Proteini su polimeri (dugačke lance) aminokiselina.</div>
+  </div>
+
+  <!-- Q12: MC - Hard -->
+  <div class="card card-q" id="Q12">
+    <span class="q-badge hard">Napredno</span>
+    <p><strong>12.</strong> Koji je GLAVNI razlog zašto Pasteurova tikvica s labuđim vratom ostala sterilna?</p>
+    <button class="opt" onclick="mc(this,'Q12',false)">a) Zrak nije mogao ući u tikvicu</button>
+    <button class="opt" onclick="mc(this,'Q12',true)">b) Zrak je mogao ući, ali su se mikroorganizmi zaustavljali u zavoju vrata</button>
+    <button class="opt" onclick="mc(this,'Q12',false)">c) Sterilizacija je ubila sve moguće mikroorganizme</button>
+    <button class="opt" onclick="mc(this,'Q12',false)">d) Tekućina u tikvici bila je otrovna za mikroorganizme</button>
+    <button class="hint-btn" onclick="document.getElementById('Q12hint').classList.add('show')">💡 Hint</button>
+    <div class="hint-box" id="Q12hint">Ključ je oblik vrata — labud! Zrak prolazi, ali čestice padaju u zavoj.</div>
+    <div class="feedback ok" id="Q12ok">✅ Točno! To je genij Pasteurovog dizajna — zrak (sa/bez kisika) je prolazio, ali su se klice zaustavljale u S-zavoju.</div>
+    <div class="feedback no" id="Q12no">❌ Zrak JE mogao ući (tikvica nije bila zatvorena!), ali su se klice zaustavljale u zavoju labuđeg vrata.</div>
+  </div>
+
+  <!-- Q13: True/False -->
+  <div class="card card-q" id="Q13">
+    <span class="q-badge">Osnovno</span>
+    <p><strong>13.</strong> Točno ili netočno: Monosaharidi su primjer polimera.</p>
+    <div class="tf-btns">
+      <button class="tf-btn" onclick="tf(this,'Q13',true)">TOČNO</button>
+      <button class="tf-btn" onclick="tf(this,'Q13',false)">NETOČNO</button>
+    </div>
+    <div class="feedback ok" id="Q13ok">❌ NETOČNO! Monosaharidi su monomeri (npr. glukoza). POLISAHARIDI su polimeri (npr. škrob).</div>
+    <div class="feedback no" id="Q13no">✅ Točno prepoznaješ! Monosaharidi (glukoza, fruktoza) su MONOMERI, ne polimeri. Polimeri bi bili polisaharidi (škrob, celuloza).</div>
+  </div>
+
+  <!-- Q14: MC - Hard -->
+  <div class="card card-q" id="Q14">
+    <span class="q-badge hard">Napredno</span>
+    <p><strong>14.</strong> Koja je KRITIČNA razlika između kemijske evolucije (nastanak života na ranoj Zemlji) i spontane generacije?</p>
+    <button class="opt" onclick="mc(this,'Q14',false)">a) Nema razlike — to su isti koncepti</button>
+    <button class="opt" onclick="mc(this,'Q14',false)">b) Kemijska evolucija se događala u laboratoriju, a spontana generacija u prirodi</button>
+    <button class="opt" onclick="mc(this,'Q14',true)">c) Kemijska evolucija je trajala stotine milijuna godina uz specifične uvjete, dok spontana generacija tvrdi da život nastaje brzo iz bilo koje nežive tvari</button>
+    <button class="opt" onclick="mc(this,'Q14',false)">d) Kemijska evolucija je teorija, a spontana generacija je dokazana činjenica</button>
+    <div class="feedback ok" id="Q14ok">✅ Odlično! Ključna razlika: kemijska evolucija = postupni, polagani proces uz specifične uvjete rane Zemlje. Spontana generacija = naivno vjerovanje da crvi nastaju iz mesa "tek tako".</div>
+    <div class="feedback no" id="Q14no">❌ Odgovor c). Kemijska evolucija je trajala stotine milijuna godina uz vrlo specifične uvjete (praatmosfera, energija). Spontana generacija tvrdi da život nastaje brzo iz bilo koje nežive tvari — što je Pasteur opovrgnuo.</div>
+  </div>
+
+  <!-- Q15: Fill - Hard -->
+  <div class="card card-q" id="Q15">
+    <span class="q-badge hard">Napredno</span>
+    <p><strong>15.</strong> Nabrojaj svih 5 obilježja živih bića (razdvoji zarezima):</p>
+    <input class="fill-input" id="Q15input" placeholder="1., 2., 3., 4., 5.">
+    <button class="btn btn-blue" onclick="checkFill('Q15')">Provjeri ✓</button>
+    <button class="hint-btn" onclick="document.getElementById('Q15hint').classList.add('show')">💡 Hint</button>
+    <div class="hint-box" id="Q15hint">Akronim: OIORP — (O)rganiziranost, (I)zmjena tvari, (O)dgovaranje na podražaje, (R)azmnožavanje, (P)rilagodba</div>
+    <div class="feedback ok" id="Q15ok">✅ Bravo! Svih 5: organiziranost, izmjena tvari i energije, odgovaranje na podražaje, razmnožavanje, prilagodba.</div>
+    <div class="feedback no" id="Q15no">❌ 5 obilježja: organiziranost, izmjena tvari i energije, odgovaranje na podražaje, razmnožavanje, prilagodba (OIORP).</div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="card" style="margin-top:24px">
+    <button class="btn btn-green" onclick="showResults()" id="finishBtn">Završi ispit i pogledaj rezultate 🏁</button>
+  </div>
+  <div id="results" style="display:none">
+    <div class="card" style="border-left:4px solid var(--green)">
+      <h2 id="resTitle">Rezultati</h2>
+      <div class="score-bar" style="height:20px"><div class="score-fill" id="resFill" style="width:0%"></div></div>
+      <p id="resText" style="font-size:20px;text-align:center;margin:12px 0;font-weight:600"></p>
+      <p id="resMsg" style="text-align:center"></p>
+    </div>
+    <div class="card">
+      <h3>🤔 Što sam danas naučila o sebi?</h3>
+      <textarea rows="3" placeholder="Što mi je bilo lako? Što mi je bilo teško? Što trebam ponoviti?" style="width:100%;padding:12px;border:2px solid #E0E0E0;border-radius:10px;font-family:inherit;font-size:16px;resize:vertical"></textarea>
+    </div>
+  </div>
+</div>
+
+<script>
+let score = 0, answered = 0, total = 15;
+const answers = {};
+
+function updateScore() {
+  const pct = Math.round((answered / total) * 100);
+  document.getElementById('scoreFill').style.width = pct + '%';
+  document.getElementById('scoreText').textContent = `${answered} / ${total} pitanja`;
+}
+
+function mc(btn, qid, correct) {
+  if (answers[qid] !== undefined) return;
+  const card = document.getElementById(qid);
+  card.querySelectorAll('.opt').forEach(b => { b.disabled = true; });
+  if (correct) { btn.classList.add('correct'); score++; document.getElementById(qid+'ok').classList.add('show'); confetti(); }
+  else { btn.classList.add('wrong'); document.getElementById(qid+'no').classList.add('show'); }
+  answers[qid] = correct; answered++; updateScore();
+}
+
+function tf(btn, qid, isCorrect) {
+  if (answers[qid] !== undefined) return;
+  const card = document.getElementById(qid);
+  card.querySelectorAll('.tf-btn').forEach(b => b.style.pointerEvents = 'none');
+  if (isCorrect) { btn.classList.add('correct'); score++; document.getElementById(qid+'ok').classList.add('show'); confetti(); }
+  else { btn.classList.add('wrong'); document.getElementById(qid+'no').classList.add('show'); }
+  answers[qid] = isCorrect; answered++; updateScore();
+}
+
+function checkFill(qid) {
+  if (answers[qid] !== undefined) return;
+  const val = document.getElementById(qid+'input').value.toLowerCase().trim();
+  let correct = false;
+  if (qid === 'Q4') correct = (val.includes('oparin') && val.includes('haldane'));
+  if (qid === 'Q11') correct = val.includes('protein');
+  if (qid === 'Q15') {
+    const keys = ['organizira','izmjen','podraž','razmnož','prilagod'];
+    let found = 0;
+    keys.forEach(k => { if (val.includes(k)) found++; });
+    correct = found >= 4;
+  }
+  if (correct) { score++; document.getElementById(qid+'ok').classList.add('show'); confetti(); }
+  else { document.getElementById(qid+'no').classList.add('show'); }
+  document.getElementById(qid+'input').disabled = true;
+  answers[qid] = correct; answered++; updateScore();
+}
+
+// Ordering
+const orderState = {};
+function orderClick(item, qid) {
+  if (!orderState[qid]) orderState[qid] = { count: 0 };
+  const s = orderState[qid];
+  if (item.dataset.assigned) return;
+  s.count++;
+  item.dataset.assigned = s.count;
+  const numEl = item.querySelector('.num');
+  numEl.textContent = s.count;
+  numEl.style.background = '#FF6F00';
+}
+function checkOrder(qid) {
+  if (answers[qid] !== undefined) return;
+  const items = document.querySelectorAll(`#${qid}items .order-item`);
+  let correct = true;
+  items.forEach(item => {
+    if (item.dataset.assigned != item.dataset.correct) correct = false;
+  });
+  if (correct) { score++; document.getElementById(qid+'ok').classList.add('show'); confetti(); }
+  else { document.getElementById(qid+'no').classList.add('show'); }
+  answers[qid] = correct; answered++; updateScore();
+  document.getElementById(qid+'check').disabled = true;
+}
+
+// Matching
+const matchState = {};
+function matchClick(item, qid, side) {
+  if (item.classList.contains('matched')) return;
+  if (!matchState[qid]) matchState[qid] = { left: null, right: null, matched: 0 };
+  const s = matchState[qid];
+  
+  document.querySelectorAll(`#${qid}match .match-item.selected`).forEach(i => {
+    if (!i.classList.contains('matched')) i.classList.remove('selected');
+  });
+  
+  item.classList.add('selected');
+  s[side] = item;
+  
+  if (s.left && s.right) {
+    if (s.left.dataset.pair === s.right.dataset.pair) {
+      s.left.classList.remove('selected'); s.left.classList.add('matched');
+      s.right.classList.remove('selected'); s.right.classList.add('matched');
+      s.matched++;
+      if (s.matched === 4) {
+        if (!answers[qid]) { score++; answers[qid] = true; answered++; updateScore(); document.getElementById(qid+'ok').classList.add('show'); confetti(); }
+      }
+    } else {
+      s.left.classList.add('wrong-match'); s.right.classList.add('wrong-match');
+      setTimeout(() => {
+        s.left.classList.remove('selected','wrong-match');
+        s.right.classList.remove('selected','wrong-match');
+      }, 600);
+    }
+    s.left = null; s.right = null;
+  }
+}
+
+function showResults() {
+  // Auto-answer remaining
+  for (let i = 1; i <= total; i++) {
+    if (!answers['Q'+i]) { answers['Q'+i] = false; answered++; }
+  }
+  updateScore();
+  document.getElementById('finishBtn').style.display = 'none';
+  document.getElementById('results').style.display = 'block';
+  const pct = Math.round((score/total)*100);
+  document.getElementById('resFill').style.width = pct+'%';
+  document.getElementById('resText').textContent = `${score} / ${total} (${pct}%)`;
+  let msg = '';
+  if (pct >= 90) msg = '🌟 Izvrsno! Gotovo savršeno! Ovo gradivo ti je kristalno jasno!';
+  else if (pct >= 75) msg = '👏 Vrlo dobro! Imaš solidno razumijevanje. Ponovi samo ono što si promašila.';
+  else if (pct >= 60) msg = '👍 Dobro! Osnove su tu, ali neke dijelove vrijedi ponoviti.';
+  else if (pct >= 40) msg = '💪 OK početak! Vrati se na lekciju i fokusiraj se na cjeline koje su ti bile teže.';
+  else msg = '🫂 Ne brini — ovo je samo provjera. Ponovi lekciju i priču, pa pokušaj ponovno!';
+  document.getElementById('resMsg').textContent = msg;
+  document.getElementById('results').scrollIntoView({behavior:'smooth'});
+  if (pct >= 75) { for(let i=0;i<3;i++) setTimeout(confetti, i*400); }
+}
+
+function confetti() {
+  const c = document.getElementById('confC');
+  const colors = ['#2E7D32','#1565C0','#FF6F00','#6A1B9A','#FFD600','#E91E63'];
+  for (let i = 0; i < 30; i++) {
+    const p = document.createElement('div'); p.className = 'confetti';
+    p.style.left = Math.random()*100+'%';
+    p.style.background = colors[Math.floor(Math.random()*colors.length)];
+    p.style.animationDelay = Math.random()*0.5+'s';
+    p.style.borderRadius = Math.random()>.5?'50%':'2px';
+    p.style.width=(Math.random()*8+5)+'px'; p.style.height=(Math.random()*8+5)+'px';
+    c.appendChild(p); setTimeout(()=>p.remove(),2500);
+  }
+}
+</script>
+</body>
+</html>

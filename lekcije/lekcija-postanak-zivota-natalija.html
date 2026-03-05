@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🧬 Kako je nastao život na Zemlji — Lekcija za Nataliju</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-main: #F1F8E9;
+  --bg-card: #FFFFFF;
+  --text-main: #2E2E2E;
+  --text-light: #5A5A5A;
+  --green: #2E7D32;
+  --green-light: #C8E6C9;
+  --blue: #1565C0;
+  --blue-light: #BBDEFB;
+  --amber: #FF6F00;
+  --amber-light: #FFE0B2;
+  --red: #C62828;
+  --red-light: #FFCDD2;
+  --purple: #6A1B9A;
+  --purple-light: #E1BEE7;
+  --teal: #00695C;
+  --teal-light: #B2DFDB;
+  --radius: 14px;
+  --shadow: 0 2px 12px rgba(0,0,0,0.07);
+  --shadow-hover: 0 4px 20px rgba(0,0,0,0.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Lexend','Verdana',sans-serif;background:var(--bg-main);color:var(--text-main);line-height:1.85;letter-spacing:0.02em;padding:12px;margin:0 auto;font-size:17px;-webkit-text-size-adjust:100%;overflow-x:hidden}
+a.skip-link{position:absolute;top:-40px;left:0;background:var(--green);color:#fff;padding:12px 20px;z-index:9999;font-weight:600;border-radius:0 0 var(--radius) 0;transition:top .2s}
+a.skip-link:focus{top:0}
+h1{font-size:24px;font-weight:700;color:var(--green);margin-bottom:8px;line-height:1.3}
+h2{font-size:20px;font-weight:600;color:#1B5E20;margin-top:20px;margin-bottom:12px}
+h3{font-size:18px;font-weight:600;margin-bottom:10px;color:var(--blue)}
+p{margin-bottom:14px}
+.btn{display:block;width:100%;padding:14px 20px;border:none;border-radius:var(--radius);font-size:17px;font-weight:600;cursor:pointer;text-align:center;margin-bottom:10px;-webkit-tap-highlight-color:transparent;touch-action:manipulation;font-family:inherit;transition:all .2s}
+.btn-primary{background:var(--green);color:#fff}
+.btn-primary:hover{background:#1B5E20}
+.btn-secondary{background:var(--blue);color:#fff}
+.btn-secondary:hover{background:#0D47A1}
+.btn-outline{background:transparent;border:2px solid var(--green);color:var(--green)}
+.btn-outline:hover{background:var(--green-light)}
+.btn-small{display:inline-block;width:auto;padding:8px 16px;font-size:15px;min-height:44px}
+.kartica{background:var(--bg-card);border-radius:var(--radius);padding:18px;margin-bottom:16px;box-shadow:var(--shadow);width:100%}
+.kartica-highlight{border-left:4px solid var(--green)}
+.kartica-story{border-left:4px solid var(--amber);background:#FFFDE7}
+.kartica-warning{border-left:4px solid var(--red);background:var(--red-light)}
+.kartica-info{border-left:4px solid var(--blue);background:var(--blue-light)}
+.term{font-weight:600;color:var(--green);border-bottom:2px dotted var(--green);cursor:help;position:relative}
+.term:hover::after,.term:focus::after{content:attr(data-def);position:absolute;bottom:100%;left:0;background:#333;color:#fff;padding:8px 12px;border-radius:8px;font-size:14px;font-weight:400;white-space:normal;width:250px;z-index:100;line-height:1.5}
+.settings-toggle{position:fixed;top:12px;right:12px;z-index:1000;width:48px;height:48px;border-radius:50%;border:none;font-size:22px;background:var(--bg-card);box-shadow:var(--shadow);cursor:pointer;display:flex;align-items:center;justify-content:center}
+.btn-pauza{position:fixed;bottom:16px;right:12px;z-index:1000;padding:10px 16px;border-radius:24px;border:none;font-size:15px;font-weight:600;background:var(--teal);color:white;box-shadow:0 2px 8px rgba(0,0,0,0.15);cursor:pointer}
+.settings-panel{position:fixed;inset:0;z-index:2000;background:var(--bg-main);padding:20px;overflow-y:auto;display:none}
+.settings-panel.active{display:block}
+.settings-panel h2{color:var(--green);margin-bottom:16px}
+.settings-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #E0E0E0}
+.settings-row label{font-weight:500;flex:1}
+.settings-row input[type=range]{width:120px}
+.progress-wrap{position:sticky;top:0;z-index:100;background:var(--bg-main);padding:8px 0 4px;border-bottom:1px solid rgba(0,0,0,0.06)}
+.progress-bar-bg{height:8px;background:#E0E0E0;border-radius:4px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--teal));border-radius:4px;transition:width .4s ease}
+.progress-text{font-size:13px;color:var(--text-light);margin-top:4px;text-align:center}
+.step{display:none}
+.step.active{display:block;animation:fadeIn .4s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.nav-buttons{display:flex;flex-direction:column;gap:10px;margin-top:20px}
+.quiz-option{display:block;width:100%;padding:14px 16px;margin-bottom:10px;border:2px solid #E0E0E0;border-radius:var(--radius);background:var(--bg-card);font-size:16px;text-align:left;cursor:pointer;font-family:inherit;transition:all .2s}
+.quiz-option:hover{border-color:var(--green);background:var(--green-light)}
+.quiz-option.correct{border-color:var(--green);background:var(--green-light);animation:pulse .3s}
+.quiz-option.wrong{border-color:var(--red);background:var(--red-light);animation:shake .3s}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.02)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.hint-btn{background:var(--amber-light);color:var(--amber);border:1px solid var(--amber);padding:8px 14px;border-radius:20px;font-size:14px;cursor:pointer;font-family:inherit;margin-top:8px}
+.hint-content{background:#FFF8E1;padding:12px;border-radius:8px;margin-top:8px;font-size:15px;display:none;border-left:3px solid var(--amber)}
+.hint-content.show{display:block;animation:fadeIn .3s}
+.tts-btn{background:none;border:1px solid var(--blue);color:var(--blue);padding:4px 10px;border-radius:16px;font-size:13px;cursor:pointer;margin-left:8px;vertical-align:middle;min-height:32px;min-width:32px}
+.tts-btn:hover{background:var(--blue-light)}
+.self-check{background:var(--teal-light);padding:16px;border-radius:var(--radius);margin:16px 0;text-align:center}
+.self-check-btns{display:flex;gap:10px;justify-content:center;margin-top:12px;flex-wrap:wrap}
+.self-check-btns button{padding:10px 20px;border-radius:20px;border:none;font-size:15px;cursor:pointer;font-family:inherit;min-height:44px}
+.checklist{list-style:none;padding:0}
+.checklist li{padding:10px 0;border-bottom:1px solid #E8E8E8;display:flex;align-items:center;gap:10px}
+.checklist li input[type=checkbox]{width:22px;height:22px;accent-color:var(--green)}
+.encouragement{background:linear-gradient(135deg,#E8F5E9,#C8E6C9);padding:16px;border-radius:var(--radius);text-align:center;margin:16px 0;font-weight:500;font-size:18px}
+.breathing-overlay{position:fixed;inset:0;z-index:3000;display:none;align-items:center;justify-content:center;flex-direction:column;background:rgba(0,80,40,0.92)}
+.breathing-overlay.active{display:flex}
+.breathing-circle{width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,0.3);animation:breathe 8s infinite ease-in-out}
+@keyframes breathe{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.5);opacity:1}}
+.breathing-text{color:#fff;font-size:20px;margin-top:20px;font-weight:500}
+.mood-selector{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0}
+.mood-btn{font-size:32px;background:none;border:3px solid transparent;border-radius:50%;width:56px;height:56px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center}
+.mood-btn:hover,.mood-btn.selected{border-color:var(--green);background:var(--green-light);transform:scale(1.15)}
+.confetti-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:5000;overflow:hidden}
+.confetti{position:absolute;width:10px;height:10px;opacity:0;animation:confettiFall 2s ease-out forwards}
+@keyframes confettiFall{0%{transform:translateY(-10px) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+.svg-diagram{width:100%;max-width:500px;margin:16px auto;display:block}
+.tab-container{margin:16px 0}
+.tab-buttons{display:flex;gap:4px;margin-bottom:0}
+.tab-btn{padding:10px 16px;border:none;border-radius:var(--radius) var(--radius) 0 0;background:#E0E0E0;cursor:pointer;font-family:inherit;font-size:15px;font-weight:500;min-height:44px}
+.tab-btn.active{background:var(--bg-card);color:var(--green);font-weight:600}
+.tab-btn.story-tab{background:#FFF8E1;color:var(--amber)}
+.tab-btn.story-tab.active{background:#FFFDE7;color:#E65100;font-weight:700}
+.tab-content{display:none;padding:18px;background:var(--bg-card);border-radius:0 var(--radius) var(--radius) var(--radius);box-shadow:var(--shadow)}
+.tab-content.active{display:block}
+.biomol-table{width:100%;border-collapse:collapse;font-size:14px;margin:12px 0}
+.biomol-table th{background:var(--green);color:#fff;padding:10px 8px;text-align:left;font-size:13px}
+.biomol-table td{padding:10px 8px;border-bottom:1px solid #E0E0E0;vertical-align:top}
+.biomol-table tr:nth-child(even){background:#F5F5F5}
+.reading-ruler{position:fixed;left:0;width:100%;height:40px;background:rgba(255,235,59,0.25);border-top:2px solid rgba(255,235,59,0.6);border-bottom:2px solid rgba(255,235,59,0.6);pointer-events:none;z-index:900;display:none}
+.inline-img{max-width:100%;height:auto;border-radius:var(--radius);margin:12px 0;box-shadow:var(--shadow)}
+.story-text{font-size:17px;line-height:2;color:#333}
+.story-text .highlight{background:linear-gradient(transparent 60%,#FFEB3B 60%);font-weight:500}
+.story-text .dramatic{font-size:19px;font-weight:600;color:var(--green);display:block;margin:16px 0;text-align:center}
+@media(min-width:600px){
+  body{padding:20px;max-width:800px;font-size:18px}
+  .nav-buttons{flex-direction:row;justify-content:space-between}
+  .nav-buttons .btn{width:auto;min-width:160px}
+  .settings-panel{max-width:400px;right:0;left:auto;border-radius:var(--radius) 0 0 var(--radius);box-shadow:-4px 0 20px rgba(0,0,0,0.1)}
+  h1{font-size:28px}
+  h2{font-size:22px}
+}
+@media(min-width:900px){body{max-width:900px;font-size:19px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Preskoči na sadržaj</a>
+
+<!-- Settings Toggle -->
+<button class="settings-toggle" onclick="toggleSettings()" aria-label="Postavke" title="Postavke">⚙️</button>
+<!-- Breathing Button -->
+<button class="btn-pauza" onclick="startBreathing()" aria-label="Pauza za disanje">🫁 Pauza</button>
+
+<!-- Settings Panel -->
+<div class="settings-panel" id="settingsPanel" role="dialog" aria-label="Postavke prikaza">
+  <h2>⚙️ Postavke</h2>
+  <div class="settings-row"><label>Veličina teksta</label><input type="range" min="14" max="28" value="17" oninput="document.body.style.fontSize=this.value+'px';localStorage.setItem('natFontSize',this.value)"></div>
+  <div class="settings-row"><label>Razmak redova</label><input type="range" min="1.4" max="2.5" step="0.1" value="1.85" oninput="document.body.style.lineHeight=this.value;localStorage.setItem('natLineH',this.value)"></div>
+  <div class="settings-row"><label>Pozadina</label>
+    <select onchange="document.body.style.background=this.value;localStorage.setItem('natBg',this.value)" style="padding:8px;border-radius:8px;font-size:16px;min-height:44px">
+      <option value="#F1F8E9">Zelenkasta</option><option value="#FFF8F0">Topla</option><option value="#E3F2FD">Plava</option><option value="#FFFFFF">Bijela</option><option value="#FFF9C4">Žuta</option><option value="#263238" style="color:#fff">Tamna</option>
+    </select>
+  </div>
+  <div class="settings-row"><label>Reading Ruler</label><input type="checkbox" onchange="toggleRuler(this.checked)" style="width:22px;height:22px"></div>
+  <button class="btn btn-primary" onclick="toggleSettings()" style="margin-top:20px">✓ Zatvori</button>
+</div>
+
+<!-- Reading Ruler -->
+<div class="reading-ruler" id="readingRuler"></div>
+
+<!-- Breathing Overlay -->
+<div class="breathing-overlay" id="breathingOverlay">
+  <div class="breathing-circle"></div>
+  <p class="breathing-text" id="breathingText">Udahni... 🌿</p>
+  <button onclick="stopBreathing()" style="margin-top:30px;padding:12px 24px;border:2px solid #fff;background:transparent;color:#fff;border-radius:20px;font-size:16px;cursor:pointer;font-family:inherit">Natrag na lekciju</button>
+</div>
+
+<!-- Confetti Container -->
+<div class="confetti-container" id="confettiContainer"></div>
+
+<!-- MAIN CONTENT -->
+<main id="main-content">
+
+<!-- Progress Bar -->
+<div class="progress-wrap">
+  <div class="progress-bar-bg" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <p class="progress-text" id="progressText">Korak 1 od 8</p>
+</div>
+
+<!-- ============ STEP 0: DOBRODOŠLICA ============ -->
+<div class="step active" data-step="0" id="step0">
+  <h1>🧬 Kako je nastao život na Zemlji</h1>
+  <p>Bok, Natalija! 👋 Danas istražujemo jedno od najfascinantnijih pitanja u biologiji — <strong>kako je život uopće nastao na našem planetu</strong>.</p>
+  
+  <div class="kartica kartica-highlight">
+    <h3>🎯 Što ćeš danas naučiti:</h3>
+    <ul class="checklist" id="topicChecklist">
+      <li><input type="checkbox" disabled> Teorije o podrijetlu života na Zemlji</li>
+      <li><input type="checkbox" disabled> Miller-Ureyev eksperiment (1953.)</li>
+      <li><input type="checkbox" disabled> Protostanice i obilježja živih bića</li>
+      <li><input type="checkbox" disabled> Spontana generacija vs biogeneza</li>
+      <li><input type="checkbox" disabled> Molekule koje život znače (biomolekule)</li>
+      <li><input type="checkbox" disabled> Priča za pamćenje — "Od ničega do svega"</li>
+    </ul>
+    <p style="margin-top:12px;font-size:15px;color:var(--text-light)">⏱️ Procijenjeno vrijeme: 25-35 minuta</p>
+  </div>
+
+  <div class="kartica">
+    <h3>🔍 Brza provjera — što već znaš?</h3>
+    <p style="font-size:15px;color:var(--text-light)">Ovo ne utječe na lekciju — samo nam pomaže vidjeti odakle krećeš!</p>
+    
+    <div class="pre-q" id="preQ1">
+      <p><strong>1.</strong> Što su aminokiseline? <button class="tts-btn" onclick="speak('Što su aminokiseline?')">🔊</button></p>
+      <button class="quiz-option" onclick="preAnswer(this,'preQ1',true)">a) Građevni blokovi proteina</button>
+      <button class="quiz-option" onclick="preAnswer(this,'preQ1',false)">b) Vrsta vitamina</button>
+      <button class="quiz-option" onclick="preAnswer(this,'preQ1',false)">c) Šećeri u krvi</button>
+    </div>
+    <div class="pre-q" id="preQ2">
+      <p><strong>2.</strong> DNA je... <button class="tts-btn" onclick="speak('DNA je...')">🔊</button></p>
+      <button class="quiz-option" onclick="preAnswer(this,'preQ2',true)">a) Molekula koja nosi nasljedne upute</button>
+      <button class="quiz-option" onclick="preAnswer(this,'preQ2',false)">b) Vrsta masti u tijelu</button>
+      <button class="quiz-option" onclick="preAnswer(this,'preQ2',false)">c) Hormon koji regulira rast</button>
+    </div>
+    <div class="pre-q" id="preQ3">
+      <p><strong>3.</strong> Koliko je Zemlja stara (otprilike)?</p>
+      <button class="quiz-option" onclick="preAnswer(this,'preQ3',false)">a) 1 milijardu godina</button>
+      <button class="quiz-option" onclick="preAnswer(this,'preQ3',true)">b) 4,5 milijardi godina</button>
+      <button class="quiz-option" onclick="preAnswer(this,'preQ3',false)">c) 100 milijuna godina</button>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-primary" onclick="goToStep(1)">Započnimo! 🚀</button>
+  </div>
+</div>
+
+<!-- ============ STEP 1: TEORIJE O PODRIJETLU ŽIVOTA ============ -->
+<div class="step" data-step="1" id="step1">
+  <h2>1️⃣ Teorije o podrijetlu života</h2>
+  
+  <div class="tab-container">
+    <div class="tab-buttons">
+      <button class="tab-btn active" onclick="switchTab(this,'tab1-learn')">📚 Učimo</button>
+      <button class="tab-btn story-tab" onclick="switchTab(this,'tab1-story')">📖 Priča</button>
+    </div>
+    
+    <div class="tab-content active" id="tab1-learn">
+      <div class="kartica">
+        <h3>🍰 Počnimo s usporedbom</h3>
+        <p><button class="tts-btn" onclick="speak('Zamislite da želite ispeći kolač. Trebate brašno, šećer, jaja, maslac — to su vaši jednostavni sastojci. Kad ih pomiješate i stavite u pećnicu, dobijete nešto potpuno novo — kolač! Slično tome, prije oko 4 milijarde godina, na Zemlji su postojali jednostavni kemijski sastojci. Uz energiju vulkana, munja i UV zračenja, ti su se sastojci počeli spajati u složenije molekule. I na kraju... nastao je život!')">🔊</button>
+        Zamisli da želiš ispeći kolač. Trebaš brašno, šećer, jaja, maslac — to su tvoji <strong>jednostavni sastojci</strong>. Kad ih pomiješaš i staviš u pećnicu, dobiješ nešto potpuno novo — kolač!</p>
+        <p>Slično tome, prije oko <strong>4 milijarde godina</strong>, na Zemlji su postojali jednostavni kemijski "sastojci". Uz energiju vulkana, munja i UV zračenja, ti su se sastojci počeli spajati u sve složenije molekule. I na kraju... <strong>nastao je život!</strong></p>
+      </div>
+      
+      <div class="kartica kartica-highlight">
+        <h3>🔬 Kemijska evolucija — 4 koraka do života</h3>
+        <p><button class="tts-btn" onclick="speak('Kemijska evolucija se odvijala u 4 koraka. Prvo, iz anorganskih molekula nastali su organski monomeri poput aminokiselina. Zatim su se monomeri spojili u polimere poput proteina. Onda su se polimeri umotali u membrane i nastale su protostanice. I konačno, protostanice su razvile metabolizam, nasljeđivanje i postale prave stanice.')">🔊</button></p>
+        
+        <!-- SVG Diagram: 4 Steps -->
+        <svg viewBox="0 0 600 120" class="svg-diagram" role="img" aria-label="Dijagram kemijske evolucije u 4 koraka">
+          <defs>
+            <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#2E7D32"/></marker>
+          </defs>
+          <!-- Step 1 -->
+          <circle cx="60" cy="50" r="8" fill="#FF6F00"/>
+          <circle cx="75" cy="40" r="6" fill="#FF6F00" opacity="0.7"/>
+          <circle cx="50" cy="60" r="5" fill="#FF6F00" opacity="0.5"/>
+          <text x="60" y="95" text-anchor="middle" font-size="11" font-family="Lexend" fill="#333" font-weight="600">Monomeri</text>
+          <!-- Arrow 1 -->
+          <line x1="100" y1="50" x2="145" y2="50" stroke="#2E7D32" stroke-width="2" marker-end="url(#arrow)"/>
+          <!-- Step 2 -->
+          <circle cx="185" cy="45" r="6" fill="#1565C0"/><circle cx="195" cy="45" r="6" fill="#1565C0"/><circle cx="205" cy="45" r="6" fill="#1565C0"/><circle cx="175" cy="55" r="6" fill="#1565C0"/><circle cx="185" cy="55" r="6" fill="#1565C0"/><circle cx="195" cy="55" r="6" fill="#1565C0"/>
+          <text x="190" y="95" text-anchor="middle" font-size="11" font-family="Lexend" fill="#333" font-weight="600">Polimeri</text>
+          <!-- Arrow 2 -->
+          <line x1="225" y1="50" x2="270" y2="50" stroke="#2E7D32" stroke-width="2" marker-end="url(#arrow)"/>
+          <!-- Step 3 -->
+          <ellipse cx="320" cy="50" rx="30" ry="25" fill="none" stroke="#6A1B9A" stroke-width="2" stroke-dasharray="4,3"/>
+          <circle cx="310" cy="45" r="4" fill="#6A1B9A" opacity="0.6"/><circle cx="325" cy="50" r="5" fill="#6A1B9A" opacity="0.6"/><circle cx="315" cy="57" r="3" fill="#6A1B9A" opacity="0.6"/>
+          <text x="320" y="95" text-anchor="middle" font-size="11" font-family="Lexend" fill="#333" font-weight="600">Protostanice</text>
+          <!-- Arrow 3 -->
+          <line x1="360" y1="50" x2="405" y2="50" stroke="#2E7D32" stroke-width="2" marker-end="url(#arrow)"/>
+          <!-- Step 4 -->
+          <ellipse cx="460" cy="50" rx="35" ry="28" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2"/>
+          <ellipse cx="460" cy="50" rx="12" ry="10" fill="#C8E6C9" stroke="#2E7D32" stroke-width="1.5"/>
+          <text x="460" y="95" text-anchor="middle" font-size="11" font-family="Lexend" fill="#333" font-weight="600">Stanice</text>
+          <!-- Title -->
+          <text x="300" y="15" text-anchor="middle" font-size="13" font-family="Lexend" fill="#2E7D32" font-weight="700">Kemijska evolucija → Biološka evolucija</text>
+        </svg>
+
+        <div style="margin-top:12px">
+          <p><strong>1. <span class="term" data-def="Monomeri su male organske molekule poput aminokiselina i šećera">Organski monomeri</span></strong> — iz anorganskih molekula nastaju male organske molekule (aminokiseline, dušične baze)</p>
+          <p><strong>2. <span class="term" data-def="Polimeri su veliki lanci sastavljeni od monomera, poput proteina, DNA i škroba">Organski polimeri</span></strong> — monomeri se spajaju u makromolekule (proteini, nukleinske kiseline, ugljikohidrati, lipidi)</p>
+          <p><strong>3. <span class="term" data-def="Protostanice su nakupine organskih tvari okružene jednostavnom membranom — preteče pravih stanica">Protostanice</span></strong> — makromolekule se pakiraju u kapljice s membranom; još NISU prave stanice</p>
+          <p><strong>4. <span class="term" data-def="Stanice su osnovne jedinice života, sposobne za metabolizam, razmnožavanje i nasljeđivanje">Stanice</span></strong> — protostanice razvijaju metabolizam, nasljeđivanje i sposobnost razmnožavanja</p>
+        </div>
+      </div>
+
+      <div class="kartica">
+        <h3>🌋 Rana Zemlja — "praatmosfera"</h3>
+        <p><button class="tts-btn" onclick="speak('Rana Zemlja izgledala je potpuno drugačije od danas. Umjesto kisika, atmosfera je sadržavala vodenu paru, metan, amonijak i vodik. Energiju za kemijske reakcije davali su vulkani, munje i ultraljubičasto zračenje.')">🔊</button>
+        Rana Zemlja izgledala je potpuno drugačije od danas. Nije bilo kisika! Atmosfera je sadržavala:</p>
+        <p style="font-size:20px;text-align:center;margin:12px 0">💨 H₂O &nbsp;&nbsp; 🔥 CH₄ &nbsp;&nbsp; ⚡ NH₃ &nbsp;&nbsp; 💫 H₂</p>
+        <p>(vodena para, metan, amonijak i vodik)</p>
+        <p>Energiju za kemijske reakcije davali su: <strong>🌋 vulkani</strong>, <strong>⚡ munje</strong> i <strong>☀️ UV zračenje</strong>.</p>
+        <p>Zanimljivo: <strong>glina</strong> je možda bila ključni katalizator! Čestice gline imaju električni naboj koji privlači organske molekule i pomaže im da se spoje. 🧱</p>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab1-story">
+      <div class="story-text">
+        <p>🌍 <span class="dramatic">Zamisli planet na kojem ne bi preživjela niti sekunda.</span></p>
+        <p>Nema kisika. Nebo je narančasto-crveno. Svugdje vulkani bljuju lavu. Munje udaraju u ocean koji je skoro kipuće vrući. I smrdi — amonijak i metan svugdje okolo. Pakao, zar ne?</p>
+        <p>A opet — <span class="highlight">upravo na tom paklenskom mjestu započela je najnevjerojatnija priča u svemiru</span>. Priča o tome kako su se obični atomi odlučili... postati živi.</p>
+        <p>Ruska biokemičar <strong>Aleksandar Oparin</strong> i britanski znanstvenik <strong>J.B.S. Haldane</strong> 1920-ih godina neovisno su došli na istu ludu ideju: "Hej, što ako je ta praatmosfera bila kao gigantski kemijski laboratorij?"</p>
+        <p>Zamislite to ovako: imaš lonac (ocean), imaš sastojke (jednostavne kemikalije), imaš vatru (munje i vulkane). <span class="highlight">Kuhaj par stotina milijuna godina i — voilà!</span></p>
+        <p>Naravno, "voilà" u ovom slučaju znači: najprostije moguće organske molekule. Daleko od bilo čega živog. Ali — prvi korak. 🧪</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Self-check -->
+  <div class="self-check">
+    <p>🤔 Razumiješ li kako kemijska evolucija vodi do biološke?</p>
+    <div class="self-check-btns">
+      <button style="background:var(--green-light);color:var(--green)" onclick="this.parentElement.parentElement.innerHTML='<p>✅ Super! Idemo dalje!</p>'">Da, jasno mi je! 👍</button>
+      <button style="background:var(--amber-light);color:var(--amber)" onclick="this.parentElement.parentElement.innerHTML='<p>💡 Ključ je zapamtiti 4 koraka: monomeri → polimeri → protostanice → stanice. Svaki korak je složeniji od prethodnog!</p>'">Trebam ponoviti 🔄</button>
+    </div>
+  </div>
+
+  <!-- Mini Quiz -->
+  <div class="kartica" id="quiz1">
+    <h3>📝 Mini kviz — Cjelina 1</h3>
+    <div id="q1_1">
+      <p><strong>1.</strong> Koji je točan redoslijed kemijske evolucije?</p>
+      <button class="quiz-option" onclick="checkQuiz(this,'q1_1',false)">a) Stanice → polimeri → monomeri → protostanice</button>
+      <button class="quiz-option" onclick="checkQuiz(this,'q1_1',true)">b) Monomeri → polimeri → protostanice → stanice</button>
+      <button class="quiz-option" onclick="checkQuiz(this,'q1_1',false)">c) Protostanice → monomeri → stanice → polimeri</button>
+      <button class="hint-btn" onclick="showHint('h1_1',1)">💡 Hint 1</button>
+      <div class="hint-content" id="h1_1_1">Kreni od najjednostavnijeg — što je manje: monomer ili polimer?</div>
+      <div class="hint-content" id="h1_1_2">Mono = jedan, poli = mnogo. Monomeri se spajaju u polimere. Što dolazi nakon?</div>
+      <div class="hint-content" id="h1_1_3">Odgovor: monomeri → polimeri → protostanice → stanice (od jednostavnog prema složenom!)</div>
+    </div>
+    <div id="q1_2" style="margin-top:16px">
+      <p><strong>2.</strong> Što je davalo energiju za kemijske reakcije na ranoj Zemlji?</p>
+      <button class="quiz-option" onclick="checkQuiz(this,'q1_2',false)">a) Sunčeva svjetlost i kisik</button>
+      <button class="quiz-option" onclick="checkQuiz(this,'q1_2',true)">b) Munje, vulkani i UV zračenje</button>
+      <button class="quiz-option" onclick="checkQuiz(this,'q1_2',false)">c) Vjetar i kiša</button>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-outline" onclick="goToStep(0)">⬅ Nazad</button>
+    <button class="btn btn-primary" onclick="goToStep(2)">Dalje ➡</button>
+  </div>
+</div>
+
+<!-- ============ STEP 2: MILLER-UREY ============ -->
+<div class="step" data-step="2" id="step2">
+  <h2>2️⃣ Miller-Ureyev eksperiment (1953.)</h2>
+  
+  <div class="encouragement">🌟 Odlično napreduješ, Natalija! Već si prošla prvi dio! 🌟</div>
+
+  <div class="tab-container">
+    <div class="tab-buttons">
+      <button class="tab-btn active" onclick="switchTab(this,'tab2-learn')">📚 Učimo</button>
+      <button class="tab-btn story-tab" onclick="switchTab(this,'tab2-story')">📖 Priča</button>
+    </div>
+    
+    <div class="tab-content active" id="tab2-learn">
+      <div class="kartica">
+        <h3>🧑‍🔬 Tko? Što? Kako?</h3>
+        <p><button class="tts-btn" onclick="speak('Godine 1953., Stanley Miller, dvadesetitrogodišnji student na Sveučilištu u Chicagu, napravio je nešto nevjerojatno. S mentorom Haroldom Ureyem osmislio je eksperiment koji je simulirao uvjete na ranoj Zemlji.')">🔊</button>
+        Godine <strong>1953.</strong>, <strong>Stanley Miller</strong>, 23-godišnji student na Sveučilištu u Chicagu, napravio je nešto nevjerojatno. S mentorom <strong>Haroldom Ureyem</strong> osmislio je eksperiment koji je simulirao uvjete na ranoj Zemlji.</p>
+      </div>
+
+      <div class="kartica kartica-highlight">
+        <h3>⚗️ Kako je eksperiment funkcionirao?</h3>
+        
+        <!-- SVG Miller-Urey Apparatus -->
+        <svg viewBox="0 0 500 380" class="svg-diagram" role="img" aria-label="Dijagram Miller-Ureyevog eksperimenta">
+          <!-- Background -->
+          <rect x="0" y="0" width="500" height="380" fill="#FAFAFA" rx="10"/>
+          <!-- Title -->
+          <text x="250" y="25" text-anchor="middle" font-size="14" font-family="Lexend" fill="#1565C0" font-weight="700">Miller-Ureyev eksperiment</text>
+          
+          <!-- Flask 1 - gases -->
+          <ellipse cx="150" cy="120" rx="55" ry="45" fill="#E3F2FD" stroke="#1565C0" stroke-width="2"/>
+          <text x="150" y="110" text-anchor="middle" font-size="10" font-family="Lexend" fill="#333">H₂O, CH₄</text>
+          <text x="150" y="125" text-anchor="middle" font-size="10" font-family="Lexend" fill="#333">NH₃, H₂</text>
+          <text x="150" y="145" text-anchor="middle" font-size="9" font-family="Lexend" fill="#1565C0" font-weight="600">"Praatmosfera"</text>
+          
+          <!-- Electrodes / Sparks -->
+          <line x1="130" y1="80" x2="130" y2="95" stroke="#FF6F00" stroke-width="3"/>
+          <line x1="170" y1="80" x2="170" y2="95" stroke="#FF6F00" stroke-width="3"/>
+          <text x="150" y="73" text-anchor="middle" font-size="9" font-family="Lexend" fill="#FF6F00" font-weight="600">⚡ Elektrode</text>
+          <!-- Spark effect -->
+          <line x1="135" y1="90" x2="165" y2="90" stroke="#FFD600" stroke-width="2" stroke-dasharray="3,2"/>
+          <text x="150" y="88" text-anchor="middle" font-size="14">⚡</text>
+
+          <!-- Tube from flask 1 to condenser -->
+          <path d="M 205 120 Q 230 120, 250 150 Q 270 180, 280 200" fill="none" stroke="#666" stroke-width="2"/>
+          
+          <!-- Condenser -->
+          <rect x="260" y="180" width="40" height="100" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2" rx="5"/>
+          <text x="280" y="175" text-anchor="middle" font-size="9" font-family="Lexend" fill="#2E7D32" font-weight="600">Hladilo</text>
+          <text x="320" y="220" font-size="9" font-family="Lexend" fill="#1565C0">← Hladna</text>
+          <text x="320" y="235" font-size="9" font-family="Lexend" fill="#1565C0">    voda</text>
+          
+          <!-- Collection flask -->
+          <ellipse cx="280" cy="320" rx="50" ry="35" fill="#FFF3E0" stroke="#FF6F00" stroke-width="2"/>
+          <text x="280" y="315" text-anchor="middle" font-size="9" font-family="Lexend" fill="#E65100" font-weight="600">Ohlađena voda s</text>
+          <text x="280" y="328" text-anchor="middle" font-size="9" font-family="Lexend" fill="#E65100" font-weight="600">organskim tvarima</text>
+          <path d="M 280 280 L 280 285" stroke="#666" stroke-width="2"/>
+
+          <!-- Flask 2 - water/ocean -->
+          <ellipse cx="400" cy="310" rx="45" ry="40" fill="#BBDEFB" stroke="#1565C0" stroke-width="2"/>
+          <text x="400" y="305" text-anchor="middle" font-size="10" font-family="Lexend" fill="#333">Voda</text>
+          <text x="400" y="320" text-anchor="middle" font-size="9" font-family="Lexend" fill="#1565C0" font-weight="600">"Praocean"</text>
+          <!-- Heating -->
+          <text x="400" y="360" text-anchor="middle" font-size="16">🔥🔥🔥</text>
+          <text x="400" y="375" text-anchor="middle" font-size="9" font-family="Lexend" fill="#C62828" font-weight="600">Zagrijavanje</text>
+          
+          <!-- Tube from water to gas flask -->
+          <path d="M 400 270 Q 400 200, 350 160 Q 300 120, 205 120" fill="none" stroke="#666" stroke-width="2"/>
+          
+          <!-- Vacuum pump -->
+          <rect x="380" y="200" width="60" height="30" fill="#E0E0E0" stroke="#666" stroke-width="1.5" rx="4"/>
+          <text x="410" y="220" text-anchor="middle" font-size="8" font-family="Lexend" fill="#333">Vakuumska</text>
+          <text x="410" y="230" text-anchor="middle" font-size="8" font-family="Lexend" fill="#333">pumpa</text>
+          <line x1="410" y1="230" x2="410" y2="270" stroke="#666" stroke-width="1.5"/>
+        </svg>
+
+        <p><strong>Korak po korak:</strong></p>
+        <p>1️⃣ U jednu tikvicu stavio je <strong>vodu</strong> (simulira praocean) i zagrijavao je</p>
+        <p>2️⃣ Vodena para odlazila je u drugu tikvicu s <strong>plinovima</strong> (CH₄, NH₃, H₂) — to simulira praatmosferu</p>
+        <p>3️⃣ Kroz tu smjesu propuštao je <strong>električne iskre</strong> — simuliraju munje! ⚡</p>
+        <p>4️⃣ Smjesa se hladila i vraćala u tikvicu za skupljanje</p>
+        <p>5️⃣ Nakon <strong>nekoliko dana</strong> — u vodi su pronađene <strong>aminokiseline</strong> i druge organske molekule! 🎉</p>
+      </div>
+
+      <div class="kartica kartica-info">
+        <h3>💡 Što ovo dokazuje?</h3>
+        <p><button class="tts-btn" onclick="speak('Miller-Ureyev eksperiment potvrdio je pretpostavku Oparina i Haldanea — da se iz jednostavnih anorganskih tvari, uz dovoljno energije, mogu stvoriti organske molekule. To je ključni prvi korak kemijske evolucije!')">🔊</button>
+        Eksperiment je <strong>potvrdio pretpostavku Oparina i Haldanea</strong> — da se iz jednostavnih anorganskih tvari, uz dovoljno energije, MOGU stvoriti organske molekule. To je ključni <strong>prvi korak kemijske evolucije!</strong></p>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab2-story">
+      <div class="story-text">
+        <p>Godina je 1953. Dok je Watson otkrivao strukturu DNA u Engleskoj, u Chicagu je jedan <span class="highlight">dvadesetitrogodišnji student</span> upravo pokrenuo eksperiment koji će promijeniti biologiju.</p>
+        <p>Stanley Miller bio je... pa, iskreno — bio je samo studentić. Dvadeset tri godine i diplomski rad. Ali je imao jednu sjajnu ideju i mentora spremnoga reći: "Daj, probaj."</p>
+        <p>Harold Urey, Millerov mentor i nobelovac, isprva je mislio da je ideja prerizična za diplomski. Što ako ne uspije? Millerova karijera bila bi gotova prije nego je počela. Ali Miller je inzistirao.</p>
+        <p><span class="dramatic">"Dajte mi tjedan dana i nekoliko tikvica."</span></p>
+        <p>Spojio je staklene tikvice gumenim cijevima. U jednu je stavio vodu — to je trebao biti ocean. U drugu je napumpao metan, amonijak i vodik — praatmosfera. Onda je uključio struju i pustio da iskre pucketaju kroz plinove. Munje u boci.</p>
+        <p>Prošao je jedan dan. Ništa posebno. Dva dana. Voda je počela poprimati <span class="highlight">žućkastu boju</span>. Treći dan — postala je tamna, gotovo smeđa.</p>
+        <p>Kad je Miller analizirao tu "juhu"... pronašao je <strong>aminokiseline</strong>. Građevne blokove proteina. Građevne blokove ŽIVOTA.</p>
+        <p>Bio je to trenutak kad je kemija rekla biologiji: <span class="dramatic">"Hej, ja sam tvoja majka."</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="self-check">
+    <p>🤔 Možeš li opisati Miller-Ureyev eksperiment?</p>
+    <div class="self-check-btns">
+      <button style="background:var(--green-light);color:var(--green)" onclick="this.parentElement.parentElement.innerHTML='<p>✅ Bravo! Nastavljamo!</p>'">Da! 👍</button>
+      <button style="background:var(--amber-light);color:var(--amber)" onclick="this.parentElement.parentElement.innerHTML=`<p>💡 Zapamti: Tikvica s vodom (ocean) + tikvica s plinovima (atmosfera) + električne iskre (munje) = aminokiseline! Jednostavno, zar ne?</p>`">Ponovi mi ukratko 🔄</button>
+    </div>
+  </div>
+
+  <div class="kartica" id="quiz2">
+    <h3>📝 Mini kviz — Cjelina 2</h3>
+    <div id="q2_1">
+      <p><strong>1.</strong> Što su Miller i Urey koristili za simuliranje munja?</p>
+      <button class="quiz-option" onclick="checkQuiz(this,'q2_1',true)">a) Električne iskre</button>
+      <button class="quiz-option" onclick="checkQuiz(this,'q2_1',false)">b) UV lampu</button>
+      <button class="quiz-option" onclick="checkQuiz(this,'q2_1',false)">c) Plamen</button>
+    </div>
+    <div id="q2_2" style="margin-top:16px">
+      <p><strong>2.</strong> Što su pronašli u vodi nakon eksperimenta?</p>
+      <button class="quiz-option" onclick="checkQuiz(this,'q2_2',false)">a) DNA molekule</button>
+      <button class="quiz-option" onclick="checkQuiz(this,'q2_2',false)">b) Žive bakterije</button>
+      <button class="quiz-option" onclick="checkQuiz(this,'q2_2',true)">c) Aminokiseline i organske molekule</button>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-outline" onclick="goToStep(1)">⬅ Nazad</button>
+    <button class="btn btn-primary" onclick="goToStep(3)">Dalje ➡</button>
+  </div>
+</div>
+
+<!-- ============ STEP 3: PROTOSTANICE ============ -->
+<div class="step" data-step="3" id="step3">
+  <h2>3️⃣ Protostanice i obilježja živih bića</h2>
+  
+  <div class="tab-container">
+    <div class="tab-buttons">
+      <button class="tab-btn active" onclick="switchTab(this,'tab3-learn')">📚 Učimo</button>
+      <button class="tab-btn story-tab" onclick="switchTab(this,'tab3-story')">📖 Priča</button>
+    </div>
+    
+    <div class="tab-content active" id="tab3-learn">
+      <div class="kartica">
+        <h3>🫧 Protostanice — mjehurići života</h3>
+        <p><button class="tts-btn" onclick="speak('Jesi li ikad puhala balone od sapunice? Sapunski mjehurić ima tanku opnu koja odvaja unutrašnjost od okoline. Protostanice su bile nešto slično — nakupine organskih tvari okružene jednostavnom membranom.')">🔊</button>
+        Jesi li ikad puhala balone od sapunice? Sapunski mjehurić ima tanku opnu koja odvaja unutrašnjost od okoline. <span class="term" data-def="Protostanice su nakupine organskih tvari okružene jednostavnom lipidnom membranom — preteče živih stanica">Protostanice</span> su bile nešto slično — nakupine organskih tvari okružene jednostavnom membranom.</p>
+        <p>Ali protostanice NISU bile žive. Da bi postale prave stanice, trebale su razviti:</p>
+        <ul style="list-style:none;padding:0">
+          <li style="padding:8px 0">🔄 <strong>Metabolizam</strong> — sposobnost pretvaranja energije</li>
+          <li style="padding:8px 0">🧬 <strong>Nasljedne upute</strong> (DNA) — "recept" za izgradnju</li>
+          <li style="padding:8px 0">🛡️ <strong>Staničnu membranu</strong> — zaštita i kontrola</li>
+          <li style="padding:8px 0">⚗️ <strong>Enzime</strong> — ubrzivače kemijskih reakcija</li>
+        </ul>
+      </div>
+      
+      <div class="kartica kartica-highlight">
+        <h3>🌿 Obilježja živih bića</h3>
+        <p><button class="tts-btn" onclick="speak('Sva živa bića imaju zajednička obilježja: organiziranost, izmjena tvari i energije, odgovaranje na podražaje, razmnožavanje, nasljedna svojstva i prilagodba.')">🔊</button>
+        Sva živa bića, od bakterije do slona, dijele ova obilježja:</p>
+        <div style="display:grid;gap:10px;margin-top:12px">
+          <div style="background:var(--green-light);padding:12px;border-radius:10px">🏗️ <strong>Organiziranost</strong> — građena od stanica, uređena struktura</div>
+          <div style="background:var(--blue-light);padding:12px;border-radius:10px">🔄 <strong>Izmjena tvari i energije</strong> — metabolizam</div>
+          <div style="background:var(--amber-light);padding:12px;border-radius:10px">⚡ <strong>Odgovaraju na podražaje</strong> — reagiraju na okolinu</div>
+          <div style="background:var(--purple-light);padding:12px;border-radius:10px">👶 <strong>Razmnožavaju se</strong> — prenose nasljedna svojstva</div>
+          <div style="background:var(--teal-light);padding:12px;border-radius:10px">🦎 <strong>Prilagođavaju se</strong> — mijenjaju se i istiću prilagodbama</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="tab-content" id="tab3-story">
+      <div class="story-text">
+        <p>Evo nečega nad čime se vrijedi zamisliti:</p>
+        <p><span class="dramatic">Svaki atom u tvom tijelu nekad je bio dio nečeg potpuno neživog.</span></p>
+        <p>Ugljik u tvojim mišićima možda je jednom bio dio vulkanske stijene. Kisik u tvojim plućima lebdio je u praatmosferi. Željezo u tvojoj krvi — doslovno je nastalo u eksploziji umirućih zvijezda.</p>
+        <p>A onda je, prije otprilike <strong>3,8 milijardi godina</strong>, nešto čudesno se dogodilo. Te iste molekule — <span class="highlight">iste tvari od kojih je napravljen kamen ili voda — nekako su se organizirale u nešto što... živi</span>.</p>
+        <p>Kako? Pa, nitko ne zna sigurno. Ali zamislite malene masne kapljice koje plutaju u toplom oceanu. Kao mjehurići od sapunice, samo tisuću puta manji. Unutra — hrpa kemikalija koje reagiraju jedna s drugom. Izvana — tanka opna koja ih drži na okupu.</p>
+        <p>To su bile <strong>protostanice</strong>. Nisu bile žive. Ali nisu bile ni potpuno nežive. Bile su negdje... između. 🫧</p>
+        <p>I onda, jednog dana (jednog tisućljeća, zapravo), jedna od tih kapljica naučila je nešto novo: <span class="highlight">kopirati se</span>. I to je bilo to. Taj trenutak — kad se kemija pretvorila u biologiju — bio je najvažniji trenutak u povijesti Zemlje.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="self-check">
+    <p>🤔 Možeš li nabrojati barem 4 obilježja živih bića?</p>
+    <div class="self-check-btns">
+      <button style="background:var(--green-light);color:var(--green)" onclick="this.parentElement.parentElement.innerHTML='<p>✅ Fantastično!</p>'">Mogu! 👍</button>
+      <button style="background:var(--amber-light);color:var(--amber)" onclick="this.parentElement.parentElement.innerHTML='<p>💡 Zapamti ih ovako: OIORP — Organiziranost, Izmjena tvari, Odgovaraju na podražaje, Razmnožavanje, Prilagodba!</p>'">Pomozi mi zapamtiti 🔄</button>
+    </div>
+  </div>
+
+  <div class="kartica" id="quiz3">
+    <h3>📝 Mini kviz — Cjelina 3</h3>
+    <div id="q3_1">
+      <p><strong>1.</strong> Protostanice su bile:</p>
+      <button class="quiz-option" onclick="checkQuiz(this,'q3_1',false)">a) Potpuno žive stanice</button>
+      <button class="quiz-option" onclick="checkQuiz(this,'q3_1',true)">b) Nakupine organskih tvari s membranom, ali bez metabolizma i nasljeđivanja</button>
+      <button class="quiz-option" onclick="checkQuiz(this,'q3_1',false)">c) Bakterije</button>
+    </div>
+    <div id="q3_2" style="margin-top:16px">
+      <p><strong>2.</strong> Koje od navedenog NIJE obilježje živih bića?</p>
+      <button class="quiz-option" onclick="checkQuiz(this,'q3_2',false)">a) Razmnožavanje</button>
+      <button class="quiz-option" onclick="checkQuiz(this,'q3_2',true)">b) Kretanje na kotačima</button>
+      <button class="quiz-option" onclick="checkQuiz(this,'q3_2',false)">c) Prilagodba na okolinu</button>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-outline" onclick="goToStep(2)">⬅ Nazad</button>
+    <button class="btn btn-primary" onclick="goToStep(4)">Dalje ➡</button>
+  </div>
+</div>
+
+<!-- ============ STEP 4: SPONTANA GENERACIJA VS BIOGENEZA ============ -->
+<div class="step" data-step="4" id="step4">
+  <h2>4️⃣ Spontana generacija vs Biogeneza</h2>
+  
+  <div class="encouragement">💪 Više od pola lekcije gotovo! Još malo! 💪</div>
+
+  <div class="tab-container">
+    <div class="tab-buttons">
+      <button class="tab-btn active" onclick="switchTab(this,'tab4-learn')">📚 Učimo</button>
+      <button class="tab-btn story-tab" onclick="switchTab(this,'tab4-story')">📖 Priča</button>
+    </div>
+    
+    <div class="tab-content active" id="tab4-learn">
+      <div class="kartica">
+        <h3>🥩 Stara ideja — "spontana generacija"</h3>
+        <p><button class="tts-btn" onclick="speak('Do 17. stoljeća, ljudi su vjerovali da život može nastati iz nežive tvari. Na primjer, mislili su da crvi nastaju iz mesa, miš iz pšenice, a žabe iz blata. To se zvalo spontana generacija.')">🔊</button>
+        Do 17. stoljeća, ljudi su vjerovali nešto čudno: da <strong>život može spontano nastati iz nežive tvari</strong>. Crvi "nastaju" iz mesa? Miševi "nastaju" iz pšenice? Zvuči smiješno danas, ali tadašnji ljudi nisu imali mikroskope!</p>
+        <p>Ova teorija zvala se <span class="term" data-def="Spontana generacija je opovrgnuta teorija da život može nastati iz nežive tvari">spontana generacija</span>.</p>
+      </div>
+      
+      <div class="kartica kartica-highlight">
+        <h3>🧪 Pasteurov eksperiment (1861.)</h3>
+        <p><button class="tts-btn" onclick="speak('Louis Pasteur dokazao je da život ne nastaje spontano. Koristio je tikvice s labuđim vratom. Hranjiva smjesa u tikvici s labuđim vratom ostala je bez mikroorganizama jer su se klice zaustavljale u zavoju vrata. Tikvica s odlomljenim vratom razvila je mikroorganizme jer je zrak sa klicama mogao ući. Zaključak: život nastaje samo iz života — biogeneza!')">🔊</button></p>
+        
+        <!-- SVG Pasteur Flask -->
+        <svg viewBox="0 0 500 200" class="svg-diagram" role="img" aria-label="Pasteurov eksperiment s labuđim vratom">
+          <!-- Flask 1 - swan neck intact -->
+          <text x="125" y="20" text-anchor="middle" font-size="11" font-family="Lexend" fill="#2E7D32" font-weight="600">Tikvica s labuđim vratom</text>
+          <ellipse cx="100" cy="140" rx="45" ry="35" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2"/>
+          <path d="M 100 105 Q 100 80, 120 70 Q 160 50, 170 70 Q 180 90, 200 85" fill="none" stroke="#2E7D32" stroke-width="2"/>
+          <text x="100" y="145" text-anchor="middle" font-size="9" font-family="Lexend" fill="#333">Hranjiva</text>
+          <text x="100" y="157" text-anchor="middle" font-size="9" font-family="Lexend" fill="#333">smjesa</text>
+          <text x="100" y="190" text-anchor="middle" font-size="10" font-family="Lexend" fill="#2E7D32" font-weight="700">✅ BEZ klica</text>
+          
+          <!-- Flask 2 - broken neck -->
+          <text x="375" y="20" text-anchor="middle" font-size="11" font-family="Lexend" fill="#C62828" font-weight="600">Tikvica s odlomljenim vratom</text>
+          <ellipse cx="350" cy="140" rx="45" ry="35" fill="#FFEBEE" stroke="#C62828" stroke-width="2"/>
+          <path d="M 350 105 L 350 70" fill="none" stroke="#C62828" stroke-width="2"/>
+          <line x1="340" y1="70" x2="360" y2="70" stroke="#C62828" stroke-width="2"/>
+          <text x="370" y="60" font-size="10" font-family="Lexend" fill="#C62828">← Zrak ulazi!</text>
+          <!-- Bacteria dots -->
+          <circle cx="340" cy="135" r="3" fill="#C62828" opacity="0.5"/>
+          <circle cx="355" cy="140" r="2" fill="#C62828" opacity="0.5"/>
+          <circle cx="345" cy="148" r="2.5" fill="#C62828" opacity="0.5"/>
+          <circle cx="360" cy="132" r="2" fill="#C62828" opacity="0.5"/>
+          <text x="350" y="190" text-anchor="middle" font-size="10" font-family="Lexend" fill="#C62828" font-weight="700">❌ PUNO klica</text>
+          
+          <!-- VS -->
+          <text x="250" y="140" text-anchor="middle" font-size="20" font-family="Lexend" fill="#666" font-weight="700">VS</text>
+        </svg>
+
+        <p><strong>Zaključak:</strong> Klice (mikroorganizmi) dolaze iz <strong>zraka</strong>, a ne nastaju spontano iz hrane! Pasteur je time dokazao teoriju <span class="term" data-def="Biogeneza = život nastaje samo iz postojećeg života, nikad spontano iz nežive tvari">biogeneze</span>:</p>
+        <p style="text-align:center;font-size:20px;font-weight:600;color:var(--green);margin:16px 0">"Omne vivum ex vivo" — Sve živo nastaje iz živoga</p>
+      </div>
+    </div>
+    
+    <div class="tab-content" id="tab4-story">
+      <div class="story-text">
+        <p>Louis Pasteur bio je, blago rečeno, <span class="highlight">neugodan tip</span>. Arogantan, tvrdoglav, uvjeren da je u pravu čak i kad mu nitko nije vjerovao.</p>
+        <p>A u ovom slučaju — bio je u pravu.</p>
+        <p>Cijela debata zvučala je otprilike ovako:</p>
+        <p style="background:#E8E8E8;padding:12px;border-radius:10px;font-style:italic;margin:12px 0">
+          Znanstvenici: "Život nastaje sam od sebe iz trulih stvari!"<br>
+          Pasteur: "Ne, ne nastaje."<br>
+          Znanstvenici: "Ali crvi se pojavljuju u mesu!"<br>
+          Pasteur: "To su jaja muha. Vi ste samo ljeni promatrači."<br>
+          Znanstvenici: 😠
+        </p>
+        <p>I onda je napravio nešto genijalno. Uzeo je tikvice i oblikovao im vrat u oblik labuda — dugi, zakrivljeni vrat. Zrak je mogao ulaziti, ali čestice prašine i klice su se zaustavljale u zavoju.</p>
+        <p>Rezultat? Hranjiva smjesa u tikvici <span class="highlight">ostala je čista danima, tjednima, mjesecima</span>. Ali čim bi odlomio vrat — bam! Mikroorganizmi posvuda.</p>
+        <p><span class="dramatic">Život ne nastaje iz ničega. Život nastaje iz života.</span></p>
+        <p>Koliko je Pasteur bio siguran u sebe? Njegova tikvica s labuđim vratom, napravljena 1861., <strong>još uvijek stoji u Pasteurovom institutu u Parizu</strong> — sterilna i nakon 160+ godina. 🏛️</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="kartica" id="quiz4">
+    <h3>📝 Mini kviz — Cjelina 4</h3>
+    <div id="q4_1">
+      <p><strong>1.</strong> Što znači "biogeneza"?</p>
+      <button class="quiz-option" onclick="checkQuiz(this,'q4_1',false)">a) Život nastaje iz nežive tvari</button>
+      <button class="quiz-option" onclick="checkQuiz(this,'q4_1',true)">b) Život nastaje samo iz postojećeg života</button>
+      <button class="quiz-option" onclick="checkQuiz(this,'q4_1',false)">c) Život nastaje iz kemijskih reakcija u laboratoriju</button>
+    </div>
+    <div id="q4_2" style="margin-top:16px">
+      <p><strong>2.</strong> Kako je Pasteur spriječio ulazak mikroorganizama u tikvicu?</p>
+      <button class="quiz-option" onclick="checkQuiz(this,'q4_2',false)">a) Zatvorio je tikvicu čepom</button>
+      <button class="quiz-option" onclick="checkQuiz(this,'q4_2',true)">b) Oblikovao je vrat tikvice u oblik labuda — klice se zaustavljale u zavoju</button>
+      <button class="quiz-option" onclick="checkQuiz(this,'q4_2',false)">c) Dodao je antibiotik u smjesu</button>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-outline" onclick="goToStep(3)">⬅ Nazad</button>
+    <button class="btn btn-primary" onclick="goToStep(5)">Dalje ➡</button>
+  </div>
+</div>
+
+<!-- ============ STEP 5: BIOMOLEKULE ============ -->
+<div class="step" data-step="5" id="step5">
+  <h2>5️⃣ Molekule koje život znače</h2>
+  
+  <div class="tab-container">
+    <div class="tab-buttons">
+      <button class="tab-btn active" onclick="switchTab(this,'tab5-learn')">📚 Učimo</button>
+      <button class="tab-btn story-tab" onclick="switchTab(this,'tab5-story')">📖 Priča</button>
+    </div>
+    
+    <div class="tab-content active" id="tab5-learn">
+      <div class="kartica">
+        <h3>🧱 LEGO-analogija</h3>
+        <p><button class="tts-btn" onclick="speak('Zamislite LEGO kockice. Jedna kockica je monomer. Spojite deset kockica i dobijete oligomer. Spojite stotine kockica u dugačak lanac — to je polimer. Vaše tijelo je napravljeno od takvih lanaca!')">🔊</button>
+        Zamisli LEGO kockice. Jedna kockica = <strong>monomer</strong>. Spojiš 2-10 kockica = <strong>oligomer</strong>. Spojiš stotine kockica = <strong>polimer</strong>. Tvoje tijelo je napravljeno od takvih lanaca!</p>
+      </div>
+
+      <div class="kartica kartica-highlight">
+        <h3>⚫ Ugljik — zvijezda života</h3>
+        <p>Ugljik je atom s <strong>4 "ruke"</strong> (4 valentna elektrona). Može se vezati na 4 druga atoma istovremeno! Zbog toga tvori nevjerojatnu raznolikost molekula — osnovu SVEGA živog.</p>
+        <svg viewBox="0 0 200 200" class="svg-diagram" style="max-width:200px" role="img" aria-label="Atom ugljika s 4 veze">
+          <circle cx="100" cy="100" r="30" fill="#333" opacity="0.9"/>
+          <text x="100" y="106" text-anchor="middle" font-size="16" font-family="Lexend" fill="#fff" font-weight="700">C</text>
+          <line x1="100" y1="70" x2="100" y2="25" stroke="#2E7D32" stroke-width="3"/><circle cx="100" cy="20" r="8" fill="#2E7D32"/><text x="100" y="24" text-anchor="middle" font-size="9" fill="#fff">1</text>
+          <line x1="130" y1="100" x2="175" y2="100" stroke="#1565C0" stroke-width="3"/><circle cx="180" cy="100" r="8" fill="#1565C0"/><text x="180" y="104" text-anchor="middle" font-size="9" fill="#fff">2</text>
+          <line x1="100" y1="130" x2="100" y2="175" stroke="#FF6F00" stroke-width="3"/><circle cx="100" cy="180" r="8" fill="#FF6F00"/><text x="100" y="184" text-anchor="middle" font-size="9" fill="#fff">3</text>
+          <line x1="70" y1="100" x2="25" y2="100" stroke="#6A1B9A" stroke-width="3"/><circle cx="20" cy="100" r="8" fill="#6A1B9A"/><text x="20" y="104" text-anchor="middle" font-size="9" fill="#fff">4</text>
+        </svg>
+      </div>
+
+      <div class="kartica">
+        <h3>📊 Tablica biomolekula</h3>
+        <p><button class="tts-btn" onclick="speak('Četiri glavne skupine biomolekula su: lipidi, ugljikohidrati, proteini i nukleinske kiseline. Svaka ima svoju ulogu i građu.')">🔊</button>
+        Klikni na svaki red za više detalja:</p>
+        <table class="biomol-table">
+          <thead><tr><th>Skupina</th><th>Podvrste</th><th>Uloga</th><th>Primjeri</th></tr></thead>
+          <tbody>
+            <tr style="cursor:pointer" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'table-row':'none'"><td><strong>🟡 Lipidi</strong></td><td>Trigliceridi, fosfolipidi, steroidi</td><td>Energija, membrana, hormoni</td><td>Masti, ulja, lecitin, kolesterol</td></tr>
+            <tr style="display:none;background:#FFF9C4"><td colspan="4" style="padding:12px"><strong>Trigliceridi</strong> = pohrana energije + zaštita + izolacija<br><strong>Fosfolipidi</strong> = grade staničnu membranu<br><strong>Steroidi</strong> = hormoni (testosteron, kolesterol)</td></tr>
+            <tr style="cursor:pointer" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'table-row':'none'"><td><strong>🟢 Ugljikohidrati</strong></td><td>Monosaharidi, disaharidi, polisaharidi</td><td>Energija, građa DNA/RNA</td><td>Glukoza, saharoza, škrob, celuloza</td></tr>
+            <tr style="display:none;background:#E8F5E9"><td colspan="4" style="padding:12px"><strong>Monosaharidi</strong> (C6) = glukoza, fruktoza, galaktoza — brza energija<br><strong>Disaharidi</strong> = saharoza (šećer!), laktoza (mlijeko)<br><strong>Polisaharidi</strong> = škrob (energija), celuloza (biljke), glikogen (životinje)</td></tr>
+            <tr style="cursor:pointer" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'table-row':'none'"><td><strong>🔴 Proteini</strong></td><td>Polimeri aminokiselina</td><td>Svašta!</td><td>Hemoglobin, enzimi, antitijela</td></tr>
+            <tr style="display:none;background:#FFEBEE"><td colspan="4" style="padding:12px">Proteini rade <strong>gotovo sve</strong> u tijelu:<br>🔴 Hemoglobin = prijenos kisika<br>💪 Aktin/miozin = rad mišića<br>🛡️ Antitijela = imunitet<br>⚗️ Enzimi = ubrzavaju reakcije<br>🧬 Neki hormoni (inzulin)</td></tr>
+            <tr style="cursor:pointer" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'table-row':'none'"><td><strong>🔵 Nukleinske kiseline</strong></td><td>DNA i RNA</td><td>Nasljedne upute, sinteza proteina</td><td>DNA, mRNA, rRNA, tRNA</td></tr>
+            <tr style="display:none;background:#E3F2FD"><td colspan="4" style="padding:12px"><strong>DNA</strong> = "knjiga recepata" u stanici — sadrži SVE genetske upute<br><strong>RNA</strong> = "kuhar" — čita recept iz DNA i pravi proteine<br>Proces: DNA → prepisuje se u RNA → prevodi se u protein</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <div class="tab-content" id="tab5-story">
+      <div class="story-text">
+        <p>Evo jedne zapanjujuće činjenice:</p>
+        <p><span class="dramatic">Ti si doslovno napravljena od zvijezda.</span></p>
+        <p>Svaki atom ugljika u tvojim stanicama nastao je u jezgri neke zvijezde koja je eksplodirala prije nekoliko milijardi godina. Kisik koji udišeš, željezo u tvojoj krvi, kalcij u tvojim kostima — <span class="highlight">sve to je zvjezdana prašina</span>.</p>
+        <p>Ali ugljik je poseban. On je kao onaj prijatelj koji se slaže sa svima na zabavi. Ima 4 "ruke" i može se uhvatiti za gotovo bilo koji drugi atom. Upravo zato je ugljik <strong>osnova svih organskih molekula</strong> — a time i svega živog.</p>
+        <p>Bill Bryson je to sjajno sažeo kad je pisao o proteinima. Zamisli ovo: ljudsko tijelo sadrži oko <strong>milijun različitih vrsta proteina</strong>. Svaki je savršeno presavijen u točno određeni oblik. Šanse da se protein slučajno pravilno presavije su otprilike iste kao šanse da tornado, prolazeći kroz otpad, slučajno sastavi Boeing 747.</p>
+        <p>A ipak — tu si. Živa. Sastavljena od molekula koje ne bi trebale postojati prema teoriji vjerojatnosti. 🧬</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="kartica" id="quiz5">
+    <h3>📝 Mini kviz — Cjelina 5</h3>
+    <div id="q5_1">
+      <p><strong>1.</strong> Zašto je ugljik osnova organskih molekula?</p>
+      <button class="quiz-option" onclick="checkQuiz(this,'q5_1',false)">a) Jer je najlakši atom</button>
+      <button class="quiz-option" onclick="checkQuiz(this,'q5_1',true)">b) Jer ima 4 valentna elektrona i može tvoriti 4 kovalentne veze</button>
+      <button class="quiz-option" onclick="checkQuiz(this,'q5_1',false)">c) Jer je najčešći element u svemiru</button>
+    </div>
+    <div id="q5_2" style="margin-top:16px">
+      <p><strong>2.</strong> Koja biomolekula gradi staničnu membranu?</p>
+      <button class="quiz-option" onclick="checkQuiz(this,'q5_2',false)">a) Škrob</button>
+      <button class="quiz-option" onclick="checkQuiz(this,'q5_2',true)">b) Fosfolipidi</button>
+      <button class="quiz-option" onclick="checkQuiz(this,'q5_2',false)">c) Hemoglobin</button>
+    </div>
+    <div id="q5_3" style="margin-top:16px">
+      <p><strong>3.</strong> DNA sadrži:</p>
+      <button class="quiz-option" onclick="checkQuiz(this,'q5_3',true)">a) Nasljedne upute za izgradnju organizma</button>
+      <button class="quiz-option" onclick="checkQuiz(this,'q5_3',false)">b) Energiju za metabolizam</button>
+      <button class="quiz-option" onclick="checkQuiz(this,'q5_3',false)">c) Masne kiseline</button>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-outline" onclick="goToStep(4)">⬅ Nazad</button>
+    <button class="btn btn-primary" onclick="goToStep(6)">Dalje — Priča! ➡</button>
+  </div>
+</div>
+
+<!-- ============ STEP 6: PRIČA ZA PAMĆENJE ============ -->
+<div class="step" data-step="6" id="step6">
+  <h2>📖 Od ničega do svega — priča za pamćenje</h2>
+  <p style="color:var(--text-light);font-size:15px">Ova priča spaja sve koncepte u jednu cjelinu. Čitaj polako i uživaj! <button class="tts-btn" onclick="speakLong(document.getElementById('fullStory').innerText)">🔊 Pročitaj mi</button></p>
+  
+  <div class="kartica kartica-story" id="fullStory">
+    <div class="story-text">
+      <p><span class="dramatic">Priča o tome kako je ništa postalo sve.</span></p>
+      
+      <p>Prije 4,5 milijardi godina, na mjestu gdje danas ležiš na kauču i čitaš ovo, nije bilo — ničega. Dobro, bilo je nešto: kamen, lava, i jedna izuzetno neugodna atmosfera. Temperatura? Dovoljno da otopi olovo na nekim mjestima. Kiša? Da — ali kiša od <strong>sumporne kiseline</strong>. Zvuči kao ljetovanje iz noćne more.</p>
+      
+      <p>Ali upravo to kaotično, nasilno, neprijateljsko mjesto bilo je <span class="highlight">kolijevka svega živog na Zemlji</span>. Uključujući tebe.</p>
+
+      <p style="text-align:center;font-size:30px;margin:16px 0">🌋⚡🌊</p>
+      
+      <p>Zamislimo na trenutak praocean. Topao, pun otopljenih minerala, i — ključno — pun jednostavnih kemikalija: vodika, metana, amonijaka. Iznad njega, nebo bez kisika, ali prepuno energije. Munje udaraju neprestano. Vulkani eruptiraju svaki dan.</p>
+      
+      <p>I u tom kaosu, počelo se događati nešto tiho, nešto gotovo nemoguće: <span class="highlight">atomi su se počeli spajati u molekule koje nikad prije nisu postojale</span>. Aminokiseline. Šećeri. Masne kiseline. Građevni blokovi života — nastali su iz kaosa.</p>
+      
+      <p>To je otprilike kao da staviš sve dijelove sata u kutiju, protreseš kutiju milijun godina — i na kraju dobiješ sat koji radi. Zvuči nemoguće? Pa, planet je imao <strong>stotine milijuna godina</strong> za probavanje. I ocean je bio <strong>jako velika kutija</strong>.</p>
+
+      <p style="text-align:center;font-size:30px;margin:16px 0">🔬🧪👨‍🔬</p>
+      
+      <p>Naravno, ljudi su se oduvijek pitali: "Ali kako?" 1953. godine, jedan 23-godišnji student odlučio je odgovoriti. Stanley Miller uzeo je staklene tikvice, spojio ih cijevima, ubacio plinove i vodu, i pustio da iskre pucketaju.</p>
+      
+      <p>Kad je nakon tjedan dana otvorio tikvice, voda je bila <strong>smeđa juha aminokiselina</strong>. Dokazao je da prva kuhinja života nije trebala ništa posebno — samo jednostavne sastojke i malo energije.</p>
+      
+      <p>Ali aminokiseline su tek početak. Trebale su se spojiti u proteine. Proteini su se trebali umotati u membrane. Te membrane su trebale "naučiti" propuštati hranu i izbacivati otpad. <span class="highlight">A negdje u tom procesu, neka molekula je naučila najnevjerojatniji trik u svemiru: kopirati samu sebe.</span></p>
+
+      <p style="text-align:center;font-size:30px;margin:16px 0">🫧➡️🧬</p>
+      
+      <p>Te prve "skoro-žive" nakupine zvali bismo <strong>protostanicama</strong>. Zamislite ih kao mehurić od sapunice ispunjen kemijskim reakcijama. Nisu bile žive — ali nisu bile ni potpuno nežive. Bile su na granici. Na najfascinantnijoj granici u svemiru — <strong>granici između kemije i biologije</strong>.</p>
+      
+      <p>A onda, jednog drevnog dana — jedna od tih kapljica je prešla crtu. Počela se hraniti. Počela se dijeliti. Počela je kopirati svoj "recept" i predavati ga sljedećoj generaciji. <span class="dramatic">Kemija je postala biologija. Neživo je postalo živo.</span></p>
+      
+      <p>Pasteur je to kasnije savršeno sažeo: <em>"Omne vivum ex vivo"</em> — sve živo nastaje iz živoga. To je istina... NAKON tog prvog puta. Ali taj prvi put — taj magični prijelaz iz kemije u biologiju — dogodio se samo jednom. I iz njega je nastalo SVE.</p>
+
+      <p style="text-align:center;font-size:30px;margin:16px 0">🌱🐟🦎🦕🐒👩</p>
+      
+      <p>Od bakterije do dinosaura. Od alge do sekvoje. Od te prve žive kapljice u toplom oceanu — do tebe, kako čitaš ovu rečenicu, koristeći mozak od 86 milijardi neurona, napravljen od istih atoma koji su nekad plutali u tom praoceanom.</p>
+      
+      <p>Svaki protein u tvom tijelu, svaka molekula DNA, svaki fosfolipid u tvojim membranama — sve je to potomak onih prvih, nesigurnih kemijskih eksperimenata u divljem oceanu mlade Zemlje.</p>
+      
+      <p><span class="dramatic">Ti si način na koji je svemir postao svjestan samog sebe.</span></p>
+      
+      <p>I to je, iskreno, najnevjerojatnija priča ikad ispričana. 🌍✨</p>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-outline" onclick="goToStep(5)">⬅ Nazad</button>
+    <button class="btn btn-primary" onclick="goToStep(7)">Završimo! 🎉</button>
+  </div>
+</div>
+
+<!-- ============ STEP 7: RECAP + MOOD ============ -->
+<div class="step" data-step="7" id="step7">
+  <h2>🏁 Što smo danas naučili?</h2>
+  
+  <div class="encouragement">🎉 Bravo, Natalija! Prošla si cijelu lekciju! 🎉</div>
+  
+  <div class="kartica kartica-highlight">
+    <h3>📋 Sažetak ključnih pojmova</h3>
+    <p><strong>1.</strong> <span class="term" data-def="Kemijski procesi koji su od jednostavnih molekula stvorili složene organske molekule">Kemijska evolucija</span>: monomeri → polimeri → protostanice → stanice</p>
+    <p><strong>2.</strong> <strong>Oparin i Haldane</strong>: hipoteza o nastanku organskih molekula iz praatmosfere</p>
+    <p><strong>3.</strong> <strong>Miller-Ureyev eksperiment</strong>: potvrdio da se aminokiseline mogu sintetizirati iz jednostavnih plinova + energije</p>
+    <p><strong>4.</strong> <strong>Protostanice</strong>: nakupine s membranom, ali bez metabolizma i nasljeđivanja</p>
+    <p><strong>5.</strong> Obilježja živih bića: organiziranost, izmjena tvari, podražaji, razmnožavanje, prilagodba</p>
+    <p><strong>6.</strong> <strong>Biogeneza</strong> (Pasteur): život nastaje samo iz života</p>
+    <p><strong>7.</strong> <strong>Biomolekule</strong>: lipidi, ugljikohidrati, proteini, nukleinske kiseline — sve građene od ugljika</p>
+  </div>
+
+  <div class="kartica">
+    <h3>🤔 Refleksija</h3>
+    <p>Što ti je bilo najzanimljivije u današnjoj lekciji? Što bi htjela istražiti dublje?</p>
+    <textarea id="reflectionText" rows="3" placeholder="Zapiši ovdje..." style="width:100%;padding:12px;border:2px solid #E0E0E0;border-radius:var(--radius);font-family:inherit;font-size:16px;resize:vertical"></textarea>
+  </div>
+  
+  <div class="kartica">
+    <h3>😊 Kako se osjećaš?</h3>
+    <div class="mood-selector">
+      <button class="mood-btn" onclick="selectMood(this)" aria-label="Super">🤩</button>
+      <button class="mood-btn" onclick="selectMood(this)" aria-label="Dobro">😊</button>
+      <button class="mood-btn" onclick="selectMood(this)" aria-label="OK">😐</button>
+      <button class="mood-btn" onclick="selectMood(this)" aria-label="Zbunjeno">😕</button>
+      <button class="mood-btn" onclick="selectMood(this)" aria-label="Teško">😰</button>
+    </div>
+    <p id="moodFeedback" style="text-align:center;margin-top:12px"></p>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-outline" onclick="goToStep(6)">⬅ Nazad na priču</button>
+    <button class="btn btn-secondary" onclick="alert('Ispit je u zasebnoj datoteci — natalija-ispit-postanak-zivota.html 📝')">Idi na ispit! 📝</button>
+  </div>
+</div>
+
+</main>
+
+<script>
+// === STATE ===
+let currentStep = 0;
+const totalSteps = 8;
+
+// === NAVIGATION ===
+function goToStep(n) {
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  const step = document.getElementById('step' + n);
+  if (step) { step.classList.add('active'); currentStep = n; updateProgress(); window.scrollTo({top: 0, behavior: 'smooth'}); step.focus(); }
+}
+function updateProgress() {
+  const pct = Math.round((currentStep / (totalSteps - 1)) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  const bar = document.querySelector('[role=progressbar]');
+  if (bar) bar.setAttribute('aria-valuenow', pct);
+  document.getElementById('progressText').textContent = `Korak ${currentStep + 1} od ${totalSteps}`;
+}
+
+// === SETTINGS ===
+function toggleSettings() {
+  const p = document.getElementById('settingsPanel');
+  p.classList.toggle('active');
+  if (p.classList.contains('active')) p.querySelector('h2').focus();
+}
+
+// === READING RULER ===
+function toggleRuler(on) {
+  const r = document.getElementById('readingRuler');
+  r.style.display = on ? 'block' : 'none';
+  if (on) document.addEventListener('mousemove', moveRuler);
+  else document.removeEventListener('mousemove', moveRuler);
+}
+function moveRuler(e) { document.getElementById('readingRuler').style.top = (e.clientY - 20) + 'px'; }
+
+// === TTS ===
+function speak(text) {
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'hr-HR'; u.rate = 0.9;
+    window.speechSynthesis.speak(u);
+  }
+}
+function speakLong(text) { speak(text.substring(0, 3000)); }
+
+// === BREATHING ===
+let breathingInterval;
+function startBreathing() {
+  const o = document.getElementById('breathingOverlay');
+  o.classList.add('active');
+  const texts = ['Udahni... 🌿', 'Drži... ✨', 'Izdahni... 🍃', 'Drži... 💫'];
+  let i = 0;
+  document.getElementById('breathingText').textContent = texts[0];
+  breathingInterval = setInterval(() => { i = (i + 1) % texts.length; document.getElementById('breathingText').textContent = texts[i]; }, 2000);
+}
+function stopBreathing() {
+  document.getElementById('breathingOverlay').classList.remove('active');
+  clearInterval(breathingInterval);
+}
+
+// === TABS ===
+function switchTab(btn, tabId) {
+  const container = btn.closest('.tab-container');
+  container.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  container.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(tabId).classList.add('active');
+}
+
+// === QUIZ ===
+function checkQuiz(btn, qId, correct) {
+  const container = document.getElementById(qId);
+  container.querySelectorAll('.quiz-option').forEach(b => b.disabled = true);
+  if (correct) {
+    btn.classList.add('correct');
+    btn.textContent = '✅ ' + btn.textContent;
+    launchConfetti();
+  } else {
+    btn.classList.add('wrong');
+    btn.textContent = '❌ ' + btn.textContent;
+    container.querySelectorAll('.quiz-option').forEach(b => { if (!b.classList.contains('wrong')) { /* find correct */ } });
+  }
+}
+function preAnswer(btn, qId, correct) {
+  const container = document.getElementById(qId);
+  container.querySelectorAll('.quiz-option').forEach(b => { b.disabled = true; b.style.opacity = '0.6'; });
+  btn.style.opacity = '1';
+  btn.style.border = correct ? '2px solid #2E7D32' : '2px solid #C62828';
+  btn.style.background = correct ? '#E8F5E9' : '#FFEBEE';
+}
+
+// === HINTS ===
+function showHint(baseId, level) {
+  for (let i = 1; i <= level; i++) {
+    const h = document.getElementById(baseId + '_' + i);
+    if (h) h.classList.add('show');
+  }
+  const btn = event.target;
+  if (level < 3) btn.onclick = function() { showHint(baseId, level + 1); };
+  else btn.style.display = 'none';
+  btn.textContent = level < 3 ? `💡 Hint ${level + 1}` : 'Nema više hintova';
+}
+
+// === CONFETTI ===
+function launchConfetti() {
+  const c = document.getElementById('confettiContainer');
+  const colors = ['#2E7D32', '#1565C0', '#FF6F00', '#6A1B9A', '#FFD600', '#E91E63'];
+  for (let i = 0; i < 40; i++) {
+    const p = document.createElement('div');
+    p.className = 'confetti';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.background = colors[Math.floor(Math.random() * colors.length)];
+    p.style.animationDelay = Math.random() * 0.5 + 's';
+    p.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    p.style.width = (Math.random() * 8 + 5) + 'px';
+    p.style.height = (Math.random() * 8 + 5) + 'px';
+    c.appendChild(p);
+    setTimeout(() => p.remove(), 2500);
+  }
+}
+
+// === MOOD ===
+function selectMood(btn) {
+  document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  const moods = {'🤩': 'Super! Drago mi je da ti se svidjelo! 🌟', '😊': 'Lijepo! Biologija može biti jako zanimljiva! 🌿', '😐': 'OK je. Svaka lekcija je korak naprijed! 💪', '😕': 'Ne brini — pogledaj priču još jednom, pomoći će ti! 📖', '😰': 'Duboki udah! Ovo je teško gradivo, ali ti možeš! 🫂'};
+  document.getElementById('moodFeedback').textContent = moods[btn.textContent.trim()] || '';
+}
+
+// === KEYBOARD NAV ===
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' && currentStep < totalSteps - 1) goToStep(currentStep + 1);
+  if (e.key === 'ArrowLeft' && currentStep > 0) goToStep(currentStep - 1);
+  if (e.key === 'Escape') { stopBreathing(); const sp = document.getElementById('settingsPanel'); if (sp.classList.contains('active')) toggleSettings(); }
+});
+
+// === LOAD SETTINGS ===
+window.addEventListener('DOMContentLoaded', () => {
+  const fs = localStorage.getItem('natFontSize');
+  const lh = localStorage.getItem('natLineH');
+  const bg = localStorage.getItem('natBg');
+  if (fs) document.body.style.fontSize = fs + 'px';
+  if (lh) document.body.style.lineHeight = lh;
+  if (bg) document.body.style.background = bg;
+});
+</script>
+</body>
+</html>

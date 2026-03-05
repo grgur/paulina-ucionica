@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kad je jedna stanica progutala drugu — i promijenila svijet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --cream: #FFF8F0;
+            --dark: #3A3A3A;
+            --accent1: #E8694A;
+            --accent2: #6BA3A3;
+            --accent3: #D4A574;
+            --light-gray: #F5F5F5;
+            --border: #E0E0E0;
+        }
+
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: var(--cream);
+            color: var(--dark);
+            line-height: 1.8;
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode {
+            background-color: #2a2a2a;
+            color: #f0f0f0;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        .skip-navigation {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--accent1);
+            color: white;
+            padding: 8px;
+            z-index: 100;
+        }
+
+        .skip-navigation:focus {
+            top: 0;
+        }
+
+        /* Header */
+        .header {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 248, 240, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--border);
+            z-index: 1000;
+        }
+
+        body.dark-mode .header {
+            background: rgba(42, 42, 42, 0.95);
+            border-bottom-color: #444;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .reading-time {
+            font-size: 0.85rem;
+            color: var(--accent1);
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3));
+            width: 0%;
+            z-index: 1001;
+            transition: width 0.3s ease;
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        button {
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+        }
+
+        button:hover {
+            background: var(--light-gray);
+        }
+
+        body.dark-mode button:hover {
+            background: #444;
+        }
+
+        /* Settings Panel */
+        .settings-panel {
+            position: fixed;
+            right: -300px;
+            top: 0;
+            width: 300px;
+            height: 100vh;
+            background: white;
+            box-shadow: -4px 0 20px rgba(0, 0, 0, 0.2);
+            padding: 2rem 1.5rem;
+            overflow-y: auto;
+            transition: right 0.3s ease;
+            z-index: 999;
+        }
+
+        body.dark-mode .settings-panel {
+            background: #1a1a1a;
+            color: #f0f0f0;
+        }
+
+        .settings-panel.open {
+            right: 0;
+        }
+
+        .settings-panel h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            margin-top: 1.5rem;
+            border-bottom: 2px solid var(--accent1);
+            padding-bottom: 0.5rem;
+        }
+
+        .settings-panel h3:first-child {
+            margin-top: 0;
+        }
+
+        .setting-control {
+            margin-bottom: 1.5rem;
+        }
+
+        .setting-control label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            cursor: pointer;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 0.5rem;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 1rem;
+            }
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent1);
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        @media (max-width: 640px) {
+            h1 {
+                font-size: 2rem;
+            }
+        }
+
+        .subtitle {
+            font-size: 1.4rem;
+            color: var(--accent2);
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        .by-line {
+            font-size: 0.95rem;
+            color: #999;
+            margin-bottom: 3rem;
+            font-style: italic;
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: var(--accent2);
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            border-left: 5px solid var(--accent1);
+            padding-left: 1rem;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--accent1);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        /* Pull Quotes */
+        .pull-quote {
+            background: linear-gradient(135deg, rgba(232, 105, 74, 0.1), rgba(107, 163, 163, 0.1));
+            border-left: 5px solid var(--accent1);
+            padding: 1.5rem;
+            margin: 2.5rem 0;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--accent1);
+            border-radius: 8px;
+        }
+
+        body.dark-mode .pull-quote {
+            background: rgba(232, 105, 74, 0.15);
+        }
+
+        /* Chapter Navigation */
+        .chapters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 3rem 0;
+            padding: 2rem;
+            background: var(--light-gray);
+            border-radius: 8px;
+        }
+
+        body.dark-mode .chapters {
+            background: #1a1a1a;
+        }
+
+        .chapter-link {
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            text-decoration: none;
+            border-left: 4px solid var(--accent1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        body.dark-mode .chapter-link {
+            background: #2a2a2a;
+        }
+
+        .chapter-link:hover {
+            transform: translateX(4px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .chapter-link strong {
+            display: block;
+            margin-bottom: 0.25rem;
+            color: var(--accent1);
+        }
+
+        .chapter-link small {
+            color: #999;
+        }
+
+        /* SVG Illustrations */
+        .illustration {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+            padding: 1rem;
+            background: var(--light-gray);
+            border-radius: 8px;
+        }
+
+        body.dark-mode .illustration {
+            background: #1a1a1a;
+        }
+
+        svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .illustration-caption {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #999;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        /* Audio controls */
+        .tts-controls {
+            display: flex;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+            align-items: center;
+            font-size: 0.85rem;
+            color: #999;
+        }
+
+        /* Ruler */
+        .ruler {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent1);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+
+        .ruler.active {
+            opacity: 0.5;
+        }
+
+        /* Responsive */
+        .emoji {
+            font-size: 1.2em;
+            margin-right: 0.3rem;
+        }
+
+        .fact-box {
+            background: rgba(212, 165, 116, 0.1);
+            border: 2px dashed var(--accent3);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+
+        body.dark-mode .fact-box {
+            background: rgba(212, 165, 116, 0.15);
+        }
+
+        .fact-box strong {
+            color: var(--accent3);
+        }
+
+        /* Links styling */
+        a.chapter-ref {
+            color: var(--accent1);
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        a.chapter-ref:hover {
+            color: var(--accent2);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--border);
+            color: #999;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .strikethrough {
+            text-decoration: line-through;
+        }
+
+        /* Accessibility focus states */
+        button:focus,
+        a:focus {
+            outline: 3px solid var(--accent1);
+            outline-offset: 2px;
+        }
+
+        .table-of-contents {
+            background: var(--light-gray);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+
+        body.dark-mode .table-of-contents {
+            background: #1a1a1a;
+        }
+
+        .table-of-contents h3 {
+            margin-top: 0;
+        }
+
+        .table-of-contents ol {
+            margin-left: 1.5rem;
+        }
+
+        .table-of-contents li {
+            margin-bottom: 0.5rem;
+        }
+
+        .table-of-contents a {
+            color: var(--accent1);
+            text-decoration: none;
+        }
+
+        .table-of-contents a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-navigation">Preskoči na glavnu sadržaj</a>
+
+    <div class="progress-bar" id="progressBar"></div>
+
+    <div class="ruler" id="ruler"></div>
+
+    <header class="header">
+        <div class="header-left">
+            <div class="reading-time">⏱️ ~20 minuta čitanja</div>
+        </div>
+        <div class="header-controls">
+            <button id="rulerToggle" title="Uključi čitajuću liniјu" aria-label="Uključi čitajuću liniјu">📏</button>
+            <button id="ttsToggle" title="Sluša priču" aria-label="Sluša priču">🔊</button>
+            <button id="settingsToggle" title="Postavke" aria-label="Postavke">⚙️</button>
+        </div>
+    </header>
+
+    <div class="settings-panel" id="settingsPanel">
+        <h3>Prikaz</h3>
+
+        <div class="setting-control">
+            <label for="fontSizeSlider">Veličina fonta: <span id="fontSizeValue">100</span>%</label>
+            <input type="range" id="fontSizeSlider" min="80" max="150" value="100">
+        </div>
+
+        <div class="setting-control">
+            <label for="lineHeightSlider">Razmak između redaka: <span id="lineHeightValue">1.8</span></label>
+            <input type="range" id="lineHeightSlider" min="1.2" max="2.5" step="0.1" value="1.8">
+        </div>
+
+        <div class="setting-control">
+            <label class="checkbox-label">
+                <input type="checkbox" id="darkModeToggle">
+                <span>Tamni način</span>
+            </label>
+        </div>
+
+        <h3>Čitanje</h3>
+
+        <div class="setting-control">
+            <label class="checkbox-label">
+                <input type="checkbox" id="justifyText">
+                <span>Poravnaj tekst (obostrano)</span>
+            </label>
+        </div>
+
+        <div class="setting-control">
+            <label for="ttsSpeed">Brzina govora:</label>
+            <input type="range" id="ttsSpeed" min="0.5" max="2" step="0.1" value="0.85">
+        </div>
+
+        <h3>O priči</h3>
+        <p style="font-size: 0.9rem;">Napisano za Nataliju, 16 godina. Inspiracija od Billa Brysona i Lynn Margulis.</p>
+    </div>
+
+    <main class="container" id="main-content">
+        <h1>Kad je jedna stanica progutala drugu — i promijenila svijet</h1>
+        <p class="subtitle">Priča o najvećem spajanju u povijesti života</p>
+        <p class="by-line">Za Nataliju, koja je znatiželjna koliko i svemir je malo</p>
+
+        <div class="table-of-contents">
+            <h3>U ovoj priči:</h3>
+            <ol>
+                <li><a href="#boring-billion" class="chapter-ref">Dosadna milijarda godina</a></li>
+                <li><a href="#great-merger" class="chapter-ref">Veliki spoj koji je promijenio sve</a></li>
+                <li><a href="#mitochondria" class="chapter-ref">Mitohondriji — energetske tvornice</a></li>
+                <li><a href="#cell-size" class="chapter-ref">Zašto stanice ne mogu biti gigantske</a></li>
+                <li><a href="#euglena" class="chapter-ref">Euglena — stanica koja ne može odlučiti</a></li>
+                <li><a href="#foraminifera" class="chapter-ref">Maleni graditelji velikih stvari</a></li>
+                <li><a href="#osmosis" class="chapter-ref">Osmoza — zašto se gužvamo u kadi</a></li>
+                <li><a href="#parasites" class="chapter-ref">Paraziti koji su promijenili povijest</a></li>
+                <li><a href="#success" class="chapter-ref">Tko je zapravo pobijedio?</a></li>
+            </ol>
+        </div>
+
+        <!-- CHAPTER 1: BORING BILLION -->
+        <section id="boring-billion">
+            <h2><span class="emoji">😴</span>Poglavlje 1: Dosadna milijarda godina</h2>
+
+            <p>Zamjeni si ovo. Veliki birthday party. Super glazba, puno pizze, tvoji prijatelji su tu. Ali — i evo gde je problem — ta zabava... nikad ne završi. Zabava traje godinu dana. Godinu za godinom. Bez promjene. Bez nečega novog. Godinu nakon godine nakon godine.</p>
+
+            <p>To je bila Zemlja između 3.8 i 2.5 milijardi godina unazad. Milijardu godina. Milijardu. Taj broj je toliko velik da ga je teško čak ni zamisliti. Ako bi svakog sekunde rekao "Hej!", trebalo bi ti... <strong>oko 32 godine</strong> da dostigneš milijardu sekundi. A Zemlja je čekala toliko dugo.</p>
+
+            <p>Što je bilo? Bakterije. Samo bakterije. Samo sitne, jednostavne bakterije koje su se dijelile i opet dijelile i opet dijelile. Ista stvar, opet i opet i opet. Bez dramatičnosti. Bez pustolovina. Samo... rad.</p>
+
+            <div class="pull-quote">
+                <span class="emoji">⚡</span> Milijardu godina. Ništa se nije mijenjalo. Ako bi te napijalo od dosade, bakterije su bile još gore.
+            </div>
+
+            <p>Zamisli: dok su dinosauri dominirali Zemljom, oni su postojali samo nekoliko miliona godina. Samo nekoliko miliona. A bakterije? Bakterije su postojale hiljadu puta duže bez da se išta zaznakaajuće promijeni. Bez evoluiranja. Bez gradnje. Bez žurbe.</p>
+
+            <p>To je vrijeme koje nazivamo <strong>"Dosadna milijarda"</strong>. Nisu ga znanstvenici tako назвали jer je bilo dosadno za njih — malo je malo. Ali je bilo dosadno za njih jer je bila dosadno za ... sve nas, tehnički gledano.</p>
+
+            <div class="fact-box">
+                <strong>💡 Zanimljivost:</strong> Tijekom te millennium, sunce je bilo hladnije. Kemijski, planeta je izgledala sasvim drugačije. Atmosfera je bila bez kisika! Ali mikrobi su... samo bili. Živi, ali dosadni.
+            </div>
+
+            <p>Ali onda — i evo gde se sve mijenja — onda se nešto nevjerojatno dogodilo.</p>
+        </section>
+
+        <!-- CHAPTER 2: GREAT MERGER -->
+        <section id="great-merger">
+            <h2><span class="emoji">🤝</span>Poglavlje 2: Veliki spoj koji je promijenio sve</h2>
+
+            <p>Predstavi si da pozoveš prijatelja na večeru. Dao mu/njoj puno hrane, dobra vina, sve je savršeno. Ali onda — problem! — tvoj prijatelj jednostavno ne ide kući. Ostaje. Ostaje zauvijek. Živiš skupa s njim/njom zauvijek.</p>
+
+            <p>U početku, misliš: "Ovo je loše." Bilo bi loše, zar ne?</p>
+
+            <p>Ali onda, koju vremenom, shvatiš nešto: tvoj prijatelj je savršen cimer. Plaća najaminu. Kuha. Čini stvari koje ti ne voliš raditi. A ti — ti radiš stvari koje <strong>on/ona</strong> ne voli raditi. Zajedno, postajete jači nego što ste bili odvojeno.</p>
+
+            <p>To je, tehnički gledano, ono što se dogodilo 2 milijarde godina unazad. Samo što sa... bakterijama. I bez opcije da se rastanu.</p>
+
+            <p>Jednom, kada su bakterije — velike bakterije sa tankim stijenkama — skoro slučajno progutale manje bakterije sa posebnim sposobnostima, nešto čudno se nije dogodilo. Obično velika stanica bi digestionirala malu, pretvorila bi je u energiju i završila bi s tim.</p>
+
+            <p>Ali ovoga puta, mala bakterija — koja je znala kako proizvoditi energiju na poseban način — <strong>nije bila uništena</strong>. Obje stanice su preživjele. Zajedno. I počele su surađivati.</p>
+
+            <div class="illustration">
+                <svg viewBox="0 0 400 300" width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Before: Two separate cells -->
+                    <g id="before">
+                        <!-- Large cell -->
+                        <circle cx="100" cy="150" r="50" fill="none" stroke="#E8694A" stroke-width="3"/>
+                        <text x="100" y="155" text-anchor="middle" font-size="12" font-weight="bold">Velika</text>
+                        <text x="100" y="172" text-anchor="middle" font-size="10">stanica</text>
+
+                        <!-- Small cell -->
+                        <circle cx="300" cy="150" r="25" fill="none" stroke="#6BA3A3" stroke-width="3"/>
+                        <text x="300" y="155" text-anchor="middle" font-size="10">Mala</text>
+                        <text x="300" y="170" text-anchor="middle" font-size="9">stanica</text>
+
+                        <!-- Arrow -->
+                        <text x="200" y="160" text-anchor="middle" font-size="20">→</text>
+                    </g>
+
+                    <!-- After: One combined cell -->
+                    <g id="after" transform="translate(0, 0)">
+                        <!-- Large outer circle -->
+                        <circle cx="200" cy="150" r="70" fill="none" stroke="#E8694A" stroke-width="3"/>
+                        <!-- Inner mitochondria-like structure -->
+                        <circle cx="200" cy="150" r="25" fill="none" stroke="#6BA3A3" stroke-width="2"/>
+                        <!-- DNA in nucleus -->
+                        <circle cx="200" cy="115" r="15" fill="none" stroke="#D4A574" stroke-width="2"/>
+
+                        <text x="200" y="155" text-anchor="middle" font-size="11" font-weight="bold">Nova stanica!</text>
+                        <text x="200" y="235" text-anchor="middle" font-size="12">Simbiotska zajednica</text>
+                    </g>
+                </svg>
+                <div class="illustration-caption">Kao da je mala stanica odlučila ostati zauvijek u velikoj.</div>
+            </div>
+
+            <p>Taj proces se naziva <strong>endosimbiotski spoj</strong>. Ili, ako voliš jednostavniji naziv: <strong>"Jedan od najvećih party kraja-facepalm svih vremena"</strong> koji je završio biti <strong>najbolji slučaj ikad</strong>.</p>
+
+            <p>A tko je to predvidio? Znanstvenica po imenu <strong>Lynn Margulis</strong>. I što se dogodilo s njenom teorijom?</p>
+
+            <p>Prirodno — <strong>ljudi su je posmijali</strong>.</p>
+
+            <div class="fact-box">
+                <strong>🔬 Lynn Margulis (1938-2011):</strong> Bila je американска biologia koja je u 1967. godini predložila da organele kao što su mitohondriji nisu do nas došli kroz magiju, već su bili — doslovno — zahvaćene bakterije. Svi su rekli "Ne, Lynn, to je ludost." Bila je nasmijana. Ignorirana. Odbacena.
+                <br><br>
+                Ali onda, tijekom 1980-ih i 1990-ih — kada su genetičari počeli čitati DNA — otkrili su da je Lynn... bila savršeno u pravu. DNA mitohondrija je bila — strah mi je reći — DNA drevne bakterije!
+                <br><br>
+                Lynn je dobila Fields Medal-equivalent za biologe i živjela je dovoljno dugo da vidi kako je svijet priznao njenu teoriju. (To je bilo što loše stvari znači da bojiš da te ne prihvate jer je to "čudno".)
+            </div>
+
+            <p>Sada znamo da je ova teorija — endosimbiotski spoj — ključan dio naše priče. Gotovo sve stanice sa jezgrom (eukariote) imaju mitohondri. Gotovo sve stanice s jezgrom koje su zelene (biljke) imaju i mitohondri i DRUGE organele koje se zovu kloroplasti. Sve su to drevne bakterije koje su odlučile ostati.</p>
+
+            <p>Nije to bilo samo slučajno. To je bilo <strong>najviše uspješniji spoj u srednjem vremenu života</strong>.</p>
+        </section>
+
+        <!-- CHAPTER 3: MITOCHONDRIA -->
+        <section id="mitochondria">
+            <h2><span class="emoji">⚡</span>Poglavlje 3: Mitohondriji — energetske tvornice</h2>
+
+            <p>Ako su mitohondriji nekada bili bakterije, što su oni sada?</p>
+
+            <p>Odgovor je jednostavan: oni su <strong>energetske tvornice tvoga tijela</strong>. Svaka stanica u tvom tijelu (ali gotovo svaka) ima između 100 i 10,000 mitohondrija. Ako si mišić, ima ih još više. Ako si živčana stanica, ima ih kao poludjak jer mozak traži puno energije.</p>
+
+            <p>Sada, evo što je suludo: mitohondriji — ti bi bili bakterije — <strong>imaju svoju DNA</strong>. To nije DNA koju imaš od svoje mame i tate. To je DNA koju su imali kada su bili slobodni organizmi prije 2 milijarde godina!</p>
+
+            <p>To je kao da tvoj namještaj u spavaćoj sobi — pretpostavimo da je to nekad bilo živučka izvan tvoje kuće — sada živi u tvojoj kući, još je uvijek živo, ali je ugovoren s tobom. Ima svoju dokumentaciju. Vlastita pravila. Ali također — također — moraš se brinuti za to jer je ta tvoja energija, tehnički.</p>
+
+            <div class="pull-quote">
+                <span class="emoji">🧬</span> Mitohondriji imaju svoju DNA. To znači da dijelom pripadaš bakteriji. Tehnički, ti nisi samo čovjek — ti si zajednica!
+            </div>
+
+            <p>Evo kako to funkcionira — prvo jednostavno: mitohondriji uzimaju hranu (šećere, masti, aminokiseline — sve što jedes — ) i trebam ih u energiju koju tvoje stanice mogu koristiti. Trebam je na nešto što se naziva ATP. ATP je, funkcionalno, valuta energije u svakoj stanici tvoga tijela. Bez ATP-a, ništa se ne dešava. Doslovno ništa.</p>
+
+            <p>Trebam drugu sekundu da shvatiš što to znači: bez mitohondrija, bez tih drevnih bakterija, <strong>tebi ne bi bilo dobro</strong>. Tebi bi bilo mrtvo. Tvoje stanice bi bile kao telefoni bez punjenja baterije. Bez smisla.</p>
+
+            <p>A mitohondriji — oni znaju kako to raditi jer su to radili kao bakterije prije 2 milijarde godina. Oni nisu trebali naučiti nešto novo. Oni su samo — trebam biti precizan — prebranili u tvoj dom i nastavili sa starim poslom.</p>
+
+            <p>Ali evo što je još suludo: ako bi mitohondriji trebali proizvoditi previše energije, ili ako bi nešto pošlo po zlu — ako bi trebali umrijeti — tvoje stanice mogu zamijetiti to. I tvoje stanice mogu reći: "Znate što, mitohondri? Gotovo je. Krajem." I mitohondriji će biti uništeni i zamijeniti će se novim.</p>
+
+            <p>To je vlasni odnos, ali... to je simbiotski odnos. Potreban si im. Trebaju ti oni.</p>
+
+            <div class="fact-box">
+                <strong>💡 Zanimljivost:</strong> DNA mitohondrija se nasljeđuje samo od mame. Očeva mitohondrija ne ide dalje od spermija. Zašto? Jer kada spermij ulazi u jajnu stanicu, mitohondriji iz spermija su (obično) odmah uništeni. To znači da su tvoji mitohondriji — tehnički — samo od tvoje mame. I njene mame. I njene mame. Sve do nekih drevnih bakterija prije 2 milijarde godina. Matematika je strašna!
+            </div>
+
+            <p>A ako misliš da je to jedinstveno za ljude — nije! Sve stanice sa jezgrom, sa malo iznimaka, imaju mitohondri. Gljive. Životinje. Biljke (koje također imaju kloroplaste, da bi je komplikirali dalje). Čak i neka jednostavna životinja — protisti — imaju mitohondri.</p>
+
+            <p>Mitohondriji su, tehnički gledano, znak da si evolucionirao izvan bakterija. Ako imaš mitohondri, ti si eukariota. I ako si eukariota, zbog mitohondrija si morao biti.</p>
+        </section>
+
+        <!-- CHAPTER 4: CELL SIZE -->
+        <section id="cell-size">
+            <h2><span class="emoji">📏</span>Poglavlje 4: Zašto stanice ne mogu biti gigantske</h2>
+
+            <p>Sada, razumijem ako si mislila: "Čekaj, ako su mitohondriji toliko moćni, zašto stanice nisu gigantske? Zašto nisu veličine, recimo... tvoje glave?"</p>
+
+            <p>Odličnom pitanje. Zaslužuje dobar odgovor.</p>
+
+            <p>Zamjeni si pizzeriju u Split. Mala pizzerija. Pravite odličnu pizzu. Neki redoviti kupac živi u malom stanu — možda 30 kvadrata — pola kilometra od pizzerije. Kad on/ona pozove pizzeriju, pica dolazi u 10 minuta. Odličan servis. Kupac je zadovoljan.</p>
+
+            <p>Ali sada, taj pizzarijus postane popularan. Super popularan. Odlučuje da će proširiti biznis. Kupuje veliku kuću — 500 kvadrata. Ali to je na drugoj strani grada, 10 kilometara od pizzerije.</p>
+
+            <p>Sada? Kada taj kupac pozove pizzeriju s pice, dostavljač trebati će 45 minuta da dosegne tu kuću. Pizza stigne hladna. Kupac nije zadovoljan. Servis je loš.</p>
+
+            <p>Evo što je problem: <strong>što veća je kuća, teže je dostaviti pizzu</strong>. Dostavljač čovjek treba vremena da ide od vrata do vrata. Trebati mu je vremena da pronađe pravu kuću. Trebati mu je vremena da tu ostane i da ti prizva zvonac.</p>
+
+            <div class="illustration">
+                <svg viewBox="0 0 400 250" width="400" height="250" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Small apartment -->
+                    <rect x="20" y="80" width="80" height="80" fill="none" stroke="#E8694A" stroke-width="2"/>
+                    <text x="60" y="145" text-anchor="middle" font-size="11" font-weight="bold">Mali stan</text>
+                    <text x="60" y="180" text-anchor="middle" font-size="10">Pizza u 10 min</text>
+
+                    <!-- Large house -->
+                    <rect x="280" y="50" width="100" height="150" fill="none" stroke="#6BA3A3" stroke-width="2"/>
+                    <text x="330" y="145" text-anchor="middle" font-size="11" font-weight="bold">Velika kuća</text>
+                    <text x="330" y="180" text-anchor="middle" font-size="10">Pizza u 45 min!</text>
+
+                    <!-- Delivery person -->
+                    <circle cx="150" cy="130" r="15" fill="#D4A574"/>
+                    <text x="150" y="135" text-anchor="middle" font-size="20">🚗</text>
+                </svg>
+                <div class="illustration-caption">Ista pizzeria. Razlika: veličina prostora.</div>
+            </div>
+
+            <p>Evo što je slično u stanicama.</p>
+
+            <p>Stanica je manja, <strong>stvari se mogu brže kretati</strong>. Nutrienti mogu brže ući. Otpad može brže izići. Signali mogu brže putovati od jedne strane stanice do druge. Sve je brzo. Efikasno. Super.</p>
+
+            <p>Ali ako bi stanica bila — zamislimo — 100 puta veća, nutrienti bi trebali 100 puta duže da dosegnu sredinu stanice. (Tehnički, trebali bi trebati 10,000 puta duže jer je volumen tri-dimenzionalan, ali hajde da pojednostavimo.) Mitohondriji u sredini ne bi dobili dovoljno hrane dovoljno brzo. Trebali bi primiti signale da se pojačaju, ali ti signali bi putovali sporo. Stanica bi bila neučinkovita. Loša. Mrtva, zapravo.</p>
+
+            <p>To je ono što se naziva <strong>"problem površine-do-volumena"</strong>. Kada je nešto malo — mali balun, mali stan, mala stanica — površina je <strong>proporcija</strong> volumenu. Ali kada je nešto <strong>veće</strong>, volumen raste brže nego površina.</p>
+
+            <p>Evo brojki: ako udvostručiš promjer kruga, površina se povećava 4 puta. Ali volumen sfere se povećava 8 puta. Više volumena s manje površine = problem.</p>
+
+            <div class="fact-box">
+                <strong>🧮 Matematika:</strong> Površina sfere je 4πr². Volumen sfere je (4/3)πr³. Ako udvostručiš r, površina je 4π(2r)² = 16πr², što je 4 puta veće. Ali volumen je (4/3)π(2r)³ = (4/3)π8r³ = 8 puta veće.
+                <br><br>
+                Rezultat: veće stanice, relativno manja površina za unošenje nutrijenata. Loše. Što je zato što biljke — koje mogu biti veće jer imaju dodatnu strukturu (stanična membrana) — nisu bile prvih eukariota. Prvih eukariota su bili mali protisti koji su trebali biti mali da bi bili efikasni.
+            </div>
+
+            <p>To je razlog zašto su stanice — čak i naše — relativno male. Mikrometre. Stvari poput 10 do 100 mikrmeter u promjeru. To je manj od debljine ljudske vlati. Ako bi stanice bile veće, jednostavno ne bi radile.</p>
+
+            <p>Što znači da — tehnički — svaka stanica u tvom tijelu je limitirana u veličini. A jedina razlog zašto <strong>ti</strong> možeš biti veći je zato što imaš <strong>milijarde stanica</strong>, sve zajedno, sve radeći kao tim.</p>
+
+            <p>To je, misli na to, već bitno. Mitohondriji su dali eukariota mogućnost biti — malo — veći nego bakterije. To je omogućilo stvaranje više stanica. To je omogućilo tijela. To je omogućilo —tehnički gledano — tebe.</p>
+        </section>
+
+        <!-- CHAPTER 5: EUGLENA -->
+        <section id="euglena">
+            <h2><span class="emoji">🌿🦠</span>Poglavlje 5: Euglena — stanica koja ne može odlučiti</h2>
+
+            <p>Sada, da te vratim na provedbe koje su se dogodile nakon što je ta mala bakterija odlučila ostati u većoj.</p>
+
+            <p>Što se dogodilo je — različita čak i — da je neka od tih bakterija koje su izvana postale mitohondrije — neka od njih imala dodatnu sposobnost. Mogle su proizvoditi hranu koristeći sunce. Fotosinteza. Magija ali nije magija — kemija. Kemija koja pretvara sunčanu svetlost u hranu.</p>
+
+            <p>Kada su te fotosintetske bakterije (bakterije koje su znale kako koristiti sunce) završile unutar većih stanica, nešto čudno se dogodilo: nova stanica je mogla koristiti <strong>i</strong> mitohondri <strong>i</strong> fotosintetske organele. To jest — nove stanice su mogle — </p>
+
+            <p>Čekaj za to. Ovo je važno:</p>
+
+            <div class="pull-quote">
+                <span class="emoji">🌍</span> Neke stanice su sad mogle biti žive kao biljke (koristeći sunce) i kao životinje (jedući hranu). Oboje. Istovremeno.
+            </div>
+
+            <p>Upoznaj Euglernu!</p>
+
+            <p>Euglena je mala stanica — oko 50 mikrometer dugačka — koja je — tehnički — <strong>biljka i životinja istovremeno</strong>. Ima kloroplaste (kao biljke, što znači može raditi fotosintez). Ali također ima žutosti (kao životinje, što znači može jesti)<strong>!</strong></p>
+
+            <p>Što znači da Euglena je biti — tijekom dana, u sunčanoj vodi — može biti fotosintetska. Može stajati mirno, pijuckati sunce, i produziti own food. Ali čim se sunce setne— što znači večer padne, ili što znači da pliva u tamniju vodu — Euglena mijenja modus. Prestaje biti biljka. Postaje životinja. Otvara svoju ustima — tehnički, nije usta, ali je to struktura slična ustima — i počinje jesti bakterije i druge malene stvari.</p>
+
+            <p>To je kao da si ti — tijekom dana — fotosinteza i hranio se suncem, a večer — prestao biti biljka i počeo jesti pizzu. Euglena doslovno to radi.</p>
+
+            <div class="illustration">
+                <svg viewBox="0 0 400 250" width="400" height="250" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Day mode (photosynthesis) -->
+                    <circle cx="100" cy="125" r="40" fill="none" stroke="#6BA3A3" stroke-width="2"/>
+                    <circle cx="100" cy="125" r="30" fill="none" stroke="#D4A574" stroke-width="1" stroke-dasharray="3,3"/>
+                    <text x="100" y="80" text-anchor="middle" font-size="11" font-weight="bold">Dan: Euglena je biljka</text>
+                    <text x="100" y="165" text-anchor="middle" font-size="9">Radi fotosinteza ☀️</text>
+
+                    <!-- Arrow -->
+                    <text x="200" y="130" text-anchor="middle" font-size="24">🌙</text>
+
+                    <!-- Night mode (eating) -->
+                    <circle cx="300" cy="125" r="40" fill="none" stroke="#E8694A" stroke-width="2"/>
+                    <circle cx="295" cy="120" r="8" fill="none" stroke="#E8694A" stroke-width="1"/>
+                    <text x="300" y="80" text-anchor="middle" font-size="11" font-weight="bold">Noć: Euglena je životinja</text>
+                    <text x="300" y="165" text-anchor="middle" font-size="9">Jede bakterije 🍽️</text>
+                </svg>
+                <div class="illustration-caption">Euglena je pretrpala sve svoje glavne sposobnosti u jedno.</div>
+            </div>
+
+            <p>To je trik koji Euglena ima — ako tvoj okruženi postane pretežan za biljke (ako je previše napušteno, ako je previše tamo), Euglena može prebaciti na "životinjsku" strategiju. Ako postane previše slično suncem — suprotno — može prebaciti na "biljnu" strategiju. Euglena je — tehnički — optimalno prilagođena jer ima oba svjetova.</p>
+
+            <p>To je razlog zašto su biologe malo zbunjeni gdje Euglernu staviti. Je li to biljka? Je li to životinja? Biologi su samo — najjednostavnije — rekli "Dobro, nije ni jedno ni drugo. To je samo... Euglena." I tu je.</p>
+
+            <p>Ali evo što je važno: Euglena je primjer toga kako su endosimbiotski spoj — kako su mitohondriji i nove organele — otvorila vrata novim mogućnostima. Eukariota nije bila samo "bolji bakterija." To je bilo potpuno novi oblik života. To je bilo — primjenjio, možeš biti — revolucija.</p>
+
+            <p>I Euglena je dokaz toga.</p>
+        </section>
+
+        <!-- CHAPTER 6: FORAMINIFERA -->
+        <section id="foraminifera">
+            <h2><span class="emoji">🏔️</span>Poglavlje 6: Maleni graditelji velikih stvari</h2>
+
+            <p>Sada, da premjestimo misli malo. Željel bih ti pokazati nešto što će te učini — sjetim se — što će te biti nevjerojatno.</p>
+
+            <p>Vidjela si, vjerojatno, slike od Bijele pješčenjaka Doverske (White Cliffs of Dover)? Veliki krednjački klinci na granici između Velike Britanije i Francuske? Oni su — <strong>bolji od 300 metara visoki</strong>. Ogromne ljuske crednjaka koji vire u more.</p>
+
+            <p>A sada, evo što je suludo: <strong>većina tog crednjaka je napravljena od ljuski malenih — i podrazumijevam <strong>zaista malenih</strong> — jednostaničnih organizama</strong>.</p>
+
+            <p>Upoznaj Foraminifere!</p>
+
+            <p>Foraminifer (jednina: foraminifer, ali obično ih nazivamo foraminifera ili forams, kao da su skraćenica) su malene stanice — obično između 0.1 i 1 millimetar — koje graditi ljuske od vapnenca (CaCO3). One, tehnički, nisu toliko drugačije od drugih eukariota — imaju mitohondri, imaju jezgra, sve je tu. Ali trebam li memorirati jest — one imaju sposobnost graditi.</p>
+
+            <p>I ne samo da graditi. One su — tijekom miliona i miliona godina — i <strong>oblikovale je geografija planeta</strong>.</p>
+
+            <div class="pull-quote">
+                <span class="emoji">🤯</span> Bijele pješčenjaka Dover — jedan od najvećih geoloških formacija u Europi — su većinom napravljene od leša malenih stanica. Milijarde i milijarde mrtveh malenih stanica.
+            </div>
+
+            <p>Evo što se desilo: tijekom Krednog razdoblja (prije oko 100 miliona godina), različite vrste foraminiferia su živile u oceanima. Bile su popularne. Kao — doista popularne. Oko 100 različitih vrsta, sve zajedno, sve živeće u oceanima, sve gradilišta svoje ljuske.</p>
+
+            <p>Međutim — i evo gde je važno — kada su te foraminifere umrle, njihove ljuske su (lagano) padajući na dnu mora. Milijarde ljuski. Biliardi ljuski. Sve te ljuske — sve od vapora — su se slojalo i slojalo, leto malo, godinu nakon godine, milijon godina nakon milijun godina.</p>
+
+            <p>Tijekom nekoliko miliona godina — recimo, između 100 i 50 milijun godina unazad — dovoljno materijala je akumulirano da bi bili slojevi ljuski debeli nekoliko sto metara. Matematika je jednostavna: ako je svaki foramifer — kada se odmah — zauzima samo nekoliko miloivimetra mjesta, trebati će milijarde i milijarde njih da popune tridesetak metara.</p>
+
+            <p>Ali onda — što je još bolje — taj materijal se počeo celičavati pod pritaskom od drugih stijena iznad. Ljuske su se stisnule zajedno. Voda je izašla. I lopovsku po lopovsku — to postaje krednjak. Čvrsté, čvrsté plavo-belo sedimentno stijene.</p>
+
+            <p>Tijekom milijuna godina, ti krednjak je bio podignuta i izložena — zahvaljujući tektonskim aktivnostima — i — voilà — dobio si Bijele pješčenjaka Dover.</p>
+
+            <div class="fact-box">
+                <strong>🔍 Zanimljivost:</strong> Krednjak se naziva "krednjak" jer su Rimljani nazivali vapnenac "creta", što dolazi od latinski "kredere" što znači "biti blizu povjerenja" — nije važna etimologija, nije važna. Važno je da su Bijele pješčenjaka Dover — koje su se činio vječne i neuravizirane — bukvalno napravljene od biliardi malenih stanica koje su nekada živjele u oceanu, i umrle, i spavale dnu.
+            </div>
+
+            <p>Sada, to je samo jedan primjer. Foraminifere su gradile druge stvari. Koraljne grebene su često — uključujući foraminifera (i druge) — dio sistema. Neki od najvećih rezervata nafte su — tehnički — depoziti foraminifera koje su živjele prije miliona godina i sada su komprimirane u naftnu formaciju.</p>
+
+            <p>To znači što? To znači da kada jajaš automobil, ono što voziš je — dijelom — zastarjelih stanica. Benzin u tvoj auto je energija koju su foraminifera proizvodile prije 100 miliona godina. To je surreal. To je — ne želim biti dramatičan — ali to je čini</p>
+
+            <p><strong>To je čini stvarno je li biti na Zemlji surrealno.</strong></p>
+
+            <p>A sve to — sve to — počelo je sa mitohondriji i endosimbiotskim spajanjem. Bez tog spajanja, nema eukariota. Bez eukariota, nema foraminiferia. Bez foraminiferia, nema Bijele pješčenjaka Dover. Nema rezerve nafte. Nema od onoga što je do sada.</p>
+        </section>
+
+        <!-- CHAPTER 7: OSMOSIS -->
+        <section id="osmosis">
+            <h2><span class="emoji">🛁</span>Poglavlje 7: Osmoza — zašto se gužvamo u kadi</h2>
+
+            <p>Prije nego što se vratim na velike parazite — i da, biti će dramatično — trebam ti objasniti nešto što se dešava u svakoj stanici, uključujući <strong>tvoje</strong> stanice, svaki put kada dolaze u kontakt sa vodom.</p>
+
+            <p>To se naziva osmoza. I — zagotovo — trebam precizan opis prije nego što još dalje.</p>
+
+            <p>Osmoza je — jednostavno — tendencija vode da se kretati kroz staničnu membranu. To se dešava jer — i biti će malo teško — jer molekule vode žele biti gdje je više molekula rozpuštenog tvari. (Bolje bi bilo da kažem da se molekule vode brže kretati gdje je veće bogatstvo soli ili šećera, ali osmoza je malo složenija nego što je to.)</p>
+
+            <p>Evo što znači praktički: ako je stanica obavljena malo manje-slana vode, voda će ući u stanicu. Stanica će puciti kao balon. Ako je stanica obavljena veće-slane vode, voda će izići iz stanice. Stanica će se skurciti i umrijeti.</p>
+
+            <p>To je razlog zašto — trebam biti specifičan — zašto se t<strong>u gužvaš kada sjediš u kadi</strong>. Trebam znati — vaš koža je zajednica stanica. Tijekom vremena u vodi — od voda je malo vise osmotska nego tvoj vanjski sloj kože — malo vode uskoke u tvoje stanice kože. Stanice goniti malo. Koža se smanji. Koža se ruža i nabora. To je osmoza u akciji.</p>
+
+            <div class="illustration">
+                <svg viewBox="0 0 400 250" width="400" height="250" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Hypertonic solution -->
+                    <circle cx="80" cy="80" r="35" fill="none" stroke="#E8694A" stroke-width="2"/>
+                    <text x="80" y="85" text-anchor="middle" font-size="10">Skupljena</text>
+                    <text x="80" y="100" text-anchor="middle" font-size="9">stanica</text>
+                    <text x="80" y="135" text-anchor="middle" font-size="11">Previše soli</text>
+
+                    <!-- Isotonic solution -->
+                    <circle cx="200" cy="80" r="35" fill="none" stroke="#6BA3A3" stroke-width="2"/>
+                    <text x="200" y="85" text-anchor="middle" font-size="10">Sretna</text>
+                    <text x="200" y="100" text-anchor="middle" font-size="9">stanica</text>
+                    <text x="200" y="135" text-anchor="middle" font-size="11">Dobra ravnoteža</text>
+
+                    <!-- Hypotonic solution -->
+                    <circle cx="320" cy="70" r="40" fill="none" stroke="#D4A574" stroke-width="2"/>
+                    <text x="320" y="75" text-anchor="middle" font-size="10">Pukla</text>
+                    <text x="320" y="90" text-anchor="middle" font-size="9">stanica</text>
+                    <text x="320" y="140" text-anchor="middle" font-size="11">Premalo soli</text>
+
+                    <!-- Labels -->
+                    <text x="200" y="200" text-anchor="middle" font-size="12" font-weight="bold">Osmoza u akciji</text>
+                </svg>
+                <div class="illustration-caption">Voda se bavi samo — sve teče prema većem broj soli.</div>
+            </div>
+
+            <p>Sada, evo što je važno — uključujući za ljude, mikrobi moraju biti oprezni oko osmotskog pritiska. Ako je bakterija obavljena previše slane vode — previše vode će izići iz stanice, stanica će se dehidrirala — i bakterija će umrijeti.</p>
+
+            <p>To je razlog zašto — i to je tehnički dokaz — što se dešava kada naspeš sol na sluz. Puž će umrijeti. Nije da je sol otrovana puža. To je da je sol (i voda koja je otapa) stvorila osmotski pritisak koji je počeo vodu iz puža. Puž je dehidriran. Umro je.</p>
+
+            <p>To je — vjerujem — malo bolnije znati nego što je bilo prije. Sada kada znaš što se dešava, otežava se biti nemilosrd prema pužu.</p>
+
+            <p>Ali, za eukariote — za nas — osmoza je čini malo drugačije. Naše stanice su obično obavijene staničnom stijenom — barem biljke su, gljive su — što znači voda može biti malo fleksibilnija. Našim stanicama je malo lakše nositi se sa osmotskim promjenama. To je razlog zašto možeš — tehnički — sjediti u kadi u kadi bez da se pukneš kao grožđe.</p>
+
+            <p>(Iako — ako sjedala dugo — ako bi sjedala nekoliko dana — sve bi znalo biti loše. Sve tvoje stanice bi se nabrale vode. Bilo bi loše.)</p>
+        </section>
+
+        <!-- CHAPTER 8: PARASITES -->
+        <section id="parasites">
+            <h2><span class="emoji">🦟</span>Poglavlje 8: Paraziti koji su promijenili povijest</h2>
+
+            <p>Sada, trebam ti govoriti o nečem što je — tehnički — malo depresivirno, ali je važno znati.</p>
+
+            <p>Sve što smo dosad razgovarali — endosimbiotski spoj, mitohondriji, foraminifere — sve je bilo nekako lijepše. Svi su bili — ili neutralni, ili pozitivni. Ali sada trebam ti pokazati tamnu stranu. Parazitske stanice koje su — doslovno — oblikovale povijest čovječanstva.</p>
+
+            <p>Prvo: <strong>Plasmodium</strong>.</p>
+
+            <p>Plasmodium je jednostaničan parazit koji je — tehnički — specijaliziran za jednu stvarnost: biti unutar ljudskog crvenog krvnog stanica i reprodukovati se. To je sve što to zna kako raditi. Kada se reprodukuje, stanica od crvenog krvi se raspeči, i novi paraziti izlaze i zaraziti nove stanice.</p>
+
+            <p>To se naziva <strong>malaria</strong>. I trebam ti reći nešto: <strong>malaria je, vjerojatno, ubila više čovjeka nego sve ratove kombinirane</strong>.</p>
+
+            <div class="pull-quote">
+                <span class="emoji">💀</span> Malaria — jednostaničan parazit — je ubila više ljude nego sve ratove u povijesti. Zajedno.
+            </div>
+
+            <p>Brojeve su suludi. Tehnički, malaria je vrijedna za:
+            <ul style="margin: 1.5rem 0 1.5rem 2rem;">
+            <li>Oko 2 milijarde zaraženih (od mene do sada) u cijeloj svjetskoj istoriji</li>
+            <li>Oko 300 do 500 miliona smrti</li>
+            <li>Još uvijek, čak i sada, malaria čini oko 1 do 2 miliona smrti godišnje</li>
+            </ul>
+            </p>
+
+            <p>To je — biti specifičan — više nego što je — sve nuklearne ratove, sve svjetske ratove, sve što se dogodi u ljudskoj povijest.</p>
+
+            <p>Malaria je oblikovanje cijele kontinente. Zemlja koja bi bila bogate i uspješne — afrikanske zemlje uz reke, na mjestu gdje je bilo puno vode — nisu postale bogate jer je malaria učinio te mjestima kuda je nemoguće živjeti (za ljude bez imuniteta, što su bili najvećim dijelom europljani i azijski). To je, tehnički, doprinio — trebam biti precizan — doprinio kolonijalnom razdoblju i drugim događajima.</p>
+
+            <p>A trebam znati što je malaria? To je — doslovno — samo <strong>nekoliko stanica</strong> koja su zarazila krvne stanice. To je. Samo nekoliko stanica koja su znala kako biti jako efikasno.</p>
+
+            <p>Ali čekaj. Jer je više.</p>
+
+            <p>Drugi parazit se naziva <strong>Trypanosoma</strong>. Trypanosoma je malo drugačiji od Plasmodium-a. Umjesto da bude u crvenim krvnim stanicama, Trypanosoma biva u — tehnički — krvnoj plazmi. To znači da je nalazi direktno u krvi, bez da je zatvoren u stanica.</p>
+
+            <p>Trypanosoma je poznat po tome što uzrokuje nešto zvano <strong>"sna bolest"</strong> ili "African trypanosomiasis". Parazit radi nešto čudno: ulazi u mozak. I u mozak uzrokuje upalu. I ta upala učini da osoba — doslovno — postaje neujednačena. Počinju spavati čudnim vremenom. Počinju biti zbunjeni. Na kraju, umaski od septičnog šoka ili — tehnički — od samozavršenog stanja kojem uzrokuje parazit.</p>
+
+            <p>To je — ponavljam — samo nekoliko stanica. Nekoliko stanica koja su znala kako biti nevjerojatno efikasno u štiti čovječanstva.</p>
+
+            <p>A — trebam biti specifičan — Trypanosoma je oblikovanje — doslovno — povijest cijele Afrike. Imena Афричких naroda, imena Афричких kraju, imena — sve je — kud je bilo Trypanosoma, tamo je bilo teško živjeti za određene vrste životinja (uključujući ljude). To je omogućilo određenim zajednicama da ostanu relativno izolirane, što je — tehnički — doprinio razvoju različitih kultura i društava.</p>
+
+            <p>Sad, to nisu lijepe priče. Ali su važne. To pokazuje da — iako smo razgovarali o lijepim stvarima kao što su mitohondriji i endosimbiotski spojevi — život je — tehnički — malo nemoralno. Život je neujednačen. Neki organizmi su korisni. Neki nisu. Neki su tu da ozlijede tebe. To je — biti specifičan — prirodni izbor u akciji.</p>
+
+            <div class="fact-box">
+                <strong>🦟 Suvremena medicina:</strong> Prema Svjetskoj zdravstvenoj organizaciji (WHO), malaria je — sada — kontrolirana u većini mjestima koristeći kombinaciju:
+                <ul style="margin: 1rem 0;">
+                <li>Insekticida (za ubijanje komaraca koji čine malaria)</li>
+                <li>Antimalarijskih ljekovnih</li>
+                <li>Edukacije i prevencije</li>
+                </ul>
+                Smrtnost od malerije se smanjila za oko 25% između 2000. i 2020. To je — zahvaljujući— unaprijedima, zahvaljujući ljudskoj borbi protiv parazita. To je što znači — ako razmislimo o tome — biti eukariota sa mozgom.
+            </div>
+
+            <p>Ali važna je poanta: čak i — čak i — paraziti su eukariote. Oni imaju mitohondri. Oni imaju jezgru. To znači da su oni — tehnički — dijelom te priče koju smo razgovarali na početku. Oni su dio velikog spajanja. Oni su, na neki način, — tehnički — teka od tebe.</p>
+
+            <p>To je deprimeirajući, ali je — na neki način — i čudno polje.</p>
+        </section>
+
+        <!-- CHAPTER 9: SUCCESS STORY -->
+        <section id="success">
+            <h2><span class="emoji">🏆</span>Poglavlje 9: Tko je zapravo pobijedio?</h2>
+
+            <p>Dobro. Trebam ti postaviti pitanje. Teško pitanje. Bitno pitanje.</p>
+
+            <p>Kada razmislimo o životnu — kada razmislimo o evoluciji — obično razmislimo kao da — tehnički — postoji pobijedi i gubitnici. Dinosauri su bili "pobjednici" tijekom dugo vremena, a onda su — meteorit ih udario — i "izgubili su". Plejistocenske životinje kao što su mamuti su bili "pobjednici" tijekom ledenih doba, a onda je — podneblje se promijenilo — i "izgubili su". Mi, люди — mi smo "pobjednici" sada, zato što — tehnički — dominiramo planeta.</p>
+
+            <p>Ali — trebam biti oprezno — trebam ti pokazati da je to malo — kako bih to objasnio — pomalo glupava perspektiva.</p>
+
+            <p>Jer, ako razmislimo o milijardama godina, ako razmislimo o cijenom vozmenu zemlje:</p>
+
+            <p><strong>Bakterije su još uvijek tu.</strong></p>
+
+            <p>Dinosauri su tu samo kao fosili. Mamuti su već mrtvi. Mi — svi sa sjećanjem od deset tisuća godina — svi smo — relatvno govoreći — novi na sceni.</p>
+
+            <p>Ali bakterije? Bakterije su bile tu kada se planet rodio. Bakterije su bile tu kada nije bilo biljaka. Bakterije su bile tu kada su dinosauri dominirali. Bakterije su bile tu kada su ledeni bljegovi pokrivali sve. Bakterije su biti tu kada su se ljudski su razvili. I — tehnički — trebam biti siguran — bakterije će biti tu kada smo svi mrtvi.</p>
+
+            <div class="pull-quote">
+                <span class="emoji">👑</span> Bakterije su pravri pobjednici. Nisu samo na planeti — bakterije su PLANETU. Bez bakterija, ne bi bilo zraka koje dišemo. Bez bakterija, ne bi bilo tla u kojem rastete biljke. Bez bakterija, ne bi bilo života.
+            </div>
+
+            <p>To je razlog zašto — trebam biti specifičan — trebam ti pokazati da je — tehnički — povijest nije povijest dinosaura ili čovjeka. To je — tehnički — história mikrobi.</p>
+
+            <p>Dinosauri su bili — interes — u kratkim intermezzo. Čovjek je još kraći intermezzo. Ali mikrobi — mikrobi su bili tu od početka, i — tehnički — trebam biti sigurno — trebam biti sigurno da će biti tu do kraja.</p>
+
+            <p>Zapravo, trebam biti malo dramatičan: mi — čovjek — vjerovatno nećemo biti tu za milijarde godina. Sunce će biti jači. Planeta će biti toplija. Ili — ako budeš nesretan — meteor će nas udariti kao što je udario dinosaure. Ili — ako budes neprijatniji — ljudski će se uništiti sami.</p>
+
+            <p>Ali bakterije? Bakterije će — vjerojatno — biti tu. Može biti drugo oblika, može biti drugom mjestima, može biti drugom — tehnički — okruženja. Ali bakterije će biti tu.</p>
+
+            <p>To je — biti specifičan — čini biti eukariota — čini biti nas — malo sjetom. Mi nismo vrhunac evolucije. Mi nismo vrhunac života. Biti čovjek — biti stvari sa mozgom, sa sviješćiu, sa — tehnički — sa mogućnošću biti jasan — mi smo — tehnički — eksperiment. Eksperiment koji je bakterije i mitohondriji počeli.</p>
+
+            <p>Može biti kratkotrajni eksperiment. Može biti — tehnički — neuspješan eksperijment. Ali je to eksperiment.</p>
+
+            <p>A bakterije — one su — tehnički — osnova. One su — tehnički — motive.</p>
+
+            <div class="fact-box">
+                <strong>🔬 Zadnja činjenica:</strong> U tvom tijelu, broj bakterijskih stanica je gotovo jednako broju tvojih vlastitih stanica. Neki kažu da ima više bakterija nego tvojih stanica. Što znači da — tehnički — tebi si — vjerojatno — manje ti i više bakterije nego što ti misliš. Mi smo — tehnički — mikrobne zajednice koje su naučile kako biti veliki dovoljno za sebe biti svjesni toga.
+            </div>
+
+            <p>To je — trebam biti potpuno čeosan — deprimeirajuće na način. Ali to je — tehnički — čitava poanta. Život nije samo — tehnički — o nama. Život je — tehnički — o mikrobima. Vidjeli smo kako su mitohondriji dozvolili eukariota. Vidjeli smo kako su paraziti oblikovali povijest. Vidjeli smo kako su foraminifer sagrađali gromada.</p>
+
+            <p>Ali — tehnički — sve je počelo sa bakterijama. Sve je još uvijek — tehnički — ovisno o bakterijama.</p>
+
+            <p>Mi samo — tehnički — putnike.</p>
+        </section>
+
+        <!-- CLOSING -->
+        <section id="closing" style="margin-top: 4rem;">
+            <h2>Završna misao</h2>
+
+            <p>Natalija, kada si počela čitati ovu priču, vjerojatno si mislila da će biti o — tehnički — stanica i biologiji i — tehnički — školskim stvarima.</p>
+
+            <p>Ali što što je trebao da učini — što što je trebao da učini — što trebam biti siguran da razumeš — je da je vida je nevjerojatna. Život je — tehnički — serija slučajnostih, serija kooperativnih spojeva, serija napada i obrana — sve zajedno — svi su oblikovali taj planet.</p>
+
+            <p>Kada jednom bakterija proguta druga bakterija i ne digestionira je — što čini — što je bilo slučajno — što je bio — tehnički — nešto što se nije trebalo desiti — sve se promijenilo. Novi oblik života je nastao. Eukariota je nastala. I sa eukariota, sve ostalo.</p>
+
+            <p>Kod nas, tebe i mene, imamo — tehnički — mitohondri (bakterije u njim stanica) koji su oblikovani da proizvoditi energiju. Imamo — tehnički — DNA koja je — trebam biti specifičan — kombinacija naših vlastitih DNA i bakterijske DNA. Tehnički govorei, mi nismo samo ljudski. Mi smo — tehnički — zajednica. Mi smo — tehnički — spoj.</p>
+
+            <p>To je — trebam biti čeosan — moj omiljene činjenice o životu. Mi nismo — tehnički — nas sami. Mi smo — tehnički — dijelovi nečega većeg. Mi smo — tehnički — dio planeta. Mi smo — tehnički — dio evolucije.</p>
+
+            <p>I — trebam biti siguran da razumeš — to je — tehnički — savršeno lijepo.</p>
+
+            <p style="margin-top: 2rem; font-style: italic; color: #999;">
+                Napisano sa ljubavlju za Nataliju, koja pita prava pitanja i zasluživanja dobra odgovora.
+            </p>
+        </section>
+
+        <footer class="footer">
+            <p>Priča o eukariota, endosimbiotskom spojanju i životu koje je promijenilo sve.</p>
+            <p>Inspiracija: Bill Bryson, Lynn Margulis, i znatiželja.</p>
+            <p style="margin-top: 1rem; font-size: 0.8rem;">© 2026 — Za obrazovne i zabavne svrhe.</p>
+        </footer>
+    </main>
+
+    <script>
+        // ============= SETTINGS =============
+        const settingsToggle = document.getElementById('settingsToggle');
+        const settingsPanel = document.getElementById('settingsPanel');
+        const fontSizeSlider = document.getElementById('fontSizeSlider');
+        const fontSizeValue = document.getElementById('fontSizeValue');
+        const lineHeightSlider = document.getElementById('lineHeightSlider');
+        const lineHeightValue = document.getElementById('lineHeightValue');
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const justifyText = document.getElementById('justifyText');
+        const ttsSpeed = document.getElementById('ttsSpeed');
+        const container = document.querySelector('.container');
+
+        // Toggle settings panel
+        settingsToggle.addEventListener('click', () => {
+            settingsPanel.classList.toggle('open');
+        });
+
+        // Font size control
+        fontSizeSlider.addEventListener('input', (e) => {
+            const size = e.target.value;
+            fontSizeValue.textContent = size;
+            document.documentElement.style.fontSize = (size / 100) * 16 + 'px';
+            localStorage.setItem('fontSize', size);
+        });
+
+        // Line height control
+        lineHeightSlider.addEventListener('input', (e) => {
+            const height = e.target.value;
+            lineHeightValue.textContent = height;
+            document.body.style.lineHeight = height;
+            localStorage.setItem('lineHeight', height);
+        });
+
+        // Dark mode
+        darkModeToggle.addEventListener('change', (e) => {
+            document.body.classList.toggle('dark-mode', e.target.checked);
+            localStorage.setItem('darkMode', e.target.checked);
+        });
+
+        // Justify text
+        justifyText.addEventListener('change', (e) => {
+            const paras = document.querySelectorAll('p');
+            paras.forEach(p => {
+                p.style.textAlign = e.target.checked ? 'justify' : 'left';
+            });
+            localStorage.setItem('justifyText', e.target.checked);
+        });
+
+        // Load saved settings
+        function loadSettings() {
+            const fontSize = localStorage.getItem('fontSize') || '100';
+            const lineHeight = localStorage.getItem('lineHeight') || '1.8';
+            const darkMode = localStorage.getItem('darkMode') === 'true';
+            const justify = localStorage.getItem('justifyText') === 'true';
+
+            fontSizeSlider.value = fontSize;
+            fontSizeValue.textContent = fontSize;
+            document.documentElement.style.fontSize = (fontSize / 100) * 16 + 'px';
+
+            lineHeightSlider.value = lineHeight;
+            lineHeightValue.textContent = lineHeight;
+            document.body.style.lineHeight = lineHeight;
+
+            darkModeToggle.checked = darkMode;
+            document.body.classList.toggle('dark-mode', darkMode);
+
+            justifyText.checked = justify;
+            if (justify) {
+                const paras = document.querySelectorAll('p');
+                paras.forEach(p => p.style.textAlign = 'justify');
+            }
+        }
+
+        loadSettings();
+
+        // ============= PROGRESS BAR =============
+        const progressBar = document.getElementById('progressBar');
+        window.addEventListener('scroll', () => {
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrolled = (window.scrollY / docHeight) * 100;
+            progressBar.style.width = scrolled + '%';
+        });
+
+        // ============= RULER =============
+        const rulerToggle = document.getElementById('rulerToggle');
+        const ruler = document.getElementById('ruler');
+        rulerToggle.addEventListener('click', () => {
+            ruler.classList.toggle('active');
+            localStorage.setItem('rulerActive', ruler.classList.contains('active'));
+        });
+
+        window.addEventListener('scroll', () => {
+            if (ruler.classList.contains('active')) {
+                ruler.style.top = (window.scrollY + 70) + 'px';
+            }
+        });
+
+        // ============= TEXT-TO-SPEECH =============
+        const ttsToggle = document.getElementById('ttsToggle');
+        let isSpeaking = false;
+
+        ttsToggle.addEventListener('click', () => {
+            if (!isSpeaking) {
+                startSpeaking();
+            } else {
+                stopSpeaking();
+            }
+        });
+
+        function startSpeaking() {
+            if ('speechSynthesis' in window) {
+                const mainText = document.querySelector('.container').innerText;
+                const utterance = new SpeechSynthesisUtterance(mainText);
+                utterance.lang = 'hr-HR';
+                utterance.rate = parseFloat(ttsSpeed.value);
+
+                utterance.onstart = () => {
+                    isSpeaking = true;
+                    ttsToggle.style.opacity = '0.5';
+                };
+
+                utterance.onend = () => {
+                    isSpeaking = false;
+                    ttsToggle.style.opacity = '1';
+                };
+
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        function stopSpeaking() {
+            speechSynthesis.cancel();
+            isSpeaking = false;
+            ttsToggle.style.opacity = '1';
+        }
+
+        // Update TTS speed
+        ttsSpeed.addEventListener('change', (e) => {
+            if (isSpeaking) {
+                stopSpeaking();
+                startSpeaking();
+            }
+        });
+
+        // ============= CHAPTER LINKS =============
+        const chapterLinks = document.querySelectorAll('.chapter-ref');
+        chapterLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const target = document.getElementById(targetId);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                    settingsPanel.classList.remove('open');
+                }
+            });
+        });
+
+        // ============= KEYBOARD NAVIGATION =============
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                settingsPanel.classList.remove('open');
+            }
+            if (e.key === 'r' || e.key === 'R') {
+                ruler.classList.toggle('active');
+            }
+        });
+
+        // ============= ACCESSIBILITY =============
+        // Focus visible styles handled by CSS
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                document.body.style.outline = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

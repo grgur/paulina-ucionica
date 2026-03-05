@@ -47,6 +47,12 @@
       "file": "lekcije/prica-visestanicni-organizmi-natalija.html",
       "date": "2026-03-05",
       "subject": "Biologija"
+    },
+    {
+      "title": "Kako je nastao život na Zemlji — Kemijska evolucija (Natalija)",
+      "file": "lekcije/lekcija-postanak-zivota-natalija.html",
+      "date": "2026-03-05",
+      "subject": "Biologija"
     }
   ],
   "ispiti": [
@@ -77,6 +83,12 @@
     {
       "title": "Ispit: Višestanični organizmi (Natalija)",
       "file": "ispiti/ispit-visestanicni-organizmi-natalija.html",
+      "date": "2026-03-05",
+      "subject": "Biologija"
+    },
+    {
+      "title": "Ispit: Kako je nastao život na Zemlji (Natalija)",
+      "file": "ispiti/ispit-postanak-zivota-natalija.html",
       "date": "2026-03-05",
       "subject": "Biologija"
     }
