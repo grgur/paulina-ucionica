@@ -53,6 +53,18 @@
       "file": "lekcije/lekcija-postanak-zivota-natalija.html",
       "date": "2026-03-05",
       "subject": "Biologija"
+    },
+    {
+      "title": "Pojava eukariota i jednostanični organizmi (Natalija)",
+      "file": "lekcije/lekcija-eukarioti-natalija.html",
+      "date": "2026-03-05",
+      "subject": "Biologija"
+    },
+    {
+      "title": "Priča: Kako je gutanje spasilo svijet — Eukarioti (Natalija)",
+      "file": "lekcije/prica-eukarioti-natalija.html",
+      "date": "2026-03-05",
+      "subject": "Biologija"
     }
   ],
   "ispiti": [
@@ -89,6 +101,12 @@
     {
       "title": "Ispit: Kako je nastao život na Zemlji (Natalija)",
       "file": "ispiti/ispit-postanak-zivota-natalija.html",
+      "date": "2026-03-05",
+      "subject": "Biologija"
+    },
+    {
+      "title": "Ispit: Eukarioti i jednostanični organizmi (Natalija)",
+      "file": "ispiti/ispit-eukarioti-natalija.html",
       "date": "2026-03-05",
       "subject": "Biologija"
     }

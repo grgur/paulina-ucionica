@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Priča o eukariotima — Za Nataliju</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FEFCF6;
+  --text: #2C2C2C;
+  --accent: #6366F1;
+  --accent-light: #EEF2FF;
+  --warm: #D97706;
+  --warm-light: #FFFBEB;
+  --green: #059669;
+  --green-light: #ECFDF5;
+  --pink: #DB2777;
+  --pink-light: #FDF2F8;
+  --radius: 16px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Merriweather', 'Georgia', serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 2;
+  padding: 16px;
+  font-size: 17px;
+  overflow-x: hidden;
+}
+.container { max-width: 680px; margin: 0 auto; padding-bottom: 60px; }
+
+/* HERO */
+.story-hero {
+  background: linear-gradient(135deg, #1E1B4B 0%, #312E81 50%, #4338CA 100%);
+  border-radius: var(--radius);
+  padding: 40px 28px;
+  color: white;
+  text-align: center;
+  margin-bottom: 32px;
+  position: relative;
+  overflow: hidden;
+}
+.story-hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.4;
+}
+.story-hero h1 { font-family: 'Lexend', sans-serif; font-size: 28px; font-weight: 700; margin-bottom: 8px; position: relative; }
+.story-hero .subtitle { font-size: 16px; opacity: 0.85; position: relative; font-style: italic; }
+.story-hero .big-emoji { font-size: 56px; display: block; margin-bottom: 12px; position: relative; }
+
+/* CHAPTER */
+.chapter {
+  margin-bottom: 36px;
+}
+.chapter-header {
+  font-family: 'Lexend', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 3px solid var(--accent-light);
+}
+.chapter p {
+  margin-bottom: 16px;
+  text-align: justify;
+  hyphens: auto;
+}
+
+/* QUOTE */
+.pull-quote {
+  border-left: 4px solid var(--accent);
+  margin: 24px 0;
+  padding: 20px 24px;
+  background: var(--accent-light);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-style: italic;
+  font-size: 18px;
+  line-height: 1.8;
+  color: #4338CA;
+}
+
+/* CALLOUT */
+.callout {
+  background: var(--warm-light);
+  border: 2px solid var(--warm);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin: 20px 0;
+}
+.callout.green { background: var(--green-light); border-color: var(--green); }
+.callout.pink { background: var(--pink-light); border-color: var(--pink); }
+.callout .label {
+  font-family: 'Lexend', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 6px;
+}
+.callout .label.warm { color: var(--warm); }
+.callout .label.green { color: var(--green); }
+.callout .label.pink { color: var(--pink); }
+
+/* IMAGE PLACEHOLDER */
+.story-image {
+  background: linear-gradient(135deg, #E0E7FF, #F5F3FF);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin: 20px 0;
+  text-align: center;
+  font-family: 'Lexend', sans-serif;
+  color: var(--accent);
+}
+.story-image .emoji { font-size: 48px; display: block; margin-bottom: 8px; }
+.story-image .caption { font-size: 14px; font-style: italic; color: #6366F1; }
+
+/* SEPARATOR */
+.sep {
+  text-align: center;
+  margin: 32px 0;
+  font-size: 24px;
+  color: #CBD5E1;
+  letter-spacing: 16px;
+}
+
+/* PROGRESS */
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent), var(--pink));
+  z-index: 100;
+  transition: width 0.1s;
+  width: 0%;
+}
+
+/* SETTINGS */
+.settings-btn {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 100;
+  background: white;
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  width: 44px; height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+}
+.settings-dropdown {
+  display: none;
+  position: fixed;
+  top: 64px;
+  right: 12px;
+  z-index: 100;
+  background: white;
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+  width: 240px;
+}
+.settings-dropdown.open { display: block; }
+.settings-dropdown label { display: block; font-family: 'Lexend', sans-serif; font-size: 13px; margin-bottom: 10px; color: #666; }
+.settings-dropdown input[type="range"] { width: 100%; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="reading-progress" id="readingProgress"></div>
+
+<button class="settings-btn" onclick="document.getElementById('settingsDrop').classList.toggle('open')" aria-label="Postavke">⚙️</button>
+<div class="settings-dropdown" id="settingsDrop">
+  <label>Veličina fonta
+    <input type="range" min="15" max="24" value="17" oninput="document.body.style.fontSize=this.value+'px'">
+  </label>
+  <label>Pozadina
+    <select onchange="document.body.style.background=this.value" style="width:100%;padding:6px;border-radius:8px;border:1px solid #ddd;">
+      <option value="#FEFCF6">Krem (zadano)</option>
+      <option value="#FFFFFF">Bijela</option>
+      <option value="#F0FDF4">Zelenkasta</option>
+      <option value="#1a1a2e">Tamna</option>
+    </select>
+  </label>
+</div>
+
+<div class="container">
+
+<!-- HERO -->
+<div class="story-hero">
+  <span class="big-emoji">🧬✨</span>
+  <h1>Najveće spajanje u povijesti života</h1>
+  <div class="subtitle">Priča o tome kako je jedan davni "nesporazum" stvorio sve živo što ima oči, mozak, srce i dušu</div>
+</div>
+
+<!-- CH 1 -->
+<div class="chapter">
+  <div class="chapter-header">1. Svijet prije tebe</div>
+
+  <p>Zamisli da je cijela povijest Zemlje — svih 4.5 milijardi godina — sažeta u jednu godinu. Siječanj, veljača, ožujak... prolaze mjeseci, a na planeti nema ničega osim golih stijena, kiselih oceana i atmosfere pune metana. Nema kisika. Nema drveća. Nema ni najsitnijeg crva.</p>
+
+  <p>Tek negdje u ožujku pojavljuju se prvi znakovi života — sićušne, jednostavne stanice bez jezgre. <strong>Prokarioti.</strong> Zamijeni ih kao najjednostavniju moguću "živu stvar": vrećicu kemikalija omotanu tankom membranom, s jednim jedinim komadom DNA koji pluta unutra bez ikakve organizacije. Nemaš ured, nemaš ladice, samo hrpa papira razbacana po podu.</p>
+
+  <p>I tako prolaze mjeseci. Travanj. Svibanj. Lipanj. Srpanj. Kolovoz. <strong>Pola godine</strong> — a na Zemlji i dalje samo ti sićušni, jednostavni prokarioti. Ništa se dramatično ne mijenja. Svijet je monoton, mikroskopski, nevidljiv golim okom.</p>
+
+  <div class="callout">
+    <div class="label warm">⏰ Za perspektivu</div>
+    Prokarioti su vladali Zemljom potpuno sami <strong>otprilike 2 milijarde godina</strong>. Da je povijest života film od 2 sata, prokarioti bi bili jedini glumci prvih 50 minuta. Doslovno ništa drugo — samo oni.
+  </div>
+
+  <p>Ali onda se, negdje krajem ljeta naše zamišljene godine, dogodilo nešto nevjerojatno. Nešto što je zauvijek promijenilo tijek života na Zemlji. Nešto tako neobično da su znanstvenici koji su to prvi predložili bili ismijani.</p>
+</div>
+
+<div class="sep">• • •</div>
+
+<!-- CH 2 -->
+<div class="chapter">
+  <div class="chapter-header">2. Žena koju nitko nije htio slušati</div>
+
+  <p>Godina je 1967. Mlada američka biologinja po imenu <strong>Lynn Margulis</strong> šalje svoj rad u znanstveni časopis. Rad odbijaju. Šalje u drugi. Odbijaju. Treći. Četvrti. <strong>Petnaest časopisa</strong> redom odbija njezin rad. Petnaest puta netko pročita njezin tekst i kaže: "Ne, ovo je preluđo."</p>
+
+  <p>Što je to toliko luđo napisala?</p>
+
+  <p>Lynn je tvrdila da eukariotske stanice — one složene stanice s jezgrom od kojih smo mi svi građeni — <strong>nisu nastale postupnom evolucijom jednog organizma</strong>. Umjesto toga, nastale su tako što je jedna stanica <em>progutala</em> drugu, a onda — umjesto da je svari — te dvije stanice su se dogovorile za suživot. Zauvijek.</p>
+
+  <div class="pull-quote">
+    Zamijeni to ovako: umjesto da ti netko upadne u kuću i ti ga izbaciš, on ostane, počne plaćati stanarinu i peglati ti košulje. I to traje <strong>dvije milijarde godina</strong>.
+  </div>
+
+  <p>To zvuči suludo, zar ne? Ali Lynn je imala dokaze. I na kraju, nakon petnaest odbijanja, njezin rad je objavljen u časopisu <em>Journal of Theoretical Biology</em>. A danas? Danas je njezina <strong>endosimbiotska teorija</strong> jedna od najvažnijih ideja u cijeloj biologiji.</p>
+
+  <div class="callout green">
+    <div class="label green">🌟 Životna lekcija</div>
+    Lynn Margulis je bila udana za Carla Sagana — najpoznatijeg astronoma 20. stoljeća. Ali njezin doprinos znanosti bio je jednako velik, ako ne i veći. Petnaest odbijanja nije je zaustavilo. Ponekad cijeli svijet griješi — i treba samo jedna tvrdoglava osoba da to pokaže.
+  </div>
+</div>
+
+<div class="sep">• • •</div>
+
+<!-- CH 3 -->
+<div class="chapter">
+  <div class="chapter-header">3. Stranac u kući — već milijardu godina</div>
+
+  <p>Dakle, evo što se zapravo dogodilo prije otprilike 2 milijarde godina.</p>
+
+  <p>Postojala je jedna veća stanica — recimo da se zvala <strong>Ana</strong>. Ana je bila prokariont, relativno velika, ali prilično bespomoćna kad je u pitanju energija. Mogla je preživjeti, ali jedva.</p>
+
+  <p>I postojala je jedna manja bakterija — nazovimo je <strong>Mia</strong>. Mia je imala nevjerojatnu sposobnost: mogla je koristiti <strong>kisik</strong> za proizvodnju energije. U to vrijeme, kisik se tek počeo nakupljati u atmosferi (zahvaljujući cijanobakterijama koje su ga "ispuštale" kao otpadni produkt fotosinteze). Za većinu tadašnjih organizama kisik je bio <em>otrov</em>. Ali Mia ga je mogla pretvoriti u <em>energiju</em>.</p>
+
+  <p>Jednog dana, Ana je progutala Miu. Možda je pokušala pojesti. Možda je Mia sama ušla u Anu tražeći zaklon. Ne znamo točno kako se to dogodilo. Ali znamo što se <strong>nije</strong> dogodilo: Mia nije svarena.</p>
+
+  <div class="story-image">
+    <span class="emoji">🫧 + 🦠 = ⚡🔵</span>
+    <div class="caption">Ana (velika stanica) guta Miu (aerobnu bakteriju) → Mia postaje mitohondrij</div>
+  </div>
+
+  <p>Umjesto toga, nešto čudesno se dogodilo. Mia je ostala živjeti <strong>unutar</strong> Ane. Ana joj je pružila sigurno okruženje i hranu. A Mia je zauzvrat proizvod nešto neprocjenjivo: <strong>energiju</strong>. Puno više energije nego što je Ana ikad sama mogla proizvesti.</p>
+
+  <p>Taj dogovor — "ja ti dajem dom, ti mi daješ energiju" — bio je toliko uspješan da se zadržao. Ne desetljećima. Ne stoljećima. <strong>Dvije milijarde godina.</strong> Mia je s vremenom izgubila sposobnost samostalnog života. Postala je dio Ane. Postala je ono što danas zovemo <strong>mitohondrij</strong>.</p>
+
+  <div class="callout pink">
+    <div class="label pink">🧠 Razmisli o ovome</div>
+    Svaka stanica u tvom tijelu sadrži stotine ili tisuće mitohondrija. Svaki od njih je daleki potomak jedne slobodne bakterije koja se jednom davno "uselila" u drugu stanicu. Tvoje stanice su doslovno <strong>zajednice organizama</strong>. Nisi jedan organizam — ti si kolaboracija!
+  </div>
+</div>
+
+<div class="sep">• • •</div>
+
+<!-- CH 4 -->
+<div class="chapter">
+  <div class="chapter-header">4. A onda — zelena revolucija</div>
+
+  <p>Priča se nije zaustavila na mitohondrijima.</p>
+
+  <p>Nešto kasnije (u evolucijskim razmjerima, "nešto kasnije" znači možda nekoliko stotina milijuna godina), jedna od tih novih, energetski naprednih stanica progutala je još jednog stanovnika: <strong>cijanobakteriju</strong>.</p>
+
+  <p>Cijanobakterije su bile pravi čarobnjaci starog svijeta. One su mogle uhvatiti sunčevu svjetlost i pretvoriti je u hranu — proces koji zovemo <strong>fotosinteza</strong>. I opet — umjesto probave, nastao je novi suživot.</p>
+
+  <p>Cijanobakterija je postala <strong>kloroplast</strong>. I tako su nastale prve stanice koje su mogle i proizvoditi energiju iz kisika (mitohondriji) i hvatati sunčevu svjetlost za hranu (kloroplasti). To su <strong>preci svih biljaka i algi</strong> na Zemlji.</p>
+
+  <div class="story-image">
+    <span class="emoji">🔵 + 🟢 = 🌿</span>
+    <div class="caption">Stanica s mitohondrijem guta cijanobakteriju → nastaje kloroplast → predak biljaka!</div>
+  </div>
+
+  <p>Razmisli o tome: svaki put kad vidiš stablo, cvijet ili travu, gledaš rezultat tog drevnog spajanja. Svaki zeleni list sadrži kloroplaste — potomke slobodnih cijanobakterija koje su živjele u oceanu prije dviju milijardi godina.</p>
+</div>
+
+<div class="sep">• • •</div>
+
+<!-- CH 5 -->
+<div class="chapter">
+  <div class="chapter-header">5. Dokazi — Kako znamo da je to istina?</div>
+
+  <p>Možda se pitaš: "Dobro, lijepa priča. Ali kako znamo da je istina?"</p>
+
+  <p>E, tu postaje stvarno zanimljivo. Pogledaj ovo:</p>
+
+  <p><strong>Prvo:</strong> Mitohondriji i kloroplasti imaju <strong>vlastitu DNA</strong>. To je potpuno odvojena DNA od one u jezgri stanice. I ta DNA je <em>kružna</em> — baš kao DNA bakterija, a ne linearna kao naša. To je kao da su zadržali svoj stari "osobni dokument" iz vremena kad su bili slobodni.</p>
+
+  <p><strong>Drugo:</strong> Imaju <strong>dvostruku membranu</strong>. Unutarnja membrana je njihova originalna, a vanjska je od domaćinske stanice koja ih je jednom progutala. Poput čovjeka koji nosi svoju jaknu, a preko nje još jednu koju mu je dao domaćin.</p>
+
+  <p><strong>Treće:</strong> Dijele se <strong>samostalno</strong> — neovisno o ostatku stanice. Kad se tvoja stanica podijeli, mitohondriji se ne dijele zato što im stanica kaže. Oni se dijele jer to <em>oni sami</em> žele, po svom vlastitom rasporedu.</p>
+
+  <p><strong>Četvrto:</strong> Reagiraju na neke <strong>antibiotike</strong> — upravo zato što su u srcu još uvijek bakterije!</p>
+
+  <div class="pull-quote">
+    Kako je to opisao Bill Bryson: mitohondrij je poput stranca u tvojoj kući koji je tamo već milijardu godina. Govori drugim jezikom, ima svoje navike, dijeli se kad njemu paše — ali bez njega ne možeš živjeti ni dvije minute.
+  </div>
+</div>
+
+<div class="sep">• • •</div>
+
+<!-- CH 6 -->
+<div class="chapter">
+  <div class="chapter-header">6. Protisti — Najčudnija bića na planeti</div>
+
+  <p>Dobro. Sad znamo kako su nastale eukariotske stanice. Ali što su radile prvih milijardu godina? Nisu se odmah organizirale u biljke i životinje. Prvo su bile <strong>same</strong>. Jednostanične. I bile su nevjerojatno raznolike.</p>
+
+  <p>Te jednostanične eukariote danas zovemo <strong>protisti</strong> — i oni su, bez ikakve sumnje, najčudnija bića na planeti.</p>
+
+  <p>Tu je <strong>ameba</strong> — stanica koja nema stalan oblik. Doslovno se "razlijeva" kroz okoliš, ispružajući dijelove sebe u smjeru u kojem želi ići. Te ispružene dijelove zovemo <strong>pseudopodiji</strong> — "lažne nožice". Kad naiđe na hranu, jednostavno je <em>obavije</em> sobom i proguta. Zamijeni to kao da možeš pojesti sendvič tako da ga obavuješ cijelim tijelom.</p>
+
+  <p>Tu je <strong>Euglena</strong> — organizam koji je zbunio znanstvenike desetljećima. Ima kloroplaste i može fotosintezirati kao biljka. Ali ima i bič, kreće se i može jesti druge organizme kad nema svjetla — kao životinja. Na kraju su znanstvenici odustali od pokušaja svrstavanja u biljke ili životinje i stavili je u svoju kategoriju.</p>
+
+  <p>I tu je <strong>papučica</strong> (Paramecium) — pokrivena tisućama sićušnih trepetljika koje se usklađeno pomiču poput valova na stadionu. Ima čak i primitivni "sustav za probavu" — hranu guta na jednom mjestu, probavlja je u vakuolama, a ostatak izbacuje na drugom mjestu. Sve to u jednoj jedinoj stanici!</p>
+
+  <div class="callout">
+    <div class="label warm">🤯 Impresivna činjenica</div>
+    Jedna jedina stanica euglene ima oko 40 odvojenih dijelova koji rade različite stvari: oko za svjetlost, motor za kretanje, tvornicu hrane, pumpu za vodu, spremište energije... Sve to u nečemu što je manje od debljine jedne tvoje vlasi kose.
+  </div>
+</div>
+
+<div class="sep">• • •</div>
+
+<!-- CH 7 -->
+<div class="chapter">
+  <div class="chapter-header">7. Mala stanica, veliki problem — Malarija</div>
+
+  <p>Ali nisu svi protisti simpatični. Neki su pravi zlikovci.</p>
+
+  <p>Najozloglašeniji je <strong>Plasmodium</strong> — sićušni, jednostanični organizam koji uzrokuje <strong>malariju</strong>. Malarija je ubila više ljudi u povijesti nego bilo koja druga bolest. Procjenjuje se da je od malarije umrla <strong>otprilike polovica svih ljudi koji su ikad živjeli</strong>. Da, pročitala si dobro — POLOVICA.</p>
+
+  <p>Kako to funkcionira? Kad te ubode zaražena ženka komarca Anopheles, Plasmodium ulazi u tvoju krv. Putuje do jetre, tamo se skriva i razmnožava. Onda izlazi u krvotok i počinje napadati <strong>crvene krvne stanice</strong> — jednu po jednu. Ulazi u stanicu, razmnožava se unutar nje dok ne napuni svu unutrašnjost, a onda stanica <em>pukne</em> i stotine novih parazita se raspe po krvi, svaki tražeći novu krvnu stanicu.</p>
+
+  <p>To pucanje stanica događa se usklađeno — zato malarija uzrokuje periodične napade vrućice. Svaki put kad nova generacija parazita izađe iz krvnih stanica, tijelo reagira vrućicom.</p>
+
+  <div class="callout pink">
+    <div class="label pink">📝 Etimologija</div>
+    Znaš li odakle dolazi riječ "malarija"? Od talijanskog <strong>"mala aria"</strong> — "loš zrak". Stari Rimljani su mislili da bolest uzrokuje smrdljivi zrak iz močvara. Nisu znali da su problem zapravo komarci koji žive na tim močvarama. Trebalo je gotovo 2000 godina da shvatimo pravog krivca!
+  </div>
+</div>
+
+<div class="sep">• • •</div>
+
+<!-- CH 8 -->
+<div class="chapter">
+  <div class="chapter-header">8. Voda ulazi, voda izlazi — Osmoza</div>
+
+  <p>Život jednostanične stanice ima jednu vječnu boru. Stanica živi u tekućini, a ta tekućina stalno želi ući ili izaći iz stanice. To kretanje vode zove se <strong>osmoza</strong> i to je nešto što svaka stanica na Zemlji mora rješavati svaki djelić sekunde.</p>
+
+  <p>Evo najjednostavnijeg objašnjenja: voda uvijek želi ići tamo gdje ima <strong>više soli ili šećera</strong>. Poput turista koji se uvijek kreću prema restoranu, a ne od njega.</p>
+
+  <p>Kad su slatkovodni protisti u pitanju — oni žive u vodi koja ima <strong>manje soli nego njihova unutrašnjost</strong>. To znači da voda stalno želi ući u stanicu. Bez zaštite, stanica bi nabubrila i puknula poput prenapuhanog balona!</p>
+
+  <p>Zato slatkovodni protisti imaju genijalnu pumpu — <strong>sterilne mjehuriće</strong> (kontraktilne vakuole). Ti mali mjehurići skupljaju višak vode i periodično je izbacuju van. Poput brodske pumpe koja neprestano ispumpava vodu koja curi u brodski trup.</p>
+
+  <div class="callout green">
+    <div class="label green">🧪 Pokus za kući</div>
+    Stavi suhu šljivu u čašu vode i ostavi je sat vremena. Kad se vratiš — šljiva je nabubrila! To je osmoza: voda iz čaše (manje šećera) ušla je u šljivu (puno šećera). Isti princip vrijedi za stanice. Ili: posoli salatu i gledaj kako "pusti vodu" — sol izvlači vodu iz stanica lista.
+  </div>
+</div>
+
+<div class="sep">• • •</div>
+
+<!-- CH 9 -->
+<div class="chapter">
+  <div class="chapter-header">9. Epilog — Zašto je ovo važno?</div>
+
+  <p>Evo zašto bi te trebala zanimati ova priča:</p>
+
+  <p>Ti si, u ovom trenutku, sastavljena od otprilike <strong>37 bilijuna stanica</strong>. Svaka od tih stanica sadrži mitohondrije — potomke nekadašnjih slobodnih bakterija. Svaka stanica je, u neku ruku, <strong>zajednica</strong>.</p>
+
+  <p>I ta zajednica postoji samo zato što se jednom davno, prije dvije milijarde godina, dogodilo nešto nevjerojatno: umjesto borbe, dva potpuno različita organizma odlučili su <strong>surađivati</strong>. I ta suradnja je stvorila sve: od amebe do dinosaura, od papučice do tebe.</p>
+
+  <p>Život nije samo natjecanje. Život je, u svojoj najdubljoj srži, <strong>suradnja</strong>.</p>
+
+  <div class="pull-quote">
+    Evolucija nije samo preživljavanje najjačih. Ponekad je preživljavanje onih koji su naučili surađivati. — inspirirana Lynn Margulis
+  </div>
+
+  <p>A sad, Natalija, za kraj jedna misao: sljedeći put kad se osjećaš umorno, sjeti se da su ti upravo mitohondriji — ti drevni stranci u tvojim stanicama — malo usporili. I da bez njih, bez tog davnog, nevjerojatnog spajanja, ne bi postojala ni jedna misao, ni jedan otkucaj srca, ni jedan osmijeh.</p>
+
+  <div class="story-image" style="background:linear-gradient(135deg,#312E81,#4338CA);color:white;">
+    <span class="emoji">🌟</span>
+    <div class="caption" style="color:#E0E7FF;font-size:16px;">Ti nisi samo organizam. Ti si dva milijarde godina stara priča o suradnji.</div>
+  </div>
+</div>
+
+</div><!-- container -->
+
+<script>
+// Reading progress
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const st = h.scrollTop || document.body.scrollTop;
+  const sh = h.scrollHeight - h.clientHeight;
+  const pct = (st / sh) * 100;
+  document.getElementById('readingProgress').style.width = pct + '%';
+});
+</script>
+
+</body>
+</html>

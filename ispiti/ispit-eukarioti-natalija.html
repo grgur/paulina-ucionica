@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ispit — Eukarioti i jednostanični organizmi</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F8F6FF;
+  --card: #FFFFFF;
+  --text: #2D2D3F;
+  --text-light: #6B6B8A;
+  --blue: #5B7FFF;
+  --blue-light: #EEF2FF;
+  --green: #10B981;
+  --green-light: #D1FAE5;
+  --orange: #F59E0B;
+  --orange-light: #FEF3C7;
+  --red: #EF4444;
+  --red-light: #FEE2E2;
+  --purple: #8B5CF6;
+  --purple-light: #F5F3FF;
+  --radius: 16px;
+  --shadow: 0 2px 16px rgba(91,127,255,0.08);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Lexend', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  padding: 12px;
+  font-size: 17px;
+  overflow-x: hidden;
+}
+.container { max-width: 700px; margin: 0 auto; padding-bottom: 100px; }
+
+/* HEADER */
+.exam-header {
+  background: linear-gradient(135deg, #EF4444 0%, #F59E0B 50%, #10B981 100%);
+  border-radius: var(--radius);
+  padding: 32px 24px;
+  color: white;
+  text-align: center;
+  margin-bottom: 24px;
+}
+.exam-header h1 { font-size: 24px; font-weight: 700; margin-bottom: 6px; }
+.exam-header p { font-size: 15px; opacity: 0.9; }
+.exam-header .emoji { font-size: 42px; display: block; margin-bottom: 8px; }
+
+/* PROGRESS */
+.progress-wrap {
+  background: #E5E7EB;
+  border-radius: 20px;
+  height: 10px;
+  margin: 16px 0;
+  overflow: hidden;
+}
+.progress-fill {
+  background: linear-gradient(90deg, var(--blue), var(--purple));
+  height: 100%;
+  border-radius: 20px;
+  transition: width 0.4s ease;
+}
+.progress-text {
+  font-size: 14px;
+  color: var(--text-light);
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+/* QUESTION */
+.question-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+.question-card.active { display: block; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.q-number {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--purple);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+.q-text {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+.q-type {
+  display: inline-block;
+  background: var(--purple-light);
+  color: var(--purple);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+/* OPTIONS */
+.option-btn {
+  display: block;
+  width: 100%;
+  background: white;
+  border: 2px solid #E5E7EB;
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin: 8px 0;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: 'Lexend', sans-serif;
+  text-align: left;
+  transition: all 0.2s;
+  line-height: 1.5;
+}
+.option-btn:hover { border-color: var(--blue); background: var(--blue-light); }
+.option-btn.selected { border-color: var(--blue); background: var(--blue-light); font-weight: 600; }
+.option-btn.correct { border-color: var(--green); background: var(--green-light); }
+.option-btn.wrong { border-color: var(--red); background: var(--red-light); }
+.option-btn.disabled { pointer-events: none; }
+.option-btn.dim { opacity: 0.5; }
+
+/* MATCH */
+.match-container { margin: 12px 0; }
+.match-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0;
+}
+.match-left {
+  flex: 1;
+  background: var(--purple-light);
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 15px;
+}
+.match-select {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 2px solid #E5E7EB;
+  font-family: 'Lexend', sans-serif;
+  font-size: 15px;
+  background: white;
+  cursor: pointer;
+}
+
+/* ORDERING */
+.order-item {
+  background: white;
+  border: 2px solid #E5E7EB;
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin: 6px 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: grab;
+  transition: all 0.2s;
+  font-size: 15px;
+}
+.order-item:active { cursor: grabbing; }
+.order-item .handle { color: var(--text-light); font-size: 18px; }
+.order-btns { display: flex; gap: 4px; margin-left: auto; }
+.order-btns button {
+  background: var(--blue-light);
+  border: none;
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  font-size: 16px;
+  cursor: pointer;
+  font-family: 'Lexend', sans-serif;
+}
+.order-btns button:hover { background: var(--blue); color: white; }
+
+/* FEEDBACK */
+.feedback {
+  margin-top: 12px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  font-size: 15px;
+  display: none;
+  line-height: 1.6;
+}
+.feedback.show { display: block; }
+.feedback.correct { background: var(--green-light); color: #065F46; border: 1px solid var(--green); }
+.feedback.wrong { background: var(--red-light); color: #991B1B; border: 1px solid var(--red); }
+.feedback.partial { background: var(--orange-light); color: #92400E; border: 1px solid var(--orange); }
+
+/* TRUE FALSE */
+.tf-btns {
+  display: flex;
+  gap: 12px;
+  margin: 12px 0;
+}
+.tf-btn {
+  flex: 1;
+  padding: 14px;
+  border: 2px solid #E5E7EB;
+  border-radius: 12px;
+  background: white;
+  font-family: 'Lexend', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+}
+.tf-btn:hover { border-color: var(--blue); }
+.tf-btn.selected { border-color: var(--blue); background: var(--blue-light); }
+.tf-btn.correct { border-color: var(--green); background: var(--green-light); }
+.tf-btn.wrong { border-color: var(--red); background: var(--red-light); }
+
+/* NAV */
+.exam-nav {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  position: sticky;
+  bottom: 12px;
+  z-index: 50;
+}
+.exam-nav button {
+  flex: 1;
+  padding: 16px;
+  border: none;
+  border-radius: 14px;
+  font-family: 'Lexend', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.exam-nav .prev-btn { background: white; color: var(--purple); border: 2px solid var(--purple); }
+.exam-nav .check-btn { background: var(--green); color: white; }
+.exam-nav .next-btn { background: linear-gradient(135deg, var(--blue), var(--purple)); color: white; }
+.exam-nav button:disabled { opacity: 0.4; pointer-events: none; }
+.exam-nav button:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0,0,0,0.12); }
+
+/* RESULTS */
+.results-screen {
+  display: none;
+  text-align: center;
+}
+.results-screen.active { display: block; }
+.score-circle {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 42px;
+  font-weight: 700;
+  border: 6px solid;
+}
+.score-circle.great { border-color: var(--green); color: var(--green); background: var(--green-light); }
+.score-circle.good { border-color: var(--blue); color: var(--blue); background: var(--blue-light); }
+.score-circle.ok { border-color: var(--orange); color: var(--orange); background: var(--orange-light); }
+.score-circle.low { border-color: var(--red); color: var(--red); background: var(--red-light); }
+.score-circle small { font-size: 14px; font-weight: 400; }
+.results-msg { font-size: 18px; margin: 16px 0; }
+
+/* REVIEW */
+.review-item {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin: 10px 0;
+  text-align: left;
+  box-shadow: var(--shadow);
+  border-left: 4px solid;
+}
+.review-item.r-correct { border-color: var(--green); }
+.review-item.r-wrong { border-color: var(--red); }
+.review-item .r-q { font-weight: 600; margin-bottom: 6px; }
+.review-item .r-answer { font-size: 15px; color: var(--text-light); }
+.review-item .r-correct-answer { font-size: 15px; color: var(--green); font-weight: 600; }
+.review-item .r-explanation { font-size: 14px; margin-top: 8px; padding-top: 8px; border-top: 1px dashed #e0e0e0; color: var(--text-light); }
+
+/* ENCOURAGEMENT */
+.encourage {
+  background: linear-gradient(135deg, var(--purple-light), var(--blue-light));
+  border-radius: var(--radius);
+  padding: 16px;
+  margin: 16px 0;
+  text-align: center;
+  font-size: 15px;
+  display: none;
+}
+.encourage.show { display: block; }
+
+.settings-btn {
+  position: fixed; top: 12px; right: 12px; z-index: 100;
+  background: white; border: 2px solid var(--purple); border-radius: 50%;
+  width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+  font-size: 20px; cursor: pointer; box-shadow: var(--shadow);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<!-- HEADER -->
+<div class="exam-header">
+  <span class="emoji">📝🧬</span>
+  <h1>Ispit: Eukarioti i jednostanični organizmi</h1>
+  <p>15 pitanja • Poglavlja 3.1 i 3.2 • Nema vremenskog ograničenja</p>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-text" id="progressText">Pitanje 1 / 15</div>
+<div class="progress-wrap"><div class="progress-fill" id="progressFill" style="width:6.67%"></div></div>
+
+<!-- QUESTIONS CONTAINER -->
+<div id="questionsContainer"></div>
+
+<!-- RESULTS -->
+<div class="results-screen" id="resultsScreen">
+  <div class="score-circle" id="scoreCircle">
+    <span id="scoreNum"></span>
+    <small id="scoreOf"></small>
+  </div>
+  <div class="results-msg" id="resultsMsg"></div>
+  <div id="reviewContainer"></div>
+  <button onclick="location.reload()" style="margin-top:20px;padding:16px 32px;background:linear-gradient(135deg,var(--blue),var(--purple));color:white;border:none;border-radius:14px;font-family:'Lexend',sans-serif;font-size:16px;font-weight:600;cursor:pointer;">🔄 Pokušaj ponovo</button>
+</div>
+
+<!-- NAV -->
+<div class="exam-nav" id="examNav">
+  <button class="prev-btn" id="prevBtn" onclick="navQ(-1)" disabled>← Nazad</button>
+  <button class="check-btn" id="checkBtn" onclick="checkCurrent()">✓ Provjeri</button>
+  <button class="next-btn" id="nextBtn" onclick="navQ(1)">Dalje →</button>
+</div>
+
+</div>
+
+<script>
+const questions = [
+  // Q1 - Multiple Choice
+  {
+    type: 'mc',
+    text: 'Što je glavna razlika između prokariotske i eukariotske stanice?',
+    options: [
+      'Prokarioti su veći od eukariota',
+      'Eukarioti imaju staničnu membranu, a prokarioti ne',
+      'Eukarioti imaju jezgru i membranske organele, a prokarioti nemaju',
+      'Prokarioti imaju mitohondrije, a eukarioti ne'
+    ],
+    correct: 2,
+    explanation: 'Eukariotske stanice imaju pravu jezgru s jezgrinom ovojnicom i membranske organele (mitohondriji, kloroplasti, ER...). Prokarioti nemaju ništa od toga — njihova DNA je slobodna u citoplazmi.'
+  },
+  // Q2 - True/False
+  {
+    type: 'tf',
+    text: 'Mitohondriji imaju vlastitu DNA koja je različita od DNA u jezgri stanice.',
+    correct: true,
+    explanation: 'Točno! To je jedan od ključnih dokaza za endosimbiotsku teoriju. Mitohondriji imaju kružnu DNA sličnu bakterijskoj, potpuno odvojenu od linearne DNA u jezgri.'
+  },
+  // Q3 - MC
+  {
+    type: 'mc',
+    text: 'Prema endosimbiotskoj teoriji, od kojih organizama su nastali kloroplasti?',
+    options: [
+      'Od aerobnih bakterija',
+      'Od cijanobakterija',
+      'Od spiralnih bakterija (spiroheta)',
+      'Od arheja'
+    ],
+    correct: 1,
+    explanation: 'Kloroplasti su nastali endosimbiozom cijanobakterija — prokariota koji su obavljali fotosintezu. Aerobne bakterije su dale mitohondrije, ne kloroplaste.'
+  },
+  // Q4 - Match
+  {
+    type: 'match',
+    text: 'Spoji organelu s njezinim podrijetlom i funkcijom:',
+    pairs: [
+      { left: 'Mitohondrij', right: 'Aerobna bakterija → energija' },
+      { left: 'Kloroplast', right: 'Cijanobakterija → fotosinteza' },
+      { left: 'Jezgra', right: 'Uvrtanje membrane → zaštita DNA' },
+      { left: 'Stanična membrana', right: 'Polupropusna barijera → kontrola tvari' }
+    ],
+    explanation: 'Mitohondriji od aerobnih bakterija (energija), kloroplasti od cijanobakterija (fotosinteza), jezgra nastala uvrtanjem membrane, a stanična membrana kontrolira prolaz tvari.'
+  },
+  // Q5 - MC
+  {
+    type: 'mc',
+    text: 'Zašto su jednostanični organizmi uglavnom vrlo mali?',
+    options: [
+      'Jer nemaju dovoljno DNA za rast',
+      'Jer bi se inače pregrijavali',
+      'Jer s rastom omjer površine i volumena postaje nepovoljan',
+      'Jer nemaju kostur koji bi ih držao'
+    ],
+    correct: 2,
+    explanation: 'Kad stanica raste, volumen raste brže od površine. Površina je ta kroz koju stanica prima hranu i izbacuje otpad — ako je premala u odnosu na volumen, stanica ne može funkcionirati.'
+  },
+  // Q6 - MC
+  {
+    type: 'mc',
+    text: 'Koji organizam je miksotrofan — može i fotosintezirati i hraniti se heterotrofno?',
+    options: [
+      'Ameba',
+      'Papučica (Paramecium)',
+      'Euglena viridis',
+      'Plasmodium'
+    ],
+    correct: 2,
+    explanation: 'Euglena viridis je klasičan primjer miksotrofa — na svjetlu koristi kloroplaste za fotosintezu, a u tami se hrani heterotrofno. Ameba i papučica su čisti heterotrofi, a Plasmodium je parazit.'
+  },
+  // Q7 - TF
+  {
+    type: 'tf',
+    text: 'Osmoza je kretanje vode iz područja veće koncentracije otopljenih tvari prema području manje koncentracije.',
+    correct: false,
+    explanation: 'Netočno! Osmoza je kretanje vode iz područja MANJE koncentracije otopljenih tvari prema području VEĆE koncentracije. Voda "ide prema soli" — ne od nje.'
+  },
+  // Q8 - MC
+  {
+    type: 'mc',
+    text: 'Što se događa sa stanicom u HIPERTONIČNOJ otopini?',
+    options: [
+      'Stanica nabubri jer voda ulazi',
+      'Stanica se skuplja jer voda izlazi',
+      'Ništa se ne događa jer su koncentracije jednake',
+      'Stanica se dijeli na dva dijela'
+    ],
+    correct: 1,
+    explanation: 'U hipertoničnoj otopini ima VIŠE soli vani nego unutra. Voda izlazi iz stanice prema većoj koncentraciji soli → stanica se smežura i skuplja.'
+  },
+  // Q9 - Match
+  {
+    type: 'match',
+    text: 'Spoji način kretanja s organizmom:',
+    pairs: [
+      { left: 'Pseudopodiji', right: 'Ameba' },
+      { left: 'Bičevi (flagele)', right: 'Euglena, Trypanosoma' },
+      { left: 'Trepetljike (cilije)', right: 'Papučica (Paramecium)' }
+    ],
+    explanation: 'Ameba se kreće pseudopodijima ("lažnim nožicama"), Euglena i Trypanosoma bičevima, a papučica (Paramecium) trepetljikama koje pokrivaju cijelu površinu stanice.'
+  },
+  // Q10 - MC
+  {
+    type: 'mc',
+    text: 'Koja od navedenih struktura NIJE dokaz za endosimbiotsku teoriju?',
+    options: [
+      'Mitohondriji imaju vlastitu DNA',
+      'Mitohondriji imaju dvostruku membranu',
+      'Mitohondriji su iste veličine kao jezgra',
+      'Mitohondriji se dijele samostalno, neovisno o stanici'
+    ],
+    correct: 2,
+    explanation: 'Mitohondriji NISU iste veličine kao jezgra — oni su slični veličinom bakterijama, što je upravo dokaz za endosimbiozu. Vlastita DNA, dvostruka membrana i samostalna dioba SU dokazi.'
+  },
+  // Q11 - TF
+  {
+    type: 'tf',
+    text: 'Nespolno razmnožavanje (diobom) proizvodi genetski identične potomke — klonove.',
+    correct: true,
+    explanation: 'Točno! Pri diobi se DNA kopira i svaka stanica-kći dobiva identičnu kopiju. Zato su potomci klonovi. Genetska raznolikost se postiže spolnim procesom (npr. konjugacijom).'
+  },
+  // Q12 - MC
+  {
+    type: 'mc',
+    text: 'Koji organizam uzrokuje malariju i kako se prenosi?',
+    options: [
+      'Trypanosoma, prenosi ga muha ce-ce',
+      'Plasmodium, prenosi ga ženka komarca Anopheles',
+      'Leishmania, prenosi ga papatač',
+      'Trichomonas, prenosi se spolnim kontaktom'
+    ],
+    correct: 1,
+    explanation: 'Malariju uzrokuje Plasmodium, a prenosi ga ženka komarca Anopheles. Trypanosoma uzrokuje bolest spavanja (muha ce-ce), Leishmania lišmanijazu (papatač), a Trichomonas trihomonijazu (spolni kontakt).'
+  },
+  // Q13 - MC (harder)
+  {
+    type: 'mc',
+    text: 'Slatkovodni protisti koriste sterilne mjehuriće (kontraktilne vakuole) za:',
+    options: [
+      'Pohranjivanje hrane za kasniju upotrebu',
+      'Ispumpavanje viška vode koja ulazi osmozom',
+      'Proizvodnju energije iz sunčeve svjetlosti',
+      'Čuvanje nasljednog materijala (DNA)'
+    ],
+    correct: 1,
+    explanation: 'Slatkovodni protisti žive u hipotoničnom okruženju — voda stalno ulazi u stanicu osmozom. Sterilni mjehurići (kontraktilne vakuole) skupljaju tu vodu i ispumpavaju je van kako stanica ne bi puknula.'
+  },
+  // Q14 - Order
+  {
+    type: 'order',
+    text: 'Poredaj korake nastanka eukariotske stanice prema endosimbiotskoj teoriji (od prvog do zadnjeg):',
+    items: [
+      'Veća stanica (domaćin) guta aerobnu bakteriju',
+      'Aerobna bakterija postaje mitohondrij',
+      'Stanica s mitohondrijem guta cijanobakteriju',
+      'Cijanobakterija postaje kloroplast'
+    ],
+    correctOrder: [0,1,2,3],
+    explanation: 'Prvo je veća stanica progutala aerobnu bakteriju → ta bakterija postala je mitohondrij → kasnije, stanica s mitohondrijem gutala je cijanobakteriju → koja je postala kloroplast. Zato SVE eukariotske stanice imaju mitohondrije, ali samo biljke i alge imaju kloroplaste.'
+  },
+  // Q15 - MC (harder, application)
+  {
+    type: 'mc',
+    text: 'Liječnik prepiše pacijentu antibiotik. Koji organizam iz lekcije bi mogao reagirati na taj antibiotik, osim bakterija?',
+    options: [
+      'Jezgra stanice, jer sadrži DNA',
+      'Mitohondrij, jer potječe od bakterije',
+      'Ribosomi, jer proizvode proteine',
+      'Stanična membrana, jer je slična bakterijskoj'
+    ],
+    correct: 1,
+    explanation: 'Odličan primjer primjene znanja! Mitohondriji potječu od bakterija (endosimbiotska teorija) i zadržali su mnoge bakterijske karakteristike, uključujući osjetljivost na neke antibiotike. Zato neki antibiotici mogu imati nuspojave — jer "slučajno" napadaju i naše mitohondrije!'
+  }
+];
+
+let currentQ = 0;
+let answers = new Array(questions.length).fill(null);
+let checked = new Array(questions.length).fill(false);
+let scores = new Array(questions.length).fill(0);
+
+const encourageMessages = [
+  '💪 Super ideš! Samo nastavi!',
+  '🌟 Svako pitanje je prilika za učenje!',
+  '🧠 Tvoj mozak upravo gradi nove veze!',
+  '✨ Sjajno! Koncentracija ti je na vrhu!'
+];
+
+function buildQuestions() {
+  const container = document.getElementById('questionsContainer');
+  questions.forEach((q, i) => {
+    const div = document.createElement('div');
+    div.className = 'question-card' + (i === 0 ? ' active' : '');
+    div.id = 'q' + i;
+
+    let html = `<div class="q-number">Pitanje ${i+1}</div>`;
+    html += `<div class="q-text">${q.text}</div>`;
+
+    if (q.type === 'mc') {
+      html += `<div class="q-type">Višestruki izbor</div>`;
+      q.options.forEach((opt, j) => {
+        html += `<button class="option-btn" data-qi="${i}" data-oi="${j}" onclick="selectMC(${i},${j},this)">${String.fromCharCode(65+j)}) ${opt}</button>`;
+      });
+    } else if (q.type === 'tf') {
+      html += `<div class="q-type">Točno / Netočno</div>`;
+      html += `<div class="tf-btns">
+        <button class="tf-btn" data-qi="${i}" data-val="true" onclick="selectTF(${i},true,this)">✅ Točno</button>
+        <button class="tf-btn" data-qi="${i}" data-val="false" onclick="selectTF(${i},false,this)">❌ Netočno</button>
+      </div>`;
+    } else if (q.type === 'match') {
+      html += `<div class="q-type">Spoji parove</div>`;
+      html += `<div class="match-container" id="match-${i}">`;
+      const shuffledRight = [...q.pairs].map(p => p.right).sort(() => Math.random() - 0.5);
+      q.pairs.forEach((p, j) => {
+        html += `<div class="match-row">
+          <div class="match-left">${p.left}</div>
+          <select class="match-select" data-qi="${i}" data-pi="${j}" onchange="selectMatch(${i})">
+            <option value="">— odaberi —</option>
+            ${shuffledRight.map(r => `<option value="${r}">${r}</option>`).join('')}
+          </select>
+        </div>`;
+      });
+      html += `</div>`;
+    } else if (q.type === 'order') {
+      html += `<div class="q-type">Poredaj korake</div>`;
+      const shuffled = q.items.map((item, idx) => ({item, idx})).sort(() => Math.random() - 0.5);
+      html += `<div id="order-${i}">`;
+      shuffled.forEach((s, j) => {
+        html += `<div class="order-item" data-qi="${i}" data-orig="${s.idx}">
+          <span class="handle">☰</span>
+          <span>${s.item}</span>
+          <div class="order-btns">
+            <button onclick="moveOrder(${i},${j},-1)">↑</button>
+            <button onclick="moveOrder(${i},${j},1)">↓</button>
+          </div>
+        </div>`;
+      });
+      html += `</div>`;
+    }
+
+    html += `<div class="feedback" id="fb-${i}"></div>`;
+
+    // Encouragement after every 4 questions
+    if ((i+1) % 4 === 0 && i < questions.length - 1) {
+      html += `<div class="encourage" id="enc-${i}">${encourageMessages[Math.floor(i/4) % encourageMessages.length]}</div>`;
+    }
+
+    div.innerHTML = html;
+    container.appendChild(div);
+  });
+}
+
+function selectMC(qi, oi, btn) {
+  if (checked[qi]) return;
+  document.querySelectorAll(`[data-qi="${qi}"].option-btn`).forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  answers[qi] = oi;
+}
+
+function selectTF(qi, val, btn) {
+  if (checked[qi]) return;
+  document.querySelectorAll(`[data-qi="${qi}"].tf-btn`).forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  answers[qi] = val;
+}
+
+function selectMatch(qi) {
+  const selects = document.querySelectorAll(`[data-qi="${qi}"].match-select`);
+  const vals = [];
+  selects.forEach(s => vals.push(s.value));
+  answers[qi] = vals;
+}
+
+function moveOrder(qi, idx, dir) {
+  if (checked[qi]) return;
+  const container = document.getElementById('order-' + qi);
+  const items = [...container.children];
+  const newIdx = idx + dir;
+  if (newIdx < 0 || newIdx >= items.length) return;
+  if (dir === -1) container.insertBefore(items[idx], items[newIdx]);
+  else container.insertBefore(items[newIdx], items[idx]);
+  // Update answers
+  const newItems = [...container.children];
+  answers[qi] = newItems.map(it => parseInt(it.dataset.orig));
+}
+
+function checkCurrent() {
+  const q = questions[currentQ];
+  const fb = document.getElementById('fb-' + currentQ);
+
+  if (q.type === 'mc') {
+    if (answers[currentQ] === null) return;
+    const correct = answers[currentQ] === q.correct;
+    scores[currentQ] = correct ? 1 : 0;
+    document.querySelectorAll(`[data-qi="${currentQ}"].option-btn`).forEach((b, i) => {
+      b.classList.add('disabled');
+      if (i === q.correct) b.classList.add('correct');
+      if (i === answers[currentQ] && !correct) b.classList.add('wrong');
+      if (i !== q.correct && i !== answers[currentQ]) b.classList.add('dim');
+    });
+    fb.className = 'feedback show ' + (correct ? 'correct' : 'wrong');
+    fb.innerHTML = (correct ? '✅ ' : '❌ ') + q.explanation;
+  } else if (q.type === 'tf') {
+    if (answers[currentQ] === null) return;
+    const correct = answers[currentQ] === q.correct;
+    scores[currentQ] = correct ? 1 : 0;
+    document.querySelectorAll(`[data-qi="${currentQ}"].tf-btn`).forEach(b => {
+      const val = b.dataset.val === 'true';
+      if (val === q.correct) b.classList.add('correct');
+      if (val === answers[currentQ] && !correct) b.classList.add('wrong');
+    });
+    fb.className = 'feedback show ' + (correct ? 'correct' : 'wrong');
+    fb.innerHTML = (correct ? '✅ ' : '❌ ') + q.explanation;
+  } else if (q.type === 'match') {
+    const selects = document.querySelectorAll(`[data-qi="${currentQ}"].match-select`);
+    if ([...selects].some(s => !s.value)) return;
+    let correctCount = 0;
+    selects.forEach((s, j) => {
+      if (s.value === q.pairs[j].right) {
+        correctCount++;
+        s.style.borderColor = 'var(--green)';
+        s.style.background = 'var(--green-light)';
+      } else {
+        s.style.borderColor = 'var(--red)';
+        s.style.background = 'var(--red-light)';
+      }
+      s.disabled = true;
+    });
+    scores[currentQ] = correctCount / q.pairs.length;
+    const cls = correctCount === q.pairs.length ? 'correct' : (correctCount > 0 ? 'partial' : 'wrong');
+    fb.className = 'feedback show ' + cls;
+    fb.innerHTML = (correctCount === q.pairs.length ? '✅ Sve točno! ' : `⚠️ ${correctCount}/${q.pairs.length} točno. `) + q.explanation;
+  } else if (q.type === 'order') {
+    const container = document.getElementById('order-' + currentQ);
+    const items = [...container.children];
+    const userOrder = items.map(it => parseInt(it.dataset.orig));
+    if (!answers[currentQ]) answers[currentQ] = userOrder;
+    let correctCount = 0;
+    items.forEach((it, j) => {
+      const orig = parseInt(it.dataset.orig);
+      if (orig === q.correctOrder[j]) {
+        correctCount++;
+        it.style.borderColor = 'var(--green)';
+        it.style.background = 'var(--green-light)';
+      } else {
+        it.style.borderColor = 'var(--red)';
+        it.style.background = 'var(--red-light)';
+      }
+      it.querySelectorAll('button').forEach(b => b.disabled = true);
+    });
+    scores[currentQ] = correctCount / q.items.length;
+    const cls = correctCount === q.items.length ? 'correct' : (correctCount > 0 ? 'partial' : 'wrong');
+    fb.className = 'feedback show ' + cls;
+    fb.innerHTML = (correctCount === q.items.length ? '✅ Savršen redoslijed! ' : `⚠️ ${correctCount}/${q.items.length} na pravom mjestu. `) + q.explanation;
+  }
+
+  checked[currentQ] = true;
+  document.getElementById('checkBtn').disabled = true;
+
+  // Show encouragement
+  const enc = document.getElementById('enc-' + currentQ);
+  if (enc) enc.classList.add('show');
+
+  // If last question, change next button
+  if (currentQ === questions.length - 1) {
+    document.getElementById('nextBtn').textContent = '📊 Pogledaj rezultate';
+    document.getElementById('nextBtn').onclick = showResults;
+  }
+}
+
+function navQ(dir) {
+  const cards = document.querySelectorAll('.question-card');
+  cards[currentQ].classList.remove('active');
+  currentQ = Math.max(0, Math.min(questions.length - 1, currentQ + dir));
+  cards[currentQ].classList.add('active');
+  updateUI();
+}
+
+function updateUI() {
+  document.getElementById('progressText').textContent = `Pitanje ${currentQ+1} / ${questions.length}`;
+  document.getElementById('progressFill').style.width = ((currentQ+1)/questions.length*100)+'%';
+  document.getElementById('prevBtn').disabled = currentQ === 0;
+  document.getElementById('checkBtn').disabled = checked[currentQ];
+  const nextBtn = document.getElementById('nextBtn');
+  if (currentQ === questions.length - 1 && checked[currentQ]) {
+    nextBtn.textContent = '📊 Pogledaj rezultate';
+    nextBtn.onclick = showResults;
+  } else {
+    nextBtn.textContent = 'Dalje →';
+    nextBtn.onclick = () => navQ(1);
+  }
+}
+
+function showResults() {
+  document.getElementById('questionsContainer').style.display = 'none';
+  document.getElementById('examNav').style.display = 'none';
+  document.getElementById('progressText').style.display = 'none';
+  document.querySelector('.progress-wrap').style.display = 'none';
+
+  const total = scores.reduce((a,b) => a+b, 0);
+  const max = questions.length;
+  const pct = Math.round(total/max*100);
+
+  const circle = document.getElementById('scoreCircle');
+  document.getElementById('scoreNum').textContent = pct + '%';
+  document.getElementById('scoreOf').textContent = `${Math.round(total*10)/10} / ${max} bodova`;
+
+  if (pct >= 90) { circle.className = 'score-circle great'; }
+  else if (pct >= 75) { circle.className = 'score-circle good'; }
+  else if (pct >= 60) { circle.className = 'score-circle ok'; }
+  else { circle.className = 'score-circle low'; }
+
+  const msgs = {
+    great: '⭐⭐⭐ Izvrsno, Natalija! Tvoj trud se stvarno isplatio! Ovo gradivo ti odlično leži.',
+    good: '⭐⭐ Super rezultat! Vidi koliko toga znaš! Još malo vježbe i bit će savršeno.',
+    ok: '⭐ Dobar početak! Svaki put si bolja. Pogledajmo zajedno što ponoviti.',
+    low: 'Svaki pokušaj gradi nove veze u tvom mozgu! Ponovimo lekciju i probaj ponovo — bit će lakše! 💪'
+  };
+  const key = pct >= 90 ? 'great' : pct >= 75 ? 'good' : pct >= 60 ? 'ok' : 'low';
+  document.getElementById('resultsMsg').textContent = msgs[key];
+
+  // Review
+  const reviewDiv = document.getElementById('reviewContainer');
+  questions.forEach((q, i) => {
+    const correct = scores[i] >= 1;
+    const div = document.createElement('div');
+    div.className = 'review-item ' + (correct ? 'r-correct' : 'r-wrong');
+    let answerText = '';
+    let correctText = '';
+    if (q.type === 'mc') {
+      answerText = answers[i] !== null ? q.options[answers[i]] : 'Bez odgovora';
+      correctText = q.options[q.correct];
+    } else if (q.type === 'tf') {
+      answerText = answers[i] === true ? 'Točno' : answers[i] === false ? 'Netočno' : 'Bez odgovora';
+      correctText = q.correct ? 'Točno' : 'Netočno';
+    } else if (q.type === 'match') {
+      answerText = `${Math.round(scores[i] * q.pairs.length)}/${q.pairs.length} parova`;
+      correctText = q.pairs.map(p => `${p.left} → ${p.right}`).join(', ');
+    } else if (q.type === 'order') {
+      answerText = `${Math.round(scores[i] * q.items.length)}/${q.items.length} na mjestu`;
+      correctText = q.items.join(' → ');
+    }
+
+    div.innerHTML = `
+      <div class="r-q">${i+1}. ${q.text}</div>
+      <div class="r-answer">Tvoj odgovor: ${answerText}</div>
+      ${!correct ? `<div class="r-correct-answer">✅ Točan odgovor: ${correctText}</div>` : ''}
+      <div class="r-explanation">${q.explanation}</div>
+    `;
+    reviewDiv.appendChild(div);
+  });
+
+  document.getElementById('resultsScreen').classList.add('active');
+}
+
+// Init
+buildQuestions();
+updateUI();
+</script>
+
+</body>
+</html>

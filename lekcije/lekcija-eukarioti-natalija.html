@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eukarioti i jednostanični organizmi — Lekcija za Nataliju</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-main: #F8F6FF;
+  --bg-card: #FFFFFF;
+  --text-main: #2D2D3F;
+  --text-light: #6B6B8A;
+  --blue: #5B7FFF;
+  --blue-light: #EEF2FF;
+  --green: #10B981;
+  --green-light: #ECFDF5;
+  --orange: #F59E0B;
+  --orange-light: #FFFBEB;
+  --red: #EF4444;
+  --red-light: #FEF2F2;
+  --purple: #8B5CF6;
+  --purple-light: #F5F3FF;
+  --teal: #14B8A6;
+  --teal-light: #F0FDFA;
+  --pink: #EC4899;
+  --pink-light: #FDF2F8;
+  --radius: 16px;
+  --shadow: 0 2px 16px rgba(91,127,255,0.08);
+  --shadow-hover: 0 8px 30px rgba(91,127,255,0.15);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Lexend', sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+  line-height: 1.8;
+  padding: 12px;
+  font-size: 17px;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+.container { max-width: 800px; margin: 0 auto; padding-bottom: 100px; }
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, #5B7FFF 0%, #8B5CF6 50%, #EC4899 100%);
+  border-radius: var(--radius);
+  padding: 32px 24px;
+  color: white;
+  text-align: center;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+  animation: float 8s ease-in-out infinite;
+}
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(20px, -20px) rotate(5deg); }
+}
+.hero h1 { font-size: 26px; font-weight: 700; margin-bottom: 8px; position: relative; }
+.hero p { font-size: 16px; opacity: 0.9; position: relative; }
+.hero .cell-emoji { font-size: 48px; margin-bottom: 12px; display: block; position: relative; }
+
+/* PROGRESS */
+.progress-bar-wrap {
+  background: rgba(255,255,255,0.15);
+  border-radius: 20px;
+  height: 8px;
+  margin-top: 16px;
+  position: relative;
+}
+.progress-bar-fill {
+  background: rgba(255,255,255,0.9);
+  height: 100%;
+  border-radius: 20px;
+  transition: width 0.5s ease;
+  width: 0%;
+}
+
+/* SECTIONS */
+.section {
+  display: none;
+  animation: fadeIn 0.4s ease;
+}
+.section.active { display: block; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* CARDS */
+.card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(91,127,255,0.08);
+}
+.card h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--purple);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.card h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--blue);
+  margin: 16px 0 8px;
+}
+
+/* CONCEPT CARDS */
+.concept {
+  border-left: 4px solid var(--blue);
+  background: var(--blue-light);
+  padding: 16px 20px;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  margin: 12px 0;
+}
+.concept.green { border-color: var(--green); background: var(--green-light); }
+.concept.orange { border-color: var(--orange); background: var(--orange-light); }
+.concept.purple { border-color: var(--purple); background: var(--purple-light); }
+.concept.pink { border-color: var(--pink); background: var(--pink-light); }
+.concept.teal { border-color: var(--teal); background: var(--teal-light); }
+.concept strong { color: var(--text-main); }
+
+/* COMPARISON TABLE */
+.compare-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin: 16px 0;
+  font-size: 15px;
+}
+.compare-table th {
+  background: var(--purple);
+  color: white;
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+}
+.compare-table td {
+  padding: 10px 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+.compare-table tr:nth-child(even) td { background: var(--purple-light); }
+.compare-table tr:last-child td { border-bottom: none; }
+
+/* INTERACTIVE FLIP */
+.flip-card {
+  background: var(--bg-card);
+  border: 2px solid var(--blue);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin: 8px 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+.flip-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+.flip-card .front { font-weight: 600; color: var(--blue); }
+.flip-card .back {
+  display: none;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--blue);
+  color: var(--text-main);
+  line-height: 1.7;
+}
+.flip-card.open .back { display: block; }
+.flip-card .tap-hint {
+  font-size: 13px;
+  color: var(--text-light);
+  margin-top: 4px;
+}
+.flip-card.open .tap-hint { display: none; }
+
+/* DIAGRAM */
+.diagram-box {
+  background: linear-gradient(135deg, var(--blue-light), var(--purple-light));
+  border-radius: var(--radius);
+  padding: 24px;
+  margin: 16px 0;
+  text-align: center;
+}
+.diagram-box .emoji-diagram {
+  font-size: 20px;
+  line-height: 2;
+}
+.diagram-box .arrow { color: var(--purple); font-weight: 700; font-size: 24px; }
+
+/* QUIZ */
+.quiz-box {
+  background: var(--green-light);
+  border: 2px solid var(--green);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin: 16px 0;
+}
+.quiz-box h4 {
+  color: var(--green);
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+.quiz-option {
+  display: block;
+  width: 100%;
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin: 8px 0;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: 'Lexend', sans-serif;
+  text-align: left;
+  transition: all 0.2s;
+}
+.quiz-option:hover { border-color: var(--green); background: #f0fdf4; }
+.quiz-option.correct { background: #d1fae5; border-color: var(--green); color: #065f46; }
+.quiz-option.wrong { background: #fee2e2; border-color: var(--red); color: #991b1b; }
+.quiz-option.disabled { pointer-events: none; opacity: 0.7; }
+.quiz-feedback {
+  margin-top: 12px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 15px;
+  display: none;
+}
+.quiz-feedback.show { display: block; }
+.quiz-feedback.correct-fb { background: #d1fae5; color: #065f46; }
+.quiz-feedback.wrong-fb { background: #fee2e2; color: #991b1b; }
+
+/* NAV BUTTONS */
+.nav-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  position: sticky;
+  bottom: 12px;
+  z-index: 50;
+}
+.nav-btn {
+  flex: 1;
+  padding: 16px;
+  border: none;
+  border-radius: 14px;
+  font-family: 'Lexend', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.nav-btn.prev {
+  background: white;
+  color: var(--purple);
+  border: 2px solid var(--purple);
+}
+.nav-btn.next {
+  background: linear-gradient(135deg, var(--blue), var(--purple));
+  color: white;
+}
+.nav-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+.nav-btn:disabled { opacity: 0.4; pointer-events: none; }
+
+/* TTS */
+.tts-btn {
+  background: var(--blue-light);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 0.2s;
+  vertical-align: middle;
+  margin-left: 6px;
+}
+.tts-btn:hover { background: var(--blue); color: white; }
+
+/* SETTINGS */
+.settings-toggle {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 100;
+  background: white;
+  border: 2px solid var(--purple);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+}
+.settings-panel {
+  display: none;
+  position: fixed;
+  top: 64px;
+  right: 12px;
+  z-index: 100;
+  background: white;
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow-hover);
+  width: 260px;
+}
+.settings-panel.open { display: block; }
+.settings-panel label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 12px;
+  color: var(--text-light);
+}
+.settings-panel input[type="range"] { width: 100%; }
+
+/* FUN FACT */
+.fun-fact {
+  background: linear-gradient(135deg, #FFF7ED, #FFFBEB);
+  border: 2px solid var(--orange);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin: 16px 0;
+}
+.fun-fact .label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--orange);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+/* OSMOSIS INTERACTIVE */
+.osmosis-demo {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 16px 0;
+}
+.cell-sim {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.5s;
+  border: 3px solid;
+  text-align: center;
+  padding: 8px;
+}
+.cell-sim.hyper { border-color: var(--red); background: var(--red-light); }
+.cell-sim.iso { border-color: var(--green); background: var(--green-light); }
+.cell-sim.hypo { border-color: var(--blue); background: var(--blue-light); }
+.cell-sim .emoji { font-size: 32px; transition: all 0.5s; }
+.cell-sim.hyper:hover .emoji { transform: scale(0.7); }
+.cell-sim.hypo:hover .emoji { transform: scale(1.4); }
+
+/* MOVEMENT ANIMATION */
+.movement-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin: 16px 0;
+}
+@media (min-width: 600px) {
+  .movement-cards { grid-template-columns: 1fr 1fr 1fr; }
+}
+.move-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 16px;
+  text-align: center;
+  border: 2px solid #e0e0e0;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.move-card:hover { border-color: var(--teal); transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+.move-card .icon { font-size: 40px; display: block; margin-bottom: 8px; }
+.move-card .name { font-weight: 700; color: var(--teal); }
+.move-card .desc { font-size: 14px; color: var(--text-light); margin-top: 4px; }
+
+/* SECTION NAV */
+.section-nav {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.section-dot {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.section-dot.visited { background: var(--green); }
+.section-dot.current { background: var(--purple); transform: scale(1.15); }
+
+/* PATHOGEN CARDS */
+.pathogen-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 16px 0;
+}
+@media (max-width: 500px) {
+  .pathogen-grid { grid-template-columns: 1fr; }
+}
+.pathogen-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 16px;
+  border: 2px solid #e0e0e0;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.pathogen-card:hover { border-color: var(--red); box-shadow: var(--shadow-hover); }
+.pathogen-card .p-icon { font-size: 32px; }
+.pathogen-card .p-name { font-weight: 700; color: var(--red); font-size: 15px; margin-top: 4px; }
+.pathogen-card .p-disease { font-size: 13px; color: var(--text-light); }
+.pathogen-card .p-details { display: none; margin-top: 10px; font-size: 14px; border-top: 1px dashed #e0e0e0; padding-top: 10px; }
+.pathogen-card.open .p-details { display: block; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<button class="settings-toggle" onclick="toggleSettings()" aria-label="Postavke">⚙️</button>
+<div class="settings-panel" id="settingsPanel" role="dialog" aria-label="Postavke prikaza">
+  <label>Veličina fonta
+    <input type="range" min="14" max="24" value="17" oninput="document.body.style.fontSize=this.value+'px'">
+  </label>
+  <label>Pozadina
+    <select onchange="document.body.style.background=this.value" style="width:100%;padding:8px;border-radius:8px;border:1px solid #ddd;">
+      <option value="#F8F6FF">Lavanda (zadano)</option>
+      <option value="#FFF8F0">Topla krem</option>
+      <option value="#F0FDF4">Blago zelena</option>
+      <option value="#FFFFFF">Bijela</option>
+      <option value="#1a1a2e">Tamna</option>
+    </select>
+  </label>
+</div>
+
+<div class="container">
+
+<!-- HERO -->
+<div class="hero">
+  <span class="cell-emoji">🔬🧬</span>
+  <h1>Eukarioti i jednostanični organizmi</h1>
+  <p>Poglavlja 3.1 i 3.2 — Interaktivna lekcija</p>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="progressBar"></div>
+  </div>
+</div>
+
+<!-- SECTION NAV -->
+<div class="section-nav" id="sectionNav" aria-label="Navigacija po cjelinama"></div>
+
+<!-- ===== SECTION 0: INTRO ===== -->
+<div class="section active" data-section="0">
+<div class="card">
+  <h2>👋 Bok Natalija!</h2>
+  <p>Večeras ćemo proći dva velika poglavlja iz biologije:</p>
+  <div class="concept purple">
+    <strong>3.1 Pojava eukariota</strong> — Kako su nastale složene stanice s jezgrom? Odakle mitohondriji i kloroplasti?
+  </div>
+  <div class="concept teal">
+    <strong>3.2 Jednostanični eukarioti i prokarioti</strong> — Protisti, kretanje, prehrana, osmoza, razmnožavanje i bolesti koje uzrokuju.
+  </div>
+  <p style="margin-top:16px;">Svaka cjelina ima interaktivne kartice koje možeš otvarati klikom, mini-kvizove za provjeru i zanimljivosti. Krećemo!</p>
+</div>
+</div>
+
+<!-- ===== SECTION 1: PROKARIOTI VS EUKARIOTI ===== -->
+<div class="section" data-section="1">
+<div class="card">
+  <h2>🧫 Prokarioti vs. Eukarioti</h2>
+  <p>Sav život na Zemlji dijeli se na dva temeljna tipa stanica. Klikni na kartice da vidiš razlike:</p>
+
+  <div class="flip-card" onclick="this.classList.toggle('open')">
+    <div class="front">🟢 Prokariotska stanica — klikni za detalje</div>
+    <div class="tap-hint">tap za otvaranje</div>
+    <div class="back">
+      <strong>Prokarioti</strong> (grč. <em>pro</em> = prije, <em>karyon</em> = jezgra) su stariji, jednostavniji organizmi. Njihova DNA je slobodna u citoplazmi — <strong>nemaju jezgru</strong> niti membranske organele. Primjeri: bakterije i arheje. Pojavili su se prije ~3.8 milijardi godina.
+    </div>
+  </div>
+
+  <div class="flip-card" onclick="this.classList.toggle('open')">
+    <div class="front">🔵 Eukariotska stanica — klikni za detalje</div>
+    <div class="tap-hint">tap za otvaranje</div>
+    <div class="back">
+      <strong>Eukarioti</strong> (grč. <em>eu</em> = pravi, <em>karyon</em> = jezgra) imaju <strong>pravu jezgru</strong> s jezgrinom ovojnicom i <strong>membranske organele</strong> (mitohondriji, kloroplasti, ER...). Pojavili su se prije ~1.5–2 milijarde godina. Primjeri: biljke, životinje, gljive, protisti.
+    </div>
+  </div>
+
+  <table class="compare-table">
+    <tr><th>Svojstvo</th><th>Prokarioti</th><th>Eukarioti</th></tr>
+    <tr><td><strong>Jezgra</strong></td><td>❌ Nema</td><td>✅ Ima (s ovojnicom)</td></tr>
+    <tr><td><strong>DNA</strong></td><td>Slobodna u citoplazmi</td><td>U jezgri, linearna</td></tr>
+    <tr><td><strong>Organele</strong></td><td>Nema membranskih</td><td>Mitohondriji, kloroplasti...</td></tr>
+    <tr><td><strong>Veličina</strong></td><td>1–10 µm</td><td>10–100 µm</td></tr>
+    <tr><td><strong>Primjeri</strong></td><td>Bakterije, arheje</td><td>Biljke, životinje, gljive</td></tr>
+  </table>
+
+  <div class="fun-fact">
+    <div class="label">💡 Zanimljivost</div>
+    Jezgra eukariotske stanice izgleda poput oraha! Ima nabore i udubine, slično kao mozak. Zato udžbenik uspoređuje orah, mozak i jezgru — svi imaju brazde i nabore koji povećavaju površinu.
+  </div>
+</div>
+</div>
+
+<!-- ===== SECTION 2: ENDOSIMBIOTSKA TEORIJA ===== -->
+<div class="section" data-section="2">
+<div class="card">
+  <h2>🤝 Endosimbiotska teorija</h2>
+  <p>Ovo je jedna od najfascinantnijih priča u biologiji — priča o tome kako su se dva potpuno različita organizma spojila i stvorili nešto novo!</p>
+
+  <div class="concept purple">
+    <strong>Endosimbioza</strong> = jedna stanica živi unutar druge na obostranu korist. Doslovno: <em>endo</em> (unutar) + <em>simbioza</em> (zajednički život).
+  </div>
+
+  <h3>Kako je nastao mitohondrij?</h3>
+  <div class="diagram-box">
+    <div class="emoji-diagram">
+      🫧 Veća stanica (prastanica)<br>
+      <span class="arrow">+</span><br>
+      🦠 Aerobna bakterija (koristi kisik za energiju)<br>
+      <span class="arrow">⬇️</span><br>
+      🔵 Aerobna bakterija ulazi u veću stanicu<br>
+      <span class="arrow">⬇️</span><br>
+      ⚡ Bakterija postaje <strong>MITOHONDRIJ</strong> — tvornica energije!
+    </div>
+  </div>
+
+  <h3>Kako je nastao kloroplast?</h3>
+  <div class="diagram-box">
+    <div class="emoji-diagram">
+      🔵 Stanica s mitohondrijem<br>
+      <span class="arrow">+</span><br>
+      🟢 Cijanobakterija (fotosinteza)<br>
+      <span class="arrow">⬇️</span><br>
+      🌿 Cijanobakterija postaje <strong>KLOROPLAST</strong> — tvornica hrane!
+    </div>
+  </div>
+
+  <h3>Dokazi za endosimbiozu</h3>
+  <div class="flip-card" onclick="this.classList.toggle('open')">
+    <div class="front">🔍 Koji su dokazi? — klikni</div>
+    <div class="tap-hint">tap za otvaranje</div>
+    <div class="back">
+      <strong>1.</strong> Mitohondriji i kloroplasti imaju <strong>vlastitu DNA</strong> — različitu od DNA jezgre!<br>
+      <strong>2.</strong> Imaju <strong>dvostruku membranu</strong> — vanjska je od domaćina, unutarnja izvorna bakterijska.<br>
+      <strong>3.</strong> <strong>Dijele se samostalno</strong>, neovisno o stanici.<br>
+      <strong>4.</strong> Slični su veličinom bakterijama.<br>
+      <strong>5.</strong> Reagiraju na neke <strong>antibiotike</strong> kao bakterije.
+    </div>
+  </div>
+
+  <div class="fun-fact">
+    <div class="label">🌟 Priča iz povijesti znanosti</div>
+    Lynn Margulis je 1967. predložila ovu teoriju. Čak <strong>15 časopisa</strong> je odbilo njezin rad prije nego što je objavljen! Svi su mislili da je luda. Danas je to jedno od najprihvaćenijih objašnjenja u biologiji. Bila je udana za Carla Sagana — slavnog astronoma.
+  </div>
+</div>
+
+<!-- MINI QUIZ 1 -->
+<div class="quiz-box">
+  <h4>🎯 Brza provjera — Cjelina 1 & 2</h4>
+  <p><strong>Što je endosimbioza?</strong></p>
+  <div id="q1">
+    <button class="quiz-option" onclick="checkQuiz('q1',this,false)">Kada jedna stanica pojede drugu i obje umru</button>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,true)">Kada jedna stanica živi unutar druge na obostranu korist</button>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,false)">Kada se dvije stanice spoje u jednu veću stanicu</button>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,false)">Kada stanica izbacuje organele u okoliš</button>
+  </div>
+  <div class="quiz-feedback" id="q1-fb"></div>
+</div>
+</div>
+
+<!-- ===== SECTION 3: JEDNOSTANIČNI EUKARIOTI ===== -->
+<div class="section" data-section="3">
+<div class="card">
+  <h2>🦠 Jednostanični eukarioti — Protisti</h2>
+  <p>Eukariote možemo podijeliti na <strong>jednostanične</strong> i <strong>višestanične</strong>. Među jednostanične spadaju organizmi koji su se nekad zvali <strong>Protista</strong> (danas Protoctista).</p>
+
+  <div class="concept teal">
+    <strong>Protisti</strong> su nevjerojatno raznoliki — od amebe koja mijenja oblik do euglene koja je polu-biljka polu-životinja. Svi su eukarioti, ali nisu ni biljke, ni životinje, ni gljive!
+  </div>
+
+  <div class="fun-fact">
+    <div class="label">💡 Zanimljivost</div>
+    Na slici 3.2.0 u udžbeniku vidimo amebocit (bijelu krvnu stanicu) koji napada eritrocite (crvene krvne stanice). Bijela krvna stanica izgleda poput jednostaničnog eukariota jer koristi pseudopodije za kretanje i "gutanje" — baš kao ameba!
+  </div>
+
+  <h3>Tajna uspjeha: Omjer površine i volumena</h3>
+  <p>Zašto su jednostanični organizmi tako mali? Tajna je u matematici!</p>
+
+  <div class="concept orange">
+    Kad stanica raste, njezin <strong>volumen raste brže od površine</strong>. Površina je ta kroz koju stanica prima hranu i izbacuje otpad. Ako stanica postane prevelika, nema dovoljno površine za opskrbu.
+  </div>
+
+  <div class="diagram-box">
+    <div class="emoji-diagram">
+      <strong>Primjer s kockom:</strong><br><br>
+      📦 Stranica 2 → Površina: 24, Volumen: 8 → Omjer: <strong>3:1</strong><br>
+      📦 Stranica 4 → Površina: 96, Volumen: 64 → Omjer: <strong>1.5:1</strong><br>
+      📦 Stranica 8 → Površina: 384, Volumen: 512 → Omjer: <strong>0.75:1</strong><br><br>
+      ⚠️ Što je stanica veća, to je omjer <strong>manji</strong> = manje površine po jedinici volumena!
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ===== SECTION 4: ZAŠTITA I POKROV ===== -->
+<div class="section" data-section="4">
+<div class="card">
+  <h2>🛡️ Zaštita i pokrov</h2>
+  <p>Jednostanični organizmi su okruženi opasnostima. Kako se štite?</p>
+
+  <div class="flip-card" onclick="this.classList.toggle('open')">
+    <div class="front">🫧 Stanična membrana</div>
+    <div class="tap-hint">tap za detalje</div>
+    <div class="back">
+      Svi organizmi imaju <strong>staničnu membranu</strong> — tanki sloj koji odvaja unutrašnjost stanice od okoline. Omogućava kretanje, izmjenu tvari i zaštitu. Polupropusna je — neke tvari prolaze, neke ne.
+    </div>
+  </div>
+
+  <div class="flip-card" onclick="this.classList.toggle('open')">
+    <div class="front">🧱 Stanična stijenka</div>
+    <div class="tap-hint">tap za detalje</div>
+    <div class="back">
+      Gotovo sve bakterije imaju <strong>staničnu stijenku</strong> koja daje čvrstoću i oblik. Kod bakterija je od peptidoglikana — složenog polimera. To je poput oklopa iznad membrane.
+    </div>
+  </div>
+
+  <div class="flip-card" onclick="this.classList.toggle('open')">
+    <div class="front">💊 Kapsula</div>
+    <div class="tap-hint">tap za detalje</div>
+    <div class="back">
+      Neke bakterije imaju dodatni sloj — <strong>kapsulu</strong>. To je sluzavi omotač koji ih štiti od napada bijlih krvnih stanica i nepovoljnih uvjeta. Poput nevidljivog štita!
+    </div>
+  </div>
+
+  <div class="flip-card" onclick="this.classList.toggle('open')">
+    <div class="front">🎯 Pelikula</div>
+    <div class="tap-hint">tap za detalje</div>
+    <div class="back">
+      Trepetljikaši imaju <strong>pelikulu</strong> — ojačanu staničnu membranu s kosketnim strukturama koja im daje stalan oblik tijela. Poput unutarnjeg "kostura" stanice.
+    </div>
+  </div>
+
+  <div class="flip-card" onclick="this.classList.toggle('open')">
+    <div class="front">🏠 Ljušturica (kućica)</div>
+    <div class="tap-hint">tap za detalje</div>
+    <div class="back">
+      Neke skupine (npr. kremenjašice, foraminiferci) grade <strong>ljušturice</strong> od kalcijeva karbonata ili silicija. Te ljušturice su toliko specifične da su važne za geološku dataciju — poznato je preko 36.000 izumrlih vrsta!
+    </div>
+  </div>
+
+  <div class="flip-card" onclick="this.classList.toggle('open')">
+    <div class="front">💤 Zaštitna čahura (cista)</div>
+    <div class="tap-hint">tap za detalje</div>
+    <div class="back">
+      Kad uvjeti postanu nepovoljni (hladnoća, suša, nedostatak hrane), neki jednostanični eukarioti mogu izlučivati <strong>zaštitnu čahuru</strong> i prijeći u <strong>trajne stadije</strong>. Kad se uvjeti poprave, izađu iz čahure i nastave život. Poput hibernacije!
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ===== SECTION 5: KRETANJE ===== -->
+<div class="section" data-section="5">
+<div class="card">
+  <h2>🏃 Kretanje jednostaničnih organizama</h2>
+  <p>Kretanje je ključno za nalaženje hrane i bijeg od opasnosti. Tri su osnovna načina:</p>
+
+  <div class="movement-cards">
+    <div class="move-card" onclick="this.querySelector('.desc').style.display=this.querySelector('.desc').style.display==='block'?'none':'block'">
+      <span class="icon">🫠</span>
+      <div class="name">Pseudopodiji</div>
+      <div class="desc" style="display:none">
+        <strong>"Lažne nožice"</strong> — Stanica ispruži dio citoplazme u smjeru kretanja. Primjer: <strong>ameba</strong>. Koristi ih i za hranjenje — obavija plijen pseudopodijima (fagocitoza). Poput protezanja ruke za hranom!
+      </div>
+    </div>
+    <div class="move-card" onclick="this.querySelector('.desc').style.display=this.querySelector('.desc').style.display==='block'?'none':'block'">
+      <span class="icon">🐍</span>
+      <div class="name">Bičevi (flagele)</div>
+      <div class="desc" style="display:none">
+        <strong>Dugi, biču slični nastavci</strong> — stanica ih koristi za pokretanje kroz tekućinu. Obično 1-2 biča. Primjeri: <strong>Euglena</strong>, <strong>Trypanosoma</strong>. Poput motora na čamcu!
+      </div>
+    </div>
+    <div class="move-card" onclick="this.querySelector('.desc').style.display=this.querySelector('.desc').style.display==='block'?'none':'block'">
+      <span class="icon">🌊</span>
+      <div class="name">Trepetljike (cilije)</div>
+      <div class="desc" style="display:none">
+        <strong>Kratki, brojni nastavci</strong> koji se kreću usklađeno poput valova. Pokrivaju cijelu površinu stanice. Primjer: <strong>papučica (Paramecium)</strong>. Poput tisuću malih vesala koja veslaju u ritmu!
+      </div>
+    </div>
+  </div>
+
+  <div class="fun-fact">
+    <div class="label">💡 Jesi li znala?</div>
+    Bijele krvne stanice u tvom tijelu koriste pseudopodije — potpuno isto kao amebe! One "jure" bakterije, obavijaju ih i gutaju. Tvoj imunitet radi na principima koji su stari preko milijardu godina.
+  </div>
+</div>
+
+<!-- MINI QUIZ 2 -->
+<div class="quiz-box">
+  <h4>🎯 Brza provjera — Kretanje</h4>
+  <p><strong>Koji organizam se kreće pomoću bičeva?</strong></p>
+  <div id="q2">
+    <button class="quiz-option" onclick="checkQuiz('q2',this,false)">Ameba</button>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,true)">Euglena</button>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,false)">Papučica (Paramecium)</button>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,false)">Kremenjašica</button>
+  </div>
+  <div class="quiz-feedback" id="q2-fb"></div>
+</div>
+</div>
+
+<!-- ===== SECTION 6: PREHRANA ===== -->
+<div class="section" data-section="6">
+<div class="card">
+  <h2>🍽️ Prehrana jednostaničnih organizama</h2>
+  <p>Kako se hrane organizmi koji nemaju usta, želudac ni crijeva?</p>
+
+  <div class="concept green">
+    <strong>🌿 Autotrofi</strong> — Sami proizvode hranu! Koriste sunčevu svjetlost (fotosinteza) ili kemijsku energiju. Primjeri: alge, cijanobakterije. Imaju klorofilaste (zelene pigmente).
+  </div>
+
+  <div class="concept orange">
+    <strong>🍖 Heterotrofi</strong> — Hrane se drugim organizmima ili organskim tvarima. Ne mogu sami stvarati hranu. Primjeri: truskovci, trepetljikaši, sluzavci, amebe. Gutaju hranu fagocitozom.
+  </div>
+
+  <div class="concept pink">
+    <strong>🌿🍖 Miksotrofi</strong> — Kombiniraju oboje! Mogu i fotosintezirati i jesti. Primjer: <strong>Euglena</strong> — na svjetlu fotosintezira, u tami se hrani heterotrofno. Najbolji od oba svijeta!
+  </div>
+
+  <h3>🔬 Euglena viridis — Zeleni bičaš</h3>
+  <div class="concept teal">
+    Euglena je fascinantan organizam. Ima:<br>
+    🟢 <strong>Kloroplaste</strong> — za fotosintezu<br>
+    🐍 <strong>Bič</strong> — za kretanje<br>
+    👁️ <strong>Očnu pjegu</strong> (fotoreceptor) — "vidi" svjetlost i kreće se prema njoj<br>
+    📦 <strong>Sterilne mjehuriće</strong> — za izbacivanje vode<br><br>
+    Nije ni biljka ni životinja — zato je svrstana u protiste!
+  </div>
+</div>
+</div>
+
+<!-- ===== SECTION 7: OSMOZA I DIFUZIJA ===== -->
+<div class="section" data-section="7">
+<div class="card">
+  <h2>💧 Osmoza i difuzija</h2>
+  <p>Kako jednostanični organizmi razmjenjuju tvari s okolišem?</p>
+
+  <div class="concept blue">
+    <strong>Difuzija</strong> = čestice se kreću iz područja <strong>veće</strong> koncentracije u područje <strong>manje</strong> koncentracije. Pasivan proces — ne treba energija! Zamijeni: parfem koji se širi sobom.
+  </div>
+
+  <div class="concept purple">
+    <strong>Osmoza</strong> = kretanje <strong>vode</strong> kroz polupropusnu membranu iz područja manje koncentracije otopljenih tvari u područje veće koncentracije. Voda "juri" tamo gdje ima više soli/šećera.
+  </div>
+
+  <h3>Tri vrste otopina</h3>
+  <p>Klikni na stanicu da vidiš što se događa:</p>
+
+  <div class="osmosis-demo">
+    <div class="cell-sim hyper" onclick="alert('HIPERTONIČNA: Više soli vani nego unutra. Voda izlazi iz stanice → stanica se SKUPLJA i smežura! 😵')">
+      <span class="emoji">😵</span>
+      <strong>Hipertonična</strong>
+      <small>vani > unutra</small>
+    </div>
+    <div class="cell-sim iso" onclick="alert('IZOTONIČNA: Jednaka koncentracija unutra i vani. Voda ulazi i izlazi jednako → stanica zadržava NORMALAN oblik! 😊')">
+      <span class="emoji">😊</span>
+      <strong>Izotonična</strong>
+      <small>vani = unutra</small>
+    </div>
+    <div class="cell-sim hypo" onclick="alert('HIPOTONIČNA: Manje soli vani nego unutra. Voda ulazi u stanicu → stanica NABUBRI i može puknuti! 🎈💥')">
+      <span class="emoji">🎈</span>
+      <strong>Hipotonična</strong>
+      <small>vani < unutra</small>
+    </div>
+  </div>
+
+  <div class="fun-fact">
+    <div class="label">💡 Primjer iz života</div>
+    Kad staviš suhu šljivu u vodu, ona nabubri — to je osmoza! Voda ulazi u šljivu jer je unutra puno šećera. Obrnuto, kad posoleš salatu, ona "pusti vodu" jer sol izvlači vodu iz stanica.
+  </div>
+
+  <div class="concept orange">
+    <strong>Sterilni mjehurići</strong> (kontraktilne vakuole) — Slatkovodni organizmi žive u hipotoničnom okruženju (voda stalno ulazi). Koriste sterilne mjehuriće za ispumpavanje viška vode — poput male pumpe!
+  </div>
+</div>
+
+<!-- MINI QUIZ 3 -->
+<div class="quiz-box">
+  <h4>🎯 Brza provjera — Osmoza</h4>
+  <p><strong>Što se događa sa stanicom u hipotoničnoj otopini?</strong></p>
+  <div id="q3">
+    <button class="quiz-option" onclick="checkQuiz('q3',this,false)">Stanica se skuplja</button>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,true)">Stanica nabubri (voda ulazi)</button>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,false)">Stanica ostaje ista</button>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,false)">Stanica se dijeli na dva dijela</button>
+  </div>
+  <div class="quiz-feedback" id="q3-fb"></div>
+</div>
+</div>
+
+<!-- ===== SECTION 8: RAZMNOŽAVANJE ===== -->
+<div class="section" data-section="8">
+<div class="card">
+  <h2>🔄 Razmnožavanje</h2>
+  <p>Jednostanični organizmi se razmnožavaju <strong>nespolno</strong> — brzo i efikasno!</p>
+
+  <div class="concept green">
+    <strong>Dioba (fisija)</strong> — Najčešći oblik. Stanica naraste, podijeli DNA, pa se razdvoji na <strong>dvije identične stanice-kćeri</strong>. Brzo i efikasno! Neke bakterije se dijele svakih 20 minuta.
+  </div>
+
+  <div class="concept blue">
+    <strong>Pupovanje</strong> — Na stanici nastaje mali "pupoljak" koji raste dok se ne odvoji kao nova stanica. Primjer: kvasac. Razlika od diobe: potomci su isprva <strong>manji</strong> od matične stanice.
+  </div>
+
+  <div class="concept orange">
+    <strong>Spolno razmnožavanje</strong> — Neki jednostanični eukarioti (npr. trepetljikaši) imaju i <strong>spolni</strong> proces — konjugaciju. Privremeno spoje dva organizma i razmijene genetski materijal. Time stvaraju <strong>raznolikost</strong> — ključnu za prilagodbu okolišu.
+  </div>
+
+  <div class="fun-fact">
+    <div class="label">💡 Zanimljivost</div>
+    Ako bi se jedna bakterija dijelila svakih 20 minuta bez ograničenja, za samo 48 sati njezino potomstvo bi premašilo masu Zemlje! Naravno, ograničeni resursi to sprečavaju. Ali ovo pokazuje koliko je nespolno razmnožavanje efikasno.
+  </div>
+
+  <div class="concept purple">
+    <strong>Klonovi</strong> — Potomci nespolnog razmnožavanja su genetski identični roditelju = <strong>klonovi</strong>. To je prednost kad su uvjeti stabilni, ali mana kad se okoliš promijeni (nema varijacija za prilagodbu).
+  </div>
+</div>
+</div>
+
+<!-- ===== SECTION 9: BOLESTI ===== -->
+<div class="section" data-section="9">
+<div class="card">
+  <h2>🦠 Jednostanični eukarioti — Uzročnici bolesti</h2>
+  <p>Neki protisti uzrokuju ozbiljne bolesti kod ljudi. Klikni na karticu za detalje:</p>
+
+  <div class="pathogen-grid">
+    <div class="pathogen-card" onclick="this.classList.toggle('open')">
+      <div class="p-icon">🔬</div>
+      <div class="p-name">Trichomonas vaginalis</div>
+      <div class="p-disease">Trihomonijaza</div>
+      <div class="p-details">
+        Prenosi se spolnim kontaktom. Uzrokuje upale i iritacije mokraćno-spolnog sustava. Kreće se pomoću <strong>bičeva</strong>. Jedna od najčešćih spolno prenosivih infekcija na svijetu.
+      </div>
+    </div>
+    <div class="pathogen-card" onclick="this.classList.toggle('open')">
+      <div class="p-icon">🐛</div>
+      <div class="p-name">Trypanosoma</div>
+      <div class="p-disease">Bolest spavanja / Chagas</div>
+      <div class="p-details">
+        <strong>T. brucei</strong> uzrokuje bolest spavanja u Africi (prenosi muha ce-ce). <strong>T. cruzi</strong> uzrokuje Chagasovu bolest u Južnoj Americi (prenosi stjenica). Kreću se bičevima u krvi domaćina.
+      </div>
+    </div>
+    <div class="pathogen-card" onclick="this.classList.toggle('open')">
+      <div class="p-icon">🦎</div>
+      <div class="p-name">Leishmania</div>
+      <div class="p-disease">Lišmanijaza</div>
+      <div class="p-details">
+        Prenosi se ubodom papatača (mali komarac). Uzrokuje kožne rane ili napada unutarnje organe — <strong>kala-azar</strong>, koja može biti smrtonosna. Česta u tropskim krajevima. Psi su glavni rezervoar zaraze.
+      </div>
+    </div>
+    <div class="pathogen-card" onclick="this.classList.toggle('open')">
+      <div class="p-icon">🦟</div>
+      <div class="p-name">Plasmodium</div>
+      <div class="p-disease">Malarija</div>
+      <div class="p-details">
+        Najpoznatiji protist-uzročnik bolesti! Prenosi ga <strong>ženka komarca Anopheles</strong>. Plasmodij napada crvene krvne stanice, razmnožava se u njima i uništava ih — uzrokuje vrućicu, tresavicu, slabost. <strong>Malarija i danas ubija stotine tisuća ljudi godišnje</strong>, većinom djecu u Africi.
+      </div>
+    </div>
+  </div>
+
+  <div class="fun-fact">
+    <div class="label">🌟 Priča o malariji</div>
+    Riječ "malarija" dolazi od talijanskog <em>"mala aria"</em> = "loš zrak". Ljudi su nekad mislili da bolest uzrokuje ustajalim zrakom iz močvara. Tek 1880. je francuski liječnik Charles Laveran otkrio pravog krivca — protist Plasmodium u krvi bolesnika.
+  </div>
+</div>
+
+<!-- MINI QUIZ 4 -->
+<div class="quiz-box">
+  <h4>🎯 Brza provjera — Bolesti</h4>
+  <p><strong>Koji organizam prenosi malariju?</strong></p>
+  <div id="q4">
+    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">Muha ce-ce</button>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">Krpelj</button>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,true)">Ženka komarca Anopheles</button>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">Papatač</button>
+  </div>
+  <div class="quiz-feedback" id="q4-fb"></div>
+</div>
+</div>
+
+<!-- ===== SECTION 10: SAŽETAK ===== -->
+<div class="section" data-section="10">
+<div class="card">
+  <h2>📋 Sažetak svega naučenog</h2>
+
+  <div class="concept purple">
+    <strong>Eukarioti</strong> su stanice s pravom jezgrom i organelama. Nastali su <strong>endosimbiozom</strong> — spajanjem jednostavnijih stanica.
+  </div>
+  <div class="concept teal">
+    <strong>Mitohondriji</strong> su nastali od aerobnih bakterija, a <strong>kloroplasti</strong> od cijanobakterija. Dokazi: vlastita DNA, dvostruka membrana, samostalna dioba.
+  </div>
+  <div class="concept green">
+    <strong>Protisti</strong> su raznoliki jednostanični eukarioti. Kreću se pseudopodijima, bičevima ili trepetljikama.
+  </div>
+  <div class="concept orange">
+    <strong>Prehrana</strong>: autotrofi (sami stvaraju hranu), heterotrofi (jedu druge), miksotrofi (oboje). Euglena je najpoznatiji miksotrofni organizam.
+  </div>
+  <div class="concept blue">
+    <strong>Osmoza</strong>: u hipotoničnoj otopini stanica bubri, u hipertoničnoj se skuplja, u izotoničnoj je u ravnoteži.
+  </div>
+  <div class="concept pink">
+    <strong>Razmnožavanje</strong>: uglavnom nespolno (dioba, pupovanje). Neki imaju i spolni proces (konjugacija) za genetsku raznolikost.
+  </div>
+  <div class="concept" style="border-color:var(--red);background:var(--red-light);">
+    <strong>Bolesti</strong>: Plasmodium (malarija), Trypanosoma (bolest spavanja), Leishmania (lišmanijaza), Trichomonas (trihomonijaza).
+  </div>
+
+  <div style="text-align:center;margin-top:24px;padding:20px;background:linear-gradient(135deg,var(--green-light),var(--blue-light));border-radius:var(--radius);">
+    <span style="font-size:40px;">🎉</span>
+    <h3 style="color:var(--green);margin:8px 0;">Bravo, Natalija!</h3>
+    <p>Prošla si cijelu lekciju o eukariotima i jednostaničnim organizmima. Sad je vrijeme za priču i ispit!</p>
+  </div>
+</div>
+</div>
+
+<!-- NAV BUTTONS -->
+<div class="nav-buttons">
+  <button class="nav-btn prev" id="prevBtn" onclick="navigate(-1)" disabled>← Nazad</button>
+  <button class="nav-btn next" id="nextBtn" onclick="navigate(1)">Dalje →</button>
+</div>
+
+</div><!-- container -->
+
+<script>
+let currentSection = 0;
+const sections = document.querySelectorAll('.section');
+const totalSections = sections.length;
+const visited = new Set([0]);
+
+// Build section nav dots
+const navEl = document.getElementById('sectionNav');
+for (let i = 0; i < totalSections; i++) {
+  const dot = document.createElement('div');
+  dot.className = 'section-dot' + (i === 0 ? ' current' : '');
+  dot.textContent = i;
+  dot.onclick = () => goToSection(i);
+  navEl.appendChild(dot);
+}
+updateNav();
+
+function goToSection(idx) {
+  if (idx < 0 || idx >= totalSections) return;
+  sections[currentSection].classList.remove('active');
+  currentSection = idx;
+  sections[currentSection].classList.add('active');
+  visited.add(currentSection);
+  updateNav();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function navigate(dir) {
+  goToSection(currentSection + dir);
+}
+
+function updateNav() {
+  document.getElementById('prevBtn').disabled = currentSection === 0;
+  const nextBtn = document.getElementById('nextBtn');
+  nextBtn.textContent = currentSection === totalSections - 1 ? '✅ Završi' : 'Dalje →';
+  if (currentSection === totalSections - 1) nextBtn.disabled = true;
+
+  // Progress
+  document.getElementById('progressBar').style.width = ((currentSection / (totalSections - 1)) * 100) + '%';
+
+  // Dots
+  document.querySelectorAll('.section-dot').forEach((d, i) => {
+    d.className = 'section-dot';
+    if (i === currentSection) d.classList.add('current');
+    else if (visited.has(i)) d.classList.add('visited');
+  });
+}
+
+function toggleSettings() {
+  document.getElementById('settingsPanel').classList.toggle('open');
+}
+
+function checkQuiz(id, btn, correct) {
+  const container = document.getElementById(id);
+  const fb = document.getElementById(id + '-fb');
+  container.querySelectorAll('.quiz-option').forEach(b => {
+    b.classList.add('disabled');
+    if (b === btn) b.classList.add(correct ? 'correct' : 'wrong');
+  });
+  // highlight correct
+  if (!correct) {
+    container.querySelectorAll('.quiz-option').forEach(b => {
+      if (b.onclick.toString().includes('true')) b.classList.add('correct');
+    });
+  }
+  fb.className = 'quiz-feedback show ' + (correct ? 'correct-fb' : 'wrong-fb');
+  const feedbacks = {
+    q1: correct ? '✅ Točno! Endosimbioza je zajednički život unutar stanice na obostranu korist.' : '❌ Ne baš. Endosimbioza znači "endo" (unutar) + "simbioza" (zajednički život na korist obje strane).',
+    q2: correct ? '✅ Točno! Euglena se kreće pomoću biča. Ameba koristi pseudopodije, a papučica trepetljike.' : '❌ Euglena se kreće pomoću biča! Ameba koristi pseudopodije, a papučica trepetljike.',
+    q3: correct ? '✅ Točno! U hipotoničnoj otopini voda ulazi u stanicu (jer je vani manje soli) pa stanica nabubri.' : '❌ U hipotoničnoj otopini voda ULAZI u stanicu jer je vani manje soli → stanica nabubri!',
+    q4: correct ? '✅ Točno! Ženka komarca Anopheles prenosi Plasmodium koji uzrokuje malariju.' : '❌ Malariju prenosi ženka komarca Anopheles! Muha ce-ce prenosi bolest spavanja, a papatač lišmanijazu.'
+  };
+  fb.innerHTML = feedbacks[id] || '';
+}
+
+// TTS
+function speak(text, lang='hr-HR') {
+  if ('speechSynthesis' in window) {
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = lang;
+    u.rate = 0.9;
+    speechSynthesis.speak(u);
+  }
+}
+</script>
+
+</body>
+</html>
