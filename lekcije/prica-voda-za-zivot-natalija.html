@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Priča o Vodi - Najčudnija Tvar u Svemiru</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.7;
+            color: #f0f4f8;
+            background: linear-gradient(135deg, #0f1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #00d4ff, #0099cc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 6vw, 3rem);
+            margin-bottom: 1.5rem;
+            color: #00d4ff;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #00e6ff;
+        }
+
+        p {
+            font-size: 1.05rem;
+            margin-bottom: 1.5rem;
+            max-width: 800px;
+            text-align: justify;
+        }
+
+        /* Header & Navigation */
+        header {
+            padding: 3rem 2rem;
+            text-align: center;
+            border-bottom: 2px solid rgba(0, 212, 255, 0.3);
+            position: sticky;
+            top: 0;
+            background: rgba(15, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            animation: slideDown 0.6s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .reading-time {
+            font-size: 0.95rem;
+            color: #0099cc;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: #00d4ff;
+            margin-bottom: 2rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        /* Table of Contents */
+        nav {
+            margin: 2rem auto;
+            max-width: 900px;
+            padding: 2rem;
+            background: rgba(0, 212, 255, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid #00d4ff;
+        }
+
+        nav h3 {
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 1.1rem;
+        }
+
+        nav ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        nav li {
+            transform: translateX(0);
+            transition: all 0.3s ease;
+        }
+
+        nav li:hover {
+            transform: translateX(10px);
+        }
+
+        nav a {
+            color: #00d4ff;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #00ffff;
+            border-bottom-color: #00d4ff;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 950px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            margin: 5rem auto;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        section:nth-child(1) { animation-delay: 0.1s; }
+        section:nth-child(2) { animation-delay: 0.2s; }
+        section:nth-child(3) { animation-delay: 0.3s; }
+        section:nth-child(4) { animation-delay: 0.4s; }
+        section:nth-child(5) { animation-delay: 0.5s; }
+        section:nth-child(6) { animation-delay: 0.6s; }
+        section:nth-child(7) { animation-delay: 0.7s; }
+        section:nth-child(8) { animation-delay: 0.8s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Section Styles */
+        .prologue {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 153, 204, 0.1));
+            padding: 3rem;
+            border-radius: 10px;
+            border-left: 5px solid #00d4ff;
+        }
+
+        .chapter {
+            background: linear-gradient(135deg, rgba(16, 73, 115, 0.2), rgba(0, 212, 255, 0.05));
+            padding: 3rem;
+            border-radius: 10px;
+            border-left: 5px solid #0099cc;
+            margin-bottom: 3rem;
+        }
+
+        .epilogue {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 153, 204, 0.15));
+            padding: 3rem;
+            border-radius: 10px;
+            border-left: 5px solid #00ffff;
+        }
+
+        /* Fun Fact Boxes */
+        .fun-fact {
+            background: linear-gradient(135deg, rgba(255, 200, 0, 0.15), rgba(255, 165, 0, 0.1));
+            border-left: 4px solid #ffc800;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+            position: relative;
+            padding-left: 2.5rem;
+        }
+
+        .fun-fact::before {
+            content: "💡";
+            position: absolute;
+            left: 1rem;
+            top: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .fun-fact-title {
+            color: #ffc800;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .fun-fact p {
+            font-size: 1rem;
+            margin: 0;
+            color: #f0f4f8;
+        }
+
+        /* Story Box */
+        .story-box {
+            background: rgba(0, 102, 153, 0.2);
+            border-left: 4px solid #00d4ff;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+            padding-left: 2.5rem;
+            position: relative;
+        }
+
+        .story-box::before {
+            content: "📖";
+            position: absolute;
+            left: 1rem;
+            top: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .story-title {
+            color: #00d4ff;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .story-box p {
+            font-size: 1rem;
+            margin: 0.5rem 0;
+            color: #f0f4f8;
+        }
+
+        /* SVG Containers */
+        .illustration {
+            display: flex;
+            justify-content: center;
+            margin: 2.5rem 0;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .illustration svg {
+            max-width: 100%;
+            height: auto;
+            filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.3));
+        }
+
+        /* Callout Quotes */
+        .callout {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(0, 230, 255, 0.05));
+            border-left: 5px solid #00ffff;
+            padding: 2rem;
+            margin: 2.5rem 0;
+            border-radius: 8px;
+            font-style: italic;
+            font-size: 1.15rem;
+            text-align: center;
+            color: #00ffff;
+            position: relative;
+        }
+
+        .callout::before {
+            content: '"';
+            position: absolute;
+            left: 0.5rem;
+            top: -0.5rem;
+            font-size: 4rem;
+            color: rgba(0, 212, 255, 0.2);
+        }
+
+        /* Two Column Layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+            align-items: start;
+        }
+
+        .two-column-text {
+            flex: 1;
+        }
+
+        .two-column-visual {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 768px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            p {
+                text-align: left;
+            }
+        }
+
+        /* Statistics/Data Boxes */
+        .stat-box {
+            background: linear-gradient(135deg, rgba(0, 153, 204, 0.2), rgba(0, 212, 255, 0.1));
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            margin: 1.5rem 0;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            color: #00d4ff;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #00e6ff;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Emphasis */
+        .highlight {
+            color: #00ffff;
+            font-weight: 700;
+        }
+
+        .emphasis {
+            color: #ffc800;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 2px solid rgba(0, 212, 255, 0.3);
+            margin-top: 5rem;
+            color: #0099cc;
+            font-size: 0.95rem;
+        }
+
+        footer p {
+            text-align: center;
+        }
+
+        .author-note {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(0, 212, 255, 0.05);
+            border-radius: 8px;
+            font-style: italic;
+        }
+
+        /* Scroll animations */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .fade-in-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+                color: #333;
+            }
+
+            header {
+                position: static;
+                background: white;
+                border-bottom: 1px solid #ccc;
+            }
+
+            h1, h2, h3 {
+                color: #0f3460;
+            }
+
+            nav {
+                display: none;
+            }
+
+            section {
+                page-break-inside: avoid;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+
+            main {
+                padding: 0 1.5rem;
+            }
+
+            section {
+                margin: 3rem auto;
+            }
+
+            .prologue, .chapter, .epilogue {
+                padding: 2rem 1.5rem;
+            }
+
+            nav ul {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #00d4ff, #0099cc);
+            border: none;
+            border-radius: 50%;
+            color: #0f1a2e;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🌊 Priča o Vodi 🌊</h1>
+        <p class="subtitle">Najčudnija tvar u svemiru</p>
+        <p class="reading-time">⏱️ Procijenjeno vrijeme čitanja: 15-18 minuta</p>
+    </header>
+
+    <main>
+        <nav>
+            <h3>📑 Sadrržaj</h3>
+            <ul>
+                <li><a href="#prologue">Prologue</a></li>
+                <li><a href="#chapter1">Zašto je voda čudna?</a></li>
+                <li><a href="#chapter2">Led koji spašava</a></li>
+                <li><a href="#chapter3">Zašto ne ključaš?</a></li>
+                <li><a href="#chapter4">Hodanje po vodi</a></li>
+                <li><a href="#chapter5">Univerzalni rastapač</a></li>
+                <li><a href="#chapter6">Tvoje vodeno tijelo</a></li>
+                <li><a href="#epilogue">Epilogue</a></li>
+            </ul>
+        </nav>
+
+        <!-- PROLOGUE -->
+        <section id="prologue" class="prologue fade-in-section">
+            <h2>Prologue: Najobičnija stvar na svijetu?</h2>
+
+            <p>Pomisli na to. U ovom trenutku, negdje na svijetu, milijarde ljudi piju nešto što je potpuno isto — vodu. Obična, neupadljiva, dosadna voda. Ista stvar koju piju mrave, koja ispunjava oceane, koja pada sa neba, koja ljulja tijelo koju imaš. Čini se da je najjednostavnija, najsveobičnija tvar ikad.</p>
+
+            <div class="callout">
+                "Ono što piješ svaki dan moglo bi biti najčudnija tvar u svemiru."
+            </div>
+
+            <p>Nije li to čudno? Upravo tako. Ako bih mogao odabrati jednu stvar koja je apsolutno bitna za razumijevanje kako funkcionira život — i kako funkcionira sve što vidimo oko sebe — bila bi to voda. Nije to samo kemikalija. Nije samo H₂O. Voda je mala medicinska čuda, molekularna čuda, kemijska čuda.</p>
+
+            <p>Većina ljudi misli da je voda dosadna. Procnjujem da si i ti to zapravo mislio. Ali čekaj, dok čitaš dalje. Jer u sljedećih 15 minuta, razgovarat ćemo o tome kako je voda dovoljno čudna da prakticira magiju — stvarnu magiju — na mikroskopskoj razini, svaki dan, bez prestanka.</p>
+
+            <div class="fun-fact">
+                <div class="fun-fact-title">Brzi Činjenica</div>
+                <p>Voda na Zemlji je više ili manje ista voda od prije 3,8 milijardi godina. Molekule vode koje piješ mogu su bile dio dinosaura, drevnih careva, i prvih oblika života na Zemlji. Doslovno piješ povijest.</p>
+            </div>
+        </section>
+
+        <!-- CHAPTER 1 -->
+        <section id="chapter1" class="chapter fade-in-section">
+            <h2>Poglavlje 1: Zašto je voda... čudna?</h2>
+
+            <p>Zamislite da... ste mali proton. Možda čak dio kiselina u želucu. Okolo vas su izvori, protoni i neutroni, stvarajući mali nebeski balet. Oko vas su elektroni, koji kruže kao mali mjesečevi oko planeta. Život je jednostavan. Sveokupno je predvidivo.</p>
+
+            <p>A onda — BAM — jednog dana ste dio nečega novog. Dio vodenog molekula. H₂O. Dva atoma vodika i jedan atom kisika. Čini se jednostavno, zar ne? Samo tri atoma. Ali čekaj.</p>
+
+            <p>Atom kisika je izuzetno sebičan. Ima apsolutnu glad za elektrone — kao dijete koje želi sve bombone iz posude. Kada se dva atoma vodika trebaju vezati uz kisik, atomi vodika doslovno <span class="highlight">daju svoju energiju</span> atomi kisika. To znamenuje, što je učinio je to da je dio molekule s kisikom — manja je malo negativno nabijen, a dijelovi s vodikom su malo pozitivno nabijeni.</p>
+
+            <div class="story-box">
+                <div class="story-title">Molekula kao magnet</div>
+                <p>Zamislite vodni molekul kao mali magnet. Dio je puta prema kisiku je malo "negativan magnet", a dijelovi prema vodiku su malo "pozitivni magneti". To znači da se vodni molekuli trebaju međusobno privlačiti — kao mali magneti koji se postavljaju jedan drugom.</p>
+                <p>Te male privlačne sile nazivaju se <span class="highlight">vodikovim vezama</span>. A vodikovim vezama su — te je to važno — neuobičajno snažne za molekularne standarde. To je kao da su molekuli vode, umjesto da su samo normalno privučeni jedni drugima, zapravo držali jedni druge za ruke. Nježno. Ali snažno.</p>
+            </div>
+
+            <p>Sada se može razmotriti što se događa kada imaš <span class="emphasis">milarde</span> i <span class="emphasis">triljade</span> vodenih molekula, sve zajedno, stvarajući taj kao što znamo kao "vodu" — tečnost koju piješ iz čaše.</p>
+
+            <div class="illustration">
+                <svg viewBox="0 0 400 300" width="300" height="220" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Title -->
+                    <text x="200" y="25" font-size="18" font-weight="bold" fill="#00d4ff" text-anchor="middle">Vodni molekul (H₂O)</text>
+
+                    <!-- Water molecule visualization -->
+                    <circle cx="200" cy="150" r="35" fill="rgba(0, 212, 255, 0.3)" stroke="#00d4ff" stroke-width="2"/>
+                    <text x="200" y="155" font-size="20" font-weight="bold" fill="#ffc800" text-anchor="middle">O</text>
+
+                    <!-- Hydrogen atoms -->
+                    <circle cx="140" cy="100" r="20" fill="rgba(255, 200, 0, 0.3)" stroke="#ffc800" stroke-width="2"/>
+                    <text x="140" y="107" font-size="14" font-weight="bold" fill="#ffc800" text-anchor="middle">H</text>
+
+                    <circle cx="260" cy="100" r="20" fill="rgba(255, 200, 0, 0.3)" stroke="#ffc800" stroke-width="2"/>
+                    <text x="260" y="107" font-size="14" font-weight="bold" fill="#ffc800" text-anchor="middle">H</text>
+
+                    <!-- Bonds -->
+                    <line x1="160" y1="120" x2="185" y2="140" stroke="#00e6ff" stroke-width="2" stroke-dasharray="5,5"/>
+                    <line x1="240" y1="140" x2="265" y2="120" stroke="#00e6ff" stroke-width="2" stroke-dasharray="5,5"/>
+
+                    <!-- Charge indicators -->
+                    <text x="200" y="225" font-size="13" fill="#00e6ff" text-anchor="middle">Kisik (malo negativan)</text>
+                    <text x="140" y="245" font-size="11" fill="#ffc800" text-anchor="middle">Vodik (+)</text>
+                    <text x="260" y="245" font-size="11" fill="#ffc800" text-anchor="middle">Vodik (+)</text>
+
+                    <!-- Legend -->
+                    <text x="20" y="280" font-size="12" fill="#00d4ff">Polarna molekula = privlači druge molekule vode</text>
+                </svg>
+            </div>
+
+            <div class="fun-fact">
+                <div class="fun-fact-title">Nevjerojatna činjenica</div>
+                <p>Vodikovim vezama čine vodu <span class="highlight">polarna molekula</span> — što znači da je kao mali magnet. To je apsolutno ključno. Bez polarnosti vode, bez tih vodikovih veza, voda bi bila gaz na sobnoj temperaturi, poput vrućeg zraka iz peći. Svijet bi bio potpuno drugačiji. Zapravo, vjerojatno ne bi bilo nikakva života.</p>
+            </div>
+
+            <p>Bill Bryson je jednom rekao: "Voda je jedina stvar koju možeš vidjeti, čuti, osjetiti i okusiti, a da zapravo ne shvatiš što je." Voda je tako sveprisutna u našem životu da je gotovo nevidljiva. Ali to što je nevidljiva, ne znači da nije nevjerojatan.</p>
+
+            <p>Što je najčudnije? Voda je <span class="highlight">univerzalni otapač</span>. Može otopiti više stvari nego bilo koja druga tečnost u svemiru. Zašto? Zato što je polarna. Ti mali magneti unutar svakog molekula vode mogu se vezati za druge kemikalije i ostale tvari i rastaviti ih. Voda je kemijski najfleksibilnija tvar koju znamo.</p>
+
+            <div class="callout">
+                "Voda je toliko sveprisutna da je gotovo nevidljiva — ali bez nje, ne bi bilo nikakva života."
+            </div>
+        </section>
+
+        <!-- CHAPTER 2 -->
+        <section id="chapter2" class="chapter fade-in-section">
+            <h2>Poglavlje 2: Led koji spašava živote</h2>
+
+            <p>Sada ćemo govoriti o nečem što je zaista čudno. Nečem što je toliko čudno, toliko protiv svega što znamo o fizici, da bi trebali biti šokirani što se to uopće događa.</p>
+
+            <p>Zamislite nešto. Gotovo svaka tvar na svijetu radi isto kada se ohladi i zamrzne. Postaje gušća. Čini se manji. Pada na dno spremnika. Znaš to. Metal se skuplja kada se ohladi. Ulje se skvrči kada se ohladi. Zrak se skuplja kada se ohladi.</p>
+
+            <p>Ali voda? Voda se <span class="highlight">proširuje</span> kada se zamrzne.</p>
+
+            <div class="story-box">
+                <div class="story-title">Zimski fenomen</div>
+                <p>Zamislite ledenu jezero u zimskom mjesecu. Padom temperatura, površina vode počinje hladnije i hladnije. Što se događa? Umjesto što teža tekućina pada na dno — što bi bilo logično — led pliva na vrhu.</p>
+                <p>Zamislite što bi se dogodilo da je drugačije. Ako bi led bio teži od vode, prvo bi potonuo na dno jezera. Zatim bi više vode zamrzlo na površini, padale bi na dno. I više, i više. I više. Dok, naposljetku, cijela jezera ne bi bila zamrzla čvrsto sve do dna.</p>
+                <p>I što bi se tada dogodilo? U proljeće, kada bi se sunce ponovno zagrijalo, the ljeto bi trebalo biti nepravilno dugo da se sve to led otopi. Zapravo, vjerojatno se ne bi ni otopilo. Jezera bi bila zamrzla za zauvijek. A ribe, kao i raci, kao i sve druge životinje — sve bi bilo mrtvo.</p>
+            </div>
+
+            <p>Ali to nije što se događa. Jer je voda čudna. Led pliva. To znači da postoji <span class="emphasis">sloj vode</span> ispod ledenog sloja, koja ostaje tekućom čak i kada je temperatura ispod ledišta. To znači da ribe i rakovice i sve ostale životinje mogu — možda malo hladno — preživjeti zimu.</p>
+
+            <div class="illustration">
+                <svg viewBox="0 0 400 300" width="350" height="250" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Sky -->
+                    <rect x="0" y="0" width="400" height="120" fill="rgba(15, 26, 46, 0.5)"/>
+
+                    <!-- Snow -->
+                    <circle cx="50" cy="20" r="3" fill="#e8f4f8"/>
+                    <circle cx="100" cy="30" r="3" fill="#e8f4f8"/>
+                    <circle cx="150" cy="15" r="3" fill="#e8f4f8"/>
+                    <circle cx="200" cy="35" r="3" fill="#e8f4f8"/>
+                    <circle cx="250" cy="20" r="3" fill="#e8f4f8"/>
+                    <circle cx="300" cy="40" r="3" fill="#e8f4f8"/>
+                    <circle cx="350" cy="25" r="3" fill="#e8f4f8"/>
+
+                    <!-- Ice layer on top -->
+                    <rect x="20" y="120" width="360" height="40" fill="#4da6ff" stroke="#00ccff" stroke-width="2"/>
+                    <text x="200" y="150" font-size="14" font-weight="bold" fill="#0f1a2e" text-anchor="middle">LED (PLUTAJUĆI)</text>
+
+                    <!-- Liquid water below -->
+                    <rect x="20" y="160" width="360" height="120" fill="#003d66" stroke="#0099cc" stroke-width="2"/>
+                    <text x="200" y="220" font-size="13" fill="#00d4ff" text-anchor="middle">TEKUĆINA VODA (0°C - 4°C)</text>
+
+                    <!-- Fish -->
+                    <ellipse cx="120" cy="200" rx="20" ry="12" fill="#ff9900" stroke="#ffa500" stroke-width="1"/>
+                    <polygon points="95,200 85,195 85,205" fill="#ff9900"/>
+                    <circle cx="125" cy="195" r="2" fill="#000"/>
+
+                    <!-- Bottom ground -->
+                    <rect x="0" y="280" width="400" height="20" fill="#334466"/>
+
+                    <!-- Labels -->
+                    <text x="20" y="290" font-size="11" fill="#00d4ff">Dno jezera (sigurno)</text>
+
+                    <!-- Temperature indicator -->
+                    <text x="320" y="180" font-size="12" fill="#00d4ff" font-style="italic">Temperatura: 4°C</text>
+                </svg>
+            </div>
+
+            <div class="fun-fact">
+                <div class="fun-fact-title">Anomalija vode</div>
+                <p>Ova "čudna" svojstva vode se zove <span class="highlight">anomalija vode</span> — što je науken način da se kaže "voda je drugačija od svih ostalih stvari na planeti". Voda ima <span class="highlight">najveću gustoću pri 4°C</span>, a ne na ledištu. Ispod te temperature, voda počinje biti manje gusta. To je razlog zašto led pliva.</p>
+            </div>
+
+            <p>Misli na ledene kapice polarnih regija. Misli na Arktik i Antarktik. Misli na sve istraživače koji su pokušali doći do North Pola, mučeći se kroz led i snijeg. Misli na polarnim medvjedima koji skakaju sa komada do komada leda, igrajući se sa životnom razlikom između sigurnosti i propasti u hladnu, tešku vodu.</p>
+
+            <p>Svi su oni ovdje <span class="emphasis">zato što voda ima čudnu svojstva</span>. Zato što je voda dovoljno jaka da pliva u njoj vlastitom ledu. Zato što je priroda dovoljno pametna da zaštiti živote koje žive u njoj.</p>
+
+            <div class="callout">
+                "Ako bi voda bila kao sve ostale stvari, cijeli planeti bi bio zamrznut ledenim kopovima. Hvala vodi što je drugačija."
+            </div>
+        </section>
+
+        <!-- CHAPTER 3 -->
+        <section id="chapter3" class="chapter fade-in-section">
+            <h2>Poglavlje 3: Zašto ne ključaš kad trčiš?</h2>
+
+            <p>Sada, hajde da razgovaramo o nečem što je doslovno spasilo vaš život, vjerojatno više od bilo čega drugoga (osim hrane i zraka). Hajde da razgovaramo o znojenju.</p>
+
+            <p>Kada počneš trčati, tvoje se tijelo počinje zagrijavati. Tvoji mišići brzo koriste energiju, stvarajući toplinu — puno toplinu. Ako se tvoje tijelo previše zagrijava, neuroni prestaju raditi. Mozak se zapeka. Smrt dolazi vrlo brzo.</p>
+
+            <p>Kako tvoje tijelo održava rashladnom? Znojenje. Znojenje je sastavljena od vode, sa manjim količinama soli i drugih kemikalija. Kada se taj znoj isparava s tvoje kože — transformira se iz tekućine u paru — on odvlači <span class="emphasis">goleme količine topline</span> s tvoga tijela.</p>
+
+            <div class="story-box">
+                <div class="story-title">Specifični toplinski kapacitet</div>
+                <p>Voda ima ono što se zove <span class="highlight">visok specifični toplinski kapacitet</span>. To znači da trebam puno energije da bi se temperatura vode promijenila. Ako bih trebao zagrijati 1 kilogram vode za 1 stupanj Celzija, trebao bi upotrijebiti 4200 joula energije. To je <span class="emphasis">tonna</span> energije!</p>
+                <p>Usporedba: trebam samo 450 joula da zagrijem 1 kilogram željeza za 1 stupanj. Voda je oko <span class="highlight">9 puta veće energije</span> da bi se zagrijala.</p>
+            </div>
+
+            <p>To znači što? To znači da voda može upijati i oslobađati toplotnu energiju bez drastičnih promjena temperature. To je razlog zašto ocean može apsorbirati svu toplinu od sunca, a da se ne zagrijava kao pustynja.</p>
+
+            <div class="two-column">
+                <div class="two-column-text">
+                    <h3>Zašto oceani ostaju blagi</h3>
+                    <p>Razmisli o glavnom gradu. Na ljetnom danu, temperatura u gradu može dostići 35°C ili više. Ali ako ta gradska koristi jako blizu oceanu, temperatura može biti samo 25°C — 10 stupnjeva hladnije!</p>
+                    <p>Zašto? Jer je voda u oceanu upijala svu toplinu, ali se nije zagrijala toliko. Specifični toplinski kapacitet vode — taj ogromni broj od 4200 — čini oceane "hladnjacima" našega planeta.</p>
+                </div>
+                <div class="two-column-visual">
+                    <svg viewBox="0 0 300 250" width="280" height="240" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Sun -->
+                        <circle cx="150" cy="30" r="25" fill="#ffc800" stroke="#ffaa00" stroke-width="2"/>
+                        <line x1="150" y1="10" x2="150" y2="0" stroke="#ffaa00" stroke-width="2"/>
+                        <line x1="175" y1="30" x2="190" y2="30" stroke="#ffaa00" stroke-width="2"/>
+                        <line x1="170" y1="15" x2="180" y2="5" stroke="#ffaa00" stroke-width="2"/>
+
+                        <!-- Land -->
+                        <rect x="0" y="100" width="130" height="150" fill="#8b7355"/>
+
+                        <!-- Ocean -->
+                        <rect x="130" y="100" width="170" height="150" fill="#003d66" stroke="#0099cc" stroke-width="2"/>
+
+                        <!-- Temperature indicators -->
+                        <text x="65" y="130" font-size="24" font-weight="bold" fill="#ffaa00" text-anchor="middle">35°C</text>
+                        <text x="65" y="155" font-size="12" fill="#e8f4f8" text-anchor="middle">ŽARKO</text>
+
+                        <text x="215" y="130" font-size="24" font-weight="bold" fill="#4da6ff" text-anchor="middle">25°C</text>
+                        <text x="215" y="155" font-size="12" fill="#00ffff" text-anchor="middle">HLADNIJE</text>
+
+                        <!-- Heat arrows -->
+                        <path d="M 65 95 Q 65 75 65 65" stroke="#ffaa00" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+                        <path d="M 215 95 Q 215 75 215 65" stroke="#ffaa00" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+
+                        <!-- Legend -->
+                        <text x="150" y="230" font-size="11" fill="#00d4ff" text-anchor="middle">Voda apsorbira toplinu bez zagrijavanja</text>
+
+                        <defs>
+                            <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+                                <polygon points="0 0, 10 5, 0 10" fill="#ffaa00"/>
+                            </marker>
+                        </defs>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="fun-fact">
+                <div class="fun-fact-title">Znojenje je genijalno</div>
+                <p>Kada znojenje isparava s tvoje kože, odvlači ogromnu količinu toplinu — poznat kao <span class="highlight">latentna toplina isparavanja</span>. Trebam oko 2,450 kilojoula energije da isparim 1 liter vode. To je dovoljna energija da rashladim cijelo tijelo kada je vruće!</p>
+            </div>
+
+            <p>Ovdje je čuda: voda je jedina kemikalija koja je tekućina na normalnim temperaturama na Zemlji i koja ima ove ogromne vlastitosti za apsorpciju i oslobađanja topline. Bez nje, planeti bi bio ili neprekidno vruć ili neprekidno hladan. Bez nje, znojenje ne bi funkcioniralo. Bez nje, ti bi bio mrtav.</p>
+
+            <div class="callout">
+                "Voda ti je spasila život više puta — čak i dok si bio u posteljici."
+            </div>
+        </section>
+
+        <!-- CHAPTER 4 -->
+        <section id="chapter4" class="chapter fade-in-section">
+            <h2>Poglavlje 4: Hodanje po vodi i penjanje po drveću</h2>
+
+            <p>Sada trebam da ti pokazem nešto što je gotovo kao magija. Nešto što je toliko čudno, da bi trebali biti sigurni da je moguće. Ali je moguće. To se događa svakog dana. Svugdje oko nas.</p>
+
+            <p>Pogledaj kroz prozor. Vidi nešto s vodenim okom? Možda je to rijetko, možda je to rijetko, ali pogledaj ponos. Ako pogledaš kao dio vode, vidiš nešto čudno: mali insekti — vodene strižavice, male bugare — hodaju po vodi kao da je led. Padaju s neba, a voda ih nosi kao da su lagani kao perje.</p>
+
+            <p>Kako je to moguće?</p>
+
+            <div class="story-box">
+                <div class="story-title">Površinska tenzija — nevidljivi čudo</div>
+                <p>Pokušaj zamisliti sljedeće: sad si voda. Si vani u jabuci, i vidiš da su tvoji komšije samo vode — milijarde i milijarde drugih vodenih molekula, doslovno držeći jedni druge za ruke kroz vodikovim vezama.</p>
+                <p>Ali što ako si na površini? Na vrhu vode? Tada nemaš komšije gore — samo zrak. Zato se dolje drže još jače. Sve molekule na površini su čine snažnu, elastičnu membrana. Naziva se <span class="highlight">površinska tenzija</span>.</p>
+            </div>
+
+            <p>Površinska tenzija je toliko snažna da male bube — vodene strižavice — mogu hodati po njoj. Ne pada. Površina vode je gotovo kao tenka koža koja se može razumno nositi s težinom mале bube.</p>
+
+            <div class="illustration">
+                <svg viewBox="0 0 400 280" width="350" height="240" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Water surface -->
+                    <line x1="0" y1="140" x2="400" y2="140" stroke="#0099cc" stroke-width="3"/>
+
+                    <!-- Water molecules below surface -->
+                    <circle cx="50" cy="160" r="8" fill="rgba(0, 212, 255, 0.5)" stroke="#00d4ff" stroke-width="1"/>
+                    <circle cx="80" cy="160" r="8" fill="rgba(0, 212, 255, 0.5)" stroke="#00d4ff" stroke-width="1"/>
+                    <circle cx="110" cy="160" r="8" fill="rgba(0, 212, 255, 0.5)" stroke="#00d4ff" stroke-width="1"/>
+                    <circle cx="140" cy="160" r="8" fill="rgba(0, 212, 255, 0.5)" stroke="#00d4ff" stroke-width="1"/>
+
+                    <!-- Surface water molecules (stronger bonds) -->
+                    <circle cx="50" cy="140" r="8" fill="#00d4ff" stroke="#00ffff" stroke-width="2"/>
+                    <circle cx="80" cy="140" r="8" fill="#00d4ff" stroke="#00ffff" stroke-width="2"/>
+                    <circle cx="110" cy="140" r="8" fill="#00d4ff" stroke="#00ffff" stroke-width="2"/>
+                    <circle cx="140" cy="140" r="8" fill="#00d4ff" stroke="#00ffff" stroke-width="2"/>
+                    <circle cx="170" cy="140" r="8" fill="#00d4ff" stroke="#00ffff" stroke-width="2"/>
+                    <circle cx="200" cy="140" r="8" fill="#00d4ff" stroke="#00ffff" stroke-width="2"/>
+
+                    <!-- Strong bonds between surface molecules -->
+                    <line x1="50" y1="140" x2="80" y2="140" stroke="#00ffff" stroke-width="2" stroke-dasharray="3,3"/>
+                    <line x1="80" y1="140" x2="110" y2="140" stroke="#00ffff" stroke-width="2" stroke-dasharray="3,3"/>
+                    <line x1="110" y1="140" x2="140" y2="140" stroke="#00ffff" stroke-width="2" stroke-dasharray="3,3"/>
+                    <line x1="140" y1="140" x2="170" y2="140" stroke="#00ffff" stroke-width="2" stroke-dasharray="3,3"/>
+                    <line x1="170" y1="140" x2="200" y2="140" stroke="#00ffff" stroke-width="2" stroke-dasharray="3,3"/>
+
+                    <!-- Water strider (vodena strižavica) -->
+                    <ellipse cx="250" cy="125" rx="15" ry="10" fill="#333333"/>
+                    <circle cx="250" cy="120" r="5" fill="#666666"/>
+                    <line x1="235" y1="110" x2="220" y2="100" stroke="#666666" stroke-width="2"/>
+                    <line x1="235" y1="130" x2="220" y2="140" stroke="#666666" stroke-width="2"/>
+                    <line x1="265" y1="110" x2="280" y2="100" stroke="#666666" stroke-width="2"/>
+                    <line x1="265" y1="130" x2="280" y2="140" stroke="#666666" stroke-width="2"/>
+
+                    <!-- Depression under legs -->
+                    <ellipse cx="220" cy="140" rx="5" ry="3" fill="none" stroke="#00ffff" stroke-width="1" stroke-dasharray="2,2"/>
+                    <ellipse cx="280" cy="140" rx="5" ry="3" fill="none" stroke="#00ffff" stroke-width="1" stroke-dasharray="2,2"/>
+
+                    <!-- Labels -->
+                    <text x="200" y="240" font-size="12" fill="#00d4ff" text-anchor="middle">Vodena strižavica — teža je od vode, ali površinska tenzija je drži gore!</text>
+                    <text x="50" y="210" font-size="11" fill="#00e6ff">Vodikovim veze</text>
+                    <text x="200" y="210" font-size="11" fill="#00e6ff">Površinska membrana</text>
+                </svg>
+            </div>
+
+            <p>Ali čekaj, tu ima više. Postoji nešto što je još čudnije. Nešto koje je ozbiljno čudno kada razumiješ kako radi.</p>
+
+            <p>Pogledaj drvo. Redwood. Sekoja. Neki od najvećih živih stvari na Planeti. Neka od njih su viša od Statua Slobode. Kako se voda penje sa korijena do vrha tih drveća — kroz više od sto metara od debla i grana?</p>
+
+            <div class="story-box">
+                <div class="story-title">Kapilarnost — "sjedinjavanje" vode</div>
+                <p>Zamislite tanke, male cijevi unutar stabla — so male da možeš vidjeti samo kroz mikroskop. Te cijevi su obložene sa tankim slojem kemikalije koji je apsolutno voli vodu. Voda voli biti blizu toga kemikalije.</p>
+                <p>Zbog toga voda počinje peti upoči — to je nazivaju <span class="highlight">adhezijom</span> (privlačenje između vode i cijevi). Ali — i tu je trik — kako se voda počinje peti upoči, molekule vode koje su iza njega trebaju biti privučene prema njoj. To je <span class="highlight">kohezija</span> (privlačenje između vodenih molekula).</p>
+                <p>Zajedno, adhezija i kohezija, zajedno sa površinskom tenzijom — stvaraju lanac od molekula vode koji se peti upoči cijevi. Zajedno, svi oni mogu vuči tešku kolonu vode — od korijena do vrha velikog drveća.</p>
+            </div>
+
+            <div class="illustration">
+                <svg viewBox="0 0 350 350" width="300" height="300" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Tree trunk (capillaries) -->
+                    <rect x="140" y="40" width="70" height="280" fill="#4a6741" stroke="#6a8761" stroke-width="2"/>
+
+                    <!-- Water inside capillaries -->
+                    <rect x="145" y="50" width="20" height="270" fill="#0066cc" stroke="#00d4ff" stroke-width="1"/>
+                    <rect x="185" y="50" width="20" height="270" fill="#0066cc" stroke="#00d4ff" stroke-width="1"/>
+
+                    <!-- Water molecules -->
+                    <circle cx="155" cy="80" r="3" fill="#00d4ff"/>
+                    <circle cx="155" cy="100" r="3" fill="#00d4ff"/>
+                    <circle cx="155" cy="120" r="3" fill="#00d4ff"/>
+                    <circle cx="155" cy="140" r="3" fill="#00d4ff"/>
+                    <circle cx="155" cy="160" r="3" fill="#00d4ff"/>
+                    <circle cx="155" cy="180" r="3" fill="#00d4ff"/>
+                    <circle cx="155" cy="200" r="3" fill="#00d4ff"/>
+                    <circle cx="155" cy="220" r="3" fill="#00d4ff"/>
+                    <circle cx="155" cy="240" r="3" fill="#00d4ff"/>
+                    <circle cx="155" cy="260" r="3" fill="#00d4ff"/>
+                    <circle cx="155" cy="280" r="3" fill="#00d4ff"/>
+                    <circle cx="155" cy="300" r="3" fill="#00d4ff"/>
+
+                    <!-- Bonds -->
+                    <line x1="155" y1="80" x2="155" y2="100" stroke="#00ffff" stroke-width="1" stroke-dasharray="2,2"/>
+                    <line x1="155" y1="100" x2="155" y2="120" stroke="#00ffff" stroke-width="1" stroke-dasharray="2,2"/>
+                    <line x1="155" y1="120" x2="155" y2="140" stroke="#00ffff" stroke-width="1" stroke-dasharray="2,2"/>
+                    <line x1="155" y1="140" x2="155" y2="160" stroke="#00ffff" stroke-width="1" stroke-dasharray="2,2"/>
+                    <line x1="155" y1="160" x2="155" y2="180" stroke="#00ffff" stroke-width="1" stroke-dasharray="2,2"/>
+
+                    <!-- Root at bottom -->
+                    <circle cx="140" cy="330" r="8" fill="#8b6f47"/>
+                    <circle cx="175" cy="335" r="6" fill="#8b6f47"/>
+
+                    <!-- Soil water -->
+                    <rect x="0" y="300" width="350" height="50" fill="rgba(100, 100, 50, 0.5)"/>
+                    <circle cx="30" cy="320" r="4" fill="#0066cc" opacity="0.7"/>
+                    <circle cx="80" cy="315" r="4" fill="#0066cc" opacity="0.7"/>
+                    <circle cx="120" cy="325" r="4" fill="#0066cc" opacity="0.7"/>
+
+                    <!-- Labels -->
+                    <text x="175" y="170" font-size="11" fill="#00d4ff">Kapilarna cijev</text>
+                    <text x="50" y="320" font-size="11" fill="#00d4ff">Korijeni u vodi</text>
+                    <text x="220" y="60" font-size="12" fill="#e8f4f8" font-weight="bold">VRHA STABLA</text>
+                    <text x="220" y="290" font-size="12" fill="#8b6f47" font-weight="bold">KORIJENI</text>
+                </svg>
+            </div>
+
+            <div class="fun-fact">
+                <div class="fun-fact-title">Redwood stvara čudo</div>
+                <p>Najstarija i najveća redwood stabla na Zemlji penju se vodu do visine od više od <span class="highlight">110 metara</span> — više od 30 puta viša od običnog kuće! To je doslovno kao da bih trebao pumpati vodu prema vrhu Empire State Buildinga. Ali redwoods to rade svakog dana, bez motora, bez elektrike, samo kroz kapilarne sile vode.</p>
+            </div>
+
+            <p>Zamislite. Zamislite jasan dan, sunčevog dana u šumskom redwoodu. Sunce zagrijava lišće. Lišće počinje isparavati vodu — u procesu koji se zove transpiracija. Ta prazna prostor na vrhu stabla — ta potreba za novom vodom — stvara ispod njega. I taj ispod je dovoljno snažan da povuče cijelu kolonu vode sve od korijena, kroz cijelo stablo, do vrha.</p>
+
+            <div class="callout">
+                "Voda hoda po zemlji kroz vazduh, kao da je mali Sherpa vodič vodeći karavanu do vrha planine."
+            </div>
+        </section>
+
+        <!-- CHAPTER 5 -->
+        <section id="chapter5" class="chapter fade-in-section">
+            <h2>Poglavlje 5: Univerzalni rastapač</h2>
+
+            <p>Sada smo stigli do nečega što je zapravo toliko snažno, toliko bitno, da ima vlastito ime u znanosti. Voda je <span class="highlight">univerzalni otapač</span>.</p>
+
+            <p>Što to znači? To znači da voda može otopiti — rastaviti, proći kroz, apsorbirati — više stvari nego bilo koji drugi tekućina na Planeti. Gotovo. Obično. Bilo šta.</p>
+
+            <p>Zašto? Jer je voda polarna. Recall: polarna molekula — mali magnet s pozitivnim dijelom (vodik) i negativnim dijelom (kisik). Zamislite da čeličnik, druge soli, druge kemikalije — većinu njih sastoji od iona, koji su nabijenih atoma.</p>
+
+            <div class="story-box">
+                <div class="story-title">Kako voda otapa sol</div>
+                <p>Uzmemo kristal natrijuma klorida — kuhinjsku sol. Svaki kristal se sastavljen od pozitivnih iona natrija i negativnih iona klora, veza zajedno u čvrstoj rešetki. Izgledaju kao beskonačno malo puzzle-a.</p>
+                <p>Sada, dodam tu sol u vodu. Što se događa? Voda počinje okružiti sve. Pozitivni dio vode (vodik) je privučen prema negativnim ionima klora. Negativni dio vode (kisik) je privučen prema pozitivnim ionima natrija. Zajedno, razaraju kristal. Ioni počinju plutati odvojeno, rastopljeni u vodi.</p>
+            </div>
+
+            <div class="two-column">
+                <div class="two-column-text">
+                    <h3>Hidrofobno protiv Hidriofilnog</h3>
+                    <p>Ne mogu sve biti otopljeno u vodi. Ulje, na primjer. Ulje je <span class="highlight">hidrofobno</span> — "voda-fobno" — znači da strahu vode. Ulje se i voda ne miješaju jer su molekule ulja nepolarne.</p>
+                    <p>Ali soli? Ione? Proteini? Ti su svi <span class="highlight">hidrofilan</span> — "voda-ljubavni" — jer su polarni, kao voda. Zato se miješaju.</p>
+                    <p>To je razlog zašto je voda toliko važna za život. Sve kemikalije koje trebaju živim staniceima — svi proteini, sve energije molekule, sve ione — trebati su moći otopiti se u vodi. I mogu.</p>
+                </div>
+                <div class="two-column-visual">
+                    <svg viewBox="0 0 300 300" width="280" height="280" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Divide line -->
+                        <line x1="150" y1="0" x2="150" y2="300" stroke="#666" stroke-width="2" stroke-dasharray="5,5"/>
+
+                        <!-- Oil side (right) -->
+                        <text x="225" y="30" font-size="14" font-weight="bold" fill="#ff9900" text-anchor="middle">ULJE</text>
+                        <circle cx="200" cy="80" r="20" fill="#ff9900" opacity="0.6"/>
+                        <circle cx="240" cy="90" r="18" fill="#ff9900" opacity="0.6"/>
+                        <circle cx="220" cy="140" r="22" fill="#ff9900" opacity="0.6"/>
+                        <circle cx="260" cy="120" r="19" fill="#ff9900" opacity="0.6"/>
+
+                        <!-- Water side (left) -->
+                        <text x="75" y="30" font-size="14" font-weight="bold" fill="#00d4ff" text-anchor="middle">VODA</text>
+                        <circle cx="50" cy="80" r="20" fill="#00d4ff" opacity="0.6"/>
+                        <circle cx="100" cy="90" r="18" fill="#00d4ff" opacity="0.6"/>
+                        <circle cx="80" cy="140" r="22" fill="#00d4ff" opacity="0.6"/>
+                        <circle cx="30" cy="120" r="19" fill="#00d4ff" opacity="0.6"/>
+
+                        <!-- Salt dissolved in water -->
+                        <circle cx="50" cy="200" r="8" fill="#ff6b6b" opacity="0.7"/>
+                        <circle cx="80" cy="210" r="8" fill="#ff6b6b" opacity="0.7"/>
+                        <circle cx="110" cy="200" r="8" fill="#ff6b6b" opacity="0.7"/>
+                        <text x="75" y="250" font-size="12" fill="#00d4ff" text-anchor="middle">Sol se otapa!</text>
+
+                        <!-- Oil doesn't mix -->
+                        <text x="225" y="250" font-size="12" fill="#ff9900" text-anchor="middle">Ulje se ne miješa!</text>
+
+                        <!-- Legend -->
+                        <text x="150" y="290" font-size="10" fill="#00e6ff" text-anchor="middle" font-style="italic">"Slično otapa slično"</text>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="fun-fact">
+                <div class="fun-fact-title">Mrtvo more — flašira od vode</div>
+                <p>Postoji jezero u Aziji koje se zove Mrtvo more. Voda u njega je toliko solitarna — toliko otopljena soli — da možeš plutati u njega bez trunki truda. Voda je guća od tebe! Zašto? Jer je voda tako dobar otapač da je mogla otopiti goleme količine soli tijekom vremena.</p>
+            </div>
+
+            <h3>pH skala — od kiselina do baza</h3>
+
+            <p>Sada, hajde da razgovaramo o nečem što je direktna posljedica toga što je voda univerzalni otapač. Hajde da razgovaramo o <span class="highlight">pH skali</span>.</p>
+
+            <p>Voda, sama po sebi, je gotovo potpuno neutralna. Ali ako otopim drugačije stvari u njoj — kiselina, baza, druige ione — tada voda postaje drugačita.</p>
+
+            <div class="illustration">
+                <svg viewBox="0 0 400 320" width="380" height="300" xmlns="http://www.w3.org/2000/svg">
+                    <!-- pH Scale -->
+                    <text x="200" y="30" font-size="18" font-weight="bold" fill="#00d4ff" text-anchor="middle">pH skala (0-14)</text>
+
+                    <!-- Color gradient bar -->
+                    <defs>
+                        <linearGradient id="phGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#ff0000;stop-opacity:1" />
+                            <stop offset="25%" style="stop-color:#ff9900;stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:#00cc00;stop-opacity:1" />
+                            <stop offset="75%" style="stop-color:#0099ff;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#6600ff;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+
+                    <rect x="40" y="60" width="320" height="30" fill="url(#phGradient)" stroke="#00d4ff" stroke-width="2"/>
+
+                    <!-- pH numbers -->
+                    <text x="40" y="110" font-size="11" fill="#ff0000" text-anchor="middle" font-weight="bold">0</text>
+                    <text x="80" y="110" font-size="11" fill="#ff9900" text-anchor="middle">3</text>
+                    <text x="120" y="110" font-size="11" fill="#ff9900" text-anchor="middle">6</text>
+                    <text x="160" y="110" font-size="11" fill="#00cc00" text-anchor="middle" font-weight="bold">7</text>
+                    <text x="200" y="110" font-size="11" fill="#00cc00" text-anchor="middle" font-weight="bold">(Neutralna)</text>
+                    <text x="240" y="110" font-size="11" fill="#0099ff" text-anchor="middle">8</text>
+                    <text x="280" y="110" font-size="11" fill="#0099ff" text-anchor="middle">11</text>
+                    <text x="360" y="110" font-size="11" fill="#6600ff" text-anchor="middle" font-weight="bold">14</text>
+
+                    <!-- Labels -->
+                    <text x="100" y="140" font-size="11" fill="#ff0000" text-anchor="middle" font-style="italic">KISELA</text>
+                    <text x="200" y="140" font-size="11" fill="#00cc00" text-anchor="middle" font-style="italic">NEUTRALNA</text>
+                    <text x="300" y="140" font-size="11" fill="#0099ff" text-anchor="middle" font-style="italic">BAZNA</text>
+
+                    <!-- Examples -->
+                    <g>
+                        <text x="50" y="180" font-size="12" font-weight="bold" fill="#ff6b6b">Primjeri:</text>
+
+                        <!-- Acidic -->
+                        <circle cx="50" cy="210" r="6" fill="#ff0000" opacity="0.7"/>
+                        <text x="65" y="215" font-size="11" fill="#f0f4f8">Limon (pH 2)</text>
+
+                        <circle cx="50" cy="235" r="6" fill="#ff6666" opacity="0.7"/>
+                        <text x="65" y="240" font-size="11" fill="#f0f4f8">Crni vinegar (pH 2.4)</text>
+
+                        <!-- Neutral -->
+                        <circle cx="200" cy="210" r="6" fill="#00cc00" opacity="0.7"/>
+                        <text x="215" y="215" font-size="11" fill="#f0f4f8">Čista voda (pH 7)</text>
+
+                        <circle cx="200" cy="235" r="6" fill="#00cc00" opacity="0.7"/>
+                        <text x="215" y="240" font-size="11" fill="#f0f4f8">Ljudski krv (pH 7.4)</text>
+
+                        <!-- Basic -->
+                        <circle cx="330" cy="210" r="6" fill="#0099ff" opacity="0.7"/>
+                        <text x="280" y="215" font-size="11" fill="#f0f4f8">Sapun (pH 8-9)</text>
+
+                        <circle cx="330" cy="235" r="6" fill="#6600ff" opacity="0.7"/>
+                        <text x="260" y="240" font-size="11" fill="#f0f4f8">Klorina voda (pH 12)</text>
+                    </g>
+
+                    <!-- Bottom note -->
+                    <text x="200" y="290" font-size="11" fill="#00e6ff" text-anchor="middle" font-style="italic">"Svaki broj predstavlja 10x promjenu u kiselosti/baznosti"</text>
+                </svg>
+            </div>
+
+            <div class="fun-fact">
+                <div class="fun-fact-title">Ioni vodika i hidroksida</div>
+                <p>Voda se može sam-jonizirati — što znači da može raskinuti na hidrogenioni (H⁺) i hidroksiid ione (OH⁻). U čistoj vodi na 25°C, samo je malo molekule vode raspada ovako, što ga čini pH 7 (neutralna). Ali ako dodaš kiselinu, više H⁺ jona — pH pada. Ako dodaš bazu, više OH⁻ jona — pH raste.</p>
+            </div>
+
+            <p>Zašto je to važno? Jer pH je <span class="emphasis">zavladavajući</span> faktor u biologiji. Tvoja krv mora biti pH 7.4 — samo malo bazna. Ako je premalo kiselina ili premalo bazna, proteini tvoga tijela počinju propasti. Možda umriješ.</p>
+
+            <p>Ribama trebati je voda određenog pH-a da bi živjele. Biljkama trebati je tlo određenog pH-a da bi rasle. Svekoliko okoliša gdje je pH promijenjeni — od kisele kišotine ili od zagađenja — životinje uginu, biljke umiru, ekosistemu se ruši.</p>
+
+            <div class="callout">
+                "Voda je temelj kemije koja čini život. Bez nje, postojala bi samo fragmenti od strukture koja ima biti životu."
+            </div>
+        </section>
+
+        <!-- CHAPTER 6 -->
+        <section id="chapter6" class="chapter fade-in-section">
+            <h2>Poglavlje 6: Tvoje vodeno tijelo</h2>
+
+            <p>Sada, hajde da razgovaramo o čemu-čemu što je izvučeno od Pronalaska. O tebi. O tome kako si duboko povezan sa vodom — ne samo kroz ono što piješ, ali kroz sve što si.</p>
+
+            <p>Koliko si vodenog? Misli na to. Zaista razmotriti. Koliki je udio tvoga tijela voda?</p>
+
+            <div class="stat-box">
+                <div class="stat-number">60%</div>
+                <div class="stat-label">Odrasla osoba je 60% voda</div>
+            </div>
+
+            <p>Šest-nula posto. To znači da je više od polovice <span class="emphasis">toga što si</span> voda. Voda. H₂O. Molekule koje smo govorili o čitavo vrijeme. Voda nije samo nešto što piješ. Voda je struktura od koje si izgrađen.</p>
+
+            <div class="illustration">
+                <svg viewBox="0 0 300 400" width="280" height="380" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Body outline -->
+                    <circle cx="150" cy="80" r="30" fill="rgba(0, 212, 255, 0.1)" stroke="#00d4ff" stroke-width="2"/>
+                    <rect x="120" y="110" width="60" height="100" fill="rgba(0, 212, 255, 0.1)" stroke="#00d4ff" stroke-width="2"/>
+                    <rect x="100" y="120" width="20" height="90" fill="rgba(0, 212, 255, 0.1)" stroke="#00d4ff" stroke-width="2"/>
+                    <rect x="180" y="120" width="20" height="90" fill="rgba(0, 212, 255, 0.1)" stroke="#00d4ff" stroke-width="2"/>
+                    <rect x="115" y="210" width="20" height="80" fill="rgba(0, 212, 255, 0.1)" stroke="#00d4ff" stroke-width="2"/>
+                    <rect x="165" y="210" width="20" height="80" fill="rgba(0, 212, 255, 0.1)" stroke="#00d4ff" stroke-width="2"/>
+
+                    <!-- Water fill -->
+                    <circle cx="150" cy="80" r="27" fill="rgba(0, 153, 204, 0.4)"/>
+                    <rect x="122" y="110" width="56" height="60" fill="rgba(0, 153, 204, 0.4)"/>
+                    <rect x="102" y="120" width="16" height="50" fill="rgba(0, 153, 204, 0.4)"/>
+                    <rect x="182" y="120" width="16" height="50" fill="rgba(0, 153, 204, 0.4)"/>
+                    <rect x="117" y="210" width="16" height="45" fill="rgba(0, 153, 204, 0.4)"/>
+                    <rect x="167" y="210" width="16" height="45" fill="rgba(0, 153, 204, 0.4)"/>
+
+                    <!-- Label -->
+                    <text x="150" y="250" font-size="16" font-weight="bold" fill="#00ffff" text-anchor="middle">60% VODA</text>
+
+                    <!-- Composition breakdown -->
+                    <rect x="20" y="300" width="260" height="90" fill="rgba(0, 212, 255, 0.1)" stroke="#00d4ff" stroke-width="2" rx="5"/>
+
+                    <text x="30" y="320" font-size="12" font-weight="bold" fill="#00d4ff">Distribucija vode u tijelu:</text>
+
+                    <circle cx="35" cy="345" r="5" fill="#0099cc"/>
+                    <text x="50" y="350" font-size="11" fill="#f0f4f8">Zalistice: 83% vode</text>
+
+                    <circle cx="35" cy="365" r="5" fill="#0099cc"/>
+                    <text x="50" y="370" font-size="11" fill="#f0f4f8">Mozak: 73% vode</text>
+
+                    <circle cx="35" cy="385" r="5" fill="#0099cc"/>
+                    <text x="50" y="390" font-size="11" fill="#f0f4f8">Kosti: 31% vode</text>
+                </svg>
+            </div>
+
+            <p>Ali što je fascinantnije? To što je taj voda — ta voda koja je 60% od toga što si — nije samo nasumčna skupljanje molekula. To je <span class="highlight">neprekidno razmjenjujući fluks</span>.</p>
+
+            <div class="story-box">
+                <div class="story-title">Voda prolazi kroz tebe</div>
+                <p>U svakog Minuta, tvoje tijelo pije vodu iz hrane i pića. U svakog minuta, tvoje tijelo izbacuje vodu kroz znojenje, kroz urin, kroz disanje — čak i kroz solze. Voda dolazi. Voda ide. Nikad ne miruje.</p>
+                <p>Znači što? To znači da je voda u tebi <span class="highlight">neprekidno se ponovno Opunjava</span>. Voda koju piješ je od prije milijarde godina, i voda koju izbacuješ će biti pića od nekog drugog — čovjeka, zveri, biljke — za nekoliko dana.</p>
+            </div>
+
+            <p>Razmisli o tome. Zaista razmisli. Molekule vode u tebi — u krvljenju ti, u tvojim stanicama, u mozgu koji razmišlja — su iste molekule vode koja je bila dio dinosaura. Dio drevnih Rimljana. Dio Kleopatre. Dio Mozarta. Dio svekog ljudskog bića koji je ikad živ.</p>
+
+            <div class="fun-fact">
+                <div class="fun-fact-title">Svaki atom vina je već bio piću milijardu puta</div>
+                <p>Stephen Jay Gould je jednom napisao da je vjerovatno da si popili sve atome vode koje je Jesus pija. Svaki atom vode koju piješ je već bio u moru, u jezerima, u oblacima, u životinama, u smrt, i ponovno. Taj voda je vrtila-se oko cijelog planeta, kroz cijelu ljudsku povijest, milijardi puta. Nema ničega što je zaista novo o vodi u tebi.</p>
+            </div>
+
+            <p>Koliko je voda bitna za tijelo? Ako izgubim samo 10% svoje voda — samo 10% — počinjem biti dehidriran. Ako izgubim 20% — umri-ću. Moj mozak je 73% vode. Moja krv je 83% vode. Moje pluće su 83% vode. Bez vode, ti je jednostavno <span class="emphasis">ne postoji</span>.</p>
+
+            <div class="two-column">
+                <div class="two-column-text">
+                    <h3>Dehidracija — Tiho ubojstvo</h3>
+                    <p>Znate što je čudno? Većina ljudi ne pi dovoljno vode. Čak i ako ne osjete žeđ. Dehidracija je tako korakati proces da je često ne primijete dok nije previši. Kada su dehidriranti, mozak se ne može ispravno razmišljati. Mišići se ne mogu pravilno raditi. Organi počinju biti pod stresom.</p>
+                    <p>A voda je besplatna. Voda je svugdje. Sve što trebam trebati je piti je.</p>
+                </div>
+                <div class="two-column-visual">
+                    <svg viewBox="0 0 300 280" width="280" height="260" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Hydration levels -->
+                        <text x="150" y="25" font-size="14" font-weight="bold" fill="#00d4ff" text-anchor="middle">Hydracijska stanja</text>
+
+                        <!-- Glass 1: Well hydrated -->
+                        <rect x="30" y="60" width="50" height="80" fill="none" stroke="#00cc00" stroke-width="2"/>
+                        <rect x="32" y="70" width="46" height="68" fill="#0099cc" opacity="0.6"/>
+                        <text x="55" y="160" font-size="11" fill="#00cc00" text-anchor="middle" font-weight="bold">Hidratiran</text>
+                        <text x="55" y="175" font-size="9" fill="#00d4ff" text-anchor="middle">(optimalno)</text>
+
+                        <!-- Glass 2: Dehydrated -->
+                        <rect x="125" y="60" width="50" height="80" fill="none" stroke="#ffc800" stroke-width="2"/>
+                        <rect x="127" y="100" width="46" height="38" fill="#ff9900" opacity="0.6"/>
+                        <text x="150" y="160" font-size="11" fill="#ffc800" text-anchor="middle" font-weight="bold">Dehidratiran</text>
+                        <text x="150" y="175" font-size="9" fill="#00d4ff" text-anchor="middle">(umjereno)</text>
+
+                        <!-- Glass 3: Severely dehydrated -->
+                        <rect x="220" y="60" width="50" height="80" fill="none" stroke="#ff6b6b" stroke-width="2"/>
+                        <rect x="222" y="125" width="46" height="13" fill="#ff4444" opacity="0.6"/>
+                        <text x="245" y="160" font-size="11" fill="#ff6b6b" text-anchor="middle" font-weight="bold">Teško dehidr.</text>
+                        <text x="245" y="175" font-size="9" fill="#ff4444" text-anchor="middle">(opasno!)</text>
+
+                        <!-- Symptoms -->
+                        <g>
+                            <text x="30" y="210" font-size="12" font-weight="bold" fill="#00d4ff">Simptomi dehidracije:</text>
+                            <text x="30" y="230" font-size="10" fill="#f0f4f8">• Suha usta, teško izgleda urin</text>
+                            <text x="30" y="245" font-size="10" fill="#f0f4f8">• Umor, glavobolja, vrtoglavica</text>
+                            <text x="30" y="260" font-size="10" fill="#f0f4f8">• Sporija misao, loš fokus</text>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="callout">
+                "Ti nisi samo od vode — ti si voda s dodatkom nekoliko kemikalija. Voda je što čini da postoji."
+            </div>
+        </section>
+
+        <!-- EPILOGUE -->
+        <section id="epilogue" class="epilogue fade-in-section">
+            <h2>Epilogue: Sljedeći put kad popiješ čašu vode...</h2>
+
+            <p>Sljedeći put kad popiješ čašu vode, zaustavi se. Čekaj sekund. Razmisli o svim stvarima koje smo govorili o.</p>
+
+            <p>Razmisli o tome kako su molekuli vode — savršeno oblikovani mali magneti — stoje držeći jedni druge za ruke kroz vodikovim vezama. Razmisli o kako je ta voda dovoljno čudna da se proširuje kada se zamrzne, spašavajući sve živote ispod leda.</p>
+
+            <p>Razmisli o tome kako je ta voda absorbirala toplinu bez zagrijavanja se, što drži oceane blage i tebe hladnim kada trčiš. Razmisli o kako je voda dovoljna snažna da drži insekte gore od površine, i dovoljno snažna da povuče vodu do vrha najvećeg stabla na Zemlji.</p>
+
+            <p>Razmisli o tome kako je ta voda otapač toliko moćan da može otopiti gotovo sve — kemikalije, soli, čak i od čega su živci živnje — i kako je to omogućilo pH skalu koja regulira sve što čini što je "život".</p>
+
+            <p>Razmisli o tome kako je ta voda <span class="highlight">tebi</span> — 60% tvoga tijela. Voda koja je bila dio svih ljudi prije tebe, i bit će dio svih ljudi nakon tebe.</p>
+
+            <div class="story-box">
+                <div class="story-title">Voda je počela sve</div>
+                <p>A znate što je najčudnije od svega? Sve to — svi život, sva kemija, sva postojanja — počela je u vodi. Prije 3,8 milijardi godina, u okeanima na primitivnoj Zemlji, prvi oblik života se pojavio u vodi. Jednostavne, zasjenjujuće se kemikalije. Ali kemikalije. Kemikalije koje su se mogućala vezati, rastaviti, ponovno vezati jer su bile u vodi.</p>
+                <p>Bez vode, ne bi bilo mitohondrije. Bez vode, ne bi bilo ribosoma. Bez vode, ne bi bilo proteina, ne bi bilo stanica, ne bi bilo živote. Sve što vidim oko sebe — svi insekti, sve biljke, sve životinje, sve — sve je ovdje jer je voda dovoljno čudna da dopusti kemiji.</p>
+            </div>
+
+            <p>Bill Bryson ima reći da je "voda jedini materijal koji može biti čvrstim, tekućim ili gazom — tri oblika — na temperaturama koje su normalne za život." To je nevjerojatan primjer kako je voda nesamo otporna, ali kako je voda savršena za našeg planeta.</p>
+
+            <p>Voda je stara. Voda je jednostavna. Voda je svugdje. I zbog toga što je voda toliko stara, toliko jednostavna, toliko svugdje, mi je smatramo dosadnom. Mi je zanemarujemo. Mi je ne voljimo.</p>
+
+            <p>Ali trebali bi. Trebali bi cijeniti čistoće vode. Trebali bi čuvati njeno čistoće. Trebali bi diviti kako je to jedina molekula koja je dovoljno čudna da je omogućila život — stvarno — biti moguće.</p>
+
+            <div class="fun-fact">
+                <div class="fun-fact-title">Vode su se mijenjale kada vidim tugu</div>
+                <p>Istraživač po imena Masaru Emoto je radio eksperimente gdje je pokazao da voda može biti "utječe" muzikom i mislima. Iako je njegova znanost bila kritizirana, ideja je lijepa: da je voda čujući, odgovoran materijal. Možda. Možda nije. Ali ideja da voda može biti povezana sa našim mislima, sa našim duhova — ta ideja je lijepa.</p>
+            </div>
+
+            <p>Dok završam ovu priču, želim da recim jednu zadnju stvar:</p>
+
+            <div class="callout">
+                "Voda nije samo kemikalija. Voda je priča. Priča živote. Priča ovoga planeta. Priča tebe. I svaki put kad piješ čašu vode, piješ tudjeg dijela те priče."
+            </div>
+
+            <p>Hvala što si čitao. Hvala što si razmišljao o vode. Hvala što je razumio kako je ta obična, nevjerojatna, čudna molekula — H₂O — sastavljena od 60% tvoga tijela, sastavljena je od 71% ovoga planeta, i sastavljena je od 98% svega što je ikad bilo živo.</p>
+
+            <p>Sljedeći put kad vidiš vodu — u čaši, u jezeru, u oceanu, u kišu — zaustavi se. Proceni.Razmisli o tome koliko je to čudna tvar. Razmisli o tome koliko je to bitna. Razmisli o tome kako bi bez toga, ti bi ne postojao.</p>
+
+            <p>I možda, samo možda, voda će biti malo manje dosadna.</p>
+
+            <p style="text-align: center; margin-top: 3rem; font-style: italic; color: #00d4ff;">
+                ❤️ Piješ vodu. Voda je tebe. Voda je sve. ❤️
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <p><strong>Za Nataliju</strong></p>
+        <p>Iz biologije — do cudesnog svijeta vode.</p>
+        <p>Nadam se da ti je to bila zanimljiva čitanja. Sada znate da voda nije samo H₂O. Voda je čudo. Voda je jedini razlog što postoji.</p>
+        <div class="author-note">
+            <p>"Ključna lekcija iz biologije je da su sve stvari međusobno povezane. Voda je pokazuje kako — jedan molekul koji je dovoljno čudan, dovoljno moćan, dovoljno čudesno da bude temeljem svekolika života na Zemlji."</p>
+            <p style="text-align: right; margin-top: 1rem;">— Nastavio u duhu Bill Brysona</p>
+        </div>
+    </footer>
+
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">⬆</button>
+
+    <script>
+        // Fade in sections on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Back to top button functionality
+        const backToTopButton = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+
+        // Smooth scroll for TOC links
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Add animation to stat boxes on scroll
+        const statBoxes = document.querySelectorAll('.stat-box');
+        const statObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out';
+                }
+            });
+        }, observerOptions);
+
+        statBoxes.forEach(box => statObserver.observe(box));
+    </script>
+</body>
+</html>

@@ -17,6 +17,18 @@
       "file": "lekcije/biologija-ponavljanje-natalija.html",
       "date": "2026-03-05",
       "subject": "Biologija"
+    },
+    {
+      "title": "Biologija — Voda za život (Natalija)",
+      "file": "lekcije/biologija-voda-za-zivot-natalija.html",
+      "date": "2026-03-05",
+      "subject": "Biologija"
+    },
+    {
+      "title": "Priča: Najčudnija tvar u svemiru — Voda (Natalija)",
+      "file": "lekcije/prica-voda-za-zivot-natalija.html",
+      "date": "2026-03-05",
+      "subject": "Biologija"
     }
   ],
   "ispiti": [
@@ -29,6 +41,12 @@
     {
       "title": "Teški ispit: Biologija — Ponavljanje (Natalija)",
       "file": "ispiti/ispit-biologija-teski-natalija.html",
+      "date": "2026-03-05",
+      "subject": "Biologija"
+    },
+    {
+      "title": "Ispit: Voda za život (Natalija)",
+      "file": "ispiti/ispit-voda-za-zivot-natalija.html",
       "date": "2026-03-05",
       "subject": "Biologija"
     }
