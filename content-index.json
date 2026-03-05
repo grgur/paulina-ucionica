@@ -29,6 +29,12 @@
       "file": "lekcije/prica-voda-za-zivot-natalija.html",
       "date": "2026-03-05",
       "subject": "Biologija"
+    },
+    {
+      "title": "Arhaična Zemlja i prokarioti (Natalija)",
+      "file": "lekcije/lekcija-arhaicna-zemlja-prokarioti.html",
+      "date": "2026-03-05",
+      "subject": "Biologija"
     }
   ],
   "ispiti": [
@@ -47,6 +53,12 @@
     {
       "title": "Ispit: Voda za život (Natalija)",
       "file": "ispiti/ispit-voda-za-zivot-natalija.html",
+      "date": "2026-03-05",
+      "subject": "Biologija"
+    },
+    {
+      "title": "Ispit: Arhaična Zemlja i prokarioti (Natalija)",
+      "file": "ispiti/ispit-arhaicna-zemlja-prokarioti.html",
       "date": "2026-03-05",
       "subject": "Biologija"
     }

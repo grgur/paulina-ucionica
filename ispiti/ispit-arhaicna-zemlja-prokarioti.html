@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🧪 Ispit — Arhaična Zemlja i Prokarioti</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-main: #0D1117;
+  --bg-card: #161B22;
+  --bg-card-alt: #1C2333;
+  --text-main: #E6EDF3;
+  --text-light: #8B949E;
+  --text-accent: #58A6FF;
+  --green: #2DC653;
+  --green-bg: rgba(45,198,83,0.08);
+  --red: #F85149;
+  --red-bg: rgba(248,81,73,0.08);
+  --orange: #FF9800;
+  --orange-bg: rgba(255,152,0,0.08);
+  --purple: #BC6FF1;
+  --amber: #FFB627;
+  --lava: #FF6B35;
+  --ocean: #00B4D8;
+  --radius: 16px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Lexend', sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+  line-height: 1.8;
+  font-size: 17px;
+  overflow-x: hidden;
+  padding-bottom: 100px;
+}
+
+/* Progress */
+.progress-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: rgba(255,255,255,0.05);
+  z-index: 1000;
+}
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--ocean), var(--green));
+  width: 0%;
+  transition: width 0.5s;
+}
+
+.container { max-width: 760px; margin: 0 auto; padding: 20px; }
+
+/* Intro screen */
+.intro-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px 20px;
+}
+.intro-screen h1 {
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
+  color: var(--ocean);
+  margin-bottom: 16px;
+}
+.intro-screen .info {
+  color: var(--text-light);
+  font-size: 0.95rem;
+  max-width: 500px;
+  margin-bottom: 32px;
+}
+.intro-screen .stats {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+.stat-box {
+  background: var(--bg-card);
+  border-radius: 12px;
+  padding: 16px 24px;
+  text-align: center;
+}
+.stat-num { font-size: 1.5rem; font-weight: 700; color: var(--ocean); }
+.stat-label { font-size: 0.75rem; color: var(--text-light); }
+.start-btn {
+  background: linear-gradient(135deg, var(--ocean), var(--green));
+  color: #fff;
+  border: none;
+  padding: 16px 48px;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-family: 'Lexend', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 4px 30px rgba(0,180,216,0.3);
+}
+.start-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(0,180,216,0.5); }
+
+/* Question */
+.question-card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 28px;
+  margin-bottom: 24px;
+  border: 1px solid rgba(255,255,255,0.06);
+  display: none;
+}
+.question-card.active { display: block; }
+.q-number {
+  font-size: 0.8rem;
+  color: var(--text-accent);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.q-difficulty {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  margin-left: 8px;
+}
+.diff-easy { background: var(--green-bg); color: var(--green); }
+.diff-medium { background: var(--orange-bg); color: var(--orange); }
+.diff-hard { background: rgba(248,81,73,0.08); color: var(--red); }
+.diff-expert { background: rgba(188,111,241,0.08); color: var(--purple); }
+.q-text {
+  font-size: 1.05rem;
+  margin-bottom: 20px;
+  line-height: 1.7;
+}
+.q-context {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  background: var(--bg-card-alt);
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  border-left: 3px solid var(--text-accent);
+}
+
+/* Options */
+.options { display: flex; flex-direction: column; gap: 10px; }
+.option-btn {
+  background: var(--bg-card-alt);
+  border: 2px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 14px 18px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: 'Lexend', sans-serif;
+  font-size: 0.95rem;
+  color: var(--text-main);
+  text-align: left;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.option-btn:hover:not(.locked) {
+  border-color: var(--text-accent);
+  background: rgba(88,166,255,0.05);
+}
+.option-letter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.05);
+  font-weight: 600;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+}
+.option-btn.correct { border-color: var(--green) !important; background: var(--green-bg) !important; }
+.option-btn.correct .option-letter { background: var(--green); color: #fff; }
+.option-btn.wrong { border-color: var(--red) !important; background: var(--red-bg) !important; }
+.option-btn.wrong .option-letter { background: var(--red); color: #fff; }
+.option-btn.locked { pointer-events: none; }
+
+/* Feedback */
+.feedback {
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  display: none;
+  line-height: 1.7;
+}
+.feedback.show { display: block; }
+.feedback-correct { background: var(--green-bg); border: 1px solid rgba(45,198,83,0.2); }
+.feedback-wrong { background: var(--red-bg); border: 1px solid rgba(248,81,73,0.2); }
+
+/* Next button */
+.next-btn {
+  display: none;
+  margin-top: 16px;
+  background: var(--bg-card-alt);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--text-accent);
+  padding: 12px 32px;
+  border-radius: 50px;
+  font-family: 'Lexend', sans-serif;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.3s;
+  float: right;
+}
+.next-btn:hover { background: rgba(88,166,255,0.1); }
+.next-btn.show { display: inline-block; }
+
+/* Match question */
+.match-container { display: flex; flex-direction: column; gap: 12px; }
+.match-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.match-term {
+  background: var(--bg-card-alt);
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  min-width: 140px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.match-select {
+  background: var(--bg-card-alt);
+  color: var(--text-main);
+  border: 2px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-family: 'Lexend', sans-serif;
+  font-size: 0.85rem;
+  flex: 1;
+  min-width: 200px;
+  cursor: pointer;
+}
+.match-select:focus { border-color: var(--text-accent); outline: none; }
+.match-row.correct-match .match-select { border-color: var(--green); }
+.match-row.wrong-match .match-select { border-color: var(--red); }
+
+/* Sort question */
+.sort-container { display: flex; flex-direction: column; gap: 8px; }
+.sort-item {
+  background: var(--bg-card-alt);
+  border: 2px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: grab;
+  transition: border-color 0.3s;
+  user-select: none;
+}
+.sort-item:active { cursor: grabbing; }
+.sort-item .sort-handle { color: var(--text-light); font-size: 1.2rem; }
+.sort-item.correct-sort { border-color: var(--green); }
+.sort-item.wrong-sort { border-color: var(--red); }
+
+/* TF buttons */
+.tf-options { display: flex; gap: 12px; }
+.tf-btn {
+  flex: 1;
+  padding: 14px;
+  border-radius: 12px;
+  border: 2px solid rgba(255,255,255,0.08);
+  background: var(--bg-card-alt);
+  color: var(--text-main);
+  font-family: 'Lexend', sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: center;
+}
+.tf-btn:hover:not(.locked) { border-color: var(--text-accent); }
+.tf-btn.correct { border-color: var(--green) !important; background: var(--green-bg) !important; }
+.tf-btn.wrong { border-color: var(--red) !important; background: var(--red-bg) !important; }
+
+/* Results */
+.results-screen {
+  display: none;
+  text-align: center;
+  padding: 40px 20px;
+}
+.results-screen.show { display: block; }
+.score-circle {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  margin: 24px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  border: 6px solid;
+}
+.score-msg {
+  font-size: 1.2rem;
+  margin: 16px 0;
+  font-weight: 500;
+}
+.review-list { margin-top: 32px; text-align: left; }
+.review-item {
+  background: var(--bg-card);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+  border-left: 4px solid;
+}
+.review-item.review-correct { border-color: var(--green); }
+.review-item.review-wrong { border-color: var(--red); }
+.review-q { font-weight: 600; font-size: 0.9rem; margin-bottom: 4px; }
+.review-a { font-size: 0.85rem; color: var(--text-light); }
+.retry-btn {
+  display: inline-block;
+  margin-top: 24px;
+  background: linear-gradient(135deg, var(--ocean), var(--green));
+  color: #fff;
+  padding: 14px 40px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  font-family: 'Lexend', sans-serif;
+}
+
+/* Check button for match/sort */
+.check-btn {
+  margin-top: 16px;
+  background: var(--text-accent);
+  color: var(--bg-main);
+  border: none;
+  padding: 12px 32px;
+  border-radius: 50px;
+  font-family: 'Lexend', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+.check-btn:hover { opacity: 0.85; }
+.check-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.clearfix::after { content: ''; display: table; clear: both; }
+</style>
+</head>
+<body>
+
+<div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
+
+<!-- INTRO -->
+<div class="intro-screen" id="introScreen">
+  <h1>🧪 Ispit: Arhaična Zemlja i Prokarioti</h1>
+  <p class="info">Ovo je izazovan ispit koji pokriva sve iz lekcije. Nema vremenskog ograničenja — uzmi koliko ti treba. Svako pitanje ima objašnjenje nakon odgovora.</p>
+  <div class="stats">
+    <div class="stat-box"><div class="stat-num">20</div><div class="stat-label">pitanja</div></div>
+    <div class="stat-box"><div class="stat-num">4</div><div class="stat-label">tipa pitanja</div></div>
+    <div class="stat-box"><div class="stat-num">∞</div><div class="stat-label">vremena</div></div>
+  </div>
+  <button class="start-btn" onclick="startExam()">Počni ispit →</button>
+</div>
+
+<!-- QUESTIONS CONTAINER -->
+<div class="container" id="examContainer" style="display:none;"></div>
+
+<!-- RESULTS -->
+<div class="container results-screen" id="resultsScreen">
+  <h2 style="color:var(--ocean);">📊 Rezultati ispita</h2>
+  <div class="score-circle" id="scoreCircle"></div>
+  <div class="score-msg" id="scoreMsg"></div>
+  <div class="review-list" id="reviewList"></div>
+  <button class="retry-btn" onclick="location.reload()">🔄 Pokušaj ponovo</button>
+  <br><br>
+  <a href="lekcija-arhaicna-zemlja-prokarioti.html" style="color:var(--text-accent);font-size:0.9rem;">← Natrag na lekciju</a>
+</div>
+
+<script>
+const questions = [
+  // 1. EASY - MC
+  {
+    type:'mc', difficulty:'easy', points:1,
+    text:'Kakva je bila atmosfera rane Zemlje (prije ~4 milijarde godina)?',
+    options:[
+      'Bogata kisikom, slična današnjoj',
+      'Bez kisika — puna CO₂, metana i vodene pare',
+      'Potpuni vakuum bez atmosfere',
+      'Bogata dušikom i kisikom u jednakim omjerima'
+    ],
+    correct:1,
+    explanation:'Rana Zemlja nije imala slobodni kisik. Atmosfera je bila puna CO₂, metana i vodene pare — toksičan koktel za nas, ali idealna za nastanak prvih organizama.'
+  },
+  // 2. MEDIUM - MC
+  {
+    type:'mc', difficulty:'medium', points:2,
+    text:'Što je paleontologija?',
+    options:[
+      'Znanost o vulkanima i tektonici ploča',
+      'Znanost koja proučava fosile i organizme iz Zemljine prošlosti',
+      'Proučavanje klime u prošlosti pomoću ledenih jezgri',
+      'Grana biologije koja proučava žive prokariote'
+    ],
+    correct:1,
+    explanation:'Paleontologija je znanost koja proučava fosile, fosilna nalazišta i općenito organizme iz Zemljine prošlosti. Paleontolozi rekonstruiraju kako je život izgledao prije milijuna godina.'
+  },
+  // 3. HARD - MC
+  {
+    type:'mc', difficulty:'hard', points:3,
+    text:'Koji je točan redoslijed koraka u procesu fosilizacije?',
+    options:[
+      'Organizam ugine → mineralizacija → zatrpavanje sedimentom → erozija',
+      'Organizam ugine → zatrpavanje sedimentom → mineralizacija → erozija na površinu',
+      'Mineralizacija → organizam ugine → zatrpavanje → erozija',
+      'Zatrpavanje sedimentom → organizam ugine → erozija → mineralizacija'
+    ],
+    correct:1,
+    explanation:'Ispravan redoslijed: 1) organizam ugine i mekano tkivo se raspada, 2) tvrdi dijelovi se zatrpaju sedimentom, 3) minerali zamjenjuju organski materijal (mineralizacija), 4) erozija izbacuje fosil na površinu.'
+  },
+  // 4. MEDIUM - TF
+  {
+    type:'tf', difficulty:'medium', points:2,
+    text:'Dendrokronologija je metoda koja pomoću godova drveća može odrediti starost drvenih predmeta i klimatske uvjete u prošlosti.',
+    correct:true,
+    explanation:'Točno! Dendrokronologija čita godove drveća: široki godovi = vlažna godina, uski godovi = suša. Koristi se za datiranje drvenih artefakata starih i tisućama godina.'
+  },
+  // 5. HARD - MC
+  {
+    type:'mc', difficulty:'hard', points:3,
+    text:'Geološka skala dijeli se na četiri eona. Koji od sljedećih NIJE eon?',
+    options:[
+      'Hadej',
+      'Arhej',
+      'Kambrij',
+      'Proterozoik'
+    ],
+    correct:2,
+    explanation:'Kambrij je PERIOD unutar eona fanerozoika, ne zaseban eon. Četiri eona su: Hadej, Arhej, Proterozoik i Fanerozoik.'
+  },
+  // 6. EXPERT - MC
+  {
+    type:'mc', difficulty:'expert', points:4,
+    text:'Ako bismo povijest Zemlje (4,6 mlrd. godina) stisnuli u 24 sata, kad bi se otprilike pojavili prvi prokarioti?',
+    options:[
+      'Oko ponoći (odmah na početku)',
+      'Oko 5 ujutro',
+      'Oko podne (12:00)',
+      'Oko 18:00 navečer'
+    ],
+    correct:1,
+    explanation:'U 24-satnoj analogiji, prokarioti se pojavljuju oko 5 ujutro (oko 3,5 mlrd. godina). To znači da su prokarioti prisutni u skoro 80% "dana" Zemlje! Čovjek se pojavljuje tek u zadnjih 30 sekundi.'
+  },
+  // 7. MEDIUM - MC
+  {
+    type:'mc', difficulty:'medium', points:2,
+    text:'Koji je naziv za događaj kad u relativno kratkom vremenu nestane više od 40% vrsta?',
+    options:[
+      'Geološka transformacija',
+      'Masovno ili veliko izumiranje',
+      'Klimatska katastrofa',
+      'Tektonski poremećaj'
+    ],
+    correct:1,
+    explanation:'Masovno ili veliko izumiranje je događaj kad u kratkom geološkom vremenu nestane preko 40% poznatih vrsta. Zabilježeno je pet takvih događaja, a znanstvenici se pitaju jesmo li usred šestog.'
+  },
+  // 8. HARD - MC
+  {
+    type:'mc', difficulty:'hard', points:3,
+    text:'Što su KEMOAUTOTROFI?',
+    context:'Razmisli o značenju korijena riječi: kemo = kemijski, auto = sam, troph = hrana.',
+    options:[
+      'Organizmi koji koriste Sunčevu energiju za proizvodnju hrane',
+      'Organizmi koji koriste energiju kemijskih reakcija za sintezu organskih spojeva',
+      'Organizmi koji jedu gotovu organsku tvari iz okoline',
+      'Organizmi koji mogu preživjeti i s kisikom i bez njega'
+    ],
+    correct:1,
+    explanation:'Kemoautotrofi koriste energiju iz kemijskih reakcija (oksidacija sumpora, željeza, vodika) za sintezu organskih spojeva. Ne trebaju Sunce! Žive na dnu oceana, oko hidrotermalnih izvora.'
+  },
+  // 9. MEDIUM - MC
+  {
+    type:'mc', difficulty:'medium', points:2,
+    text:'Koji je GLAVNI nusprodukt fotosinteze koji je promijenio Zemljinu atmosferu?',
+    options:[
+      'Ugljikov dioksid (CO₂)',
+      'Dušik (N₂)',
+      'Kisik (O₂)',
+      'Metan (CH₄)'
+    ],
+    correct:2,
+    explanation:'Fotosinteza: CO₂ + H₂O + Sunčeva energija → C₆H₁₂O₆ (šećer) + O₂ (kisik). Kisik je nusprodukt koji je potpuno transformirao atmosferu i omogućio kompleksniji život.'
+  },
+  // 10. EXPERT - MC
+  {
+    type:'mc', difficulty:'expert', points:4,
+    text:'Koja je KLJUČNA razlika između fotosinteze i kemosinteze?',
+    options:[
+      'Fotosinteza proizvodi kisik, a kemosinteza ne — ali obje koriste Sunčevu energiju',
+      'Fotosinteza koristi Sunčevu energiju, a kemosinteza koristi energiju kemijskih reakcija',
+      'Kemosinteza je učinkovitija od fotosinteze',
+      'Fotosintezu provode samo eukarioti, a kemosintezu samo prokarioti'
+    ],
+    correct:1,
+    explanation:'Ključna razlika je IZVOR ENERGIJE: fotosinteza koristi Sunčevu energiju, dok kemosinteza koristi energiju iz kemijskih reakcija (oksidacija sumpora, vodika, željeza). Zato kemosintetski organizmi mogu živjeti u potpunom mraku na dnu oceana.'
+  },
+  // 11. MEDIUM - TF
+  {
+    type:'tf', difficulty:'medium', points:2,
+    text:'Stromatoliti su najstariji fosili na Zemlji (oko 3,5 milijardi godina stari) i ne postoje više nigdje na svijetu kao živi organizmi.',
+    correct:false,
+    explanation:'Netočno! Stromatoliti POSTOJE kao živi organizmi — najpoznatiji su u zaljevu Shark Bay u Australiji. Također, u Hrvatskoj cijanobakterije sudjeluju u taloženju sedre na Plitvicama i Krki.'
+  },
+  // 12. HARD - MC
+  {
+    type:'mc', difficulty:'hard', points:3,
+    text:'Kako je pojava kisika u atmosferi utjecala na anaerobne organizme?',
+    options:[
+      'Pomogli im se prilagoditi i postati jači',
+      'Kisik im je bio otrov — mnogi su izumrli ili se povukli u anaerobna staništa',
+      'Nije imala nikakav utjecaj na njih',
+      'Anaerobni organizmi su počeli koristiti kisik odmah'
+    ],
+    correct:1,
+    explanation:'Za anaerobne organizme, kisik je bio toksičan. Velika oksigenacija uzrokovala je masovno izumiranje anaeroba. Preživjeli su se sakrili u staništa bez kisika: mulj, duboke vode, unutrašnjost tla.'
+  },
+  // 13. EXPERT - MC
+  {
+    type:'mc', difficulty:'expert', points:4,
+    text:'Zašto je stanično disanje (aerobna razgradnja) bilo evolucijska revolucija?',
+    options:[
+      'Bilo je jednostavnije od anaerobne razgradnje',
+      'Proizvodilo je 18 puta više energije od anaerobne razgradnje',
+      'Nije trebalo hranu, samo kisik',
+      'Omogućilo je organizmima život bez vode'
+    ],
+    correct:1,
+    explanation:'Stanično disanje s kisikom daje oko 18× više energije nego anaerobna razgradnja. Ta dodatna energija omogućila je nastanak složenijih, većih organizama — uključujući eukariote, koji su preci svih biljaka i životinja.'
+  },
+  // 14. MEDIUM - MC
+  {
+    type:'mc', difficulty:'medium', points:2,
+    text:'Što je nastalo kao posljedica nakupljanja kisika u gornjim slojevima atmosfere?',
+    options:[
+      'Magnetsko polje',
+      'Ozonski omotač (O₃)',
+      'Van Allenov pojas',
+      'Ionosfera'
+    ],
+    correct:1,
+    explanation:'Kisik (O₂) pod utjecajem UV zračenja tvori ozon (O₃). Nastaje ozonski omotač koji štiti Zemljinu površinu od štetnog ultraljubičastog zračenja — bez njega, život na kopnu ne bi bio moguć.'
+  },
+  // 15. HARD - MC
+  {
+    type:'mc', difficulty:'hard', points:3,
+    text:'Koja je KLJUČNA razlika u građi stanične stijenke između arheja i bakterija?',
+    options:[
+      'Arheje nemaju staničnu stijenku, a bakterije imaju',
+      'Arheje imaju stijenku od peptidoglikana, bakterije od proteina',
+      'Arheje imaju stijenku od proteina, bakterije od peptidoglikana',
+      'Obje imaju identičnu građu stanične stijenke'
+    ],
+    correct:2,
+    explanation:'Arheje imaju staničnu stijenku građenu od PROTEINA, dok bakterije imaju stijenku od PEPTIDOGLIKANA (kompleksnog polimera proteina i šećera). Zato antibiotici (koji napadaju peptidoglikan) djeluju na bakterije, ali NE na arheje.'
+  },
+  // 16. MEDIUM - TF
+  {
+    type:'tf', difficulty:'medium', points:2,
+    text:'Antibiotici djeluju i na bakterije i na viruse.',
+    correct:false,
+    explanation:'Netočno! Antibiotici djeluju SAMO na bakterije, NE na viruse. Prekomjerna uporaba antibiotika dovodi do rezistencije — bakterije mutiraju i postaju otporne. To je jedan od najvećih zdravstvenih problema 21. stoljeća.'
+  },
+  // 17. HARD - MC
+  {
+    type:'mc', difficulty:'hard', points:3,
+    text:'Što su termofili?',
+    options:[
+      'Arheje prilagođene ekstremno slanim sredinama',
+      'Arheje prilagođene ekstremno visokim temperaturama',
+      'Bakterije koje žive u kiselim sredinama',
+      'Prokarioti koji žive u vakuumu svemira'
+    ],
+    correct:1,
+    explanation:'Termofili su arheje (ekstremofili) prilagođene životu na ekstremno visokim temperaturama (80-120°C). Žive oko vulkana, hidrotermalnih izvora i vrućih izvora.'
+  },
+  // 18. EXPERT - MC
+  {
+    type:'mc', difficulty:'expert', points:4,
+    text:'Escherichia coli koristi se kao indikator čistoće vode. Što njezina prisutnost u pitkoj vodi ukazuje?',
+    options:[
+      'Voda ima previše minerala',
+      'Voda je zagađena industrijskim otpadom',
+      'Voda je kontaminirana fekalnim otpadom',
+      'Voda sadrži previše klora'
+    ],
+    correct:2,
+    explanation:'E. coli normalno živi u crijevima čovjeka i životinja. Ako se nađe u pitkoj vodi, to je pouzdan znak FEKALNOG onečišćenja. Zato se koliformni indeks koristi kao standardna mjera mikrobiološke čistoće vode.'
+  },
+  // 19. HARD - MC
+  {
+    type:'mc', difficulty:'hard', points:3,
+    text:'Što je "cvjetanje vode" i zašto je opasno?',
+    options:[
+      'Pojava algi koje proizvode kisik — korisno za riblje populacije',
+      'Prekomjerno razmnožavanje cijanobakterija uslijed viška fosfata — može otrovati vodu i ubiti organizme',
+      'Prirodni proces koji čisti jezera od zagađenja',
+      'Sezonski fenomen koji nema utjecaj na ekosustav'
+    ],
+    correct:1,
+    explanation:'Cvjetanje vode nastaje kad cijanobakterije se prekomjerno namnože zbog viška mineralnih tvari (fosfata). Kad uginu, raspadanjem troše kisik iz vode i mogu proizvesti toksine — opasno za ribe i druge vodene organizme.'
+  },
+  // 20. EXPERT - MC
+  {
+    type:'mc', difficulty:'expert', points:4,
+    context:'Ovo pitanje zahtijeva povezivanje više koncepata iz lekcije.',
+    text:'Koja je TOČNA kronologija ključnih događaja u razvoju života na Zemlji?',
+    options:[
+      'Eukarioti → Prokarioti → Fotosinteza → Kisik u atmosferi',
+      'Anaerobni heterotrofi → Kemoautotrofi → Cijanobakterije (fotosinteza) → Kisik → Ozonski omotač → Eukarioti',
+      'Fotosinteza → Anaerobni heterotrofi → Kisik → Prokarioti → Eukarioti',
+      'Cijanobakterije → Anaerobni heterotrofi → Kemoautotrofi → Eukarioti → Kisik'
+    ],
+    correct:1,
+    explanation:'Ispravan kronološki redoslijed: 1) Anaerobni heterotrofi (jedu gotovu hranu, bez kisika) → 2) Kemoautotrofi (proizvode hranu kemijskim reakcijama) → 3) Fotoautotrofi/cijanobakterije (fotosinteza, proizvode kisik) → 4) Kisik se nakuplja u atmosferi → 5) Ozonski omotač → 6) Stanično disanje i pojava eukariota.'
+  }
+];
+
+let currentQ = 0;
+let score = 0;
+let answers = [];
+let totalPoints = questions.reduce((s,q)=>s+q.points,0);
+
+function startExam() {
+  document.getElementById('introScreen').style.display = 'none';
+  document.getElementById('examContainer').style.display = 'block';
+  renderQuestion(0);
+  updateProgress();
+}
+
+function renderQuestion(idx) {
+  const container = document.getElementById('examContainer');
+  const q = questions[idx];
+  container.innerHTML = '';
+
+  const card = document.createElement('div');
+  card.className = 'question-card active';
+
+  const diffLabel = {easy:'Osnovno',medium:'Srednje',hard:'Teško',expert:'Expert'}[q.difficulty];
+  const diffClass = 'diff-'+q.difficulty;
+
+  let html = `<div class="q-number">Pitanje ${idx+1} od ${questions.length} <span class="q-difficulty ${diffClass}">${diffLabel} (${q.points} bod${q.points>1?'a':''})</span></div>`;
+  if (q.context) html += `<div class="q-context">💡 ${q.context}</div>`;
+  html += `<div class="q-text">${q.text}</div>`;
+
+  if (q.type === 'mc') {
+    html += '<div class="options">';
+    q.options.forEach((opt, i) => {
+      const letter = String.fromCharCode(65+i);
+      html += `<button class="option-btn" data-idx="${i}" onclick="answerMC(this,${idx},${i})"><span class="option-letter">${letter}</span><span>${opt}</span></button>`;
+    });
+    html += '</div>';
+  } else if (q.type === 'tf') {
+    html += `<div class="tf-options">
+      <button class="tf-btn" onclick="answerTF(this,${idx},true)">✅ Točno</button>
+      <button class="tf-btn" onclick="answerTF(this,${idx},false)">❌ Netočno</button>
+    </div>`;
+  }
+
+  html += `<div class="feedback" id="fb-${idx}"></div>`;
+  html += `<div class="clearfix"><button class="next-btn" id="next-${idx}" onclick="nextQuestion()">Sljedeće pitanje →</button></div>`;
+
+  card.innerHTML = html;
+  container.appendChild(card);
+}
+
+function answerMC(btn, qIdx, optIdx) {
+  const q = questions[qIdx];
+  const isCorrect = optIdx === q.correct;
+  const allBtns = btn.parentElement.querySelectorAll('.option-btn');
+
+  allBtns.forEach(b => {
+    b.classList.add('locked');
+    const bIdx = parseInt(b.dataset.idx);
+    if (bIdx === q.correct) b.classList.add('correct');
+    else if (b === btn && !isCorrect) b.classList.add('wrong');
+  });
+
+  showFeedback(qIdx, isCorrect, q);
+}
+
+function answerTF(btn, qIdx, answer) {
+  const q = questions[qIdx];
+  const isCorrect = answer === q.correct;
+  const allBtns = btn.parentElement.querySelectorAll('.tf-btn');
+
+  allBtns.forEach(b => b.classList.add('locked'));
+  if (isCorrect) btn.classList.add('correct');
+  else {
+    btn.classList.add('wrong');
+    allBtns.forEach(b => {
+      if (b !== btn) b.classList.add('correct');
+    });
+  }
+
+  showFeedback(qIdx, isCorrect, q);
+}
+
+function showFeedback(qIdx, isCorrect, q) {
+  if (isCorrect) score += q.points;
+  answers[qIdx] = isCorrect;
+
+  const fb = document.getElementById('fb-'+qIdx);
+  fb.className = 'feedback show ' + (isCorrect ? 'feedback-correct' : 'feedback-wrong');
+  fb.innerHTML = (isCorrect ? '✅ <strong>Točno!</strong> ' : '❌ <strong>Nije točno.</strong> ') + q.explanation;
+
+  document.getElementById('next-'+qIdx).classList.add('show');
+  updateProgress();
+}
+
+function nextQuestion() {
+  currentQ++;
+  if (currentQ >= questions.length) {
+    showResults();
+  } else {
+    renderQuestion(currentQ);
+    updateProgress();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+}
+
+function updateProgress() {
+  const pct = ((currentQ + (answers[currentQ] !== undefined ? 1 : 0)) / questions.length) * 100;
+  document.getElementById('progressBar').style.width = pct + '%';
+}
+
+function showResults() {
+  document.getElementById('examContainer').style.display = 'none';
+  const results = document.getElementById('resultsScreen');
+  results.classList.add('show');
+
+  const pct = Math.round((score / totalPoints) * 100);
+  const circle = document.getElementById('scoreCircle');
+  let color = pct >= 90 ? 'var(--green)' : pct >= 70 ? 'var(--ocean)' : pct >= 50 ? 'var(--orange)' : 'var(--red)';
+  circle.style.borderColor = color;
+  circle.style.color = color;
+  circle.innerHTML = `${pct}%<div style="font-size:0.8rem;font-weight:400;color:var(--text-light);">${score}/${totalPoints} bodova</div>`;
+
+  const msg = document.getElementById('scoreMsg');
+  if (pct >= 90) msg.innerHTML = '⭐⭐⭐ Briljantno! Odlično poznaješ gradivo!';
+  else if (pct >= 70) msg.innerHTML = '⭐⭐ Super! Imaš solidno znanje. Još malo vježbe za savršenstvo.';
+  else if (pct >= 50) msg.innerHTML = '⭐ Dobar početak! Ponovi dijelove koji su ti bili teži.';
+  else msg.innerHTML = '💪 Ne odustaj! Vrati se na lekciju i probaj ponovo — bit će lakše!';
+
+  const reviewList = document.getElementById('reviewList');
+  reviewList.innerHTML = '<h3 style="margin-bottom:16px;color:var(--text-accent);">Pregled odgovora:</h3>';
+  questions.forEach((q, i) => {
+    const correct = answers[i];
+    reviewList.innerHTML += `<div class="review-item ${correct ? 'review-correct' : 'review-wrong'}">
+      <div class="review-q">${i+1}. ${q.text.substring(0,80)}${q.text.length>80?'...':''}</div>
+      <div class="review-a">${correct ? '✅ Točno' : '❌ Netočno'} — ${q.explanation.substring(0,100)}...</div>
+    </div>`;
+  });
+
+  document.getElementById('progressBar').style.width = '100%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+
+</body>
+</html>

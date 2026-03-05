@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌍 Arhaična Zemlja i Prokarioti — Natalijina Biologija</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-main: #0D1117;
+  --bg-card: #161B22;
+  --bg-card-alt: #1C2333;
+  --text-main: #E6EDF3;
+  --text-light: #8B949E;
+  --text-accent: #58A6FF;
+  --lava: #FF6B35;
+  --lava-glow: #FF9F1C;
+  --ocean: #00B4D8;
+  --ocean-deep: #0077B6;
+  --green-life: #2DC653;
+  --green-dark: #1B8A3A;
+  --purple: #BC6FF1;
+  --purple-light: #D4A5FF;
+  --amber: #FFB627;
+  --red-warn: #F85149;
+  --radius: 16px;
+  --shadow: 0 4px 24px rgba(0,0,0,0.3);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Lexend', sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+  line-height: 1.8;
+  font-size: 17px;
+  overflow-x: hidden;
+  padding-bottom: 80px;
+}
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px 20px;
+  background: linear-gradient(180deg, #1a0a00 0%, #2d1500 30%, #0D1117 100%);
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 30% 80%, rgba(255,107,53,0.3) 0%, transparent 50%),
+              radial-gradient(ellipse at 70% 60%, rgba(255,159,28,0.2) 0%, transparent 40%);
+  animation: lavaGlow 8s ease-in-out infinite alternate;
+}
+@keyframes lavaGlow {
+  0% { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  color: var(--lava);
+  text-shadow: 0 0 40px rgba(255,107,53,0.5);
+  position: relative;
+  z-index: 1;
+  margin-bottom: 12px;
+}
+.hero .subtitle {
+  font-size: clamp(1rem, 3vw, 1.3rem);
+  color: var(--lava-glow);
+  font-weight: 300;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 24px;
+}
+.hero .tagline {
+  color: var(--text-light);
+  font-size: 0.95rem;
+  max-width: 500px;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 40px;
+}
+.hero .start-btn {
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(135deg, var(--lava), var(--lava-glow));
+  color: #fff;
+  border: none;
+  padding: 16px 40px;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-family: 'Lexend', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 4px 30px rgba(255,107,53,0.4);
+}
+.hero .start-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 40px rgba(255,107,53,0.6);
+}
+
+/* Progress bar */
+.progress-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: rgba(255,255,255,0.05);
+  z-index: 1000;
+}
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--lava), var(--ocean), var(--green-life));
+  width: 0%;
+  transition: width 0.5s ease;
+}
+
+/* Navigation */
+.nav-dots {
+  position: fixed;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 100;
+}
+.nav-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  border: 2px solid rgba(255,255,255,0.2);
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+}
+.nav-dot.active {
+  background: var(--ocean);
+  border-color: var(--ocean);
+  box-shadow: 0 0 10px rgba(0,180,216,0.5);
+}
+.nav-dot .tooltip {
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--bg-card);
+  color: var(--text-main);
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+.nav-dot:hover .tooltip { opacity: 1; }
+
+@media (max-width: 768px) {
+  .nav-dots { display: none; }
+}
+
+/* Sections */
+.section {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 60px 20px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.section-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  line-height: 1.3;
+}
+.section-subtitle {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  font-weight: 300;
+}
+
+/* Cards */
+.card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(255,255,255,0.06);
+  transition: border-color 0.3s;
+}
+.card:hover {
+  border-color: rgba(255,255,255,0.12);
+}
+.card-lava { border-left: 4px solid var(--lava); }
+.card-ocean { border-left: 4px solid var(--ocean); }
+.card-green { border-left: 4px solid var(--green-life); }
+.card-purple { border-left: 4px solid var(--purple); }
+.card-amber { border-left: 4px solid var(--amber); }
+
+.card h3 {
+  font-size: 1.15rem;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Key concept badge */
+.concept-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.badge-definition { background: rgba(88,166,255,0.15); color: var(--text-accent); }
+.badge-example { background: rgba(45,198,83,0.15); color: var(--green-life); }
+.badge-important { background: rgba(255,107,53,0.15); color: var(--lava); }
+.badge-fun { background: rgba(188,111,241,0.15); color: var(--purple-light); }
+
+/* Timeline */
+.timeline {
+  position: relative;
+  padding-left: 40px;
+  margin: 24px 0;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 16px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--lava), var(--ocean), var(--green-life));
+  border-radius: 3px;
+}
+.timeline-item {
+  position: relative;
+  margin-bottom: 28px;
+  padding-left: 20px;
+}
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -31px;
+  top: 8px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 3px solid;
+  background: var(--bg-main);
+}
+.timeline-item:nth-child(1)::before { border-color: var(--lava); }
+.timeline-item:nth-child(2)::before { border-color: var(--lava-glow); }
+.timeline-item:nth-child(3)::before { border-color: var(--amber); }
+.timeline-item:nth-child(4)::before { border-color: var(--ocean); }
+.timeline-item:nth-child(5)::before { border-color: var(--green-life); }
+.timeline-item:nth-child(6)::before { border-color: var(--purple); }
+.timeline-time {
+  font-size: 0.85rem;
+  color: var(--text-accent);
+  font-weight: 600;
+}
+.timeline-text {
+  font-size: 0.95rem;
+  color: var(--text-light);
+  margin-top: 4px;
+}
+
+/* Comparison */
+.compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 20px 0;
+}
+@media (max-width: 600px) {
+  .compare-grid { grid-template-columns: 1fr; }
+}
+.compare-card {
+  background: var(--bg-card-alt);
+  border-radius: var(--radius);
+  padding: 20px;
+  border-top: 4px solid;
+  text-align: center;
+}
+
+/* Flip cards */
+.flip-container {
+  perspective: 1000px;
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+.flip-card {
+  position: relative;
+  width: 100%;
+  min-height: 160px;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+.flip-card.flipped { transform: rotateY(180deg); }
+.flip-front, .flip-back {
+  position: absolute;
+  width: 100%;
+  min-height: 160px;
+  backface-visibility: hidden;
+  border-radius: var(--radius);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.flip-front {
+  background: var(--bg-card);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.flip-back {
+  background: var(--bg-card-alt);
+  border: 1px solid rgba(88,166,255,0.2);
+  transform: rotateY(180deg);
+}
+.flip-hint {
+  font-size: 0.75rem;
+  color: var(--text-light);
+  margin-top: 8px;
+}
+
+/* Interactive quiz */
+.quiz-question {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.quiz-question h4 {
+  font-size: 1rem;
+  margin-bottom: 16px;
+  color: var(--text-accent);
+}
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.quiz-option {
+  background: var(--bg-card-alt);
+  border: 2px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 14px 18px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: 'Lexend', sans-serif;
+  font-size: 0.95rem;
+  color: var(--text-main);
+  text-align: left;
+}
+.quiz-option:hover {
+  border-color: var(--text-accent);
+  background: rgba(88,166,255,0.05);
+}
+.quiz-option.correct {
+  border-color: var(--green-life) !important;
+  background: rgba(45,198,83,0.1) !important;
+}
+.quiz-option.wrong {
+  border-color: var(--red-warn) !important;
+  background: rgba(248,81,73,0.1) !important;
+}
+.quiz-option.disabled { pointer-events: none; opacity: 0.7; }
+.quiz-feedback {
+  margin-top: 12px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  display: none;
+}
+.quiz-feedback.show { display: block; }
+.quiz-feedback.correct-fb {
+  background: rgba(45,198,83,0.1);
+  border: 1px solid rgba(45,198,83,0.3);
+  color: var(--green-life);
+}
+.quiz-feedback.wrong-fb {
+  background: rgba(248,81,73,0.1);
+  border: 1px solid rgba(248,81,73,0.3);
+  color: #FF7B72;
+}
+
+/* Story section */
+.story-block {
+  background: linear-gradient(135deg, rgba(188,111,241,0.05), rgba(88,166,255,0.05));
+  border-radius: var(--radius);
+  padding: 32px 24px;
+  margin: 24px 0;
+  border: 1px solid rgba(188,111,241,0.15);
+  position: relative;
+}
+.story-block::before {
+  content: '📖';
+  position: absolute;
+  top: -16px;
+  left: 24px;
+  background: var(--bg-main);
+  padding: 4px 8px;
+  font-size: 1.5rem;
+}
+.story-block p {
+  font-size: 1.05rem;
+  line-height: 2;
+  margin-bottom: 16px;
+  color: #C9D1D9;
+}
+.story-block .highlight-text {
+  color: var(--amber);
+  font-weight: 500;
+}
+.story-block .analogy {
+  display: block;
+  background: rgba(255,182,39,0.08);
+  border-left: 3px solid var(--amber);
+  padding: 12px 16px;
+  margin: 16px 0;
+  border-radius: 0 12px 12px 0;
+  font-style: italic;
+  color: var(--amber);
+}
+
+/* Venn diagram */
+.venn-container {
+  display: flex;
+  justify-content: center;
+  margin: 24px 0;
+  position: relative;
+  min-height: 260px;
+}
+.venn-circle {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  font-size: 0.75rem;
+  text-align: center;
+  position: absolute;
+  top: 30px;
+}
+.venn-left {
+  left: calc(50% - 160px);
+  background: rgba(255,107,53,0.15);
+  border: 2px solid var(--lava);
+}
+.venn-right {
+  left: calc(50% - 40px);
+  background: rgba(0,180,216,0.15);
+  border: 2px solid var(--ocean);
+}
+.venn-center {
+  position: absolute;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(188,111,241,0.2);
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  text-align: center;
+  z-index: 2;
+  border: 1px solid var(--purple);
+}
+.venn-label {
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+}
+@media (max-width: 500px) {
+  .venn-circle { width: 160px; height: 160px; font-size: 0.65rem; padding: 14px; }
+  .venn-left { left: calc(50% - 140px); }
+  .venn-right { left: calc(50% - 20px); }
+}
+
+/* Image with caption */
+.img-frame {
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin: 20px 0;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.img-frame img {
+  width: 100%;
+  display: block;
+}
+.img-caption {
+  padding: 12px 16px;
+  font-size: 0.8rem;
+  color: var(--text-light);
+  background: var(--bg-card);
+  text-align: center;
+}
+
+/* Expand / collapse */
+.expandable {
+  margin: 16px 0;
+}
+.expand-trigger {
+  background: var(--bg-card-alt);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 14px 20px;
+  width: 100%;
+  text-align: left;
+  color: var(--text-accent);
+  font-family: 'Lexend', sans-serif;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.3s;
+}
+.expand-trigger:hover { background: rgba(88,166,255,0.05); }
+.expand-trigger .arrow { transition: transform 0.3s; }
+.expand-trigger.open .arrow { transform: rotate(180deg); }
+.expand-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+  padding: 0 20px;
+}
+.expand-content.open {
+  max-height: 2000px;
+  padding: 16px 20px;
+}
+
+/* Fun fact callout */
+.fun-fact {
+  background: linear-gradient(135deg, rgba(255,182,39,0.08), rgba(255,107,53,0.05));
+  border: 1px solid rgba(255,182,39,0.2);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin: 20px 0;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.fun-fact .ff-icon { font-size: 1.5rem; flex-shrink: 0; }
+.fun-fact .ff-text { font-size: 0.95rem; color: var(--amber); }
+
+/* Process diagram */
+.process-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 20px 0;
+}
+.process-step {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  position: relative;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.process-arrow {
+  text-align: center;
+  font-size: 1.5rem;
+  color: var(--text-light);
+  padding: 4px 0;
+}
+.process-step .step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin-right: 10px;
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg-card);
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  color: var(--text-light);
+  border: 1px solid rgba(255,255,255,0.08);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+.chapter-count {
+  color: var(--text-accent);
+  font-weight: 600;
+}
+
+/* Photosynthesis vs Chemosynthesis diagram */
+.diagram-box {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin: 16px 0;
+  border: 1px solid rgba(255,255,255,0.08);
+  text-align: center;
+}
+.diagram-title {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 12px;
+  padding: 8px;
+  border-radius: 8px;
+}
+.equation {
+  font-size: 1.1rem;
+  padding: 12px;
+  background: var(--bg-card-alt);
+  border-radius: 10px;
+  margin: 8px 0;
+  font-weight: 300;
+}
+.equation .reactant { color: var(--ocean); }
+.equation .product { color: var(--green-life); }
+.equation .energy { color: var(--amber); }
+
+/* Bacteria illustration */
+.bacteria-parts {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+.bacteria-part {
+  background: var(--bg-card-alt);
+  border-radius: 12px;
+  padding: 14px;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.bacteria-part .part-icon { font-size: 1.8rem; margin-bottom: 6px; }
+.bacteria-part .part-name { font-weight: 600; font-size: 0.85rem; color: var(--text-accent); }
+.bacteria-part .part-desc { font-size: 0.8rem; color: var(--text-light); margin-top: 4px; }
+
+/* Back to top */
+.back-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--text-main);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  box-shadow: var(--shadow);
+}
+.back-top.show { display: flex; }
+</style>
+</head>
+<body>
+
+<div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
+
+<!-- NAV DOTS -->
+<div class="nav-dots" id="navDots"></div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <h1>🌋 Arhaična Zemlja</h1>
+  <div class="subtitle">& prvi znakovi života</div>
+  <p class="tagline">Putovanje kroz 4 milijarde godina — od planeta lava do prvih živih bića. Biologija, 2. razred.</p>
+  <button class="start-btn" onclick="startLesson()">Kreni na putovanje ▼</button>
+</section>
+
+<!-- CHAPTER 1: EARLY EARTH -->
+<section class="section" id="ch1" data-title="Paklena Zemlja">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(255,107,53,0.15);">🌋</div>
+    <div>
+      <div class="section-title" style="color:var(--lava);">Poglavlje 1: Paklena Zemlja</div>
+      <div class="section-subtitle">Kako je izgledao naš planet prije 4 milijarde godina</div>
+    </div>
+  </div>
+
+  <div class="story-block">
+    <p>Zamisli da možeš putovati vremenskim strojem <span class="highlight-text">4 milijarde godina u prošlost</span>. Što bi vidjela? Ništa što bi prepoznala kao Zemlju.</p>
+    <p>Nema kontinenata — samo vulkansko stijenje koje se diže iz mora. Nema trave, nema drveća, nema ptica. <span class="highlight-text">Apsolutna tišina</span> — osim tutnjave vulkana, šuštanja lave i bombardiranja meteorita koji padaju s neba.</p>
+    <span class="analogy">💡 Zamislite ovo: Mlado Sunce sjajilo je sa samo 70% današnje snage, a Zemlja se okretala tako brzo da je dan trajao samo 18 sati. Mjesec je bio mnogo bliže i izgledao ogroman na nebu.</span>
+    <p>A najvažnija stvar? <span class="highlight-text">U atmosferi nije bilo kisika.</span> Nijedan čovjek ne bi mogao udahnuti. Atmosfera je bila puna ugljičnog dioksida, metana i vodene pare — otrovni koktel za nas, ali savršen početak za nešto nevjerojatno.</p>
+  </div>
+
+  <div class="fun-fact">
+    <div class="ff-icon">🤯</div>
+    <div class="ff-text">Bill Bryson u svojoj knjizi kaže: nastanak života je još uvijek jedan od najvećih misterija znanosti. Aminokiseline se mogu stvoriti iz kemikalija u munji — ali kako su se te jednostavne molekule organizirale u živu stanicu? Nitko još ne zna odgovor.</div>
+  </div>
+
+  <!-- Mini quiz -->
+  <div class="quiz-question" id="q1">
+    <h4>🎯 Brza provjera</h4>
+    <p>Kakva je bila atmosfera rane Zemlje?</p>
+    <div class="quiz-options">
+      <button class="quiz-option" onclick="checkQuiz(this,'q1',false)">Bogata kisikom, slična današnjoj</button>
+      <button class="quiz-option" onclick="checkQuiz(this,'q1',true)">Bez kisika — puna CO₂, metana i vodene pare</button>
+      <button class="quiz-option" onclick="checkQuiz(this,'q1',false)">Potpuni vakuum, bez ikakve atmosfere</button>
+    </div>
+    <div class="quiz-feedback" id="q1-fb"></div>
+  </div>
+</section>
+
+<!-- CHAPTER 2: FOSSILS -->
+<section class="section" id="ch2" data-title="Fosili">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(255,182,39,0.15);">🦴</div>
+    <div>
+      <div class="section-title" style="color:var(--amber);">Poglavlje 2: Fosili pričaju priče</div>
+      <div class="section-subtitle">Vremenske kapsule iz kamena</div>
+    </div>
+  </div>
+
+  <div class="story-block">
+    <p>Znaš onaj osjećaj kad nađeš stari dnevnik nekoga tko je živio prije tebe? Fosili su upravo to — <span class="highlight-text">dnevnici Zemlje</span>, zapisani u kamenu.</p>
+    <p>Svaki fosil je ostatak organizma koji je živio prije tisuća, milijuna ili čak <span class="highlight-text">milijardi godina</span>. Kosturi dinosaura, ljušture školjki, otisci paprati — sve to su stranice u kamenom dnevniku naše planete.</p>
+  </div>
+
+  <div class="card card-amber">
+    <h3><span class="concept-badge badge-definition">Definicija</span> Paleontologija</h3>
+    <p>Znanost koja proučava fosile i općenito organizme iz Zemljine prošlosti. Paleontolozi su detektivi koji iz koščica i otisaka rekonstruiraju živote davno izumrlih bića.</p>
+  </div>
+
+  <h3 style="margin: 32px 0 16px; color: var(--amber);">Kako nastaje fosil?</h3>
+  <div class="process-flow">
+    <div class="process-step">
+      <span class="step-num" style="background:rgba(255,107,53,0.2);color:var(--lava);">1</span>
+      <strong>Organizam ugine</strong> — npr. dinosaur. Mekano tkivo se brzo raspada.
+    </div>
+    <div class="process-arrow">↓</div>
+    <div class="process-step">
+      <span class="step-num" style="background:rgba(255,182,39,0.2);color:var(--amber);">2</span>
+      <strong>Ostaje tvrdi skelet</strong> koji se zatrpava rahlim sedimentom (pijeskom, muljem).
+    </div>
+    <div class="process-arrow">↓</div>
+    <div class="process-step">
+      <span class="step-num" style="background:rgba(0,180,216,0.2);color:var(--ocean);">3</span>
+      <strong>Sediment se gomila</strong> — sloj za slojem, tijekom tisućljeća. Pritisak i kemijski procesi pretvaraju sediment u stijenu.
+    </div>
+    <div class="process-arrow">↓</div>
+    <div class="process-step">
+      <span class="step-num" style="background:rgba(45,198,83,0.2);color:var(--green-life);">4</span>
+      <strong>Fosilizacija!</strong> — Minerali zamjenjuju kost, pretvarajući je u kamen. Milioni godina kasnije, erozija izbacuje fosil na površinu.
+    </div>
+  </div>
+
+  <div class="fun-fact">
+    <div class="ff-icon">🌲</div>
+    <div class="ff-text"><strong>Dendrokronologija</strong> — metoda koja čita godove drveća poput barkoda. Široki godovi = vlažna godina, uski godovi = suša. Znanstvenici pomoću nje mogu datirati drvene predmete stare tisućama godina!</div>
+  </div>
+</section>
+
+<!-- CHAPTER 3: GEOLOGICAL PERIODS -->
+<section class="section" id="ch3" data-title="Geološka razdoblja">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(0,180,216,0.15);">⏳</div>
+    <div>
+      <div class="section-title" style="color:var(--ocean);">Poglavlje 3: Geološka razdoblja</div>
+      <div class="section-subtitle">4,6 milijardi godina u jednom danu</div>
+    </div>
+  </div>
+
+  <div class="story-block">
+    <p>Evo jedne nevjerojatne usporedbe. Zamisli da <span class="highlight-text">cijelu povijest Zemlje stisneš u 24 sata</span> — od ponoći do ponoći.</p>
+    <span class="analogy">🕐 U tom scenariju: prvi jednostavni organizmi (prokarioti) pojavljuju se oko 5 ujutro. Eukarioti tek oko 16h. Biljke koloniziraju kopno oko 20:30. Dinosauri se pojavljuju oko 22:45. A čovjek? Pojavljuje se u <em>zadnjih 30 sekundi</em> prije ponoći.</span>
+    <p>To znači da je <span class="highlight-text">80% povijesti života na Zemlji</span> pripadalo mikroskopskim bićima. Oni su bili glavni likovi ove priče milijardama godina prije nego što je ijedan dinosaur zakoračio na scenu.</p>
+  </div>
+
+  <h3 style="margin: 20px 0 16px; color: var(--ocean);">Četiri velika eona</h3>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-time">🔥 Hadej (4,6 – 4,0 mlrd. g.)</div>
+      <div class="timeline-text">Pakleni početak. Zemlja se tek formira, bombardirana meteoritima. Nema života.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-time">🦠 Arhej (4,0 – 2,5 mlrd. g.)</div>
+      <div class="timeline-text">Pojava prvih prokariota! Anaerobni organizmi, bez kisika. Stromatoliti — najstariji tragovi života.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-time">🧬 Proterozoik (2,5 – 0,54 mlrd. g.)</div>
+      <div class="timeline-text">Velika oksigenacija! Cijanobakterije pune atmosferu kisikom. Pojava eukariota.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-time">🌿 Fanerozoik (0,54 mlrd. g. – danas)</div>
+      <div class="timeline-text">Kambrijska eksplozija, dinosauri, sisavci, ljudi. Sve što "poznajemo" zbilo se u ovom eonu.</div>
+    </div>
+  </div>
+
+  <div class="card card-ocean">
+    <h3><span class="concept-badge badge-important">Važno</span> Masovna izumiranja</h3>
+    <p>Tijekom fanerozoika zabilježeno je <strong>pet velikih masovnih izumiranja</strong> — trenutaka kad je preko 40% vrsta nestalo u kratkom vremenu. Danas se znanstvenici pitaju jesmo li usred šestog — uzrokovanog ljudskim djelovanjem.</p>
+  </div>
+</section>
+
+<!-- CHAPTER 4: LIFE WITHOUT OXYGEN -->
+<section class="section" id="ch4" data-title="Život bez kisika">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(188,111,241,0.15);">🌑</div>
+    <div>
+      <div class="section-title" style="color:var(--purple-light);">Poglavlje 4: Život bez kisika</div>
+      <div class="section-subtitle">Pretkambrij — carstvo nevidljivih</div>
+    </div>
+  </div>
+
+  <div class="story-block">
+    <p>Zamisli da živiš u svijetu bez kisika. Zvuči nemoguće? A upravo tako su živjeli <span class="highlight-text">prvi organizmi na Zemlji — milijardama godina</span>.</p>
+    <p>Ti prvi organizmi bili su <strong>anaerobni heterotrofi</strong>. Zvuči komplicirano, ali hajde da razbijemo te riječi:</p>
+    <span class="analogy">
+      🔬 <strong>Anaerobni</strong> = ne trebaju kisik (an = bez, aero = zrak)<br>
+      🍕 <strong>Heterotrofi</strong> = jedu gotovu hranu iz okoline (hetero = drugačiji, troph = hrana)<br><br>
+      Zamislite ih kao najjednostavnija bića koja "jedu" organske molekule iz oceana — poput nekoga tko jede ostatke iz frižidera bez da sam kuha.
+    </span>
+  </div>
+
+  <h3 style="margin: 20px 0 16px; color: var(--purple-light);">Od "jedenja" do "kuhanja" — evolucija prehrane</h3>
+
+  <div class="compare-grid">
+    <div class="compare-card" style="border-color: var(--lava);">
+      <div style="font-size:2.5rem;margin-bottom:8px;">🧪</div>
+      <h4 style="color:var(--lava);">Kemosinteza</h4>
+      <p style="font-size:0.85rem;color:var(--text-light);margin-top:8px;">Koristi energiju iz <strong>kemijskih reakcija</strong> (sumpor, vodík, željezo) za stvaranje hrane. Ne treba im Sunce! Žive na dnu oceana, oko hidrotermalnih izvora.</p>
+    </div>
+    <div class="compare-card" style="border-color: var(--green-life);">
+      <div style="font-size:2.5rem;margin-bottom:8px;">☀️</div>
+      <h4 style="color:var(--green-life);">Fotosinteza</h4>
+      <p style="font-size:0.85rem;color:var(--text-light);margin-top:8px;">Koristi <strong>Sunčevu energiju</strong> za pretvorbu CO₂ i vode u hranu (šećer) i kisik. Revolucija koja je promijenila cijeli planet!</p>
+    </div>
+  </div>
+
+  <div class="diagram-box">
+    <div class="diagram-title" style="background:rgba(45,198,83,0.1);color:var(--green-life);">⚗️ Fotosinteza — jednadžba</div>
+    <div class="equation">
+      <span class="reactant">CO₂</span> + <span class="reactant">H₂O</span> + <span class="energy">☀️ Sunčeva energija</span> → <span class="product">C₆H₁₂O₆ (šećer)</span> + <span class="product">O₂ (kisik)</span>
+    </div>
+  </div>
+  <div class="diagram-box">
+    <div class="diagram-title" style="background:rgba(255,107,53,0.1);color:var(--lava);">🌋 Kemosinteza — jednadžba</div>
+    <div class="equation">
+      <span class="reactant">CO₂</span> + <span class="reactant">H₂S (sumporovodik)</span> + <span class="energy">⚡ kemijska energija</span> → <span class="product">ugljikohidrati (hrana)</span> + <span class="product">S (sumpor)</span>
+    </div>
+  </div>
+
+  <div class="quiz-question" id="q2">
+    <h4>🎯 Brza provjera</h4>
+    <p>Koji organizmi su prvi proizveli kisik na Zemlji?</p>
+    <div class="quiz-options">
+      <button class="quiz-option" onclick="checkQuiz(this,'q2',false)">Anaerobni heterotrofi</button>
+      <button class="quiz-option" onclick="checkQuiz(this,'q2',false)">Kemoautotrofi</button>
+      <button class="quiz-option" onclick="checkQuiz(this,'q2',true)">Fotosintetski organizmi (cijanobakterije)</button>
+      <button class="quiz-option" onclick="checkQuiz(this,'q2',false)">Eukarioti</button>
+    </div>
+    <div class="quiz-feedback" id="q2-fb"></div>
+  </div>
+</section>
+
+<!-- CHAPTER 5: CYANOBACTERIA & OXYGEN REVOLUTION -->
+<section class="section" id="ch5" data-title="Kisik mijenja sve">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(0,180,216,0.15);">💨</div>
+    <div>
+      <div class="section-title" style="color:var(--ocean);">Poglavlje 5: Kisik mijenja sve</div>
+      <div class="section-subtitle">Cijanobakterije, stromatoliti i Velika oksigenacija</div>
+    </div>
+  </div>
+
+  <div class="story-block">
+    <p>Evo jednog od najdramatičnijih obrata u povijesti Zemlje. Prije otprilike <span class="highlight-text">3 milijarde godina</span>, pojavljuju se mikroskopski organizmi koji će doslovno <strong>preobraziti cijeli planet</strong>.</p>
+    <p>Zovu se <span class="highlight-text">cijanobakterije</span>. Na prvi pogled — ništa posebno. Sitni, jednoćelijski prokarioti. Ali imali su supermoć: mogli su koristiti Sunčevu energiju za fotosintezu, a kao nusprodukt — ispuštali su <strong>kisik</strong>.</p>
+    <span class="analogy">💡 Zamislite cijeli planet kao zatvorenu garažu punu ispušnih plinova. A onda netko postavi milijarde malih pročistača zraka koji rade non-stop, 24/7, milijardama godina. To su bile cijanobakterije.</span>
+  </div>
+
+  <div class="card card-ocean">
+    <h3>🪨 Stromatoliti — najstariji "živi fosili"</h3>
+    <p>Najraniji fosilni dokazi života na Zemlji stari su oko <strong>3,5 milijardi godina</strong>. To su <strong>stromatoliti</strong> — slojevite strukture koje su nastale kad su cijanobakterije sljepljivale čestice sedimenta, sloj za slojem, tisućama godina.</p>
+    <p style="margin-top:12px;">I evo nevjerojatnog dijela: <strong>stromatoliti još uvijek postoje!</strong> U zaljevu Shark Bay u Australiji rastu živi stromatoliti — gotovo identični onima od prije 3,5 milijardi godina. To je kao da nađeš živog dinosaura u svom dvorištu.</p>
+    <p style="margin-top:12px; color:var(--text-light); font-size:0.9rem;">🇭🇷 A znaš li da i <strong>u Hrvatskoj</strong> imamo proces sličan stromatolitima? Na Plitvičkim jezerima i Krki cijanobakterije sudjeluju u taloženju sedre (travertina) — to je razlog zašto su ti slapovi tako posebni!</p>
+  </div>
+
+  <div class="fun-fact">
+    <div class="ff-icon">🏗️</div>
+    <div class="ff-text">Jedan stromatolit visok 1 metar može biti star 2000-3000 godina. Sporiji su od svakog građevinskog projekta u Hrvatskoj! 😄</div>
+  </div>
+
+  <h3 style="margin: 32px 0 16px; color: var(--ocean);">Kako je kisik promijenio Zemlju?</h3>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-time">🔬 Faza 1: Tvornice kisika rade</div>
+      <div class="timeline-text">Cijanobakterije ispuštaju O₂. Ali kisik reagira s otopljenim željezom u oceanu — nastaju crvene željezne naslage (rude).</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-time">🌊 Faza 2: More je zasićeno</div>
+      <div class="timeline-text">Kad se svo željezo "potrošilo", kisik se počinje otapati u vodi, a zatim izlaziti u atmosferu.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-time">☠️ Faza 3: Masovno izumiranje anaerobâ</div>
+      <div class="timeline-text">Za anaerobne organizme, kisik je bio OTROV. Mnogi su izumrli. Preživjeli su se sakrili u anaerobna staništa (mulj, dubine).</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-time">🛡️ Faza 4: Ozonski omotač</div>
+      <div class="timeline-text">O₂ pod UV zračenjem tvori O₃ (ozon). Nastaje ozonski omotač koji štiti Zemlju od štetnog UV zračenja.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-time">⚡ Faza 5: Stanično disanje</div>
+      <div class="timeline-text">Novi organizmi razvijaju stanično disanje — koriste kisik za razgradnju hrane. Daje 18× više energije od anaerobne razgradnje!</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-time">🧬 Faza 6: Eukarioti!</div>
+      <div class="timeline-text">Nastaju složenije stanice s jezgrom — eukarioti. Predak svih biljaka, životinja i gljiva.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CHAPTER 6: PROKARYOTES -->
+<section class="section" id="ch6" data-title="Prokarioti">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(45,198,83,0.15);">🦠</div>
+    <div>
+      <div class="section-title" style="color:var(--green-life);">Poglavlje 6: Prokarioti — vladari Zemlje</div>
+      <div class="section-subtitle">Arheje i bakterije</div>
+    </div>
+  </div>
+
+  <div class="story-block">
+    <p>Kad čuješ riječ "prokarioti", možda pomisliš na nešto dosadno i jednostavno. Ali evo činjenice koja bi te trebala zapanjiti:</p>
+    <p><span class="highlight-text">Prokarioti su najuspješniji organizmi u povijesti života na Zemlji.</span> Postoje već 3,5+ milijardi godina. Preživjeli su svako masovno izumiranje. Žive u kipućoj vodi, u ledu, u kiselini, u nuklearnim reaktorima, na dnu oceana, u tvojim crijevima.</p>
+    <span class="analogy">🎬 Kad bi se snimao film o životu na Zemlji, prokarioti bi bili glavni likovi u prvih 80% filma. Mi, ljudi, pojavili bismo se tek u odjavnoj špici.</span>
+  </div>
+
+  <div class="card card-green">
+    <h3>📏 Koliko su mali?</h3>
+    <p>Prokarioti su sitni — veličine <strong>0,1 – 5 μm</strong> (mikrometara). To je 1000× manje od milimetra! Na vrh igle stalo bi ih više tisuća. Nemaju oblikovanu jezgru — njihova DNA pluta slobodno u citoplazmi.</p>
+    <p style="margin-top:8px;">Razmnožavaju se <strong>dvojnom diobom</strong> — jednostavno se podijele na dvoje. Neke bakterije to mogu svakih 20 minuta. To znači da od jedne bakterije ujutro može nastati <strong>milijarde</strong> do večeri!</p>
+  </div>
+
+  <h3 style="margin: 32px 0 16px; color: var(--green-life);">Dvije domene prokariota</h3>
+
+  <div class="venn-container">
+    <div class="venn-circle venn-left">
+      <div class="venn-label" style="color:var(--lava);">ARHEJE</div>
+      <div style="font-size:0.72rem;color:var(--text-light);">
+        Stanična stijenka od <strong>proteina</strong><br>
+        Otporne na antibiotike<br>
+        Često ekstremofili
+      </div>
+    </div>
+    <div class="venn-center">
+      <strong>Zajedničko:</strong><br>
+      Jednostanični prokarioti<br>
+      Nema jezgre
+    </div>
+    <div class="venn-circle venn-right">
+      <div class="venn-label" style="color:var(--ocean);">BAKTERIJE</div>
+      <div style="font-size:0.72rem;color:var(--text-light);">
+        Stijenka od <strong>peptidoglikana</strong><br>
+        Antibiotici ih ubijaju<br>
+        Svugdje oko nas
+      </div>
+    </div>
+  </div>
+
+  <div class="expandable">
+    <button class="expand-trigger" onclick="toggleExpand(this)">
+      🔥 Što su ekstremofili? <span class="arrow">▼</span>
+    </button>
+    <div class="expand-content">
+      <p>Ekstremofili su arheje prilagođene životu u ekstremnim uvjetima:</p>
+      <div class="bacteria-parts" style="margin-top:12px;">
+        <div class="bacteria-part"><div class="part-icon">🌡️</div><div class="part-name">Termofili</div><div class="part-desc">Vrela voda (80-120°C), vulkani, termalni izvori</div></div>
+        <div class="bacteria-part"><div class="part-icon">🧊</div><div class="part-name">Psihrofili</div><div class="part-desc">Ledena staništa (ispod 0°C), antarktički led</div></div>
+        <div class="bacteria-part"><div class="part-icon">🧂</div><div class="part-name">Halofili</div><div class="part-desc">Iznimno slana voda (Mrtvo more, solane)</div></div>
+        <div class="bacteria-part"><div class="part-icon">⬇️</div><div class="part-name">Barofili</div><div class="part-desc">Ogroman tlak na dnu oceana</div></div>
+        <div class="bacteria-part"><div class="part-icon">🍋</div><div class="part-name">Acidofili</div><div class="part-desc">Kisele sredine (pH < 3), rudnički odvodi</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quiz-question" id="q3">
+    <h4>🎯 Brza provjera</h4>
+    <p>Koja je KLJUČNA razlika u staničnoj stijenci arheja i bakterija?</p>
+    <div class="quiz-options">
+      <button class="quiz-option" onclick="checkQuiz(this,'q3',false)">Arheje nemaju staničnu stijenku</button>
+      <button class="quiz-option" onclick="checkQuiz(this,'q3',true)">Arheje imaju stijenku od proteina, bakterije od peptidoglikana</button>
+      <button class="quiz-option" onclick="checkQuiz(this,'q3',false)">Bakterije nemaju staničnu stijenku</button>
+      <button class="quiz-option" onclick="checkQuiz(this,'q3',false)">Obje imaju identičnu građu stijenke</button>
+    </div>
+    <div class="quiz-feedback" id="q3-fb"></div>
+  </div>
+</section>
+
+<!-- CHAPTER 7: BACTERIA DETAIL -->
+<section class="section" id="ch7" data-title="Bakterije">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(0,119,182,0.15);">🔬</div>
+    <div>
+      <div class="section-title" style="color:var(--ocean-deep);">Poglavlje 7: Bakterije izbliza</div>
+      <div class="section-subtitle">Cijanobakterije, bakterioklorofil i cvjetanje vode</div>
+    </div>
+  </div>
+
+  <div class="card card-ocean">
+    <h3>🟢 Cijanobakterije — zvijezde priče</h3>
+    <p>Cijanobakterije su posebne jer su <strong>prokarioti koji rade fotosintezu</strong> — jedini prokarioti koji proizvode kisik. Obično su veće i složenije od drugih bakterija, često se udružuju u kolonije nalik dugačkim nitima.</p>
+    <p style="margin-top:10px;">Ime su dobile po <strong>cijan boji</strong> (modrozelena) — boji fotosintetskog pigmenta kojeg sadrže.</p>
+    <p style="margin-top:10px;">Žive doslovno svugdje: u slatkim vodama, morima, na vlažnom tlu, na kori drveća, na snijegu, čak i unutar listova paprati!</p>
+  </div>
+
+  <div class="expandable">
+    <button class="expand-trigger" onclick="toggleExpand(this)">
+      🧫 Što je bakterioklorofil? <span class="arrow">▼</span>
+    </button>
+    <div class="expand-content">
+      <p>Neke bakterije (ne cijanobakterije) imaju posebne fotosintetske pigmente zvane <strong>bakterioklorofil</strong>. Razlikuju se od biljnog klorofila:</p>
+      <ul style="margin:12px 0 0 20px;color:var(--text-light);">
+        <li>Provode <strong>anoksigensku fotosintezu</strong> — NE proizvode kisik</li>
+        <li>Umjesto vode koriste sumporovodik (H₂S)</li>
+        <li>Daju bakterijama grimiznu ili zelenu boju</li>
+      </ul>
+      <p style="margin-top:12px;color:var(--text-light);">Zato neka jezera imaju čudnu crvenu/purpurnu boju — to su grimizne sumporne bakterije!</p>
+    </div>
+  </div>
+
+  <div class="card card-lava" style="margin-top:20px;">
+    <h3>🌊 Cvjetanje vode — kad cijanobakterije "podivljaju"</h3>
+    <p>Kad u vodu dospije previše mineralnih tvari (posebno fosfata — npr. od gnojiva s polja), cijanobakterije se obilno namnože. Voda postaje zelena i gusta — to je <strong>cvjetanje vode</strong>.</p>
+    <p style="margin-top:10px;">Problem? Kad te cijanobakterije uginu, njihov raspad troši kisik iz vode i može otrovati druge organizme. To je jedan od razloga zašto se zagađenje voda mora sprječavati.</p>
+  </div>
+
+  <div class="fun-fact">
+    <div class="ff-icon">🏞️</div>
+    <div class="ff-text">Plitvička jezera i rijeka Krka duguju svoju ljepotu upravo cijanobakterijama! Ovi mikroskopski organizmi pomažu u taloženju sedre (travertina) — vapnenačke stijene koja stvara te prekrasne slapove i jezera. Bez cijanobakterija — nema Plitvica!</div>
+  </div>
+</section>
+
+<!-- CHAPTER 8: IMPORTANCE & DISEASES -->
+<section class="section" id="ch8" data-title="Važnost prokariota">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(255,107,53,0.15);">⚖️</div>
+    <div>
+      <div class="section-title" style="color:var(--lava-glow);">Poglavlje 8: Heroji i zlikovci</div>
+      <div class="section-subtitle">Važnost prokariota i bolesti</div>
+    </div>
+  </div>
+
+  <div class="story-block">
+    <p>Prokarioti imaju dvostruku ulogu. S jedne strane — bez njih <span class="highlight-text">ne bismo mogli živjeti</span>. S druge strane — neki od njih mogu nas ubiti.</p>
+    <span class="analogy">🎭 Zamislite prokariote kao likove u filmu: 99% su pozitivci (dobri momci), a 1% su negativci (patogeni). Ali taj 1% može napraviti veliku štetu.</span>
+  </div>
+
+  <h3 style="margin:20px 0 16px;color:var(--green-life);">👍 Korisni prokarioti</h3>
+  <div class="bacteria-parts">
+    <div class="bacteria-part"><div class="part-icon">🧀</div><div class="part-name">Fermentacija</div><div class="part-desc">Sir, jogurt, kiselo zelje, pivo, vino — sve zahvaljujući bakterijama!</div></div>
+    <div class="bacteria-part"><div class="part-icon">🌱</div><div class="part-name">Fiksacija dušika</div><div class="part-desc">Pretvaraju atmosferski N₂ u oblik koji biljke mogu koristiti. Bez toga — nema poljoprivrede.</div></div>
+    <div class="bacteria-part"><div class="part-icon">♻️</div><div class="part-name">Razgradnja</div><div class="part-desc">Razgrađuju mrtve organizme i vraćaju hranjive tvari u tlo. Prirodni reciklažni sustav.</div></div>
+    <div class="bacteria-part"><div class="part-icon">💊</div><div class="part-name">Biotechnologija</div><div class="part-desc">Proizvodnja inzulina, čišćenje naftnih mrlja, obrada otpada.</div></div>
+    <div class="bacteria-part"><div class="part-icon">🫃</div><div class="part-name">Probavni sustav</div><div class="part-desc">Milijarde "dobrih bakterija" u tvojim crijevima pomažu probavu i jačaju imunitet.</div></div>
+  </div>
+
+  <h3 style="margin:32px 0 16px;color:var(--red-warn);">👎 Patogene bakterije</h3>
+  <div class="card" style="border-left:4px solid var(--red-warn);">
+    <p><strong>Patogene bakterije</strong> uzrokuju bolesti. Ulaze u tijelo kroz:</p>
+    <div class="bacteria-parts" style="margin-top:12px;">
+      <div class="bacteria-part"><div class="part-icon">💨</div><div class="part-name">Kapljice</div><div class="part-desc">Udisanje (angina, tuberkuloza)</div></div>
+      <div class="bacteria-part"><div class="part-icon">🍽️</div><div class="part-name">Hrana/Voda</div><div class="part-desc">Gutanje (salmoneloza, dizenterija, kolera)</div></div>
+      <div class="bacteria-part"><div class="part-icon">🩹</div><div class="part-name">Oštećena koža</div><div class="part-desc">Rane (tetanus, gnojne infekcije)</div></div>
+      <div class="bacteria-part"><div class="part-icon">👤</div><div class="part-name">Kontakt</div><div class="part-desc">Spolni prijenos (klamidija, gonoreja)</div></div>
+    </div>
+  </div>
+
+  <div class="card card-ocean" style="margin-top:20px;">
+    <h3>💧 Escherichia coli — indikator čistoće vode</h3>
+    <p><strong>E. coli</strong> je bakterija koja normalno živi u crijevima čovjeka. Ako se nađe u pitkoj vodi — to znači da je voda zagađena fekalnim otpadom. Zato se koristi <strong>koliformni indeks</strong> kao mjera čistoće vode.</p>
+  </div>
+
+  <h3 style="margin:32px 0 16px;color:var(--amber);">🛡️ Prevencija bakterijskih bolesti</h3>
+  <div class="bacteria-parts">
+    <div class="bacteria-part"><div class="part-icon">🧼</div><div class="part-name">Higijena</div><div class="part-desc">Pranje ruku, čistoća hrane i vode</div></div>
+    <div class="bacteria-part"><div class="part-icon">💉</div><div class="part-name">Cijepljenje</div><div class="part-desc">Cjepiva protiv tetanusa, difterije, tuberkuloze...</div></div>
+    <div class="bacteria-part"><div class="part-icon">💊</div><div class="part-name">Antibiotici</div><div class="part-desc">Lijekovi koji ubijaju bakterije ili zaustavljaju rast</div></div>
+    <div class="bacteria-part"><div class="part-icon">🍏</div><div class="part-name">Zdrave navike</div><div class="part-desc">Zdrava prehrana za jak imunitet</div></div>
+  </div>
+
+  <div class="card card-lava" style="margin-top:20px;">
+    <h3>⚠️ Problem s antibioticima</h3>
+    <p>Antibiotici djeluju samo na <strong>bakterije</strong>, ne na viruse! Prekomjerna i nepravilna uporaba antibiotika dovodi do <strong>rezistencije</strong> — bakterije mutiraju i postaju otporne. To je jedan od najvećih zdravstvenih problema 21. stoljeća.</p>
+    <p style="margin-top:8px;">Također, antibiotici ne razlikuju "dobre" od "loših" bakterija — ubijaju i korisne bakterije u crijevima. Zato uz antibiotike liječnici često preporučuju probiotike.</p>
+  </div>
+</section>
+
+<!-- CHAPTER 9: BRYSON STORY -->
+<section class="section" id="ch9" data-title="Priča o životu">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(188,111,241,0.15);">📖</div>
+    <div>
+      <div class="section-title" style="color:var(--purple-light);">Bonus: Priča o životu</div>
+      <div class="section-subtitle">Inspirirano knjigom "Kratka povijest gotovo svega" Billa Brysona</div>
+    </div>
+  </div>
+
+  <div class="story-block" style="border-color:rgba(188,111,241,0.3);">
+    <p style="font-size:1.1rem;font-weight:500;color:var(--purple-light);margin-bottom:20px;">🌍 Kako je kamenčić od bakterije promijenio cijeli planet</p>
+
+    <p>Zamislite da ste upravo stigli na Zemlju iz svemira. Piše se otprilike 4 milijarde godina prije danas. Vaš prvi dojam? <span class="highlight-text">Ovo je najgore mjesto u svemiru za provesti vikend.</span></p>
+
+    <p>Nebo je narančasto-crveno, kao da je netko prosuo rajčicu po oblacima. Pod nogama — žar. Vulkani bljuju lavu na sve strane. S neba padaju kameni veličine automobila — meteoriti koji bombardiraju površinu planet koja se tek hladi. Temperatura je paklena. Kiša koja pada je zapravo vrela kiselina.</p>
+
+    <p>I onda — u toj kemijskoj juhi od oceana — dogodi se nešto što nitko ne može objasniti. <span class="highlight-text">Neke molekule se počnu kopirati.</span> Sasvim slučajno. Kao kad fotokopirka u uredu poludi i počne sama printati kopije kopija.</p>
+
+    <span class="analogy">🎲 Bill Bryson to opisuje ovako: šanse da se život spontano stvori iz kemikalija su otprilike jednake šansama da tornado proleti kroz odlagalište starih aviona i slučajno sastavi Boeing 747. A ipak — dogodilo se. Barem jednom. I to je bilo dovoljno.</span>
+
+    <p>Ti prvi "živi" organizmi nisu bili impresivni. Zamislite ih kao mjehurić masnoće s komadićem DNA unutra. Bez očiju, bez mozga, bez plana. Samo jedna naredba u njihovom programu: <span class="highlight-text">kopiraj se.</span></p>
+
+    <p>I kopirali su se. Milijardama godina. U oceanu bez kisika, na planeti bez trave, pod nebom bez ozona.</p>
+
+    <p>A onda — revolucija.</p>
+
+    <p>Prije otprilike <span class="highlight-text">2,7 milijardi godina</span>, jedna skupina ovih mikroskopskih bića razvila je trik koji će zauvijek promijeniti pravila igre. Naučile su <strong>jesti Sunce</strong>.</p>
+
+    <span class="analogy">☀️ Ne doslovno, naravno. Ali cijanobakterije su razvile sposobnost da uhvate Sunčeve zrake i pretvore ih u energiju — a kao otpad iz tog procesa ispuštale su plin koji nikad prije nije postojao u većim količinama u atmosferi. Taj plin bio je kisik.</span>
+
+    <p>E sad, evo plot-twista koji bi bio previše dramatičan čak i za Netflix: <span class="highlight-text">kisik je bio OTROV za gotovo sve što je tada živjelo na Zemlji.</span></p>
+
+    <p>Za anaerobne organizme koji su milijardama godina živjeli bez kisika, ovo je bila katastrofa apokaliptičnih razmjera. Zamislite da netko počne puniti vašu sobu plinom koji vam razara stanice. To je bio kisik za tadašnje organizme.</p>
+
+    <p>Znanstvenici ovo nazivaju <span class="highlight-text">"Velika oksigenacija"</span> — i bio je to možda najmasovnije izumiranje u povijesti Zemlje. Ironija? Uzrokovale su ga bakterije veličine tisućitog dijela milimetra.</p>
+
+    <p>Ali evo još jednog preokreta: iz te katastrofe rodilo se <strong>nešto novo</strong>. Organizmi koji su preživjeli naučili su ne samo tolerirati kisik — nego ga <em>koristiti</em>. Stanično disanje s kisikom proizvodi <strong>18 puta više energije</strong> nego stari anaerobni način. To je kao da ste cijeli život vozili bicikl, a onda netko izumi Ferrari.</p>
+
+    <p>S tom novom energijom, život je mogao postati <strong>složeniji</strong>. Veći. Ambiciozniji. Nastali su eukarioti — stanice s jezgrom. Od eukariota su nastale biljke. Pa životinje. Pa ribe. Pa dinosauri. Pa ljudi koji pišu udžbenike i tinejdžerice koje ih čitaju. 😄</p>
+
+    <span class="analogy">🌳 Svaki put kad udahneš, sjeti se: taj kisik proizvele su cijanobakterije. Njihov posao još nije gotov — i danas oceanski fitoplankton (potomci cijanobakterija) proizvodi oko 50% kisika na Zemlji. Pola tvojih udisaja zahvali oceanu.</span>
+
+    <p>I da — one sitne hrpice kamena u Australiji, stromatoliti u zaljevu Shark Bay, koji izgledaju kao dosadne gljive od kamena? To su <span class="highlight-text">prapraunuci onih istih cijanobakterija</span>. Stari 3,5 milijarde godina. Još uvijek rade isti posao. Tiho, strpljivo, svaki dan.</p>
+
+    <p style="font-weight:500;color:var(--purple-light);margin-top:20px;">Nekad najmanji likovi napišu najveću priču. 🦠✨</p>
+  </div>
+</section>
+
+<!-- SUMMARY -->
+<section class="section" id="ch10" data-title="Sažetak">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(255,182,39,0.15);">📋</div>
+    <div>
+      <div class="section-title" style="color:var(--amber);">Sažetak — Što smo naučili?</div>
+    </div>
+  </div>
+
+  <div id="flipCards">
+    <p style="color:var(--text-light);margin-bottom:16px;">Klikni na kartice da vidiš definiciju ↓</p>
+
+    <div class="flip-container" onclick="this.querySelector('.flip-card').classList.toggle('flipped')">
+      <div class="flip-card">
+        <div class="flip-front"><h3>🌋 Arhaična Zemlja</h3><div class="flip-hint">Klikni za objašnjenje</div></div>
+        <div class="flip-back"><p style="font-size:0.9rem;">Zemlja prije ~4 mlrd. godina: bez kisika, bez kontinenata, vulkanska aktivnost, atmosfera puna CO₂ i metana.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-container" onclick="this.querySelector('.flip-card').classList.toggle('flipped')">
+      <div class="flip-card">
+        <div class="flip-front"><h3>🦴 Fosilizacija</h3><div class="flip-hint">Klikni za objašnjenje</div></div>
+        <div class="flip-back"><p style="font-size:0.9rem;">Proces pretvaranja ostataka organizama u kamen: organizam ugine → zatrpa se sedimentom → mineralizacija → fosil.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-container" onclick="this.querySelector('.flip-card').classList.toggle('flipped')">
+      <div class="flip-card">
+        <div class="flip-front"><h3>🦠 Prokarioti</h3><div class="flip-hint">Klikni za objašnjenje</div></div>
+        <div class="flip-back"><p style="font-size:0.9rem;">Jednostanični organizmi bez jezgre. Dijele se na ARHEJE (ekstremofilne, proteinska stijenka) i BAKTERIJE (peptidoglikanska stijenka).</p></div>
+      </div>
+    </div>
+
+    <div class="flip-container" onclick="this.querySelector('.flip-card').classList.toggle('flipped')">
+      <div class="flip-card">
+        <div class="flip-front"><h3>💨 Velika oksigenacija</h3><div class="flip-hint">Klikni za objašnjenje</div></div>
+        <div class="flip-back"><p style="font-size:0.9rem;">Cijanobakterije fotosintezom napunile atmosferu kisikom → masovno izumiranje anaeroba → nastanak ozonskog omotača → pojava staničnog disanja i eukariota.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-container" onclick="this.querySelector('.flip-card').classList.toggle('flipped')">
+      <div class="flip-card">
+        <div class="flip-front"><h3>🪨 Stromatoliti</h3><div class="flip-hint">Klikni za objašnjenje</div></div>
+        <div class="flip-back"><p style="font-size:0.9rem;">Najstariji fosili (~3,5 mlrd. g.) — slojevite strukture cijanobakterija. Još žive u Shark Bay, Australija! U Hrvatskoj: Plitvice i Krka (sedra).</p></div>
+      </div>
+    </div>
+
+    <div class="flip-container" onclick="this.querySelector('.flip-card').classList.toggle('flipped')">
+      <div class="flip-card">
+        <div class="flip-front"><h3>⚗️ Fotosinteza vs Kemosinteza</h3><div class="flip-hint">Klikni za objašnjenje</div></div>
+        <div class="flip-back"><p style="font-size:0.9rem;">Fotosinteza: Sunce + CO₂ + H₂O → šećer + O₂. Kemosinteza: kemijske reakcije (sumpor, željezo) → hrana. Bez Sunca, na dnu oceana.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-container" onclick="this.querySelector('.flip-card').classList.toggle('flipped')">
+      <div class="flip-card">
+        <div class="flip-front"><h3>🛡️ Antibiotici</h3><div class="flip-hint">Klikni za objašnjenje</div></div>
+        <div class="flip-back"><p style="font-size:0.9rem;">Djeluju SAMO na bakterije, NE na viruse. Ubijaju i korisne bakterije. Prekomjerna uporaba → rezistencija (bakterije postaju otporne).</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quiz-question" id="q4" style="margin-top:32px;">
+    <h4>🎯 Završna provjera</h4>
+    <p>Koji organizmi su zaslužni za nastanak ozonskog omotača?</p>
+    <div class="quiz-options">
+      <button class="quiz-option" onclick="checkQuiz(this,'q4',false)">Eukarioti</button>
+      <button class="quiz-option" onclick="checkQuiz(this,'q4',false)">Arheje (ekstremofili)</button>
+      <button class="quiz-option" onclick="checkQuiz(this,'q4',true)">Cijanobakterije</button>
+      <button class="quiz-option" onclick="checkQuiz(this,'q4',false)">Grimizne sumporne bakterije</button>
+    </div>
+    <div class="quiz-feedback" id="q4-fb"></div>
+  </div>
+
+  <div style="text-align:center;margin-top:48px;">
+    <p style="color:var(--text-light);margin-bottom:16px;">Spremna za ispit? 💪</p>
+    <a href="ispit-arhaicna-zemlja-prokarioti.html" style="display:inline-block;background:linear-gradient(135deg,var(--green-life),var(--ocean));color:#fff;padding:16px 40px;border-radius:50px;text-decoration:none;font-weight:600;font-size:1.1rem;box-shadow:0 4px 30px rgba(45,198,83,0.3);transition:transform 0.3s;">Otvori ispit →</a>
+  </div>
+</section>
+
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<div class="scroll-indicator" id="scrollIndicator">
+  <span class="chapter-count" id="chapterIndicator">1/10</span> poglavlja
+</div>
+
+<script>
+// Sections and navigation
+const sections = document.querySelectorAll('.section');
+const navDotsContainer = document.getElementById('navDots');
+const progressBar = document.getElementById('progressBar');
+const backTop = document.getElementById('backTop');
+const scrollIndicator = document.getElementById('scrollIndicator');
+const chapterIndicator = document.getElementById('chapterIndicator');
+
+// Build nav dots
+sections.forEach((s, i) => {
+  const dot = document.createElement('div');
+  dot.className = 'nav-dot';
+  dot.innerHTML = `<span class="tooltip">${s.dataset.title || 'Poglavlje '+(i+1)}</span>`;
+  dot.onclick = () => s.scrollIntoView({behavior:'smooth'});
+  navDotsContainer.appendChild(dot);
+});
+const dots = document.querySelectorAll('.nav-dot');
+
+// Intersection observer for animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, {threshold: 0.1});
+sections.forEach(s => observer.observe(s));
+
+// Scroll handler
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / docHeight) * 100;
+  progressBar.style.width = progress + '%';
+
+  // Back to top
+  if (scrollTop > 600) backTop.classList.add('show');
+  else backTop.classList.remove('show');
+
+  // Active section
+  let activeIdx = 0;
+  sections.forEach((s, i) => {
+    const rect = s.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.5) activeIdx = i;
+  });
+  dots.forEach((d, i) => d.classList.toggle('active', i === activeIdx));
+  chapterIndicator.textContent = (activeIdx+1) + '/' + sections.length;
+});
+
+// Start lesson
+function startLesson() {
+  document.getElementById('ch1').scrollIntoView({behavior:'smooth'});
+}
+
+// Quiz
+function checkQuiz(btn, qId, correct) {
+  const question = document.getElementById(qId);
+  const options = question.querySelectorAll('.quiz-option');
+  const fb = document.getElementById(qId + '-fb');
+
+  options.forEach(o => {
+    o.classList.add('disabled');
+    if (o === btn) o.classList.add(correct ? 'correct' : 'wrong');
+  });
+  // Show correct if wrong
+  if (!correct) {
+    options.forEach(o => {
+      if (o.getAttribute('onclick').includes('true')) o.classList.add('correct');
+    });
+  }
+  fb.className = 'quiz-feedback show ' + (correct ? 'correct-fb' : 'wrong-fb');
+  fb.textContent = correct ? '✅ Točno! Odlično!' : '❌ Nije točno — ali sad znaš! Pogledaj istaknuti odgovor.';
+}
+
+// Expand
+function toggleExpand(trigger) {
+  trigger.classList.toggle('open');
+  const content = trigger.nextElementSibling;
+  content.classList.toggle('open');
+}
+
+// Hide scroll indicator after a while
+setTimeout(() => {
+  scrollIndicator.style.opacity = '0.6';
+}, 5000);
+</script>
+
+</body>
+</html>
