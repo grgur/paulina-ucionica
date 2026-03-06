@@ -101,6 +101,18 @@
       "file": "lekcije/natalija-prica-biljna-tkiva.html",
       "date": "2026-03-06",
       "subject": "Biologija"
+    },
+    {
+      "title": "Sjemenjače — Golosjemenjače i kritosjemenjače (Natalija)",
+      "file": "lekcije/natalija-lekcija-sjemenjace.html",
+      "date": "2026-03-06",
+      "subject": "Biologija"
+    },
+    {
+      "title": "Priča: Kako su biljke osvojile svijet — Sjemenjače (Natalija)",
+      "file": "lekcije/natalija-prica-sjemenjace.html",
+      "date": "2026-03-06",
+      "subject": "Biologija"
     }
   ],
   "ispiti": [
@@ -161,6 +173,12 @@
     {
       "title": "Ispit: Od eukariota do biljnih tkiva (Natalija)",
       "file": "ispiti/natalija-ispit-biljna-tkiva.html",
+      "date": "2026-03-06",
+      "subject": "Biologija"
+    },
+    {
+      "title": "Ispit: Sjemenjače (Natalija)",
+      "file": "ispiti/natalija-ispit-sjemenjace.html",
       "date": "2026-03-06",
       "subject": "Biologija"
     }

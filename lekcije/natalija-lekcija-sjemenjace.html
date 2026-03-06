@@ -1,0 +1,2013 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Natalijina Učionica - Sjemenjače</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --cream: #FFF8F0;
+            --blue: #4A90E2;
+            --green: #7ED321;
+            --orange: #F5A623;
+            --red: #E74C3C;
+            --purple: #9B59B6;
+            --teal: #1ABC9C;
+            --dark: #2C3E50;
+            --light-gray: #ECF0F1;
+        }
+
+        body {
+            font-family: 'Lexend', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--cream);
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--blue), var(--teal));
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        /* Settings Panel */
+        .settings-panel {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border: 2px solid var(--blue);
+            border-radius: 8px;
+            padding: 15px;
+            z-index: 1000;
+            min-width: 200px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .settings-toggle {
+            background: var(--blue);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        .settings-toggle:hover {
+            background: var(--dark);
+        }
+
+        .settings-content {
+            display: none;
+            border-top: 2px solid var(--blue);
+            padding-top: 10px;
+        }
+
+        .settings-content.show {
+            display: block;
+        }
+
+        .setting-group {
+            margin-bottom: 15px;
+        }
+
+        .setting-group label {
+            display: block;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .setting-group input[type="range"] {
+            width: 100%;
+        }
+
+        .setting-group input[type="checkbox"] {
+            margin-right: 5px;
+            cursor: pointer;
+        }
+
+        .setting-group button {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            background: var(--teal);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85em;
+        }
+
+        .setting-group button:hover {
+            background: var(--blue);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: var(--light-gray);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 30px;
+        }
+
+        .progress-label {
+            font-size: 0.9em;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 25px;
+            background: white;
+            border-radius: 5px;
+            overflow: hidden;
+            border: 2px solid var(--blue);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--teal), var(--green));
+            width: 0%;
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        /* Navigation */
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: var(--blue);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.95em;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: var(--dark);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn.active {
+            background: var(--teal);
+        }
+
+        /* Sections */
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .section h2 {
+            color: var(--blue);
+            font-size: 2em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid var(--blue);
+            padding-bottom: 10px;
+        }
+
+        /* Card System */
+        .card {
+            background: white;
+            border-left: 5px solid var(--blue);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .card.definition {
+            border-left-color: var(--blue);
+            background: linear-gradient(135deg, #E3F2FD 0%, white 100%);
+        }
+
+        .card.example {
+            border-left-color: var(--green);
+            background: linear-gradient(135deg, #E8F5E9 0%, white 100%);
+        }
+
+        .card.important {
+            border-left-color: var(--orange);
+            background: linear-gradient(135deg, #FFF3E0 0%, white 100%);
+        }
+
+        .card.warning {
+            border-left-color: var(--red);
+            background: linear-gradient(135deg, #FFEBEE 0%, white 100%);
+        }
+
+        .card.tip {
+            border-left-color: var(--purple);
+            background: linear-gradient(135deg, #F3E5F5 0%, white 100%);
+        }
+
+        .card.formula {
+            border-left-color: var(--teal);
+            background: linear-gradient(135deg, #E0F2F1 0%, white 100%);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .card-header h3 {
+            margin: 0;
+            color: var(--dark);
+            font-size: 1.2em;
+        }
+
+        .card-toggle {
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: var(--dark);
+            transition: transform 0.3s;
+        }
+
+        .card-toggle.collapsed {
+            transform: rotate(90deg);
+        }
+
+        .card-content {
+            max-height: 1000px;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .card-content.collapsed {
+            max-height: 0;
+            margin-top: 0;
+        }
+
+        .card-label {
+            display: inline-block;
+            background: var(--blue);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.75em;
+            font-weight: bold;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .card.definition .card-label { background: var(--blue); }
+        .card.example .card-label { background: var(--green); }
+        .card.important .card-label { background: var(--orange); }
+        .card.warning .card-label { background: var(--red); }
+        .card.tip .card-label { background: var(--purple); }
+        .card.formula .card-label { background: var(--teal); }
+
+        /* Text elements */
+        p {
+            margin-bottom: 15px;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        strong {
+            color: var(--blue);
+            font-weight: bold;
+        }
+
+        em {
+            color: var(--orange);
+            font-style: italic;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        table thead {
+            background: var(--blue);
+            color: white;
+        }
+
+        table th, table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        table tr:hover {
+            background: #F9F9F9;
+        }
+
+        /* Quiz */
+        .quiz-container {
+            background: #F0F8FF;
+            border: 2px solid var(--blue);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .quiz-question {
+            margin-bottom: 20px;
+        }
+
+        .quiz-question h4 {
+            color: var(--blue);
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .quiz-option {
+            margin: 10px 0;
+        }
+
+        .quiz-option input[type="radio"],
+        .quiz-option input[type="checkbox"] {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .quiz-option label {
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .quiz-button {
+            background: var(--green);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        .quiz-button:hover {
+            background: #6AC805;
+        }
+
+        .quiz-result {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .quiz-result.show {
+            display: block;
+        }
+
+        .quiz-result.correct {
+            background: #D4EDDA;
+            border: 2px solid var(--green);
+            color: #155724;
+        }
+
+        .quiz-result.incorrect {
+            background: #F8D7DA;
+            border: 2px solid var(--red);
+            color: #721C24;
+        }
+
+        /* TTS Button */
+        .tts-button {
+            background: var(--purple);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85em;
+            margin: 10px 0;
+            display: inline-block;
+        }
+
+        .tts-button:hover {
+            background: #8E44AD;
+        }
+
+        /* Reading Ruler */
+        .reading-ruler {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--blue), var(--teal));
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            z-index: 999;
+        }
+
+        .reading-ruler.active {
+            opacity: 0.7;
+        }
+
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        .focus-visible {
+            outline: 3px solid var(--blue);
+            outline-offset: 2px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .settings-panel {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin-bottom: 20px;
+                min-width: 100%;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .nav-btn {
+                width: 100%;
+            }
+
+            .card {
+                padding: 15px;
+            }
+
+            table {
+                font-size: 0.9em;
+            }
+
+            table th, table td {
+                padding: 8px;
+            }
+        }
+
+        /* SVG Styles */
+        svg {
+            max-width: 100%;
+            height: auto;
+            margin: 20px 0;
+        }
+
+        .diagram-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid var(--light-gray);
+        }
+    </style>
+</head>
+<body>
+    <!-- Reading Ruler -->
+    <div class="reading-ruler"></div>
+
+    <!-- Settings Panel -->
+    <div class="settings-panel" role="complementary" aria-label="Postavke lekcije">
+        <button class="settings-toggle" aria-expanded="false" aria-controls="settings-content">⚙️ Postavke</button>
+        <div id="settings-content" class="settings-content">
+            <div class="setting-group">
+                <label for="font-size">Veličina teksta:</label>
+                <input type="range" id="font-size" min="12" max="20" value="16">
+            </div>
+            <div class="setting-group">
+                <label for="line-height">Razmak redaka:</label>
+                <input type="range" id="line-height" min="1.2" max="2" step="0.1" value="1.6">
+            </div>
+            <div class="setting-group">
+                <label>
+                    <input type="checkbox" id="reading-ruler">
+                    Pomoć za čitanje
+                </label>
+            </div>
+            <div class="setting-group">
+                <label>
+                    <input type="checkbox" id="high-contrast">
+                    Viši kontrast
+                </label>
+            </div>
+            <div class="setting-group">
+                <button id="reset-settings">Vrati zadane postavke</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header role="banner">
+            <h1>🌿 Natalijina Učionica</h1>
+            <p>Sjemenjače - Golosjemenjače i Kritosjemenjače</p>
+        </header>
+
+        <!-- Progress Bar -->
+        <div class="progress-container" aria-live="polite" aria-label="Napredak lekcije">
+            <div class="progress-label">Napredak: <span id="progress-percent">0</span>%</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="nav-buttons" role="navigation" aria-label="Navigacija kroz sekcije">
+            <button class="nav-btn active" data-section="0">Početak</button>
+            <button class="nav-btn" data-section="1">Uvod</button>
+            <button class="nav-btn" data-section="2">Golosjemenjače</button>
+            <button class="nav-btn" data-section="3">Životni ciklus</button>
+            <button class="nav-btn" data-section="4">Kritosjemenjače</button>
+            <button class="nav-btn" data-section="5">Oplodnja</button>
+            <button class="nav-btn" data-section="6">Rasprostranivanje</button>
+            <button class="nav-btn" data-section="7">Zaključak</button>
+        </nav>
+
+        <!-- Sections -->
+
+        <!-- Section 0: Diagnostic Quiz -->
+        <section id="section-0" class="section active" aria-labelledby="section-0-title">
+            <h2 id="section-0-title">📋 Dijagnostička Provjera - Ono što već znaš</h2>
+
+            <div class="card definition">
+                <div class="card-header">
+                    <h3>Provjeri svoje znanje prije početka!</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <p>Odgovori na nekoliko pitanja kako bi vidjela gdje stojišh. Nema brige ako ne znaš sve - ovo će te pomoći da vidišh što ćeš naučiti!</p>
+                </div>
+            </div>
+
+            <div class="quiz-container" role="region" aria-label="Dijagnostička provjera">
+                <div class="quiz-question">
+                    <h4>1. Što je fotosintetska aktivnost biljaka?</h4>
+                    <div class="quiz-option">
+                        <input type="radio" id="q1a" name="quiz1" value="a">
+                        <label for="q1a">a) Proceso stvaranja hrane od sunčeve svetlosti, vode i CO₂</label>
+                    </div>
+                    <div class="quiz-option">
+                        <input type="radio" id="q1b" name="quiz1" value="b">
+                        <label for="q1b">b) Razrada metabolizma</label>
+                    </div>
+                    <div class="quiz-option">
+                        <input type="radio" id="q1c" name="quiz1" value="c">
+                        <label for="q1c">c) Apsorpcija vode iz zemlje</label>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>2. Koji je dio biljke odgovoran za reprodukciju kod većine biljaka?</h4>
+                    <div class="quiz-option">
+                        <input type="radio" id="q2a" name="quiz2" value="a">
+                        <label for="q2a">a) Korijen</label>
+                    </div>
+                    <div class="quiz-option">
+                        <input type="radio" id="q2b" name="quiz2" value="b">
+                        <label for="q2b">b) Cvijet ili šišarka</label>
+                    </div>
+                    <div class="quiz-option">
+                        <input type="radio" id="q2c" name="quiz2" value="c">
+                        <label for="q2c">c) Stabljika</label>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>3. Što je spolno razmnožavanje?</h4>
+                    <div class="quiz-option">
+                        <input type="radio" id="q3a" name="quiz3" value="a">
+                        <label for="q3a">a) Razmnožavanje bez muške gamete</label>
+                    </div>
+                    <div class="quiz-option">
+                        <input type="radio" id="q3b" name="quiz3" value="b">
+                        <label for="q3b">b) Spajanje muške i ženske gamete da se kreira novi organizam</label>
+                    </div>
+                    <div class="quiz-option">
+                        <input type="radio" id="q3c" name="quiz3" value="c">
+                        <label for="q3c">c) Samo razmnožavanje biljaka</label>
+                    </div>
+                </div>
+
+                <button class="quiz-button" onclick="checkDiagnosticQuiz()">Provjeri odgovore</button>
+                <div id="diagnostic-result" class="quiz-result"></div>
+            </div>
+
+            <div class="card tip">
+                <div class="card-header">
+                    <h3>💡 Savjet za učenje</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <p>Preporučujem ti da čitaš polako i da se fokusiš na <strong>nove termine</strong>. Ako nešto nije jasno, klikni na karticu da je proširiš i pročitaj detaljnije objasnjenjem.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 1: Introduction -->
+        <section id="section-1" class="section" aria-labelledby="section-1-title">
+            <h2 id="section-1-title">🌱 Sjemenjače - Uvod</h2>
+
+            <div class="card definition">
+                <div class="card-header">
+                    <h3>Što su sjemenjače?</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <p><span class="card-label">DEFINICIJA</span></p>
+                    <p><strong>Sjemenjače</strong> su biljke koje se razmnožavaju sjemenkama. One su najnaprednija grupa biljaka na Zemlji i obuhvaćaju većinu biljaka koje vidimo svakodnevno - od četinjača do cvijeća.</p>
+                    <p>Ključne karakteristike:</p>
+                    <ul>
+                        <li>Imaju razvijene <strong>korijen, stabljiku i listove</strong></li>
+                        <li>Razmnožavaju se <strong>sjemenkama</strong></li>
+                        <li>Razvile su posebne strukture za spolnu reprodukciju</li>
+                        <li>Dominirale su Zemljinu floru već 150 milijuna godina</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card important">
+                <div class="card-header">
+                    <h3>Zašto su sjemenjače važne?</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <p>Sjemenjače su od kritične važnosti za:</p>
+                    <ul>
+                        <li>🥗 <strong>Hranu</strong> - većina hrane koju jedemo dolazi od sjemenjača</li>
+                        <li>🌳 <strong>Ekosisteme</strong> - pružaju kisik i azil za životinje</li>
+                        <li>🏗️ <strong>Gradnju</strong> - drvo od četinjača je osnovna građevna materijal</li>
+                        <li>💊 <strong>Medicinu</strong> - mnogi lijekovi proizlaze iz sjemenjača</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card example">
+                <div class="card-header">
+                    <h3>Primjeri sjemenjača u svijetu oko tebe</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <p>Pogledaj oko sebe! Vjerojatno vidiš:</p>
+                    <ul>
+                        <li>🌲 <strong>Četinjače</strong>: borove, smrekovice, jele (u hrvatskim šumama)</li>
+                        <li>🌺 <strong>Cvijeće</strong>: ruže, tulipane, narcise</li>
+                        <li>🍎 <strong>Voće</strong>: jabuke, kruške, višnje</li>
+                        <li>🌾 <strong>Žitarice</strong>: kukuruz, pšenica, ječam</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card formula">
+                <div class="card-header">
+                    <h3>Dvije glavne grupe sjemenjača</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Svojstvo</th>
+                                <th>Golosjemenjače</th>
+                                <th>Kritosjemenjače</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Svojstvo sjemena</strong></td>
+                                <td>Otvoreno sjeme</td>
+                                <td>Zaštićeno u plodnici</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Oprašivanje</strong></td>
+                                <td>Vjetrom</td>
+                                <td>Vjetrom, insektima, životinjama</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Plod</strong></td>
+                                <td>Nema pravi plod</td>
+                                <td>Razvija se pravi plod</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Primjeri</strong></td>
+                                <td>Bor, smreka, jela</td>
+                                <td>Cvijeće, voće, žitarice</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <button class="tts-button" onclick="speakText('Sjemenjače su biljke koje se razmnožavaju sjemenkama. Dijele se na golosjemenjače i kritosjemenjače.')">🔊 Čitaj glasno</button>
+        </section>
+
+        <!-- Section 2: Gymnosperms -->
+        <section id="section-2" class="section" aria-labelledby="section-2-title">
+            <h2 id="section-2-title">🌲 Golosjemenjače (Gymnospermae)</h2>
+
+            <div class="card definition">
+                <div class="card-header">
+                    <h3>Što su golosjemenjače?</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <p><span class="card-label">DEFINICIJA</span></p>
+                    <p><strong>Golosjemenjače</strong> dolaze od grčkih riječi "gymnos" (golo) i "sperma" (sjeme). To znači da im je sjeme <strong>otvoreno i nije zaštićeno</strong>.</p>
+                    <p>Karakteristike:</p>
+                    <ul>
+                        <li>Evolucijski su <strong>primitivnije</strong> od kritosjemenjača</li>
+                        <li>Sjeme se formira na površini plodnog lista (u šišarci)</li>
+                        <li>Oprašuju se <strong>vjetrom</strong>, ne insektima</li>
+                        <li>Većina su <strong>četinjače</strong> (s iglicama umjesto listova)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card important">
+                <div class="card-header">
+                    <h3>Glavne grupe golosjemenjača</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <ul>
+                        <li><strong>Četinjače:</strong> Bor (Pinus), smreka (Picea), jela (Abies), tisa (Taxus), čempres (Cupressus)</li>
+                        <li><strong>Ginko:</strong> "Živući fosil" - jedina preživala vrsta iz drevnih vremena</li>
+                        <li><strong>Cikase:</strong> Liče na male palme, također živući fosili</li>
+                        <li><strong>Welwitschia:</strong> Čudan biljak s dvije najveće liste na svijetu</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card definition">
+                <div class="card-header">
+                    <h3>Građa ženske šišarke (čošera)</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <p><span class="card-label">STRUKTURA</span></p>
+                    <p>Ženska šišarka je sastavljena od:</p>
+                    <ul>
+                        <li><strong>Plodnih listova (skrljuštin)</strong> - spiralno raspoređeni listovi</li>
+                        <li><strong>Sjemeni zamatci</strong> - dva otvorena zametka na svakom plodnom listu</li>
+                        <li><strong>Nucel (megasporangij)</strong> - stanica sjemenog zametka gdje se formira žensko sjeme</li>
+                    </ul>
+                    <p><strong>Što se odvija u nucleu?</strong></p>
+                    <ol>
+                        <li>Mejozom se formiraju 4 <strong>MEGASPORE</strong> (ženske spore)</li>
+                        <li>Od jedne megaspore se razvija <strong>ŽENSKI GAMETOFIT</strong></li>
+                        <li>Ženski gametofit se zove <strong>EMBRIONSKA VREĆA</strong></li>
+                        <li>U embrionskoj vrećoj se formiraju 2 <strong>JAJNE STANICE</strong> (ženske gamete)</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="card definition">
+                <div class="card-header">
+                    <h3>Građa muške šišarke (čošera)</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <p><span class="card-label">STRUKTURA</span></p>
+                    <p>Muška šišarka je sastavljena od:</p>
+                    <ul>
+                        <li><strong>Plodničkih listova</strong> - sitni listovi s donje strane</li>
+                        <li><strong>Peludnica (mikrosporangije)</strong> - muški sporangiji</li>
+                    </ul>
+                    <p><strong>Što se odvija u peludnici?</strong></p>
+                    <ol>
+                        <li>Mejozom se formiraju <strong>MIKROSPORE</strong></li>
+                        <li>Mikrospore se dijele mitozom u muškom gametofitu</li>
+                        <li>Muški gametofit se zove <strong>PELUDNO ZRNCE</strong> (polenova)</li>
+                        <li>Peludno zrnce sadrži dvije stanice: <strong>vegetativnu i generativnu</strong></li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="card example">
+                <div class="card-header">
+                    <h3>Kako prepoznati muške i ženske šišarke kod bora?</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Svojstvo</th>
+                                <th>Muške šišarke</th>
+                                <th>Ženske šišarke</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Veličina</strong></td>
+                                <td>Manje (1-3 cm)</td>
+                                <td>Veće (5-20 cm)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Boja</strong></td>
+                                <td>Žuta, smeđa</td>
+                                <td>Zelena, zatim smeđa</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Trajnost</strong></td>
+                                <td>Otpadaju nakon oprašivanja</td>
+                                <td>Ostaju 2-3 godine</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Lokacija</strong></td>
+                                <td>Donje grane</td>
+                                <td>Gornje grane</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <button class="tts-button" onclick="speakText('Golosjemenjače imaju otvoreno sjeme. Formiraju se u ženskim šišarkama gdje se razvijaju embrionske vreće s jajnim stanicama.')">🔊 Čitaj glasno</button>
+        </section>
+
+        <!-- Section 3: Life Cycle -->
+        <section id="section-3" class="section" aria-labelledby="section-3-title">
+            <h2 id="section-3-title">🔄 Životni Ciklus Golosjemenjača</h2>
+
+            <div class="card definition">
+                <div class="card-header">
+                    <h3>Faze životnog ciklusa</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <p><span class="card-label">PROCES</span></p>
+                    <p>Životni ciklus golosjemenjača (npr. bora) ima ove faze:</p>
+                </div>
+            </div>
+
+            <div class="card important">
+                <div class="card-header">
+                    <h3>1. Oprašivanje</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <ul>
+                        <li>Pelud (peludna zrnca) nošen <strong>vjetrom</strong> dospijeva na mikropilu sjemenog zametka</li>
+                        <li><strong>Mikropila</strong> je mali otvor na vrhu sjemenog zametka</li>
+                        <li>Peludna zrnca se "ljepljivo" hvataju na njušci šišarke</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card important">
+                <div class="card-header">
+                    <h3>2. Klijevanje peludi</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <ul>
+                        <li>Peludno zrnce klija i razvija <strong>PELUDNU MJEŠINICU</strong></li>
+                        <li>Peludna mješinica prolazi kroz mikropilu i rasteganja se prema jajnoj stanici</li>
+                        <li>Kroz mješinicu putuju <strong>muške gamete</strong> (spermalne stanice)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card important">
+                <div class="card-header">
+                    <h3>3. Oplodnja</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <ul>
+                        <li>Muška gameta (spermalna stanica) spaja se s <strong>JAJNOM STANICOM</strong></li>
+                        <li>Nastaje <strong>ZIGOTA</strong> (2n) - isto je kao i kod svih živih organizama</li>
+                        <li>Zigota je početak novog organizma</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card important">
+                <div class="card-header">
+                    <h3>4. Razvoj sjemenke</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <ol>
+                        <li>Zigota se dijeli mittozom u <strong>EMBRIO</strong> (klica)</li>
+                        <li>Embrio je još mali, ali ima sve dijelove nove biljke</li>
+                        <li>Vanjska ovojnica sjemenog zametka postaje <strong>SJEMENA LUPINA</strong></li>
+                        <li>Embrionska vreća sadrži hranjive tvari za novi biljak</li>
+                        <li>Sve zajedno formira <strong>SJEMENKU</strong></li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="card formula">
+                <div class="card-header">
+                    <h3>Gametofiti u golosjemenjačama</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <p><strong>Što je gametofit?</strong> To je faza biljnog životnog ciklusa gdje biljka proizvodi spolne stanice (gamete).</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Vrsta</th>
+                                <th>Ženski gametofit</th>
+                                <th>Muški gametofit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Naziv</strong></td>
+                                <td>Embrionska vreća</td>
+                                <td>Peludno zrnce</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Hromozomi</strong></td>
+                                <td>Haploidna (n)</td>
+                                <td>Haploidna (n)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Gdje se nalazi</strong></td>
+                                <td>U ženskome sjemenom zametku</td>
+                                <td>U pelu (peludnom zrnu)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Funkcija</strong></td>
+                                <td>Proizvodi jajne stanice</td>
+                                <td>Proizvodi muške gamete</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card tip">
+                <div class="card-header">
+                    <h3>💡 Zanimljiv savjet</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <p>Kod golosjemenjača, muški gametofit (peludno zrnce) je već mali "biljak" kada se prašuje. Ima svojestnu strukturu s vegetativnom i generativnom stanicom. Ženski gametofit (embrionska vreća) je još manji i nalazi se unutar sjemenog zametka!</p>
+                </div>
+            </div>
+
+            <button class="tts-button" onclick="speakText('Životni ciklus golosjemenjača počinje oprašivanjem vjetrom, zatim klijevanjem peludi, oplodnjom, i razvitkom sjemenke.')">🔊 Čitaj glasno</button>
+        </section>
+
+        <!-- Section 4: Angiosperms -->
+        <section id="section-4" class="section" aria-labelledby="section-4-title">
+            <h2 id="section-4-title">🌸 Kritosjemenjače (Angiospermae)</h2>
+
+            <div class="card definition">
+                <div class="card-header">
+                    <h3>Što su kritosjemenjače?</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <p><span class="card-label">DEFINICIJA</span></p>
+                    <p><strong>Kritosjemenjače</strong> dolaze od riječi "krito" (skriveno) i "sperma" (sjeme). Njihovo sjeme je zaštićeno unutar <strong>plodnice</strong> tučka.</p>
+                    <p>Karakteristike:</p>
+                    <ul>
+                        <li>Evolucijski su <strong>naprednije</strong> od golosjemenjača</li>
+                        <li>Imaju <strong>cvjetove</strong> - specijalizovane strukture za spolnu reprodukciju</li>
+                        <li>Sjeme je zaštićeno u <strong>plodnici</strong></li>
+                        <li>Razvijaju <strong>pravi plod</strong> nakon oprašivanja</li>
+                        <li>Oprašuju se vjetrom, insektima, ili životinjama</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card important">
+                <div class="card-header">
+                    <h3>Građa cvijeta - Dijelovi cvijeta</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <p>Cvijet ima ove dijelove:</p>
+                    <ul>
+                        <li><strong>Čaška (Sepali)</strong> - zeleni listići koji štite cvijet prije cvjetanja</li>
+                        <li><strong>Latica (Petali)</strong> - obojeni, mekani listići koji privlače insekte</li>
+                        <li><strong>Prašnik (Stamen)</strong> - muški spolni organ koji proizvodi pelud</li>
+                        <li><strong>Tučak (Pistil)</strong> - ženski spolni organ</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card definition">
+                <div class="card-header">
+                    <h3>Anatomija prašnika i tučka</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <p><strong>Prašnik se sastoji od:</strong></p>
+                    <ul>
+                        <li><strong>Antera</strong> - vrh prašnika gdje se proizvodi pelud</li>
+                        <li><strong>Nit</strong> - tanka struktura koja nosi anteru</li>
+                    </ul>
+                    <p><strong>Tučak se sastoji od:</strong></p>
+                    <ul>
+                        <li><strong>Njuška (Stigma)</strong> - ljepljiva vrh gdje se hvata pelud</li>
+                        <li><strong>Vrat (Style)</strong> - dugačak kanal kroz koji prolazi pelud</li>
+                        <li><strong>Plodnica (Ovary)</strong> - donji dio koji sadrži sjemene zamatke</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="diagram-container" role="img" aria-label="Dijagram strukture cvijeta">
+                <svg width="300" height="400" viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Stem -->
+                    <line x1="150" y1="350" x2="150" y2="200" stroke="#8B4513" stroke-width="4"/>
+
+                    <!-- Ovary (Plodnica) -->
+                    <circle cx="150" cy="200" r="25" fill="#90EE90" stroke="#228B22" stroke-width="2"/>
+                    <text x="150" y="205" text-anchor="middle" font-size="12" font-weight="bold">Plodnica</text>
+
+                    <!-- Style -->
+                    <line x1="150" y1="175" x2="150" y2="120" stroke="#FFB6C1" stroke-width="3"/>
+                    <text x="165" y="150" font-size="11">Vrat</text>
+
+                    <!-- Stigma -->
+                    <circle cx="150" cy="110" r="15" fill="#FF69B4" stroke="#C71585" stroke-width="2"/>
+                    <text x="150" y="115" text-anchor="middle" font-size="10" font-weight="bold">Njuška</text>
+
+                    <!-- Stamens -->
+                    <line x1="120" y1="160" x2="100" y2="110" stroke="#DAA520" stroke-width="2"/>
+                    <circle cx="100" cy="100" r="8" fill="#FFD700"/>
+                    <text x="85" y="90" font-size="10">Prašnik</text>
+
+                    <line x1="180" y1="160" x2="200" y2="110" stroke="#DAA520" stroke-width="2"/>
+                    <circle cx="200" cy="100" r="8" fill="#FFD700"/>
+
+                    <!-- Petals -->
+                    <path d="M 130 180 Q 100 150 95 120" stroke="#FF1493" stroke-width="3" fill="none"/>
+                    <path d="M 170 180 Q 200 150 205 120" stroke="#FF1493" stroke-width="3" fill="none"/>
+                    <path d="M 135 190 Q 110 220 100 250" stroke="#FF1493" stroke-width="3" fill="none"/>
+                    <path d="M 165 190 Q 190 220 200 250" stroke="#FF1493" stroke-width="3" fill="none"/>
+                    <text x="220" y="160" font-size="10">Latice</text>
+
+                    <!-- Sepals -->
+                    <path d="M 140 210 Q 120 240 110 280" stroke="#228B22" stroke-width="2" fill="none"/>
+                    <path d="M 160 210 Q 180 240 190 280" stroke="#228B22" stroke-width="2" fill="none"/>
+                    <text x="50" y="250" font-size="10">Čaške</text>
+                </svg>
+            </div>
+
+            <div class="card important">
+                <div class="card-header">
+                    <h3>Spolni lipci cvjetova</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <p><strong>Dvospolni cvijet:</strong> Ima i prašnike i tučak - kompletan je spolni organ</p>
+                    <p><strong>Jednospolni cvijet:</strong> Ima samo prašnike (muški) ILI samo tučak (ženski)</p>
+                    <p><strong>Dvodomne biljke:</strong> Muški i ženski cvjetovi se nalaze na <strong>različitim biljkama</strong></p>
+                    <p><strong>Jednodomne biljke:</strong> Muški i ženski cvjetovi se nalaze na <strong>istoj biljki</strong></p>
+                </div>
+            </div>
+
+            <div class="card definition">
+                <div class="card-header">
+                    <h3>Jednosupnice vs Dvosupnice</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <p>Kritosjemenjače se dijele na dvije klase prema broju kotiledona (supki) u sjemenki:</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Osobina</th>
+                                <th>Jednosupnice (Monocots)</th>
+                                <th>Dvosupnice (Dicots)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Sjemenka</strong></td>
+                                <td>1 supka</td>
+                                <td>2 supke</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Listovi</strong></td>
+                                <td>Usporedne žile</td>
+                                <td>Mrežaste žile</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Stabljika</strong></td>
+                                <td>Žile razmještene (nema prave kambjalne zone)</td>
+                                <td>Žile u koncentričnim krugovima</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Korijen</strong></td>
+                                <td>Snopni (vlaknastu)</td>
+                                <td>Glavno korijenje</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Cvijet</strong></td>
+                                <td>Na osnovi broja 3</td>
+                                <td>Na osnovi broja 4 ili 5</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Primjeri</strong></td>
+                                <td>Trava, kukuruz, žito, ljiljan</td>
+                                <td>Ruža, jabuka, mahuna, čokol</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card example">
+                <div class="card-header">
+                    <h3>Prepoznavanje jednosupnica i dvosupnica</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <p><strong>Kako je prepoznati?</strong></p>
+                    <ul>
+                        <li>Pogledaj <strong>listove</strong>: Ako su žile paralelne = jednosupnica; Ako su mrežaste = dvosupnica</li>
+                        <li>Pogledaj <strong>cvjetove</strong>: Ako su dijelovi u grupama od 3 = jednosupnica; Ako su u grupama od 4 ili 5 = dvosupnica</li>
+                    </ul>
+                    <p><strong>Primjeri iz Hrvatske prirode:</strong></p>
+                    <p>Jednosupnice: Pšenica, kukuruz, ljiljan, krokus</p>
+                    <p>Dvosupnice: Mahune, jabuke, kruške, sve divlje cvjetne biljke</p>
+                </div>
+            </div>
+
+            <button class="tts-button" onclick="speakText('Kritosjemenjače imaju cvjetove. Dijele se na jednosupnice s jednom supkom i mrežastim žilama, te dvosupnice s dvije supke i paralelnim žilama.')">🔊 Čitaj glasno</button>
+        </section>
+
+        <!-- Section 5: Double Fertilization -->
+        <section id="section-5" class="section" aria-labelledby="section-5-title">
+            <h2 id="section-5-title">💝 Spolno Razmnožavanje i Dvostruka Oplodnja</h2>
+
+            <div class="card definition">
+                <div class="card-header">
+                    <h3>Što je spolno razmnožavanje kod kritosjemenjača?</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <p><span class="card-label">PROCES</span></p>
+                    <p>Spolno razmnožavanje kod kritosjemenjača je proces gdje se muške i ženske spolne stanice spajaju da bi se stvorio novi organizam.</p>
+                </div>
+            </div>
+
+            <div class="card important">
+                <div class="card-header">
+                    <h3>Razvoj muških gametofita (Peludnih zrnaca)</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <ol>
+                        <li><strong>Antere</strong> (vrh prašnika) sadrže <strong>diploidne stanice</strong> (2n)</li>
+                        <li>Mejozom se te stanice dijele u 4 <strong>MIKROSPORE</strong> (n)</li>
+                        <li>Svaka mikrospore se dijeli mitozom u dva dijela</li>
+                        <li>Nastaje <strong>PELUDNO ZRNCE</strong> (muški gametofit) s:
+                            <ul>
+                                <li><strong>Vegetativnom stanicom</strong> - proizvodi peludnu mješinicu</li>
+                                <li><strong>Generativnom stanicom</strong> - kasnije se dijeli u 2 muške gamete</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="card important">
+                <div class="card-header">
+                    <h3>Razvoj ženskih gametofita (Embrionske vreće)</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <ol>
+                        <li><strong>Plodnica</strong> (ženski spolni organ) sadrži <strong>sjemene zamatke</strong></li>
+                        <li>U svakom sjemenom zametku je <strong>nucel</strong> - ženski sporangij s diploidnom stanicom (2n)</li>
+                        <li>Mejozom se ta stanica dijeli u 4 <strong>MEGASPORE</strong> (n)</li>
+                        <li>3 megaspore umiru, 1 preživi</li>
+                        <li>Preživjela megaspore se dijeli mitozom 3 puta, što daje 8 jezgri</li>
+                        <li>Nastaje <strong>EMBRIONSKA VREĆA</strong> (ženski gametofit) s:
+                            <ul>
+                                <li>3 stanice na vrhu - uključujući <strong>JAJNU STANICU</strong></li>
+                                <li>3 stanice na dnu</li>
+                                <li>2 stanice u sredini - koje će se spojiti u <strong>SEKUNDARNU JEZGRU</strong></li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="card warning">
+                <div class="card-header">
+                    <h3>Oprašivanje - Prvi korak</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <p><strong>Kako se preladi pelud na njušku tučka?</strong></p>
+                    <ul>
+                        <li>🌬️ <strong>Vjetrom</strong> - za anemofil cvjetove (bez mirisanja, male latice)</li>
+                        <li>🐝 <strong>Insektima</strong> - za entomofil cvjetove (mirišljavi, obojeni)</li>
+                        <li>🦝 <strong>Životinjama</strong> - ptice, zmije, sisavci</li>
+                        <li>💧 <strong>Vodom</strong> - za akvatične biljke</li>
+                    </ul>
+                    <p><strong>Ljepljiva njuška tučka</strong> ima specijalne receptore koji prepoznaju pelud iste vrste biljke - to sprječava "stranooprašivanje".</p>
+                </div>
+            </div>
+
+            <div class="card important">
+                <div class="card-header">
+                    <h3>Klijevanje peludi na njušci tučka</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <ol>
+                        <li>Peludno zrnce se lijepi na njušku tučka</li>
+                        <li><strong>Vegetativna stanica</strong> se aktivira i počinje klijevati</li>
+                        <li>Razvija se <strong>PELUDNA MJEŠINICA</strong> - tunel kroz koji će prolaziti muške gamete</li>
+                        <li>Mješinica raste kroz <strong>vrat tučka</strong> prema plodnici</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="card formula">
+                <div class="card-header">
+                    <h3>🎯 DVOSTRUKA OPLODNJA - Specijalno za kritosjemenjače!</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <p><strong>Ovo je glavni razlog zašto su kritosjemenjače tako uspješne!</strong></p>
+                    <p>U embrionskoj vrećoj se dogode 2 oplodnje istovremeno:</p>
+                    <p><strong>PRVA OPLODNJA:</strong></p>
+                    <ul>
+                        <li><strong>Prva muška gameta (spermalna stanica)</strong> + <strong>Jajna stanica</strong> = <strong>ZIGOTA (2n)</strong></li>
+                        <li>Zigota će se razviti u <strong>EMBRIO (klicu)</strong></li>
+                    </ul>
+                    <p><strong>DRUGA OPLODNJA:</strong></p>
+                    <ul>
+                        <li><strong>Druga muška gameta (spermalna stanica)</strong> + <strong>Sekundarna jezgra (2n)</strong> = <strong>TRIPLOIDNA STANICA (3n)</strong></li>
+                        <li>Ova stanica će se razviti u <strong>ENDOSPERM</strong></li>
+                    </ul>
+                    <p><strong>Što je endosperm?</strong> To je tkivo bogato hranljivima (škrob, masti, ulja, bjelančevine) koje prehrani rastući embrio.</p>
+                </div>
+            </div>
+
+            <div class="card example">
+                <div class="card-header">
+                    <h3>Primjeri endosperma koji jede svaki dan</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <p>Endosperm su neki od najpopularnijih hrana u svijetu:</p>
+                    <ul>
+                        <li>🌾 <strong>Žito (pšenica, ječam, riža):</strong> Bjelina sjemenke koju jedemo</li>
+                        <li>🥥 <strong>Kokos:</strong> Bijelo meso u sredini je endosperm</li>
+                        <li>🍌 <strong>Banana:</strong> Većina je endosperm</li>
+                        <li>☕ <strong>Kava:</strong> Zrno je zapravo sjemenka - endosperm puni zrno</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card important">
+                <div class="card-header">
+                    <h3>Faze razvoja nakon dvostruke oplodnje</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <ol>
+                        <li><strong>Zigota se razvija u EMBRIO</strong> - ovo je mala biljka s:
+                            <ul>
+                                <li>Klijalom (klicama)</li>
+                                <li>Kotiledinama (supkama)</li>
+                                <li>Maločkomom (mali korijen)</li>
+                            </ul>
+                        </li>
+                        <li><strong>Triploidna stanica se razvija u ENDOSPERM</strong>
+                            <ul>
+                                <li>Stanice se brže dijele nego zigota</li>
+                                <li>Formira se velika stanica puna hrane</li>
+                            </ul>
+                        </li>
+                        <li><strong>Vanjska ovojnica sjemenog zametka postaje SJEMENA LUPINA</strong>
+                            <ul>
+                                <li>To je tvrda zaštita oko sjemenke</li>
+                            </ul>
+                        </li>
+                        <li><strong>Sve zajedno čini SJEMENKU</strong></li>
+                    </ol>
+                </div>
+            </div>
+
+            <button class="tts-button" onclick="speakText('Dvostruka oplodnja je specijalna za kritosjemenjače. Jedna muška gameta oplodi jajnu stanicu u zigotu. Druga muška gameta oplodi sekundarnu jezgru u endosperm.')">🔊 Čitaj glasno</button>
+        </section>
+
+        <!-- Section 6: Pollination and Fruit -->
+        <section id="section-6" class="section" aria-labelledby="section-6-title">
+            <h2 id="section-6-title">🐝 Oprašivanje, Plodovi i Razmnožavanje</h2>
+
+            <div class="card important">
+                <div class="card-header">
+                    <h3>Vrste oprašivanja</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <p><strong>SAMOOPRAŠIVANJE (Autogamija):</strong></p>
+                    <ul>
+                        <li>Pelud je <strong>istog cvijeta</strong> prešao na njušku tučka</li>
+                        <li>Rijetko se javlja jer većina biljaka ima mehanizme koji to spriječavaju</li>
+                    </ul>
+                    <p><strong>STRANOOPRAŠIVANJE (Alogamija):</strong></p>
+                    <ul>
+                        <li>Pelud je <strong>drugog cvijeta</strong> iste vrste (može biti ista biljka ili druga biljka)</li>
+                        <li>Najčešće se javlja</li>
+                        <li>Mehanizmi:
+                            <ul>
+                                <li><strong>Zoofil (entomofil, ornitofil):</strong> Insekti, ptice, sisavci</li>
+                                <li><strong>Anemofil:</strong> Vjetar</li>
+                                <li><strong>Hidrofil:</strong> Voda</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card definition">
+                <div class="card-header">
+                    <h3>Prilagodbe cvjetova za oprašivanje</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <p><strong>Entomofil cvijeće (oprašivanje insektima):</strong></p>
+                    <ul>
+                        <li>🌹 <strong>Boja:</strong> Živo obojeno (crveno, narančasto, plavo)</li>
+                        <li>🌺 <strong>Miris:</strong> Mirišljavi da privuku insekte</li>
+                        <li>🍯 <strong>Nektar:</strong> Slatka tekućina kao hrana za insekte</li>
+                        <li>💐 <strong>Latica:</strong> Velike, mehane latice</li>
+                    </ul>
+                    <p><strong>Anemofil cvijeće (oprašivanje vjetrom):</strong></p>
+                    <ul>
+                        <li>🌾 <strong>Boja:</strong> Zelena ili ljubičasta, neupadljiva</li>
+                        <li>🌬️ <strong>Miris:</strong> Malo ili nema mirisa</li>
+                        <li>💨 <strong>Pelud:</strong> Jako lagan pelud koji lako letuje</li>
+                        <li>🪶 <strong>Njuška:</strong> Velika, fluffy njuška za hvatanje peludi</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card important">
+                <div class="card-header">
+                    <h3>Razvoj ploda</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <p><strong>Što se dogodi s cvjetom nakon oplodnje?</strong></p>
+                    <ol>
+                        <li>Latice i prašnici <strong>otpadaju</strong></li>
+                        <li>Čaška može ostati ili otpadnuti</li>
+                        <li><strong>Plodnica se počinje razvijati</strong></li>
+                        <li>Plodnica postaje <strong>PLOD</strong></li>
+                    </ol>
+                    <p><strong>Što je plod?</strong> Plod je <strong>zrela plodnica koja sadrži sjemenke</strong>. Ovo je svojstvo samo kritosjemenjača!</p>
+                    <p><strong>Dijelovi ploda:</strong></p>
+                    <ul>
+                        <li><strong>USPLOĐE</strong> - vanjski dio ploda koji vidimo i jedno (meso voća)</li>
+                        <li><strong>Sjemenke</strong> - unutar ploda</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card example">
+                <div class="card-header">
+                    <h3>Vrste plodova</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Vrsta ploda</th>
+                                <th>Opis</th>
+                                <th>Primjeri</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Sočni plodovi</strong></td>
+                                <td>Voći su sa mekosću unutrašnjošću</td>
+                                <td>Jabuke, kruške, marelice, jagnje</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Suhi pucavci</strong></td>
+                                <td>Otvaraju se od sami kada dozriju</td>
+                                <td>Mahune, grašak, boba</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Suhi nepucavci</strong></td>
+                                <td>Ne otvaraju se, ostaju cijeli</td>
+                                <td>Žito, orahuski, bademi</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Zbirni plodovi</strong></td>
+                                <td>Nastaju od nekoliko sjemenih zametaka</td>
+                                <td>Jagnje, maline, oskoruše</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card important">
+                <div class="card-header">
+                    <h3>Rasprostranivanje sjemenki</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <p>Plodovi pospješuju rasprostranivanje sjemenki na različite načine:</p>
+                    <p><strong>EPIZOOCHORIJA:</strong> Sjemenke se prilepe na sjaj životinja</p>
+                    <ul>
+                        <li>Primjer: Ambrozijini karats (ljepljivi plodovi)</li>
+                    </ul>
+                    <p><strong>ENDOZOOCHORIJA:</strong> Životinje jedu plod, sjemenke prolaze kroz crijeva</p>
+                    <ul>
+                        <li>Primjer: Jagnje, maline, bobice</li>
+                    </ul>
+                    <p><strong>ANEMOCHORIJA:</strong> Vjetar nosi sjemenke</p>
+                    <ul>
+                        <li>Primjer: Javor (sjemenke s krilima), maslina</li>
+                    </ul>
+                    <p><strong>HYDROOCHORIJA:</strong> Voda nosi sjemenke</p>
+                    <ul>
+                        <li>Primjer: Kokos, morske trave</li>
+                    </ul>
+                    <p><strong>AUTOCHORIJA:</strong> Biljka sama raspršuje sjemenke</p>
+                    <ul>
+                        <li>Primjer: Orka, akacija - "eksplozivno" otvaranje</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card tip">
+                <div class="card-header">
+                    <h3>💡 Koevolucija - zajednička evolucija!</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <p><strong>Koevolucija</strong> je kada dvije vrste evoluiraju zajedno jer utječu jedna na drugu.</p>
+                    <p><strong>Primjer:</strong> Pčele i cvijeće su evoluirale zajedno:</p>
+                    <ul>
+                        <li>Cvijeće je razvilo boje i mirise da privuče pčele</li>
+                        <li>Pčele su razvile dugi jezik da dosegnu nektar</li>
+                        <li>Pčele nose pelud dok žnakuje nektar</li>
+                        <li>Svi su zadovoljni - cvijeće se oprašuje, pčele imaju hranu!</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card definition">
+                <div class="card-header">
+                    <h3>Vegetativno razmnožavanje - Razmnožavanje bez spolnog procesa</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <p><strong>Vegetativno razmnožavanje</strong> je razmnožavanje <strong>bez gameta</strong> (bez muške i ženske stanice). Nova biljka je genetski identična roditeljskoj - to su <strong>klonovi</strong>!</p>
+                    <p><strong>Vrste vegetativnog razmnožavanja:</strong></p>
+                    <ul>
+                        <li><strong>Korjenjima:</strong> Novi biljak raste iz korijena (primjer: maline)</li>
+                        <li><strong>Stolonima:</strong> Dugi izdanci na tlu koji se ukorijenjuju (primjer: jagnje)</li>
+                        <li><strong>Podancima:</strong> Grane koje padaju i ukorjenjuju se (primjer: breza)</li>
+                        <li><strong>Vriježama:</strong> Priaze stabljike koje se ukorjenjuju na tlu</li>
+                        <li><strong>Lukovima:</strong> Specijalni podzemni organi (primjer: luk, tulipan)</li>
+                        <li><strong>Gomoljima:</strong> Zadebljani dijelovi stabljike pod tlom (primjer: krumpir)</li>
+                        <li><strong>Fragmentacijom:</strong> Rasplod dijela biljke koja ponovno izraste</li>
+                    </ul>
+                    <p><strong>Prednost:</strong> Brže, lakše, genetski identični potomci</p>
+                    <p><strong>Nedostatak:</strong> Nema genetske raznolikosti, ranjivost na bolesti</p>
+                </div>
+            </div>
+
+            <button class="tts-button" onclick="speakText('Oprašivanje se dogodi vjetrom, insektima ili životinjama. Nakon oplodnje plodnica se razvija u plod koji sadrži sjemenke i pomaže u njihovoj rasprostranjenosti.')">🔊 Čitaj glasno</button>
+        </section>
+
+        <!-- Section 7: Summary and Quiz -->
+        <section id="section-7" class="section" aria-labelledby="section-7-title">
+            <h2 id="section-7-title">✅ Zaključak i Završna Provjera</h2>
+
+            <div class="card important">
+                <div class="card-header">
+                    <h3>Ključne točke koje si naučila</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <ul>
+                        <li>✅ Sjemenjače se dijele na <strong>golosjemenjače</strong> (otvoreno sjeme) i <strong>kritosjemenjače</strong> (zaštićeno sjeme)</li>
+                        <li>✅ Golosjemenjače se oprašuju <strong>vjetrom</strong>, a imaju muške i ženske <strong>šišarke</strong></li>
+                        <li>✅ Kritosjemenjače imaju <strong>cvjetove</strong> s prašnicima i tučkom</li>
+                        <li>✅ <strong>Dvostruka oplodnja</strong> je specijalna za kritosjemenjače - dvije muške gamete oplode jajnu stanicu i sekundarnu jezgru</li>
+                        <li>✅ Iz zigote se razvija <strong>embrio</strong>, iz triploidne stanice <strong>endosperm</strong></li>
+                        <li>✅ Plod je <strong>zrela plodnica</strong> koja sadrži sjemenke - svojstvo samo kritosjemenjača</li>
+                        <li>✅ Kriosjemenjače se mogu razmnožavati i <strong>vegetativno</strong> (bez spolnog procesa)</li>
+                        <li>✅ <strong>Koevolucija</strong> je zajednička evolucija biljaka i životinja</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card formula">
+                <div class="card-header">
+                    <h3>Usporedba životnih ciklusa</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Faza</th>
+                                <th>Golosjemenjače</th>
+                                <th>Kritosjemenjače</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Sporofit</strong></td>
+                                <td>Cijela vidljiva biljka (2n)</td>
+                                <td>Cijela vidljiva biljka (2n)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Muški gametofit</strong></td>
+                                <td>Peludno zrnce (n)</td>
+                                <td>Peludno zrnce (n)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ženski gametofit</strong></td>
+                                <td>Embrionska vreća (n)</td>
+                                <td>Embrionska vreća (n) s 8 jezgri</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Oplodnja</strong></td>
+                                <td>Jedinstvena oplodnja</td>
+                                <td>Dvostruka oplodnja</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Plod</strong></td>
+                                <td>Nema pravog ploda</td>
+                                <td>Pravi plod (zrela plodnica)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="quiz-container" role="region" aria-label="Završna provjera znanja">
+                <h3>📝 Završna Provjera Znanja</h3>
+                <p>Odgovori na ova pitanja da vidiš koliko si naučila!</p>
+
+                <div class="quiz-question">
+                    <h4>1. Koja je glavna razlika između golosjemenjača i kritosjemenjača?</h4>
+                    <div class="quiz-option">
+                        <input type="radio" id="f1a" name="final1" value="a">
+                        <label for="f1a">a) Golosjemenjače imaju zaštićeno sjeme u plodnici</label>
+                    </div>
+                    <div class="quiz-option">
+                        <input type="radio" id="f1b" name="final1" value="b">
+                        <label for="f1b">b) Kritosjemenjače imaju zaštićeno sjeme u plodnici, golosjemenjače imaju otvoreno sjeme</label>
+                    </div>
+                    <div class="quiz-option">
+                        <input type="radio" id="f1c" name="final1" value="c">
+                        <label for="f1c">c) Nema razlike u sjemenu</label>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>2. Što je dvostruka oplodnja?</h4>
+                    <div class="quiz-option">
+                        <input type="radio" id="f2a" name="final2" value="a">
+                        <label for="f2a">a) Dvije muške gamete oplode istu jajnu stanicu</label>
+                    </div>
+                    <div class="quiz-option">
+                        <input type="radio" id="f2b" name="final2" value="b">
+                        <label for="f2b">b) Jedna muška gameta oplodi jajnu stanicu, druga oplodi sekundarnu jezgru</label>
+                    </div>
+                    <div class="quiz-option">
+                        <input type="radio" id="f2c" name="final2" value="c">
+                        <label for="f2c">c) Dvije ženske gamete se spajaju</label>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>3. Iz čega se razvija endosperm?</h4>
+                    <div class="quiz-option">
+                        <input type="radio" id="f3a" name="final3" value="a">
+                        <label for="f3a">a) Iz zigote</label>
+                    </div>
+                    <div class="quiz-option">
+                        <input type="radio" id="f3b" name="final3" value="b">
+                        <label for="f3b">b) Iz embrionske vreće</label>
+                    </div>
+                    <div class="quiz-option">
+                        <input type="radio" id="f3c" name="final3" value="c">
+                        <label for="f3c">c) Iz triploidne stanice (2n muška gameta + 2n sekundarna jezgra)</label>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>4. Što je plod?</h4>
+                    <div class="quiz-option">
+                        <input type="radio" id="f4a" name="final4" value="a">
+                        <label for="f4a">a) Samo slatka hrana (voće)</label>
+                    </div>
+                    <div class="quiz-option">
+                        <input type="radio" id="f4b" name="final4" value="b">
+                        <label for="f4b">b) Zrela plodnica koja sadrži sjemenke - svojstvo samo kritosjemenjača</label>
+                    </div>
+                    <div class="quiz-option">
+                        <input type="radio" id="f4c" name="final4" value="c">
+                        <label for="f4c">c) Samo kod cvijeća</label>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>5. Koja je glavna prednost kritosjemenjača nad golosjemenjačama?</h4>
+                    <div class="quiz-option">
+                        <input type="radio" id="f5a" name="final5" value="a">
+                        <label for="f5a">a) Brže rastu</label>
+                    </div>
+                    <div class="quiz-option">
+                        <input type="radio" id="f5b" name="final5" value="b">
+                        <label for="f5b">b) Imaju cvjetove i plodove, što pospješuje rasprostranivanje sjemenki i privlačenje životinja</label>
+                    </div>
+                    <div class="quiz-option">
+                        <input type="radio" id="f5c" name="final5" value="c">
+                        <label for="f5c">c) Nemaju prednosti</label>
+                    </div>
+                </div>
+
+                <button class="quiz-button" onclick="checkFinalQuiz()">Provjeri sve odgovore</button>
+                <div id="final-result" class="quiz-result"></div>
+            </div>
+
+            <div class="card example">
+                <div class="card-header">
+                    <h3>Što dalje? Prijedlozi za istraživanje</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <p>Sada kada znaš osnove sjemenjača, evo što bi mogla:
+                    <ul>
+                        <li>🔬 <strong>Pretresi cvjetne dijelove</strong> s lupom - pogledaj prašnike, tučak, latice</li>
+                        <li>🌿 <strong>Pogledaj sjemenke bliže</strong> - mogu li vidjeti embrija, endosperma, sjemenu lupinu?</li>
+                        <li>🌳 <strong>Istražuj drveće u našoj okolini</strong> - jesu li to golosjemenjače ili kritosjemenjače?</li>
+                        <li>🐝 <strong>Provjeri tko oprašuje cvjetove</strong> - vjetar, insekti, ili nešto treće?</li>
+                        <li>📊 <strong>Napravi popis voća i povrća</strong> koja su zapravo plodovi kritosjemenjača</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card tip">
+                <div class="card-header">
+                    <h3>💡 Savjet za dalje učenje</h3>
+                    <button class="card-toggle" aria-expanded="true"></button>
+                </div>
+                <div class="card-content">
+                    <p>Ova lekcija je dobra baza! Ako se želiš dublje upustiti:</p>
+                    <ul>
+                        <li>Istraži više o <strong>ekologiji sjemenjača</strong> i their role u ekosistemima</li>
+                        <li>Nauči više o <strong>poljoprivredi</strong> - kako se uzgajaju kritosjemenjače za hranu</li>
+                        <li>Pogledaj <strong>evoluciju sjemenjača</strong> kroz vrijeme</li>
+                        <li>Razumijete više o <strong>genetici</strong> sjemenjača i kako se oplemenjuju biljke</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Settings functionality
+        const settingsToggle = document.querySelector('.settings-toggle');
+        const settingsContent = document.getElementById('settings-content');
+        const fontSizeInput = document.getElementById('font-size');
+        const lineHeightInput = document.getElementById('line-height');
+        const readingRulerCheckbox = document.getElementById('reading-ruler');
+        const highContrastCheckbox = document.getElementById('high-contrast');
+        const resetButton = document.getElementById('reset-settings');
+        const readingRuler = document.querySelector('.reading-ruler');
+        const container = document.querySelector('.container');
+
+        settingsToggle.addEventListener('click', () => {
+            settingsContent.classList.toggle('show');
+            settingsToggle.setAttribute('aria-expanded', settingsContent.classList.contains('show'));
+        });
+
+        fontSizeInput.addEventListener('change', (e) => {
+            document.body.style.fontSize = e.target.value + 'px';
+            localStorage.setItem('fontSize', e.target.value);
+        });
+
+        lineHeightInput.addEventListener('change', (e) => {
+            document.body.style.lineHeight = e.target.value;
+            localStorage.setItem('lineHeight', e.target.value);
+        });
+
+        readingRulerCheckbox.addEventListener('change', (e) => {
+            if (e.target.checked) {
+                readingRuler.classList.add('active');
+                document.addEventListener('mousemove', (event) => {
+                    readingRuler.style.top = event.clientY + 'px';
+                });
+            } else {
+                readingRuler.classList.remove('active');
+            }
+            localStorage.setItem('readingRuler', e.target.checked);
+        });
+
+        highContrastCheckbox.addEventListener('change', (e) => {
+            if (e.target.checked) {
+                document.body.style.filter = 'contrast(1.3)';
+            } else {
+                document.body.style.filter = 'contrast(1)';
+            }
+            localStorage.setItem('highContrast', e.target.checked);
+        });
+
+        resetButton.addEventListener('click', () => {
+            fontSizeInput.value = '16';
+            lineHeightInput.value = '1.6';
+            readingRulerCheckbox.checked = false;
+            highContrastCheckbox.checked = false;
+            document.body.style.fontSize = '16px';
+            document.body.style.lineHeight = '1.6';
+            document.body.style.filter = 'contrast(1)';
+            readingRuler.classList.remove('active');
+            localStorage.clear();
+        });
+
+        // Load saved settings
+        const savedFontSize = localStorage.getItem('fontSize');
+        const savedLineHeight = localStorage.getItem('lineHeight');
+        const savedReadingRuler = localStorage.getItem('readingRuler') === 'true';
+        const savedHighContrast = localStorage.getItem('highContrast') === 'true';
+
+        if (savedFontSize) {
+            fontSizeInput.value = savedFontSize;
+            document.body.style.fontSize = savedFontSize + 'px';
+        }
+
+        if (savedLineHeight) {
+            lineHeightInput.value = savedLineHeight;
+            document.body.style.lineHeight = savedLineHeight;
+        }
+
+        if (savedReadingRuler) {
+            readingRulerCheckbox.checked = true;
+            readingRuler.classList.add('active');
+            document.addEventListener('mousemove', (event) => {
+                readingRuler.style.top = event.clientY + 'px';
+            });
+        }
+
+        if (savedHighContrast) {
+            highContrastCheckbox.checked = true;
+            document.body.style.filter = 'contrast(1.3)';
+        }
+
+        // Card expand/collapse functionality
+        const cardHeaders = document.querySelectorAll('.card-header');
+        cardHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const card = header.parentElement;
+                const toggle = header.querySelector('.card-toggle');
+                const content = card.querySelector('.card-content');
+
+                toggle.classList.toggle('collapsed');
+                content.classList.toggle('collapsed');
+            });
+
+            header.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    header.click();
+                }
+            });
+        });
+
+        // Navigation
+        const navButtons = document.querySelectorAll('.nav-btn');
+        const sections = document.querySelectorAll('.section');
+        const totalSections = sections.length;
+
+        navButtons.forEach((btn, index) => {
+            btn.addEventListener('click', () => {
+                showSection(index);
+                updateProgress();
+            });
+        });
+
+        function showSection(index) {
+            sections.forEach(section => section.classList.remove('active'));
+            navButtons.forEach(btn => btn.classList.remove('active'));
+
+            sections[index].classList.add('active');
+            navButtons[index].classList.add('active');
+
+            window.scrollTo(0, 0);
+        }
+
+        function updateProgress() {
+            const activeIndex = Array.from(navButtons).findIndex(btn => btn.classList.contains('active'));
+            const progress = ((activeIndex + 1) / totalSections) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+            document.getElementById('progress-percent').textContent = Math.round(progress);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                const activeIndex = Array.from(sections).findIndex(s => s.classList.contains('active'));
+                if (activeIndex < totalSections - 1) {
+                    showSection(activeIndex + 1);
+                    updateProgress();
+                }
+            } else if (e.key === 'ArrowLeft') {
+                const activeIndex = Array.from(sections).findIndex(s => s.classList.contains('active'));
+                if (activeIndex > 0) {
+                    showSection(activeIndex - 1);
+                    updateProgress();
+                }
+            }
+        });
+
+        // Text to speech
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'hr-HR';
+                utterance.rate = 0.9;
+                speechSynthesis.speak(utterance);
+            } else {
+                alert('Govorna sinteza nije dostupna u vašem pregledniku.');
+            }
+        }
+
+        // Quiz functionality
+        function checkDiagnosticQuiz() {
+            const q1 = document.querySelector('input[name="quiz1"]:checked')?.value;
+            const q2 = document.querySelector('input[name="quiz2"]:checked')?.value;
+            const q3 = document.querySelector('input[name="quiz3"]:checked')?.value;
+
+            let correct = 0;
+            let total = 3;
+
+            if (q1 === 'a') correct++;
+            if (q2 === 'b') correct++;
+            if (q3 === 'b') correct++;
+
+            const result = document.getElementById('diagnostic-result');
+            result.classList.add('show');
+
+            if (correct === total) {
+                result.classList.remove('incorrect');
+                result.classList.add('correct');
+                result.innerHTML = `<strong>Odličan rezultat!</strong> Odgovorio si točno na sva ${total} pitanja. Spreman si za ostatak lekcije!`;
+            } else {
+                result.classList.remove('correct');
+                result.classList.add('incorrect');
+                result.innerHTML = `<strong>Rezultat: ${correct}/${total}</strong>. Nema brige! Tijekom ove lekcije, sve će ti biti jasnije.`;
+            }
+
+            speakText(`Odgovorio si točno na ${correct} od ${total} pitanja.`);
+        }
+
+        function checkFinalQuiz() {
+            const f1 = document.querySelector('input[name="final1"]:checked')?.value;
+            const f2 = document.querySelector('input[name="final2"]:checked')?.value;
+            const f3 = document.querySelector('input[name="final3"]:checked')?.value;
+            const f4 = document.querySelector('input[name="final4"]:checked')?.value;
+            const f5 = document.querySelector('input[name="final5"]:checked')?.value;
+
+            let correct = 0;
+            let total = 5;
+
+            if (f1 === 'b') correct++;
+            if (f2 === 'b') correct++;
+            if (f3 === 'c') correct++;
+            if (f4 === 'b') correct++;
+            if (f5 === 'b') correct++;
+
+            const result = document.getElementById('final-result');
+            result.classList.add('show');
+
+            const percentage = (correct / total) * 100;
+
+            if (percentage === 100) {
+                result.classList.remove('incorrect');
+                result.classList.add('correct');
+                result.innerHTML = `<strong>Savršeno! 🌟</strong> Odgovorio si točno na sva 5 pitanja! Sada su ti sjemenjače sasvim jasne. Bravo!`;
+                speakText('Savršeno! Odgovorio si točno na sva 5 pitanja!');
+            } else if (percentage >= 80) {
+                result.classList.remove('incorrect');
+                result.classList.add('correct');
+                result.innerHTML = `<strong>Odličan rezultat! 👏</strong> Odgovorio si točno na ${correct} od 5 pitanja (${Math.round(percentage)}%). Odličan rad!`;
+                speakText(`Odličan rezultat! Odgovorio si točno na ${correct} od 5 pitanja.`);
+            } else if (percentage >= 60) {
+                result.classList.remove('correct');
+                result.classList.add('incorrect');
+                result.innerHTML = `<strong>Dobar početak! 📚</strong> Odgovorio si točno na ${correct} od 5 pitanja (${Math.round(percentage)}%). Preporučujem da ponovno pročitaš dijelove koji nisu bili jasni.`;
+                speakText(`Dobar početak! Odgovorio si točno na ${correct} od 5 pitanja.`);
+            } else {
+                result.classList.remove('correct');
+                result.classList.add('incorrect');
+                result.innerHTML = `<strong>Pokušaj ponovo!</strong> Odgovorio si točno na ${correct} od 5 pitanja (${Math.round(percentage)}%). Preporučujem da ponovno pročitaš sve dijelove lekcije.`;
+                speakText(`Pokušaj ponovo. Odgovorio si točno na ${correct} od 5 pitanja.`);
+            }
+        }
+
+        // Initialize
+        updateProgress();
+    </script>
+</body>
+</html>

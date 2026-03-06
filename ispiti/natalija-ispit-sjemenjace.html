@@ -1,0 +1,1947 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ispit: Sjemenjače — Natalijina Učionica</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --cream: #FFF8F0;
+            --dark-text: #2c3e50;
+            --accent-1: #FF6B6B;
+            --accent-2: #4ECDC4;
+            --accent-3: #45B7D1;
+            --accent-4: #FFA07A;
+            --accent-5: #98D8C8;
+            --success-green: #51CF66;
+            --warning-orange: #FFA94D;
+            --error-red: #FF6B6B;
+            --light-gray: #f5f5f5;
+            --border-gray: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: var(--cream);
+            color: var(--dark-text);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode {
+            background-color: #2c3e50;
+            color: #f5f5f5;
+        }
+
+        /* Skip link */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--accent-2);
+            color: white;
+            padding: 8px;
+            text-decoration: none;
+            border-radius: 0 0 4px 0;
+            z-index: 100;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        header {
+            background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        /* Welcome message */
+        .welcome-section {
+            background: white;
+            border-left: 6px solid var(--accent-2);
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .welcome-section h2 {
+            color: var(--accent-2);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .welcome-section p {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        /* Settings panel */
+        .settings-panel {
+            background: white;
+            border: 2px solid var(--border-gray);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .settings-panel h3 {
+            margin-bottom: 1.5rem;
+            color: var(--dark-text);
+            font-size: 1.1rem;
+        }
+
+        .settings-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .settings-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .settings-group input[type="range"] {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: var(--border-gray);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .settings-group input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent-2);
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .settings-group input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent-2);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .color-options {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .color-option {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .color-option:focus {
+            outline: 3px solid var(--accent-3);
+            outline-offset: 2px;
+        }
+
+        .color-option.active {
+            border-color: var(--dark-text);
+            box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .color-cream {
+            background-color: #FFF8F0;
+        }
+
+        .color-light {
+            background-color: #f5f5f5;
+        }
+
+        .color-sepia {
+            background-color: #FEF5E7;
+        }
+
+        .color-dark {
+            background-color: #2c3e50;
+        }
+
+        /* Control buttons */
+        .control-buttons {
+            display: flex;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        button {
+            padding: 0.75rem 1.5rem;
+            font-family: 'Lexend', sans-serif;
+            font-size: 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        button:focus {
+            outline: 3px solid var(--accent-3);
+            outline-offset: 2px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-2), var(--accent-3));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(78, 205, 196, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--light-gray);
+            color: var(--dark-text);
+            border: 2px solid var(--border-gray);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border-gray);
+        }
+
+        .btn-breathing {
+            background: linear-gradient(135deg, #FF6B6B, #FFB84D);
+            color: white;
+        }
+
+        .btn-breathing:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn-tts {
+            background: transparent;
+            color: var(--accent-2);
+            border: 2px solid var(--accent-2);
+            padding: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .btn-tts:hover {
+            background: var(--accent-2);
+            color: white;
+        }
+
+        /* Progress bar */
+        .progress-container {
+            margin: 2rem 0;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: var(--light-gray);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success-green), var(--accent-2));
+            transition: width 0.3s ease;
+            border-radius: 6px;
+        }
+
+        /* Exam section */
+        .exam-section {
+            display: none;
+        }
+
+        .exam-section.active {
+            display: block;
+        }
+
+        /* Question card */
+        .question-card {
+            background: white;
+            border-left: 6px solid var(--accent-2);
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .question-card.warmup {
+            border-left-color: var(--accent-4);
+            background: linear-gradient(135deg, rgba(255, 160, 122, 0.05), transparent);
+        }
+
+        .question-card.correct {
+            border-left-color: var(--success-green);
+            background: linear-gradient(135deg, rgba(81, 207, 102, 0.05), transparent);
+        }
+
+        .question-card.incorrect {
+            border-left-color: var(--error-red);
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.05), transparent);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .question-number {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--accent-2);
+        }
+
+        .question-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .warmup-badge {
+            background: var(--accent-4);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+
+        .difficulty-badge {
+            background: var(--border-gray);
+            color: var(--dark-text);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+
+        .difficulty-badge.basic {
+            background: #E3F2FD;
+            color: #1976D2;
+        }
+
+        .difficulty-badge.medium {
+            background: #FFF3E0;
+            color: #F57C00;
+        }
+
+        .difficulty-badge.advanced {
+            background: #F3E5F5;
+            color: #7B1FA2;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+            line-height: 1.8;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .option {
+            padding: 1rem;
+            border: 2px solid var(--border-gray);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .option:hover {
+            border-color: var(--accent-2);
+            background: rgba(78, 205, 196, 0.05);
+        }
+
+        .option:focus-within {
+            outline: 3px solid var(--accent-3);
+            outline-offset: 2px;
+        }
+
+        .option input[type="radio"],
+        .option input[type="checkbox"] {
+            margin-right: 0.75rem;
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+        }
+
+        .option input[type="radio"]:focus,
+        .option input[type="checkbox"]:focus {
+            outline: none;
+        }
+
+        .option label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .option.selected {
+            border-color: var(--accent-2);
+            background: rgba(78, 205, 196, 0.1);
+        }
+
+        .option.correct {
+            border-color: var(--success-green);
+            background: rgba(81, 207, 102, 0.1);
+        }
+
+        .option.incorrect {
+            border-color: var(--error-red);
+            background: rgba(255, 107, 107, 0.1);
+        }
+
+        /* Feedback */
+        .feedback-message {
+            padding: 1rem;
+            border-radius: 6px;
+            margin-top: 1rem;
+            font-weight: 500;
+            display: none;
+        }
+
+        .feedback-message.show {
+            display: block;
+        }
+
+        .feedback-correct {
+            background: rgba(81, 207, 102, 0.1);
+            border-left: 4px solid var(--success-green);
+            color: var(--success-green);
+        }
+
+        .feedback-incorrect {
+            background: rgba(255, 107, 107, 0.1);
+            border-left: 4px solid var(--error-red);
+            color: var(--error-red);
+        }
+
+        .feedback-partial {
+            background: rgba(255, 160, 122, 0.1);
+            border-left: 4px solid var(--accent-4);
+            color: var(--accent-4);
+        }
+
+        .hint-button {
+            background: transparent;
+            color: var(--accent-3);
+            border: 2px solid var(--accent-3);
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        .hint-button:hover {
+            background: var(--accent-3);
+            color: white;
+        }
+
+        .hint-text {
+            background: rgba(69, 183, 209, 0.1);
+            border-left: 4px solid var(--accent-3);
+            padding: 0.75rem;
+            margin-top: 1rem;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            display: none;
+        }
+
+        .hint-text.show {
+            display: block;
+        }
+
+        /* Match pairs */
+        .match-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 600px) {
+            .match-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .match-column h4 {
+            margin-bottom: 1rem;
+            color: var(--accent-2);
+            font-weight: 600;
+        }
+
+        .match-item {
+            padding: 1rem;
+            background: var(--light-gray);
+            border: 2px solid var(--border-gray);
+            border-radius: 6px;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .match-item:hover {
+            border-color: var(--accent-2);
+            background: rgba(78, 205, 196, 0.05);
+        }
+
+        .match-item.matched {
+            border-color: var(--success-green);
+            background: rgba(81, 207, 102, 0.1);
+        }
+
+        /* Fill in the blank */
+        .blank-container {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .blank-input {
+            padding: 0.75rem;
+            border: 2px solid var(--border-gray);
+            border-radius: 4px;
+            font-family: 'Lexend', sans-serif;
+            font-size: 1rem;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .blank-input:focus {
+            outline: none;
+            border-color: var(--accent-2);
+            box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.1);
+        }
+
+        .word-bank {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .word-option {
+            padding: 0.5rem 1rem;
+            background: var(--light-gray);
+            border: 2px solid var(--border-gray);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .word-option:hover {
+            border-color: var(--accent-2);
+            background: rgba(78, 205, 196, 0.05);
+        }
+
+        .word-option.selected {
+            border-color: var(--accent-2);
+            background: var(--accent-2);
+            color: white;
+        }
+
+        /* Sort/Order */
+        .sort-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .sort-item {
+            padding: 1rem;
+            background: var(--light-gray);
+            border: 2px solid var(--border-gray);
+            border-radius: 6px;
+            cursor: move;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .sort-item:hover {
+            border-color: var(--accent-2);
+            background: rgba(78, 205, 196, 0.05);
+        }
+
+        .sort-handle {
+            color: var(--accent-2);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .sort-item.correct {
+            border-color: var(--success-green);
+            background: rgba(81, 207, 102, 0.1);
+        }
+
+        /* SVG diagram */
+        .diagram-container {
+            background: var(--light-gray);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            overflow-x: auto;
+        }
+
+        svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Breathing exercise modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 1rem;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 400px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-content h2 {
+            margin-bottom: 1.5rem;
+            color: var(--accent-2);
+        }
+
+        .breathing-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-2), var(--accent-3));
+            margin: 1.5rem auto;
+            animation: breathe 16s infinite;
+        }
+
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            25% { transform: scale(1.3); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 1; }
+            75% { transform: scale(1); opacity: 0.6; }
+        }
+
+        .breathing-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark-text);
+            margin: 1rem 0;
+        }
+
+        /* Encouraging messages */
+        .encouragement-message {
+            background: linear-gradient(135deg, rgba(255, 160, 122, 0.1), rgba(78, 205, 196, 0.1));
+            border-left: 4px solid var(--accent-4);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .encouragement-message.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .encouragement-message h3 {
+            color: var(--accent-4);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Results section */
+        .results-section {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin: 2rem 0;
+        }
+
+        .results-score {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent-2);
+            margin: 1rem 0;
+        }
+
+        .results-stars {
+            font-size: 2.5rem;
+            margin: 1rem 0;
+        }
+
+        .results-message {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--dark-text);
+            margin: 1.5rem 0;
+            line-height: 1.8;
+        }
+
+        .results-breakdown {
+            background: var(--light-gray);
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .results-breakdown h3 {
+            margin-bottom: 1rem;
+            color: var(--accent-2);
+        }
+
+        .results-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-gray);
+        }
+
+        .results-item:last-child {
+            border-bottom: none;
+        }
+
+        .review-section {
+            background: var(--light-gray);
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .review-section h3 {
+            margin-bottom: 1rem;
+            color: var(--accent-2);
+        }
+
+        .review-question {
+            background: white;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+            border-left: 4px solid var(--border-gray);
+        }
+
+        .review-question.correct {
+            border-left-color: var(--success-green);
+        }
+
+        .review-question.incorrect {
+            border-left-color: var(--error-red);
+        }
+
+        .review-question-text {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .review-answer {
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--border-gray);
+        }
+
+        .review-answer strong {
+            color: var(--accent-2);
+        }
+
+        .learning-recommendations {
+            background: linear-gradient(135deg, rgba(78, 205, 196, 0.1), rgba(69, 183, 209, 0.1));
+            border-left: 4px solid var(--accent-2);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 6px;
+        }
+
+        .learning-recommendations h3 {
+            color: var(--accent-2);
+            margin-bottom: 1rem;
+        }
+
+        .learning-recommendations ul {
+            margin-left: 1.5rem;
+        }
+
+        .learning-recommendations li {
+            margin-bottom: 0.75rem;
+            line-height: 1.6;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            .question-card {
+                padding: 1.5rem;
+            }
+
+            .question-text {
+                font-size: 1rem;
+            }
+
+            .results-score {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Dark mode adjustments */
+        body.dark-mode .question-card,
+        body.dark-mode .welcome-section,
+        body.dark-mode .settings-panel,
+        body.dark-mode .progress-container,
+        body.dark-mode .results-section,
+        body.dark-mode .review-section,
+        body.dark-mode .modal-content {
+            background: #34495e;
+            color: #f5f5f5;
+        }
+
+        body.dark-mode .option {
+            background: #2c3e50;
+            border-color: #5d6d7b;
+        }
+
+        body.dark-mode .option:hover {
+            background: rgba(78, 205, 196, 0.15);
+        }
+
+        /* Print styles */
+        @media print {
+            .settings-panel,
+            .control-buttons,
+            .btn-breathing,
+            .btn-tts,
+            header {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="#exam-content" class="skip-link">Preskoči na sadržaj ispita</a>
+
+    <header>
+        <h1>Natalijina Učionica</h1>
+        <p>Ispit: Sjemenjače (Seed Plants)</p>
+    </header>
+
+    <div class="container">
+        <!-- Settings Panel -->
+        <div class="settings-panel" role="region" aria-label="Postavke čitanja">
+            <h3>Prilagodi prikaz</h3>
+
+            <div class="settings-group">
+                <label for="font-size">Veličina slova</label>
+                <input type="range" id="font-size" min="14" max="24" value="16" step="2">
+                <span id="font-size-display">16px</span>
+            </div>
+
+            <div class="settings-group">
+                <label>Boja pozadine</label>
+                <div class="color-options">
+                    <button class="color-option active color-cream" data-bg="cream" title="Krema" aria-label="Pozadina: Krema"></button>
+                    <button class="color-option color-light" data-bg="light" title="Svijetlo siva" aria-label="Pozadina: Svijetlo siva"></button>
+                    <button class="color-option color-sepia" data-bg="sepia" title="Sepia" aria-label="Pozadina: Sepia"></button>
+                    <button class="color-option color-dark" data-bg="dark" title="Tamno" aria-label="Pozadina: Tamno"></button>
+                </div>
+            </div>
+
+            <div class="settings-group">
+                <label for="line-height">Razmak između redaka</label>
+                <input type="range" id="line-height" min="1.2" max="2.4" value="1.6" step="0.2">
+                <span id="line-height-display">1.6</span>
+            </div>
+        </div>
+
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <h2>Dobrodošla, Natalija! 👋</h2>
+            <p>Ovo je prilika da pokažeš što znaš o sjemenjačama. Nema vremenskog ograničenja — uzimaš si svo vrijeme koje trebаš. Svaki odgovor je prilika da naučiš nešto novo!</p>
+            <p><strong>Kako će ispit izgledati:</strong> Počinjemo sa zagrijavanjem (ta pitanja se ne broje), zatim ide 15 pitanja. Nakon svakog odgovora dobit ćeš povratnu informaciju. Na kraju ćeš vidjeti detaljnu analizu.</p>
+            <div class="control-buttons">
+                <button class="btn-primary" id="start-exam">Započni ispit</button>
+                <button class="btn-breathing" id="breathing-btn">Trebam minutu 🫁</button>
+            </div>
+        </div>
+
+        <!-- Exam Content -->
+        <div id="exam-content" role="main">
+            <!-- Progress Bar -->
+            <div class="progress-container" id="progress-container" style="display: none;">
+                <div class="progress-label">
+                    <span>Napredak</span>
+                    <span id="progress-text">0 / 15</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+            </div>
+
+            <!-- Control Buttons During Exam -->
+            <div class="control-buttons" id="exam-controls" style="display: none;">
+                <button class="btn-primary" id="submit-answer">Pošalji odgovor</button>
+                <button class="btn-secondary" id="pause-btn">Pauza</button>
+                <button class="btn-breathing" id="breathing-btn-exam">Trebam minutu 🫁</button>
+            </div>
+
+            <!-- Encouragement Messages -->
+            <div class="encouragement-message" id="encouragement-1">
+                <h3>Odličnog pokusaja! 🌟</h3>
+                <p>Vidim koliko dobro napredujete! Svaki odgovor vas čini boljim.</p>
+            </div>
+
+            <div class="encouragement-message" id="encouragement-2">
+                <h3>Nastavi tako! 💪</h3>
+                <p>Već si prošao pola puta — solidno napredovanje!</p>
+            </div>
+
+            <div class="encouragement-message" id="encouragement-3">
+                <h3>Gotovo je blizu! 🎯</h3>
+                <p>Samo još nekoliko pitanja. Fokusiraj se i daj sve od sebe!</p>
+            </div>
+
+            <!-- Questions Container -->
+            <div id="questions-container"></div>
+
+            <!-- Results Section -->
+            <div class="results-section" id="results-section" style="display: none;">
+                <h2>Čestitam! 🎉</h2>
+                <div class="results-score" id="results-score">0%</div>
+                <div class="results-stars" id="results-stars"></div>
+                <div class="results-message" id="results-message"></div>
+
+                <div class="results-breakdown">
+                    <h3>Pregled rezultata</h3>
+                    <div class="results-item">
+                        <span>Tačan odgovora (bez zagrijavanja)</span>
+                        <span id="correct-count">0</span>
+                    </div>
+                    <div class="results-item">
+                        <span>Netačan odgovora</span>
+                        <span id="incorrect-count">0</span>
+                    </div>
+                    <div class="results-item">
+                        <span>Ukupno bodova</span>
+                        <span id="total-points">0</span>
+                    </div>
+                </div>
+
+                <div class="review-section" id="review-section">
+                    <h3>Detaljni pregled</h3>
+                    <div id="review-items"></div>
+                </div>
+
+                <div class="learning-recommendations">
+                    <h3>Što bi trebala ponoviti? 📚</h3>
+                    <ul id="learning-recommendations-list"></ul>
+                </div>
+
+                <div class="control-buttons">
+                    <button class="btn-primary" id="restart-exam">Ponovi ispit</button>
+                    <button class="btn-secondary" id="download-results">Preuzmi rezultate (PDF)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Breathing Modal -->
+    <div class="modal" id="breathing-modal" role="dialog" aria-label="Vježba dišanja">
+        <div class="modal-content">
+            <h2>Duboko dišite</h2>
+            <p>Slijedite kružni ritam. Ovo će trajati 2 minute.</p>
+            <div class="breathing-circle"></div>
+            <div class="breathing-text" id="breathing-text">Udah...</div>
+            <button class="btn-secondary" id="close-breathing">Gotovo</button>
+        </div>
+    </div>
+
+    <!-- Pause Modal -->
+    <div class="modal" id="pause-modal" role="dialog" aria-label="Pauzirani ispit">
+        <div class="modal-content">
+            <h2>Ispit je pauziran</h2>
+            <p>Uzmi si svo vrijeme koje trebas. Kada budeš spreman/a, klikni ispod.</p>
+            <button class="btn-primary" id="resume-exam">Nastavi sa ispitom</button>
+        </div>
+    </div>
+
+    <script>
+        // State management
+        const examState = {
+            currentQuestion: 0,
+            answers: {},
+            score: 0,
+            isWarmup: false,
+            isPaused: false,
+            questionsAnswered: 0,
+            warmupAnswered: 0,
+            allAnswers: {}
+        };
+
+        // All exam questions
+        const examQuestions = [
+            // === WARMUP QUESTIONS (3 questions - don't count toward score) ===
+            {
+                id: 'warmup1',
+                type: 'multiple-choice',
+                difficulty: 'basic',
+                warmup: true,
+                text: 'Koja je glavna karakteristika sjemenjača?',
+                options: [
+                    'Imaju sjemenke',
+                    'Nemaju vijeta/',
+                    'Rastu samo u toplim klimama',
+                    'Imaju samo listove'
+                ],
+                correct: [0],
+                explanation: 'Sjemenjače se zovu tako upravo jer imaju sjemenke (seeds). To je njihova glavna karakteristika koja ih razlikuje od ostalih biljaka.',
+                hint: 'Razmisli o nazivu "sjemenjače" — što znači "sjeme"?'
+            },
+            {
+                id: 'warmup2',
+                type: 'true-false',
+                difficulty: 'basic',
+                warmup: true,
+                text: 'Golosjemenjače imaju sjemenke koje su vidljive na površini lješnjaka.',
+                correct: true,
+                explanation: 'Točno! Golosjemenjače imaju sjemenke koje su izložene na površini lješnjaka (kao kod bora ili smreke). "Golo" znači da nisu prekrivene.',
+                hint: 'Razmisli o značenju riječi "golo" — što znači da su sjemenke gole?'
+            },
+            {
+                id: 'warmup3',
+                type: 'multiple-choice',
+                difficulty: 'basic',
+                warmup: true,
+                text: 'Koje su dvije glavne grupe sjemenjača?',
+                options: [
+                    'Biljke i životinje',
+                    'Golosjemenjače i kritosjemenjače',
+                    'Kopnene i vodene biljke',
+                    'Zelene i bezobojne biljke'
+                ],
+                correct: [1],
+                explanation: 'Sjemenjače se dijele na golosjemenjače (s golim sjemenama na lješnjacima) i kritosjemenjače (sa sjemenama u plodniku).',
+                hint: 'Jedna grupa ima gole sjemenke, a druga ima pokrivene sjemenke.'
+            },
+
+            // === ACTUAL EXAM QUESTIONS (15 questions) ===
+            {
+                id: 'q1',
+                type: 'multiple-choice',
+                difficulty: 'basic',
+                text: 'Što je sjemenka?',
+                options: [
+                    'Zapečaćeni embrij s pružama hrane',
+                    'Samo ljuska bez sadržaja',
+                    'Dio virusa',
+                    'Otvor u lešnjaku'
+                ],
+                correct: [0],
+                explanation: 'Sjemenka je zapečaćeni embrij s pružama hrane (endosperm ili kotiledonima) koji embriji koriste za rast kada se siju.',
+                hint: 'Razmisli o tome što trebams embriju kada počne rasti.'
+            },
+            {
+                id: 'q2',
+                type: 'true-false',
+                difficulty: 'basic',
+                text: 'Kritosjemenjače su starije od golosjemenjača na Zemlji.',
+                correct: false,
+                explanation: 'Netočno. Golosjemenjače su se pojavile prije kritosjemenjača u evolucijskoj povijesti. Kritosjemenjače su novija grupa.',
+                hint: 'Koja grupa se pojavila prvo — starija ili novija?'
+            },
+            {
+                id: 'q3',
+                type: 'multiple-choice',
+                difficulty: 'medium',
+                text: 'Kako se čini prašnica na četinjaču (golosjemenjači)?',
+                options: [
+                    'Mali žuti/braonkasti male strukture na muškm lješnjaku',
+                    'Velik cvijek sa laticama',
+                    'Dio ženskog lješnjaka',
+                    'Zeleni list na vrhu grane'
+                ],
+                correct: [0],
+                explanation: 'Prašnice su male žute ili braonkaste strukture (microsporangia) na površini muškog lješnjaka gdje se tvore peludna zrna.',
+                hint: 'Muški lješnjak je sitan i žućkast na boru ili smreci.'
+            },
+            {
+                id: 'q4',
+                type: 'matching',
+                difficulty: 'medium',
+                text: 'Upari dijelove s njihovim opisom',
+                pairs: [
+                    { left: 'Peludno zrno', right: 'Mikrogametofit četinjača' },
+                    { left: 'Embrionska vreća', right: 'Megagametofit kritosjemenjača' },
+                    { left: 'Endosperm', right: 'Hrana za embrij (3n)' },
+                    { left: 'Prašnik', right: 'Dio cvijeta koji proizvodi peludu' }
+                ],
+                correct: [[0, 0], [1, 1], [2, 2], [3, 3]],
+                explanation: 'Peludno zrno je muški gametofir (haploidna faza), embrionska vreća je ženski gametofit, endosperm je triploidna hrana, prašnik je dio cvijeta.',
+                hint: 'Gametofit je razvojni stadij gdje se tvore gamete (spermiji i jajne stanice).'
+            },
+            {
+                id: 'q5',
+                type: 'fill-blank',
+                difficulty: 'medium',
+                text: 'Kod kritosjemenjača, dvostruka oplodnja znači da se tvore dva produkta: zigota (2n) i ________ (3n).',
+                wordBank: ['endosperm', 'embrij', 'peludno zrno', 'plod'],
+                correct: 'endosperm',
+                explanation: 'Dvostruka oplodnja je karakteristika kritosjemenjača: jedan spermij oplodi jajnu ćeliju (2n zigota), a drugi spermij oplodi sekundarnu jezgru (3n endosperm).',
+                hint: 'Što je hrana za embrij u sjemenki?'
+            },
+            {
+                id: 'q6',
+                type: 'sort-order',
+                difficulty: 'medium',
+                text: 'Redoslijed životnog ciklusa četinjače: Rasporedi korake od najranijeg ka najposlijednjempor',
+                items: [
+                    'Prašnica proizvodi peludno zrno',
+                    'Pelud dosegne ženski lješnjak',
+                    'Poludn tuba ulazi u megasporangij',
+                    'Fertilizacija — spermij + jajnа stanica = zigota',
+                    'Razvoj embrija',
+                    'Zrela sjemenka sa embrijom'
+                ],
+                correct: [0, 1, 2, 3, 4, 5],
+                explanation: 'Životni ciklus ide od proizvodnje peludy, preko opraživanja, do razvoja sjemenke.',
+                hint: 'Počni sa proizvodnjom peludy u prašnici.'
+            },
+            {
+                id: 'q7',
+                type: 'multiple-choice',
+                difficulty: 'medium',
+                text: 'Što je samooprašivanje?',
+                options: [
+                    'Opraživanje cvijeta njegovom vlastitom peludom',
+                    'Opraživanje od drugog cvijeta iste biljke',
+                    'Opraživanje od biljke druge vrste',
+                    'Opraživanje vjetrom'
+                ],
+                correct: [0],
+                explanation: 'Samooprašivanje je opraživanje cvijeta njegovom vlasttom peludom. Stranooprašivanje je primanje peludy od drugog cvijeta.',
+                hint: 'Što znači "samo" u samooprašivanju?'
+            },
+            {
+                id: 'q8',
+                type: 'multiple-choice',
+                difficulty: 'advanced',
+                text: 'Koji su dijelovi cvijeta uključeni u reprodukciju?',
+                options: [
+                    'Samo čaška i latica',
+                    'Prašnik (s prašnicom i prašcima) i tučak (s njuškom, vratom, plodnicom)',
+                    'Samo latica',
+                    'Stebljika i listovi'
+                ],
+                correct: [1],
+                explanation: 'Reproduktivni dijelovi su prašnik (muški) s prašnicom koja proizvodi peludu, i tučak (ženski) s plodnicom koja sadrži ovule.',
+                hint: 'Muški dio je prašnik, ženski dio je tučak.'
+            },
+            {
+                id: 'q9',
+                type: 'diagram',
+                difficulty: 'medium',
+                text: 'Pogledaj diagram strukture cvijeta. Koja je oznaka tučka?',
+                diagram: `
+                    <svg viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Petals -->
+                        <ellipse cx="100" cy="150" rx="40" ry="80" fill="#FF99CC" stroke="#333" stroke-width="2"/>
+                        <ellipse cx="200" cy="150" rx="40" ry="80" fill="#FF99CC" stroke="#333" stroke-width="2"/>
+                        <ellipse cx="150" cy="100" rx="40" ry="80" fill="#FF99CC" stroke="#333" stroke-width="2" transform="rotate(60 150 100)"/>
+                        <ellipse cx="150" cy="200" rx="40" ry="80" fill="#FF99CC" stroke="#333" stroke-width="2" transform="rotate(-60 150 200)"/>
+
+                        <!-- Stamen (prašnik) -->
+                        <line x1="140" y1="180" x2="140" y2="220" stroke="#FFD700" stroke-width="3"/>
+                        <ellipse cx="140" cy="225" rx="8" ry="12" fill="#FFD700" stroke="#333" stroke-width="1"/>
+
+                        <!-- Pistil (tučak) -->
+                        <line x1="160" y1="180" x2="160" y2="240" stroke="#90EE90" stroke-width="3"/>
+                        <polygon points="160,240 155,260 165,260" fill="#90EE90" stroke="#333" stroke-width="1"/>
+
+                        <!-- Labels -->
+                        <text x="150" y="280" font-size="14" fill="#333" text-anchor="middle">A</text>
+                        <text x="100" y="280" font-size="14" fill="#333" text-anchor="middle">B</text>
+                        <text x="200" y="280" font-size="14" fill="#333" text-anchor="middle">C</text>
+
+                        <!-- Legend -->
+                        <text x="20" y="330" font-size="12" font-weight="bold" fill="#333">A = Tučak (zeleno)</text>
+                        <text x="20" y="350" font-size="12" font-weight="bold" fill="#333">B = Prašnik (žuto)</text>
+                        <text x="20" y="370" font-size="12" font-weight="bold" fill="#333">C = Latica (ružičasta)</text>
+                    </svg>
+                `,
+                options: ['A', 'B', 'C'],
+                correct: [0],
+                explanation: 'Tučak je ženski reproduktivni dio (A - zeleno na diagramu). Prašnik je muški dio (B - žuto).',
+                hint: 'Tučak ima oblik malenog vrća sa žigom na vrhu. Označen je zelenom bojom.'
+            },
+            {
+                id: 'q10',
+                type: 'true-false',
+                difficulty: 'advanced',
+                text: 'Jednodomne biljke imaju muške i ženské cvjetove na istoj biljci.',
+                correct: true,
+                explanation: 'Točno! Jednodomne biljke imaju i muške i ženské cvjetove na istoj biljci (npr. kukuruz). Dvodomne biljke imaju muške na jednoj biljci i ženské na drugoj (npr. ginko).',
+                hint: 'Jednodomne = jedan dom (biljka), dvodomne = dva doma (dvije biljke).'
+            },
+            {
+                id: 'q11',
+                type: 'multiple-choice',
+                difficulty: 'advanced',
+                text: 'Što je entomofilija?',
+                options: [
+                    'Opraživanje vodenim putem',
+                    'Opraživanje putem insekta',
+                    'Opraživanje vjetrom',
+                    'Opraživanje životinjama osim insekta'
+                ],
+                correct: [1],
+                explanation: 'Entomofilija je opraživanje putem insekta (entomo = insekt). Anemofilija je vjetrom, ornitologija je pticama, kirofilija je šišmišima.',
+                hint: 'Entomo je grčka reč za insekt.'
+            },
+            {
+                id: 'q12',
+                type: 'fill-blank',
+                difficulty: 'advanced',
+                text: 'Proces gdje se biljka aseksualnom reprodukcijom tvori kao __________ (genetski identične jedinke od majčne biljke) bez opraživanja.',
+                wordBank: ['klonovi', 'mutacija', 'hibrid', 'spolne ćelije'],
+                correct: 'klonovi',
+                explanation: 'Aseksualnom reprodukcijom nastaju klonovi — genetski identične jedinke. Primjeri su fragmentacija, stoloni, podanci, lukovice, bulbili.',
+                hint: 'Klonovi su potpuno isti kao majčna biljka, kao fotokopija.'
+            },
+            {
+                id: 'q13',
+                type: 'matching',
+                difficulty: 'medium',
+                text: 'Upari tip raspodjele sjemenaka s njegovom opisom',
+                pairs: [
+                    { left: 'Anemochorija', right: 'Rasprostranjena vjetrom' },
+                    { left: 'Endozoochorija', right: 'Životinja jede i izbaci sjemenke' },
+                    { left: 'Hidrochoria', right: 'Rasprostranjena vodom' },
+                    { left: 'Autochorija', right: 'Biljka sama izbaci sjemenke' }
+                ],
+                correct: [[0, 0], [1, 1], [2, 2], [3, 3]],
+                explanation: 'Različiti mehanizmi raspodjele osiguravaju da sjemenke dosegnu nova mjesta. Anemochorija koristi vjetar, endozoochorija koristi životinje, hidrochoria koristi vodu, autochorija je samodisperzija.',
+                hint: 'Aero/anemo = vjetar, zoo = životinja, hydro = voda.'
+            },
+            {
+                id: 'q14',
+                type: 'diagram',
+                difficulty: 'advanced',
+                text: 'Pogledaj životni ciklus kritosjemenjače. Koji je stadij haploidne (n)?',
+                diagram: `
+                    <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Circle showing cycle -->
+                        <circle cx="200" cy="150" r="120" fill="none" stroke="#4ECDC4" stroke-width="2" stroke-dasharray="5,5"/>
+
+                        <!-- Diploid phase -->
+                        <circle cx="200" cy="40" r="30" fill="#FF6B6B" stroke="#333" stroke-width="2"/>
+                        <text x="200" y="45" font-size="12" fill="white" font-weight="bold" text-anchor="middle">Biljka (2n)</text>
+
+                        <!-- Meiosis -->
+                        <text x="300" y="100" font-size="11" fill="#333">Meioza</text>
+                        <path d="M 220 70 L 280 120" stroke="#333" stroke-width="1" marker-end="url(#arrowhead)"/>
+
+                        <!-- Haploid spores -->
+                        <circle cx="330" cy="150" r="30" fill="#90EE90" stroke="#333" stroke-width="2"/>
+                        <text x="330" y="145" font-size="11" fill="white" font-weight="bold" text-anchor="middle">Spore</text>
+                        <text x="330" y="160" font-size="10" fill="white" text-anchor="middle">(n)</text>
+
+                        <!-- Gametophyte -->
+                        <text x="280" y="200" font-size="11" fill="#333">Gametofit</text>
+                        <path d="M 330 180 L 270 220" stroke="#333" stroke-width="1" marker-end="url(#arrowhead)"/>
+
+                        <!-- Gametes -->
+                        <circle cx="200" cy="260" r="30" fill="#45B7D1" stroke="#333" stroke-width="2"/>
+                        <text x="200" y="260" font-size="12" fill="white" font-weight="bold" text-anchor="middle">Gamete</text>
+                        <text x="200" y="275" font-size="10" fill="white" text-anchor="middle">(n)</text>
+
+                        <!-- Fertilization back -->
+                        <text x="100" y="200" font-size="11" fill="#333">Oplodnja</text>
+                        <path d="M 170 240 L 100 100" stroke="#333" stroke-width="1" marker-end="url(#arrowhead)"/>
+
+                        <!-- Arrow marker -->
+                        <defs>
+                            <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                                <polygon points="0 0, 10 3, 0 6" fill="#333" />
+                            </marker>
+                        </defs>
+                    </svg>
+                `,
+                options: [
+                    'Biljka (2n)',
+                    'Spore i gamete (n)',
+                    'Samo biljka',
+                    'Samo plod'
+                ],
+                correct: [1],
+                explanation: 'Haploidni (n) stadiji su spore i gamete (jajne stanice i spermiji). Diploidni (2n) stadij je somatska biljka.',
+                hint: 'Haploidno znači jednu setu kromosoma (n). Diploidno znači dvije sete (2n).'
+            },
+            {
+                id: 'q15',
+                type: 'multiple-choice',
+                difficulty: 'advanced',
+                text: 'Koji je primjer biljke koja koristi vegetativnu reprodukciju putem podanaca (runners)?',
+                options: [
+                    'Jagoda (Fragaria)',
+                    'Pinija (Pinus pinea)',
+                    'Tisa (Taxus baccata)',
+                    'Ginko (Ginkgo biloba)'
+                ],
+                correct: [0],
+                explanation: 'Jagoda koristi podance (stolone) — dugačke, tanke stebljike koje rastu po tlu i tvore nove biljke na čvorištima. To je oblik aseksualnog razmnožavanja.',
+                hint: 'Jagoda je tradicionalna biljka koju je lako vidjeti kako se širi na površini tla.'
+            }
+        ];
+
+        // Breathing exercise
+        function startBreathingExercise() {
+            const modal = document.getElementById('breathing-modal');
+            const textElement = document.getElementById('breathing-text');
+            modal.classList.add('show');
+
+            const phases = ['Udah...', 'Zadrži...', 'Izdah...', ''];
+            let phaseIndex = 0;
+            let cycleCount = 0;
+
+            const interval = setInterval(() => {
+                textElement.textContent = phases[phaseIndex % 4];
+                phaseIndex++;
+
+                if (phaseIndex % 4 === 0) {
+                    cycleCount++;
+                    if (cycleCount >= 2) {
+                        clearInterval(interval);
+                        setTimeout(() => {
+                            modal.classList.remove('show');
+                        }, 1000);
+                    }
+                }
+            }, 4000);
+        }
+
+        // TTS functionality
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'hr-HR';
+                speechSynthesis.cancel();
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        // Initialize exam
+        function initializeExam() {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+
+            examQuestions.forEach((question, index) => {
+                const questionElement = createQuestionElement(question, index);
+                container.appendChild(questionElement);
+            });
+
+            document.getElementById('welcome-section')?.classList.add('hidden');
+            document.getElementById('progress-container').style.display = 'block';
+            document.getElementById('exam-controls').style.display = 'flex';
+
+            loadQuestion(0);
+        }
+
+        function createQuestionElement(question, index) {
+            const div = document.createElement('div');
+            div.className = `question-card ${question.warmup ? 'warmup' : ''}`;
+            div.id = `question-${question.id}`;
+            div.setAttribute('data-question-id', question.id);
+
+            let html = `
+                <div class="question-header">
+                    <div>
+                        <span class="question-number">Pitanje ${question.warmup ? 'Z' + (index + 1) : index - 2}</span>
+                        ${question.warmup ? '<span class="warmup-badge">Zagrijavanje — ne broji se u ocjenu</span>' : ''}
+                    </div>
+                    <div class="question-meta">
+                        <span class="difficulty-badge ${question.difficulty}">${
+                            question.difficulty === 'basic' ? 'Osnovno' :
+                            question.difficulty === 'medium' ? 'Srednje' : 'Izazovno'
+                        }</span>
+                        <button class="btn-tts" data-question-id="${question.id}" title="Čitaj tekst">🔊</button>
+                    </div>
+                </div>
+                <div class="question-text">${question.text}</div>
+            `;
+
+            // Different question types
+            if (question.type === 'multiple-choice') {
+                html += `<div class="options-container">`;
+                question.options.forEach((option, idx) => {
+                    html += `
+                        <div class="option">
+                            <label>
+                                <input type="radio" name="answer-${question.id}" value="${idx}" data-question-id="${question.id}">
+                                ${option}
+                            </label>
+                        </div>
+                    `;
+                });
+                html += `</div>`;
+            } else if (question.type === 'true-false') {
+                html += `<div class="options-container">
+                    <div class="option">
+                        <label>
+                            <input type="radio" name="answer-${question.id}" value="true" data-question-id="${question.id}">
+                            Točno
+                        </label>
+                    </div>
+                    <div class="option">
+                        <label>
+                            <input type="radio" name="answer-${question.id}" value="false" data-question-id="${question.id}">
+                            Netočno
+                        </label>
+                    </div>
+                </div>`;
+            } else if (question.type === 'matching') {
+                html += `<div class="match-container">
+                    <div class="match-column">
+                        <h4>Lijeva strana</h4>
+                        ${question.pairs.map((pair, idx) => `
+                            <div class="match-item" data-match-id="left-${idx}" data-question-id="${question.id}">
+                                ${pair.left}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="match-column">
+                        <h4>Desna strana</h4>
+                        ${question.pairs.map((pair, idx) => `
+                            <div class="match-item" data-match-id="right-${idx}" data-question-id="${question.id}">
+                                ${pair.right}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>`;
+            } else if (question.type === 'fill-blank') {
+                html += `<div class="blank-container">
+                    <input type="text" class="blank-input" data-question-id="${question.id}" placeholder="Upisati odgovor...">
+                </div>
+                <div class="word-bank">
+                    ${question.wordBank.map((word, idx) => `
+                        <button class="word-option" data-word="${word}" data-question-id="${question.id}">
+                            ${word}
+                        </button>
+                    `).join('')}
+                </div>`;
+            } else if (question.type === 'sort-order') {
+                html += `<div class="sort-container" data-question-id="${question.id}">
+                    ${question.items.map((item, idx) => `
+                        <div class="sort-item" draggable="true" data-index="${idx}" data-question-id="${question.id}">
+                            <span class="sort-handle">⋮⋮</span>
+                            <span>${item}</span>
+                        </div>
+                    `).join('')}
+                </div>`;
+            } else if (question.type === 'diagram') {
+                html += `
+                    <div class="diagram-container">
+                        ${question.diagram}
+                    </div>
+                    <div class="options-container">
+                        ${question.options.map((option, idx) => `
+                            <div class="option">
+                                <label>
+                                    <input type="radio" name="answer-${question.id}" value="${idx}" data-question-id="${question.id}">
+                                    ${option}
+                                </label>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+
+            // Add hint and feedback
+            html += `
+                <button class="hint-button" data-question-id="${question.id}">💡 Savjet</button>
+                <div class="hint-text" data-question-id="${question.id}">${question.hint || ''}</div>
+                <div class="feedback-message" data-question-id="${question.id}"></div>
+            `;
+
+            div.innerHTML = html;
+            return div;
+        }
+
+        function loadQuestion(index) {
+            const allQuestions = document.querySelectorAll('.question-card');
+            allQuestions.forEach(q => q.style.display = 'none');
+
+            if (index < examQuestions.length) {
+                const question = examQuestions[index];
+                document.getElementById(`question-${question.id}`).style.display = 'block';
+                window.scrollTo(0, 0);
+
+                updateProgress();
+                attachEventListeners();
+            }
+        }
+
+        function attachEventListeners() {
+            // TTS buttons
+            document.querySelectorAll('.btn-tts').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const questionId = e.target.getAttribute('data-question-id');
+                    const question = examQuestions.find(q => q.id === questionId);
+                    speakText(question.text);
+                });
+            });
+
+            // Hint buttons
+            document.querySelectorAll('.hint-button').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const questionId = e.target.getAttribute('data-question-id');
+                    const hintElement = document.querySelector(`.hint-text[data-question-id="${questionId}"]`);
+                    hintElement.classList.toggle('show');
+                    speakText(hintElement.textContent);
+                });
+            });
+
+            // Word bank buttons
+            document.querySelectorAll('.word-option').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const questionId = e.target.getAttribute('data-question-id');
+                    const word = e.target.getAttribute('data-word');
+                    const input = document.querySelector(`.blank-input[data-question-id="${questionId}"]`);
+                    input.value = word;
+                    e.target.classList.add('selected');
+                });
+            });
+
+            // Drag and drop for sort
+            const sortItems = document.querySelectorAll('.sort-item');
+            sortItems.forEach(item => {
+                item.addEventListener('dragstart', dragStart);
+                item.addEventListener('dragover', dragOver);
+                item.addEventListener('drop', drop);
+                item.addEventListener('dragend', dragEnd);
+            });
+        }
+
+        let draggedItem = null;
+        function dragStart(e) {
+            draggedItem = this;
+            this.style.opacity = '0.5';
+        }
+        function dragOver(e) {
+            e.preventDefault();
+        }
+        function drop(e) {
+            e.preventDefault();
+            if (draggedItem !== this) {
+                const container = this.parentNode;
+                const allItems = [...container.querySelectorAll('.sort-item')];
+                const draggedIndex = allItems.indexOf(draggedItem);
+                const targetIndex = allItems.indexOf(this);
+
+                if (draggedIndex < targetIndex) {
+                    this.parentNode.insertBefore(draggedItem, this.nextSibling);
+                } else {
+                    this.parentNode.insertBefore(draggedItem, this);
+                }
+            }
+        }
+        function dragEnd(e) {
+            this.style.opacity = '1';
+        }
+
+        function submitAnswer() {
+            const currentQuestion = examQuestions[examState.currentQuestion];
+            const questionId = currentQuestion.id;
+            let answer = null;
+            let isCorrect = false;
+
+            if (currentQuestion.type === 'multiple-choice' || currentQuestion.type === 'diagram') {
+                const selected = document.querySelector(`input[name="answer-${questionId}"]:checked`);
+                if (selected) {
+                    answer = parseInt(selected.value);
+                    isCorrect = currentQuestion.correct.includes(answer);
+                }
+            } else if (currentQuestion.type === 'true-false') {
+                const selected = document.querySelector(`input[name="answer-${questionId}"]:checked`);
+                if (selected) {
+                    answer = selected.value === 'true';
+                    isCorrect = answer === currentQuestion.correct;
+                }
+            } else if (currentQuestion.type === 'fill-blank') {
+                const input = document.querySelector(`.blank-input[data-question-id="${questionId}"]`);
+                answer = input.value.trim().toLowerCase();
+                isCorrect = answer === currentQuestion.correct.toLowerCase();
+            } else if (currentQuestion.type === 'sort-order') {
+                const sortedItems = document.querySelectorAll(`.sort-item[data-question-id="${questionId}"]`);
+                answer = Array.from(sortedItems).map((item, idx) => {
+                    return parseInt(item.getAttribute('data-index'));
+                });
+                isCorrect = JSON.stringify(answer) === JSON.stringify(currentQuestion.correct);
+            } else if (currentQuestion.type === 'matching') {
+                // Matching logic
+                answer = [];
+                isCorrect = true;
+            }
+
+            if (answer === null && currentQuestion.type !== 'matching') {
+                alert('Molim odaberi odgovor prije nego što nastaviš.');
+                return;
+            }
+
+            examState.allAnswers[questionId] = answer;
+
+            // Show feedback
+            const feedbackElement = document.querySelector(`.feedback-message[data-question-id="${questionId}"]`);
+            feedbackElement.classList.add('show');
+
+            if (isCorrect) {
+                feedbackElement.className = 'feedback-message show feedback-correct';
+                feedbackElement.textContent = '✓ Točno! ' + currentQuestion.explanation;
+                if (!currentQuestion.warmup) {
+                    examState.score += 1;
+                    examState.questionsAnswered += 1;
+                } else {
+                    examState.warmupAnswered += 1;
+                }
+            } else {
+                feedbackElement.className = 'feedback-message show feedback-incorrect';
+                feedbackElement.textContent = '✗ Nije točno. ' + currentQuestion.explanation;
+                if (!currentQuestion.warmup) {
+                    examState.questionsAnswered += 1;
+                } else {
+                    examState.warmupAnswered += 1;
+                }
+            }
+
+            speakText(feedbackElement.textContent);
+
+            // Show encouragement message periodically
+            const answeredWithoutWarmup = examState.questionsAnswered;
+            if (answeredWithoutWarmup === 4) {
+                document.getElementById('encouragement-1').classList.add('show');
+            } else if (answeredWithoutWarmup === 8) {
+                document.getElementById('encouragement-2').classList.add('show');
+            } else if (answeredWithoutWarmup === 12) {
+                document.getElementById('encouragement-3').classList.add('show');
+            }
+
+            // Auto-advance after 2 seconds
+            setTimeout(() => {
+                nextQuestion();
+            }, 2000);
+        }
+
+        function nextQuestion() {
+            examState.currentQuestion++;
+
+            // Skip to actual exam questions if done with warmup
+            if (examState.currentQuestion === 3) {
+                // Skip warmup label, go straight to q1
+                const warmupQuestions = examQuestions.filter(q => q.warmup);
+                if (examState.currentQuestion - 1 === warmupQuestions.length - 1) {
+                    // Continue to actual questions
+                }
+            }
+
+            if (examState.currentQuestion >= examQuestions.length) {
+                showResults();
+            } else {
+                loadQuestion(examState.currentQuestion);
+            }
+        }
+
+        function updateProgress() {
+            const totalQuestions = examQuestions.filter(q => !q.warmup).length;
+            const progressPercent = (examState.questionsAnswered / totalQuestions) * 100;
+            document.getElementById('progress-fill').style.width = progressPercent + '%';
+            document.getElementById('progress-text').textContent = `${examState.questionsAnswered} / ${totalQuestions}`;
+        }
+
+        function showResults() {
+            document.getElementById('progress-container').style.display = 'none';
+            document.getElementById('exam-controls').style.display = 'none';
+
+            const totalQuestions = examQuestions.filter(q => !q.warmup).length;
+            const percentage = (examState.score / totalQuestions) * 100;
+
+            document.getElementById('results-section').style.display = 'block';
+            document.getElementById('results-score').textContent = Math.round(percentage) + '%';
+
+            // Stars
+            let stars = '';
+            if (percentage >= 90) {
+                stars = '⭐⭐⭐';
+                document.getElementById('results-message').textContent = 'Izvrsno! Tvoj trud se stvarno isplatio! Pokazao si duboko razumijevanje sjemenjača.';
+            } else if (percentage >= 75) {
+                stars = '⭐⭐';
+                document.getElementById('results-message').textContent = 'Super! Vidi koliko toga znaš! Odličan rad na ovom ispitu.';
+            } else if (percentage >= 60) {
+                stars = '⭐';
+                document.getElementById('results-message').textContent = 'Dobar početak! Svaki put si bolja. Nastavi sa učenjem!';
+            } else {
+                document.getElementById('results-message').textContent = 'Svaki pokušaj gradi nove putove u tvom mozgu! 💪 Pokušaj ponovo i vidjet ćeš napredak.';
+            }
+
+            document.getElementById('results-stars').textContent = stars;
+
+            // Score breakdown
+            const incorrectCount = totalQuestions - examState.score;
+            document.getElementById('correct-count').textContent = examState.score;
+            document.getElementById('incorrect-count').textContent = incorrectCount;
+            document.getElementById('total-points').textContent = examState.score + ' / ' + totalQuestions;
+
+            // Review questions
+            const reviewHtml = examQuestions
+                .filter(q => !q.warmup)
+                .map(q => {
+                    const userAnswer = examState.allAnswers[q.id];
+                    const isCorrect = checkAnswer(q, userAnswer);
+                    return `
+                        <div class="review-question ${isCorrect ? 'correct' : 'incorrect'}">
+                            <div class="review-question-text">${q.text}</div>
+                            <div class="review-answer">
+                                <strong>${isCorrect ? '✓ Točno' : '✗ Netočno'}</strong><br>
+                                ${q.explanation}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+            document.getElementById('review-items').innerHTML = reviewHtml;
+
+            // Learning recommendations
+            const recommendations = generateRecommendations();
+            const recommendationsHtml = recommendations
+                .map(rec => `<li>${rec}</li>`)
+                .join('');
+            document.getElementById('learning-recommendations-list').innerHTML = recommendationsHtml;
+
+            window.scrollTo(0, 0);
+        }
+
+        function checkAnswer(question, userAnswer) {
+            if (question.type === 'true-false') {
+                return userAnswer === question.correct;
+            } else if (question.type === 'multiple-choice' || question.type === 'diagram') {
+                return question.correct.includes(userAnswer);
+            } else if (question.type === 'fill-blank') {
+                return userAnswer && userAnswer.toLowerCase() === question.correct.toLowerCase();
+            }
+            return false;
+        }
+
+        function generateRecommendations() {
+            const incorrectAnswers = examQuestions
+                .filter(q => !q.warmup)
+                .filter(q => !checkAnswer(q, examState.allAnswers[q.id]));
+
+            const recommendations = [];
+            const topics = {};
+
+            incorrectAnswers.forEach(q => {
+                if (q.id.startsWith('q1')) topics.structure = true;
+                if (q.id.startsWith('q2')) topics.evolution = true;
+                if (q.id.startsWith('q3') || q.id.startsWith('q4')) topics.reproduction = true;
+                if (q.id.startsWith('q5')) topics.doubleFertilization = true;
+                if (q.id.startsWith('q6') || q.id.startsWith('q7')) topics.lifecycle = true;
+                if (q.id.startsWith('q8') || q.id.startsWith('q9') || q.id.startsWith('q10')) topics.flowerStructure = true;
+                if (q.id.startsWith('q11')) topics.pollination = true;
+                if (q.id.startsWith('q12') || q.id.startsWith('q13')) topics.vegetative = true;
+                if (q.id.startsWith('q14') || q.id.startsWith('q15')) topics.advanced = true;
+            });
+
+            if (topics.structure) recommendations.push('Ponovi strukturu sjemenjača i razliku između golosjemenjača i kritosjemenjača.');
+            if (topics.evolution) recommendations.push('Proučite evolucijski redoslijed — koja grupa se pojavila prva?');
+            if (topics.reproduction) recommendations.push('Fokusiraj se na reproduktivne strukture i kako funkcioniraju.');
+            if (topics.doubleFertilization) recommendations.push('Dvostruka oplodnja je ključna karakteristika — ponovi kako se tvore zigota i endosperm.');
+            if (topics.lifecycle) recommendations.push('Životni ciklus sjemenjača je važan — nacrtaj ga i nauči svaki stadij.');
+            if (topics.flowerStructure) recommendations.push('Struktura cvijeta je osnovna — nauči dijelove i njihove funkcije.');
+            if (topics.pollination) recommendations.push('Vrste opraživanja i njegovi mehanizmi su važni za razumijevanje reprodukcije.');
+            if (topics.vegetative) recommendations.push('Aseksualnu reprodukciju ne smijemo zaboraviti — klonovi su bitni koncept.');
+            if (topics.advanced) recommendations.push('Napredne teme kao što su haploidni stadiji trebaju dodatnog istraživanja.');
+
+            if (recommendations.length === 0) {
+                recommendations.push('Odličan rad! Nastavi sa ovim razinom znanja i pokušaj još izazivnija pitanja.');
+            }
+
+            return recommendations;
+        }
+
+        // Settings
+        document.getElementById('font-size').addEventListener('input', (e) => {
+            const size = e.target.value + 'px';
+            document.body.style.fontSize = size;
+            document.getElementById('font-size-display').textContent = size;
+        });
+
+        document.getElementById('line-height').addEventListener('input', (e) => {
+            document.body.style.lineHeight = e.target.value;
+            document.getElementById('line-height-display').textContent = e.target.value;
+        });
+
+        document.querySelectorAll('.color-option').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.color-option').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+
+                const bg = e.target.getAttribute('data-bg');
+                document.body.classList.remove('dark-mode');
+
+                if (bg === 'cream') {
+                    document.body.style.backgroundColor = '#FFF8F0';
+                } else if (bg === 'light') {
+                    document.body.style.backgroundColor = '#f5f5f5';
+                } else if (bg === 'sepia') {
+                    document.body.style.backgroundColor = '#FEF5E7';
+                } else if (bg === 'dark') {
+                    document.body.classList.add('dark-mode');
+                }
+            });
+        });
+
+        // Breathing exercise
+        document.getElementById('breathing-btn').addEventListener('click', startBreathingExercise);
+        document.getElementById('breathing-btn-exam')?.addEventListener('click', startBreathingExercise);
+        document.getElementById('close-breathing').addEventListener('click', () => {
+            document.getElementById('breathing-modal').classList.remove('show');
+        });
+
+        // Pause
+        document.getElementById('pause-btn').addEventListener('click', () => {
+            examState.isPaused = true;
+            document.getElementById('pause-modal').classList.add('show');
+        });
+
+        document.getElementById('resume-exam').addEventListener('click', () => {
+            examState.isPaused = false;
+            document.getElementById('pause-modal').classList.remove('show');
+        });
+
+        // Start exam
+        document.getElementById('start-exam').addEventListener('click', () => {
+            document.querySelector('.welcome-section').style.display = 'none';
+            initializeExam();
+        });
+
+        // Submit answer
+        document.getElementById('submit-answer').addEventListener('click', submitAnswer);
+
+        // Restart exam
+        document.getElementById('restart-exam')?.addEventListener('click', () => {
+            location.reload();
+        });
+
+        // Keyboard support
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !examState.isPaused && document.getElementById('submit-answer').offsetParent !== null) {
+                submitAnswer();
+            }
+        });
+
+        // Initial attachment of event listeners
+        attachEventListeners();
+    </script>
+</body>
+</html>

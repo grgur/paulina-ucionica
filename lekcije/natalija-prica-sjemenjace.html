@@ -1,0 +1,1660 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Prica o sjemenjačama za Nataliju - edukativna i zabavna tečaj biologije">
+    <title>Sjemenjače - Natalijina Učionica</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --cream: #FFF8F0;
+            --dark-text: #1a1a1a;
+            --light-text: #555;
+            --blue: #4A7BA7;
+            --green: #6B9B5F;
+            --orange: #D97706;
+            --purple: #7C6BA8;
+            --border: #E5D5C0;
+            --shadow: rgba(0, 0, 0, 0.08);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: var(--cream);
+            color: var(--dark-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        body.dark-mode {
+            background-color: #2a2a2a;
+            color: #f0f0f0;
+            --border: #444;
+            --shadow: rgba(255, 255, 255, 0.08);
+        }
+
+        body.sepia-mode {
+            background-color: #f4ecd8;
+            color: #3d3d2d;
+        }
+
+        /* Skip Link */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--blue);
+            color: white;
+            padding: 8px;
+            text-decoration: none;
+            z-index: 1000;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* Header and Navigation */
+        header {
+            background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
+            color: white;
+            padding: 2rem 1.5rem;
+            box-shadow: 0 2px 8px var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 0.95rem;
+            opacity: 0.95;
+            margin-bottom: 1rem;
+        }
+
+        /* Settings Panel */
+        .settings-panel {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px var(--shadow);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            align-items: center;
+        }
+
+        body.dark-mode .settings-panel {
+            background: #333;
+        }
+
+        .setting-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .setting-group label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--dark-text);
+        }
+
+        body.dark-mode .setting-group label {
+            color: #e0e0e0;
+        }
+
+        .setting-group input[type="range"] {
+            cursor: pointer;
+        }
+
+        .setting-group button {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--border);
+            background: white;
+            color: var(--dark-text);
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Lexend', sans-serif;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode .setting-group button {
+            background: #444;
+            color: #f0f0f0;
+            border-color: #555;
+        }
+
+        .setting-group button:hover {
+            background: var(--blue);
+            color: white;
+            border-color: var(--blue);
+        }
+
+        .setting-group button.active {
+            background: var(--blue);
+            color: white;
+            border-color: var(--blue);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        body.dark-mode .progress-container {
+            background: #333;
+        }
+
+        .progress-label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--blue) 0%, var(--purple) 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        /* Navigation Cards */
+        nav.section-nav {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        nav.section-nav button {
+            padding: 1rem;
+            border: 2px solid var(--border);
+            background: white;
+            color: var(--dark-text);
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Lexend', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode nav.section-nav button {
+            background: #333;
+            color: #f0f0f0;
+            border-color: #555;
+        }
+
+        nav.section-nav button:hover {
+            background: var(--blue);
+            color: white;
+            border-color: var(--blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(74, 123, 167, 0.2);
+        }
+
+        nav.section-nav button.active {
+            background: var(--blue);
+            color: white;
+            border-color: var(--blue);
+        }
+
+        /* Content Sections */
+        section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px var(--shadow);
+            border-left: 4px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode .card {
+            background: #333;
+            color: #f0f0f0;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        .card.blue-card {
+            border-left-color: var(--blue);
+        }
+
+        .card.green-card {
+            border-left-color: var(--green);
+        }
+
+        .card.orange-card {
+            border-left-color: var(--orange);
+        }
+
+        .card.purple-card {
+            border-left-color: var(--purple);
+        }
+
+        .card h2 {
+            color: var(--dark-text);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        body.dark-mode .card h2 {
+            color: #f0f0f0;
+        }
+
+        .card h3 {
+            color: var(--dark-text);
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            font-size: 1.2rem;
+        }
+
+        body.dark-mode .card h3 {
+            color: #f0f0f0;
+        }
+
+        .card p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+
+        .card ul, .card ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .card li {
+            margin-bottom: 0.5rem;
+            line-height: 1.8;
+        }
+
+        /* TTS Button */
+        .tts-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: none;
+            border: none;
+            color: var(--blue);
+            cursor: pointer;
+            font-family: 'Lexend', sans-serif;
+            font-weight: 500;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            margin-top: 0.5rem;
+        }
+
+        .tts-btn:hover {
+            background: rgba(74, 123, 167, 0.1);
+            transform: scale(1.05);
+        }
+
+        .tts-btn:focus {
+            outline: 2px solid var(--blue);
+            outline-offset: 2px;
+        }
+
+        /* Images and Diagrams */
+        .image-container {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .image-caption {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--light-text);
+            font-style: italic;
+        }
+
+        /* SVG Diagrams */
+        svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Highlight Boxes */
+        .highlight {
+            background: rgba(74, 123, 167, 0.1);
+            border-left: 4px solid var(--blue);
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+
+        body.dark-mode .highlight {
+            background: rgba(74, 123, 167, 0.2);
+        }
+
+        .highlight.important {
+            background: rgba(217, 119, 6, 0.1);
+            border-left-color: var(--orange);
+        }
+
+        body.dark-mode .highlight.important {
+            background: rgba(217, 119, 6, 0.2);
+        }
+
+        .fact-box {
+            background: linear-gradient(135deg, rgba(107, 155, 95, 0.1) 0%, rgba(124, 107, 168, 0.1) 100%);
+            border-left: 4px solid var(--green);
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+
+        body.dark-mode .fact-box {
+            background: linear-gradient(135deg, rgba(107, 155, 95, 0.2) 0%, rgba(124, 107, 168, 0.2) 100%);
+        }
+
+        .fact-box strong {
+            color: var(--green);
+        }
+
+        /* Comparison Sections */
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        @media (max-width: 600px) {
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .comparison-item {
+            background: rgba(74, 123, 167, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 2px solid var(--border);
+        }
+
+        body.dark-mode .comparison-item {
+            background: rgba(74, 123, 167, 0.1);
+            border-color: #555;
+        }
+
+        .comparison-item h4 {
+            color: var(--blue);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        /* Reading Ruler */
+        .reading-ruler {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--blue);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+            z-index: 50;
+        }
+
+        .reading-ruler.active {
+            opacity: 1;
+        }
+
+        /* Keyboard Navigation Focus */
+        button:focus, a:focus {
+            outline: 2px solid var(--blue);
+            outline-offset: 2px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--blue);
+            color: white;
+            text-align: center;
+            padding: 2rem 1.5rem;
+            margin-top: 3rem;
+            border-radius: 8px 8px 0 0;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Emoji Support */
+        .emoji {
+            font-size: 1.2em;
+            margin: 0 0.25rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                padding: 1.5rem 1rem;
+            }
+
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .settings-panel {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .card {
+                padding: 1rem;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            header, nav.section-nav, .settings-panel, .progress-container {
+                display: none;
+            }
+
+            body {
+                background: white;
+            }
+
+            section {
+                display: block !important;
+            }
+
+            .card {
+                page-break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid var(--border);
+            }
+        }
+
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0,0,0,0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        /* Animation */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Preskoči na glavnu stranicu</a>
+
+    <header>
+        <h1>🌱 Natalijina Učionica</h1>
+        <p>Priča o sjemenjačama - Od spore do cvijeća</p>
+    </header>
+
+    <div class="container">
+        <!-- Settings Panel -->
+        <div class="settings-panel">
+            <div class="setting-group">
+                <label for="font-size">Veličina fonta:</label>
+                <input type="range" id="font-size" min="14" max="22" value="16">
+                <span id="font-size-value">16px</span>
+            </div>
+
+            <div class="setting-group">
+                <label for="line-height">Redak:</label>
+                <input type="range" id="line-height" min="1.4" max="2.2" step="0.1" value="1.6">
+                <span id="line-height-value">1.6</span>
+            </div>
+
+            <div class="setting-group">
+                <label>Tema:</label>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button id="light-mode" class="active">☀️ Svetlo</button>
+                    <button id="dark-mode">🌙 Tamno</button>
+                    <button id="sepia-mode">📖 Sepia</button>
+                </div>
+            </div>
+
+            <div class="setting-group">
+                <label>
+                    <input type="checkbox" id="reading-ruler">
+                    📏 Pokazivač redaka
+                </label>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-label">
+                <span>Napredak:</span>
+                <span id="progress-percent">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <!-- Section Navigation -->
+        <nav class="section-nav" aria-label="Navigacija poglavlja">
+            <button class="nav-btn active" data-section="intro">Uvod</button>
+            <button class="nav-btn" data-section="spores">Prije sjemenja</button>
+            <button class="nav-btn" data-section="seed-invention">Izum sjemena</button>
+            <button class="nav-btn" data-section="gymnosperms">Golosjemenjače</button>
+            <button class="nav-btn" data-section="angiosperms">Kritosjemenjače</button>
+            <button class="nav-btn" data-section="flowers">Čuda cvijeća</button>
+            <button class="nav-btn" data-section="fruits">Voće - drugi genij</button>
+            <button class="nav-btn" data-section="vegetative">Kloniranje biljaka</button>
+            <button class="nav-btn" data-section="victory">Sjemenjače pobjede</button>
+            <button class="nav-btn" data-section="conclusion">Zaključak</button>
+        </nav>
+
+        <!-- Main Content -->
+        <main id="main-content">
+
+            <!-- Section: Intro -->
+            <section id="intro" class="active">
+                <div class="card blue-card">
+                    <h2><span class="emoji">🌍</span> Dobrodošla u povijest biljnog svijeta!</h2>
+
+                    <p>Zamijeni se na trenutak. Trebaš napustiti planeta Zemlju zauvijek - možda zauvijek. Trebaš ostaviti svoje dijete da krene u nepoznatost, samo sa njim/njom i ništa više. Strašno, zar ne?</p>
+
+                    <p>Sada si u koži rane biljke. Prije otprilike 500 milijuna godina, biljke su počele stvarati svoje prve "ljude" - spore. Bili su to mali, goli, bez zaštite, bez hrane. Otpuštili bi ih na milost i nemilost vjetra i vode.</p>
+
+                    <p>Ali onda se dogodilo nešto nevjerojatno. <strong>Prije otprilike 380 milijuna godina, biljke su izumile sjeme</strong> - prvu prvu stvarnu revoluciju u svijetu biljaka.</p>
+
+                    <button class="tts-btn" aria-label="Čitaj naglas" onclick="speak(this.parentElement.textContent)">
+                        🔊 Čitaj naglas
+                    </button>
+                </div>
+
+                <div class="card green-card">
+                    <h3>Što će biti u ovoj priči?</h3>
+
+                    <p>Pratit ćeš putovanje od najjednostavnijih biljaka do onoga što vidimo svakodnevno u parku, na školskom vrtu i u trgovini voćem.</p>
+
+                    <ul>
+                        <li>💭 Kako su biljke počele sa sporama</li>
+                        <li>🔐 Što je sjeme i zašto je bilo najbolji izum biologije</li>
+                        <li>🌲 Golosjemenjače - koning tijekom doba dinosaura</li>
+                        <li>🌸 Kritosjemenjače - biljke koje su osvojile svijet</li>
+                        <li>🦋 Cvijeće kao najgenialnije marketinško rješenje prirode</li>
+                        <li>🍎 Voće - biranje "ponesi moje sjeme" strategije</li>
+                        <li>🍓 Zašto banane nemaju sjemenke i kako se jagode razmnožavaju</li>
+                    </ul>
+
+                    <button class="tts-btn" aria-label="Čitaj naglas" onclick="speak(this.parentElement.textContent)">
+                        🔊 Čitaj naglas
+                    </button>
+                </div>
+
+                <div class="fact-box">
+                    <strong>💡 Fascinatno:</strong> Sve zelene biljke koje vidiš oko sebe (trave, drveće, cvijeće) su osmislile svoje strategije za preživljavanje samo u zadnjih 500 milijuna godina. Ako bi Zemlja postojala 24 sata, biljke bi stupiće na kopno tek nakon 20:30 uvečer!
+                </div>
+            </section>
+
+            <!-- Section: Spores -->
+            <section id="spores">
+                <div class="card orange-card">
+                    <h2><span class="emoji">☘️</span> Prije sjemenja: era spore</h2>
+
+                    <p>Zamislite svijet bez cvjetnih biljaka. Bez ruža, bez maslina, bez kupusa. Nije lako, zar ne? Ali prije 400 milijuna godina, taj je svijet bio stvarnost.</p>
+
+                    <p>Prve biljke koje su napustile vodu bili su jednostavni članovi: <strong>mahovi i papratnjaci</strong>. Oni se reproducirali sa sporama - maleničkim, nezaštićenim ćelijama.</p>
+
+                    <button class="tts-btn" aria-label="Čitaj naglas" onclick="speak(this.parentElement.textContent)">
+                        🔊 Čitaj naglas
+                    </button>
+                </div>
+
+                <div class="card blue-card">
+                    <h3>Kako su spore funkcionirale?</h3>
+
+                    <p>Spore su bili kao slanje bebe u svijet sa samo golo kožom:</p>
+
+                    <ul>
+                        <li><strong>Bez hrane</strong> - novonastala biljka nije imala rezervu hrane za rast</li>
+                        <li><strong>Bez zaštite</strong> - bilo koji UV sunca ili sušnog zraka mogao je ubiti sporu</li>
+                        <li><strong>Bez mobilnosti</strong> - zavise od vode ili vjetra da ih proslijede</li>
+                        <li><strong>Nevjerojatna količina</strong> - papratnja s jednom frondom može baciti <strong>milijarde spore</strong> da bi jedna preživjela</li>
+                    </ul>
+
+                    <button class="tts-btn" aria-label="Čitaj naglas" onclick="speak(this.parentElement.textContent)">
+                        🔊 Čitaj naglas
+                    </button>
+                </div>
+
+                <div class="highlight">
+                    <strong>🎓 Definicija:</strong> <strong>Spore</strong> su jednostanični (ili malobrojni) strukturni oblici koje neke biljke koriste za razmnožavanje. Obično su lakše i lakše padale od sjemena.
+                </div>
+
+                <div class="fact-box">
+                    <strong>🍄 Zanimljivo:</strong> Gljive se AINDA razmnožavaju sporama! Kada vidiš gljive koje izlaze iz zemlje nakon kiše, većina onoga što vidišš su samo "voće" - spore se luče s donje strane kape gljive.
+                </div>
+            </section>
+
+            <!-- Section: Seed Invention -->
+            <section id="seed-invention">
+                <div class="card purple-card">
+                    <h2><span class="emoji">🎁</span> Izum sjemena - najbolja biološka ideja</h2>
+
+                    <p>Zamislite: računalo je bila revolucija u komunikaciji. Авион je bio revolucija u putovanju. Kaj je bila revolucija u razmnožavanju biljaka?</p>
+
+                    <p><strong>Sjeme.</strong></p>
+
+                    <p>Prije otprilike 380 milijuna godina, neke biljke su osmislile nešto briljantno. Umjesto slanja голе spore u svijet, zašto ne bi sjeme "zapakovali" sa:</p>
+
+                    <div class="highlight important">
+                        <strong>🔐 Tri magične komponente sjemena:</strong>
+                        <ul style="margin-top: 0.5rem;">
+                            <li><strong>Embrij</strong> - mala biljka koja čeka da počne rastuća</li>
+                            <li><strong>Endosperm</strong> - hranjivi paket (kao lunchbox) koji embrij hrani tijekom početnog rasta</li>
+                            <li><strong>Sjemenka</strong> - tvrda, zaštitna ovojnica koja štiti embrij od vrućine, hladnoće, sušnosti i štete</li>
+                        </ul>
+                    </div>
+
+                    <p>To je kao razlika između slanja bebe bez ničega (spore) naspram slanja bebe umotane u toplu deku sa punjenjem i bočicom mlijeka (sjeme). Koja strategija mislite da je bolja?</p>
+
+                    <button class="tts-btn" aria-label="Čitaj naglas" onclick="speak(this.parentElement.textContent)">
+                        🔊 Čitaj naglas
+                    </button>
+                </div>
+
+                <div class="card blue-card">
+                    <h3>Why sjeme je bilo tako revolucionarno?</h3>
+
+                    <p><strong>Kvaliteta > Količina</strong></p>
+
+                    <p>Spore znače baciti milijarde i nadati se jednoj da preživi. Sjeme znači baciti manje, ali sa bolim šansama. <strong>Jedno sjeme od hrastovog stabla ima bolju šansu da se razvije u hlad nego milijuna mahovih spore.</strong></p>
+
+                    <p><strong>Manja ovisnost o vodi</strong></p>
+
+                    <p>Spore trebaju vodu. Sjeme se ne treba osjećati vlažnostno početka, što znači da biljke mogu naseliti suhe dijelove planete.</p>
+
+                    <p><strong>Duže čekanja</strong></p>
+
+                    <p>Sjeme može biti dormantno - mirno čekajući - tijekom mjeseci ili čak godina dok se ne pojave idealni uvjeti. Spore to ne mogu.</p>
+
+                    <button class="tts-btn" aria-label="Čitaj naglas" onclick="speak(this.parentElement.textContent)">
+                        🔊 Čitaj naglas
+                    </button>
+                </div>
+
+                <div class="image-container">
+                    <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" style="max-width: 500px;">
+                        <rect x="20" y="20" width="150" height="250" fill="#FFE5D9" stroke="#999" stroke-width="2"/>
+                        <circle cx="95" cy="80" r="8" fill="#FF9999"/>
+                        <text x="95" y="120" text-anchor="middle" font-size="12" font-weight="bold">Spore</text>
+                        <text x="95" y="140" text-anchor="middle" font-size="10">bez zaštite</text>
+                        <text x="95" y="155" text-anchor="middle" font-size="10">bez hrane</text>
+                        <text x="95" y="170" text-anchor="middle" font-size="10">ranjive</text>
+
+                        <rect x="230" y="20" width="150" height="250" fill="#E5FFE5" stroke="#999" stroke-width="2"/>
+
+                        <!-- Sjemenka outer -->
+                        <rect x="285" y="75" width="70" height="70" fill="#D4AF37" rx="5"/>
+
+                        <!-- Endosperm -->
+                        <rect x="290" y="80" width="60" height="55" fill="#FFE5A0" rx="3"/>
+
+                        <!-- Embrij -->
+                        <circle cx="320" cy="105" r="12" fill="#90EE90"/>
+                        <path d="M 320 93 Q 318 85 320 80" stroke="#228B22" stroke-width="2" fill="none"/>
+                        <path d="M 320 117 Q 318 125 320 130" stroke="#8B4513" stroke-width="2" fill="none"/>
+
+                        <text x="305" y="220" text-anchor="middle" font-size="12" font-weight="bold">Sjeme</text>
+                        <text x="305" y="240" text-anchor="middle" font-size="10">zaštitna ovojnica</text>
+                        <text x="305" y="255" text-anchor="middle" font-size="10">sa hranom i embrijom</text>
+
+                        <text x="95" y="295" text-anchor="middle" font-size="14" font-weight="bold">Spore vs Sjeme</text>
+                    </svg>
+                    <p class="image-caption">Usporedba spore i sjemena - vidljiva je ogromna razlika u zaštiti i hranidbi</p>
+                </div>
+
+                <div class="fact-box">
+                    <strong>🌰 Primjer:</strong> Hrastova sjemenka (žirMath) je samo 1-2 cm velika ali sadrži toliko hranjive vrijednosti da sam po sebi može hranjiti mali hrast tijekom cijele prve godine rasta. Ni jedna spore to ne može.
+                </div>
+            </section>
+
+            <!-- Section: Gymnosperms -->
+            <section id="gymnosperms">
+                <div class="card blue-card">
+                    <h2><span class="emoji">🌲</span> Golosjemenjače - "Golisemi" biljke</h2>
+
+                    <p>Kada su biljke prvi put izumile sjeme, nisu znale što napraviti sa njim.</p>
+
+                    <p><strong>Golosjemenjače</strong> - što znači "golo sjeme" - to su prve biljke koje su sa sjemenom, ali nisu to sakrile. Sjeme je samo... sido na površini ljestvica šišarke.</p>
+
+                    <button class="tts-btn" aria-label="Čitaj naglas" onclick="speak(this.parentElement.textContent)">
+                        🔊 Čitaj naglas
+                    </button>
+                </div>
+
+                <div class="card green-card">
+                    <h3>Koje su golosjemenjače?</h3>
+
+                    <ul>
+                        <li><strong>Četinjače (conifers)</strong> - bor, smreka, jela - dominirajuće drveće sjevernih šuma</li>
+                        <li><strong>Ginkgo biloba</strong> - "živući fossil" - identičan sa onim iz prije 200 milijuna godina</li>
+                        <li><strong>Cikade</strong> - izgleda kao palmino ali je zapravo golosjemenjača, česta u toplijim dijelovima svijeta</li>
+                    </ul>
+
+                    <button class="tts-btn" aria-label="Čitaj naglas" onclick="speak(this.parentElement.textContent)">
+                        🔊 Čitaj naglas
+                    </button>
+                </div>
+
+                <div class="card orange-card">
+                    <h3>Golosjemenjače tijekom doba dinosaura</h3>
+
+                    <p>Tijekom Jurskog perioda (prije 201-145 milijuna godina), svijet je izgledao drugačije od današnjeg. Nije bilo trava. Nije bilo cvijeća. Umjesto toga, planet je bio prekrivena sa:</p>
+
+                    <ul>
+                        <li><strong>Ogromni šumama četinjača</strong></li>
+                        <li><strong>Gustim šumama cikada</strong></li>
+                        <li><strong>Nisko rastuće paprati</strong></li>
+                    </ul>
+
+                    <p>I dinosauri su se do zadnja jedli sve do biljaka koje su dostojni imena. <strong>Jurski period je bio epoha biljaka kao što je doba dinosaura</strong> - oni su funkcionirali zajedno.</p>
+
+                    <button class="tts-btn" aria-label="Čitaj naglas" onclick="speak(this.parentElement.textContent)">
+                        🔊 Čitaj naglas
+                    </button>
+                </div>
+
+                <div class="comparison">
+                    <div class="comparison-item">
+                        <h4>⚤ Oplodnja vjetrom</h4>
+                        <p>Golosjemenjače se oslanjaju na vjetar za oplodnju. To znači:</p>
+                        <ul style="font-size: 0.95rem;">
+                            <li>Nema cvijeća - nema potrebe za privlačenjem</li>
+                            <li>Ogromna količina peludi</li>
+                            <li>Nevjerojatna neučinkovitost</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-item">
+                        <h4>🔢 Količine peludije</h4>
+                        <p><strong>Jedni samo bor može baciti nekoliko milijardi zrnaca peludije godišnje!</strong> To je zato što većina nikada ne pogodi drugim borom.</p>
+                    </div>
+                </div>
+
+                <div class="highlight important">
+                    <strong>⚠️ Zašto toliko peludije?</strong>
+                    <p>Jer su vjetrom oplođivane biljke nevjerojatno neučinkovite. Ako bacite milijardu, možda će 1.000.000 doći na žensku šišarku od drugog bora. To je stopa uspjeha od 0,0001%!</p>
+                </div>
+
+                <div class="fact-box">
+                    <strong>🌳 Primjer:</strong> Ginkgo biloba je živući fossil - ta biljka je bila gdje su hodali dinosauri i može živjeti do 1.000 godina. Većina ginkga stabla žiwe osamljena - nemoguće je vidjeti živu pljesnicu jer nema dovoljno ženskih stabala u blizini muškog.</p>
+                </div>
+
+                <div class="fact-box">
+                    <strong>🤧 Alerergija:</strong> Proljetna alergija koju doživljaš? To je često razlog jer mnoga gotovski stabla (breza, bagrem) koriste vjetrom oplođenu peludiju. Vaš imunosni sustav reagira na tu peludiju!</strong>
+                </div>
+            </section>
+
+            <!-- Section: Angiosperms -->
+            <section id="angiosperms">
+                <div class="card purple-card">
+                    <h2><span class="emoji">🌸</span> Kritosjemenjače - revolucija cvijeća</h2>
+
+                    <p>Golosjemenjače su vladali planeta tijekom 250 milijuna godina. Bili su najbolje što je evolucija znala napraviti.</p>
+
+                    <p>A onda se, prije samo 130 milijuna godina, dogodilo nešto nevjerojatno.</p>
+
+                    <p><strong>Kritosjemenjače</strong> - što znači "sjeme skriveno u plodu" - su iznenadni pojavile i u roku od samo nekoliko milijuna godina, osvojile su cijeli planet.</p>
+
+                    <p>Darwin je to nazvao "abominable mystery" - jeziva tajna - jer se pojavio tako brzo i raznovrstan da je bio gotovo nemoguće objasniti.</p>
+
+                    <button class="tts-btn" aria-label="Čitaj naglas" onclick="speak(this.parentElement.textContent)">
+                        🔊 Čitaj naglas
+                    </button>
+                </div>
+
+                <div class="card blue-card">
+                    <h3>Što je čini drugačitom?</h3>
+
+                    <p>Tri ključne razlike:</p>
+
+                    <ol>
+                        <li><strong>Cvijeće</strong> - nije samo lijepo, nego je to najgenialnije marketinško rješenje ikada</li>
+                        <li><strong>Voće</strong> - zapravo sjemenka sprema u proslavljeno "pakovanje"</li>
+                        <li><strong>Partnerstvo sa životinjama</strong> - umjesto bacanja milijardi peludije, kritosjemenjače su izumile saradnje</li>
+                    </ol>
+
+                    <button class="tts-btn" aria-label="Čitaj naglas" onclick="speak(this.parentElement.textContent)">
+                        🔊 Čitaj naglas
+                    </button>
+                </div>
+
+                <div class="highlight important">
+                    <strong>📊 Brojke razmnožavanja:</strong>
+                    <p>Prije 130 milijuna godina: gotovo sve biljke su bili golosjemenjače i papratnjaci</p>
+                    <p>Danas: <strong>90% svih vrsta biljaka su kritosjemenjače</strong></p>
+                    <p>To je jedna od najvećih evolucijskih priče ikada!</p>
+                </div>
+
+                <div class="fact-box">
+                    <strong>🌍 Zaokret:</strong> Kritosjemenjače ne trebaju čekati dinosaure. Dinosauri su izumrli prije 66 milijuna godina. Kritosjemenjače su samo nastavili da se razmnožavaju sa ili bez njih!
+                </div>
+            </section>
+
+            <!-- Section: Flowers -->
+            <section id="flowers">
+                <div class="card orange-card">
+                    <h2><span class="emoji">🌺</span> Čuda cvijeća - priroda je briljantni kreativac</h2>
+
+                    <p>Zamislite da ste firma koja trebate prodati proizvod. Što ćete napraviti?</p>
+
+                    <p>Recite li ljudima da ga trebaju? Umjesto toga, napravite nešto što će ih privući - lijepu boju, dobar miris, besplatni uzorak.</p>
+
+                    <p><strong>To je točno što su biljke napravile sa cvijeća.</strong></p>
+
+                    <p>Cvijeće je jedina stvar - to je "oglas" koji je biljka može biti. Nije za biljku. Cvijeće je za: pčele, leptire, kolibrie, šišmiševe, ljudski nešto žito i mnoge druge životinje.</p>
+
+                    <button class="tts-btn" aria-label="Čitaj naglas" onclick="speak(this.parentElement.textContent)">
+                        🔊 Čitaj naglas
+                    </button>
+                </div>
+
+                <div class="card blue-card">
+                    <h3>Dijelovi cvijeća - dijelovi oglasa</h3>
+
+                    <p>Baš kao što svaki oglas ima razne dijelove (boja, tekst, ponuda), tako i cvijeće:</p>
+
+                    <ul>
+                        <li><strong>Boje (płatke)</strong> - привлечь внимание (привлечи) - kao neon znakovi "ovdje je hrana"</li>
+                        <li><strong>Miris</strong> - kao aroma u kući - privlači mušice i životinje sa dalje</li>
+                        <li><strong>Nektar</strong> - besplatna nagradi - sladak sjever koji pčele i leptiri vole</li>
+                        <li><strong>Strukturu cvijeta</strong> - organizovani tako da kada životinja dolazi po nektar, obavezno prikuplja peludiju na svojoj koži</li>
+                    </ul>
+
+                    <button class="tts-btn" aria-label="Čitaj naglas" onclick="speak(this.parentElement.textContent)">
+                        🔊 Čitaj naglas
+                    </button>
+                </div>
+
+                <div class="image-container">
+                    <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" style="max-width: 400px;">
+                        <!-- Steblo -->
+                        <line x1="200" y1="280" x2="200" y2="120" stroke="#228B22" stroke-width="3"/>
+
+                        <!-- Listovi -->
+                        <ellipse cx="170" cy="200" rx="20" ry="30" fill="#90EE90" opacity="0.8"/>
+                        <ellipse cx="230" cy="180" rx="20" ry="30" fill="#90EE90" opacity="0.8"/>
+
+                        <!-- Tučak (Carpel) - ženski dio -->
+                        <circle cx="200" cy="90" r="8" fill="#FF69B4"/>
+                        <line x1="200" y1="98" x2="200" y2="115" stroke="#FF69B4" stroke-width="2"/>
+
+                        <!-- Prašnici (Stamens) - muški dijelovi -->
+                        <line x1="185" y1="105" x2="175" y2="95" stroke="#FFD700" stroke-width="2"/>
+                        <circle cx="175" cy="95" r="4" fill="#FFD700"/>
+
+                        <line x1="215" y1="105" x2="225" y2="95" stroke="#FFD700" stroke-width="2"/>
+                        <circle cx="225" cy="95" r="4" fill="#FFD700"/>
+
+                        <line x1="190" y1="110" x2="180" y2="115" stroke="#FFD700" stroke-width="2"/>
+                        <circle cx="180" cy="115" r="4" fill="#FFD700"/>
+
+                        <line x1="210" y1="110" x2="220" y2="115" stroke="#FFD700" stroke-width="2"/>
+                        <circle cx="220" cy="115" r="4" fill="#FFD700"/>
+
+                        <!-- Płatci (Petals) - boja oglasa -->
+                        <ellipse cx="200" cy="60" rx="15" ry="25" fill="#FF6BB6"/>
+                        <ellipse cx="235" cy="75" rx="15" ry="25" fill="#FF6BB6" transform="rotate(72 235 75)"/>
+                        <ellipse cx="165" cy="75" rx="15" ry="25" fill="#FF6BB6" transform="rotate(-72 165 75)"/>
+                        <ellipse cx="245" cy="110" rx="15" ry="25" fill="#FF6BB6" transform="rotate(144 245 110)"/>
+                        <ellipse cx="155" cy="110" rx="15" ry="25" fill="#FF6BB6" transform="rotate(-144 155 110)"/>
+
+                        <!-- Labele -->
+                        <text x="200" y="35" text-anchor="middle" font-size="11" font-weight="bold">Tučak</text>
+                        <text x="200" y="35" text-anchor="middle" font-size="11" font-weight="bold">(ženski)</text>
+
+                        <text x="250" y="95" font-size="10">Prašnici</text>
+                        <text x="250" y="110" font-size="10">(muški)</text>
+
+                        <text x="110" y="80" font-size="10">Płatci</text>
+                        <text x="110" y="95" font-size="10">(boja)</text>
+
+                        <text x="200" y="320" text-anchor="middle" font-size="13" font-weight="bold">Dijelovi cvijeća</text>
+                    </svg>
+                    <p class="image-caption">Dijelovi cvijeća - svaki ima svoju funkciju za privlačenje pollinators</p>
+                </div>
+
+                <div class="card green-card">
+                    <h3>Različita cvijeća za različite "kupce"</h3>
+
+                    <p>Baš kao što Coca-Cola ima drugačije oglase za različite dobi, tako i biljke imaju drugačije cvijeće za različite pollinatore:</p>
+
+                    <div class="comparison">
+                        <div class="comparison-item">
+                            <h4>🐝 Za pčele</h4>
+                            <p>Pčele vide modru i ljubičastu boju, ne crvenu. Zato su mnoga cvijeća koja privlače pčele modra ili ljubičasta.</p>
+                        </div>
+                        <div class="comparison-item">
+                            <h4>🦋 Za leptire</h4>
+                            <p>Leptiri vole crvenu i narančastu boju. Biljke kao Asclepias koriste te boje.</p>
+                        </div>
+                    </div>
+
+                    <div class="comparison">
+                        <div class="comparison-item">
+                            <h4>🐦 Za kolibrie</h4>
+                            <p>Kolibrie vide crvenu boju bolje od svega. Svako cvijeće koje pokušava privući kolibrie je crveno!</p>
+                        </div>
+                        <div class="comparison-item">
+                            <h4>🦇 Za šišmiševe</h4>
+                            <p>Šišmiševi su noćni i ne vide boje. Umjesto toga, cvijeće koja privlače šišmiševe ima jak miris i strukturu kojom mogu jesti nektara sa kraja.</p>
+                        </div>
+                    </div>
+
+                    <button class="tts-btn" aria-label="Čitaj naglas" onclick="speak(this.parentElement.textContent)">
+                        🔊 Čitaj naglas
+                    </button>
+                </div>
+
+                <div class="card purple-card">
+                    <h3>Koevolucija - prirodna veza</h3>
+
+                    <p><strong>Koevolucija</strong> je kada dvije vrste se razvijaju zajedno, oblikujući jednu drugu.</p>
+
+                    <p>Primjer: Orhideja koja izgleda točno kao ženski osamin. Muški osamin će doći pokušati se pariti sa "ženskom" pa će obavezno prikupiti peludiju. Kad ide na sljedeću orhideju, prenosi peludiju. To je savršen sustav!</p>
+
+                    <p>Primjer 2: Rafflesia - "cvjetna trupla" - smrdi kao mrsina kako bi privukla muhe. Muhe misle da je to mjesto za polegnuće jajica pa dolaze... i opyllutaju se peludijom.</p>
+
+                    <button class="tts-btn" aria-label="Čitaj naglas" onclick="speak(this.parentElement.textContent)">
+                        🔊 Čitaj naglas
+                    </button>
+                </div>
+
+                <div class="fact-box">
+                    <strong>🎭 Primjer koevolucije:</strong> Orhideja iz Madagaskara ima nektarnu trubicu dugačku 30 cm! Darwin je rekao da mora postojati insekt sa 30 cm dugačkim „jezikom" da je opyla. Prije sto godina, to je bio misli što su smješno. Onda su pronašli mušicu sa 30 cm dugačkim jezikom. Darwin je bio u pravu!
+                </div>
+
+                <div class="fact-box">
+                    <strong>🌸 Brojke:</strong> Orhideja ima oko 28.000 vrsta - više nego svih mamala, ptica i gmazova zajedno! Sve su otkrile razne veze sa različitim životinjama.
+                </div>
+            </section>
+
+            <!-- Section: Fruits -->
+            <section id="fruits">
+                <div class="card green-card">
+                    <h2><span class="emoji">🍎</span> Voće - drugi genij kritosjemenjača</h2>
+
+                    <p>Cvijeće privlači pollinatore kako bi prenijeli peludiju. Ali što se događa nakon oplodnje?</p>
+
+                    <p><strong>Ovum postane sjeme. Oko njega se razvije voće.</strong></p>
+
+                    <p>Voće je zapravo transformiran ovar - ženski dio cvijeća. To je kao da biljka kaže: "hvala što ste mi pomogli. Evo, uzmite svoje voće i ponesi moje sjeme drugdje!"</p>
+
+                    <button class="tts-btn" aria-label="Čitaj naglas" onclick="speak(this.parentElement.textContent)">
+                        🔊 Čitaj naglas
+                    </button>
+                </div>
+
+                <div class="card blue-card">
+                    <h3>Voće je paket sa porukom</h3>
+
+                    <p>Voće je paket koji kaže životinjama: "Pojedite me, a ja ću vam dati slatkiš (meso), a vi ćete prenijeti moja sjemenka negdje daleko gdje mogu rasti sami."</p>
+
+                    <p>To je vWIN-WIN situacija:</p>
+
+                    <ul>
+                        <li><strong>Životinja</strong> je dobija hranu (vitamine, energiju, vode)</li>
+                        <li><strong>Biljka</strong> je dobija transport sjemenja na novo mjesto</li>
+                    </ul>
+
+                    <button class="tts-btn" aria-label="Čitaj naglas" onclick="speak(this.parentElement.textContent)">
+                        🔊 Čitaj naglas
+                    </button>
+                </div>
+
+                <div class="card orange-card">
+                    <h3>Različita voća za različite putanja</h3>
+
+                    <p>Svako voće je specificirano za način na koji se širi:</p>
+
+                    <div class="comparison">
+                        <div class="comparison-item">
+                            <h4>🐿️ Mesnato voće</h4>
+                            <p>Jabuke, kruške, maline, bobice - slatka i mesnata. Životinje ih pojedu, sjemenka prolazi kroz probavni sustav i bude izbačena sa drugim mjestom gdje mogu rasti.</p>
+                        </div>
+                        <div class="comparison-item">
+                            <h4>🌬️ Dijeljena voća</h            h4>
+                            <p>Javor, brijest - leteće sjemenke sa "krilima". Vjetar ih nosi.</p>
+                        </div>
+                    </div>
+
+                    <div class="comparison">
+                        <div class="comparison-item">
+                            <h4>🦔 Ljepljivo voće</h4>
+                            <p>Štapolike sjemenke sa kukuljicama - zarubljeve se u krznu životinja i budu prenesene na nove lokacije.</p>
+                        </div>
+                        <div class="comparison-item">
+                            <h4>💧 Vodeno voće</h4>
+                            <p>Kokosni orah može plutati mjesecima da dosegne nove otoke.</p>
+                        </div>
+                    </div>
+
+                    <button class="tts-btn" aria-label="Čitaj naglas" onclick="speak(this.parentElement.textContent)">
+                        🔊 Čitaj naglas
+                    </button>
+                </div>
+
+                <div class="highlight important">
+                    <strong>🤔 Matematika voća:</strong>
+                    <p>Hrastovo stablo može proizvesti 70.000 žira godišnje. To je 70.000 sjemenaka s hranom, zaštitom i mogućnosti da se raspršu. Samo nekoliko će preživjeti, ali čak i manji broj koji uspije da postanu stabla je više nego dovoljno!</p>
+                </div>
+
+                <div class="card purple-card">
+                    <h3>Dvostruka oplodnja - samo kritosjemenjače!</h3>
+
+                    <p>Evo gdje kritosjemenjače zaista bubnule svoje genijalne rješenja:</p>
+
+                    <p><strong>Dvostruka oplodnja</strong> znači:</p>
+
+                    <ol>
+                        <li>Prvo spermije oplođuje jajce → stvara se embrij (nova biljka)</li>
+                        <li>Drugo spermije fuzionira sa centralnom ćelijom → stvara se endosperm (hrana)</li>
+                    </ol>
+
+                    <p>To je kao kada istovremeno položite narudžbu hrane I popunite hladnjak. Isplativ!</p>
+
+                    <p>Golosjemenjače nemaju dvostruku oplodnju - endosperm dolazi od majke pre oplodnje. Kritosjemenjače samo stvaraju endosperm kada znaju da su sjeme uspješno opljujene.</p>
+
+                    <button class="tts-btn" aria-label="Čitaj naglas" onclick="speak(this.parentElement.textContent)">
+                        🔊 Čitaj naglas
+                    </button>
+                </div>
+
+                <div class="fact-box">
+                    <strong>🍌 Banane bez sjemenki:</strong> Banane nemaju sjemenke jer su ljudski izbjegli divokim bananama da se ne razmnožavaju - htjeli su samo meso bez sjemenki. To je selektivna uzgoja. Divoke banane imaju sjemenke!
+                </div>
+
+                <div class="fact-box">
+                    <strong>🍓 Jagode:</strong> Jagode nisu „voće" u botaničkom smislu - to je cvijeće koje se preobrazilo. Ona sjemenka na površini jagode su pravi plodovi!
+                </div>
+
+                <div class="fact-box">
+                    <strong>☕ Naš omiljeni proizvodi:</strong> Kava, čokolada, vanila - sve dolaze iz kritosjemenjača! Bez kritosjemenjača, nema dosadašnjeg svijeta.
+                </div>
+            </section>
+
+            <!-- Section: Vegetative Reproduction -->
+            <section id="vegetative">
+                <div class="card blue-card">
+                    <h2><span class="emoji">🍓</span> Kloniranje biljaka - ponovljivi hitovi</h2>
+
+                    <p>Pretpostavka: što ako biljka nije trebala čekati sjeme ili oplodnju? Što ako mogu samo... preslika sami sebe?</p>
+
+                    <p><strong>Vegetativna razmnožavanja</strong> je kada biljka stvara novi biljke bez spolne reprodukcije - bez cvijeća, bez pollinacije, bez sjemena.</p>
+
+                    <p>To je biološki copy-paste.</p>
+
+                    <button class="tts-btn" aria-label="Čitaj naglas" onclick="speak(this.parentElement.textContent)">
+                        🔊 Čitaj naglas
+                    </button>
+                </div>
+
+                <div class="card green-card">
+                    <h3>Kako biljke se kloniraju?</h3>
+
+                    <ul>
+                        <li><strong>Trkačи (Runners)</strong> - Jagode. Preko zemlje ide dugačka stabla koja stvara nove jagode. Svaka je klonirana kopija majke.</li>
+                        <li><strong>Tisuće Žbunovi (Bulbs)</strong> - Češnjak, luk, tulipani. Ispod zemlje stvaraju male kugle koje se mogu odvojiti i postati nove biljke.</li>
+                        <li><strong>Tubera (Tubers)</strong> - Krompir. Krompir sam je tuberna - deformirana stabla puna škroba. Svaki "oko" na krompiru može postati nova biljka!</li>
+                        <li><strong>Grana fragmenti</strong> - Neki biljke mogu da rastu iz komadica koji su slomljeni. Sada je poznato da se svaki mali komadic može prenijeti i rasti.</li>
+                    </ul>
+
+                    <button class="tts-btn" aria-label="Čitaj naglas" onclick="speak(this.parentElement.textContent)">
+                        🔊 Čitaj naglas
+                    </button>
+                </div>
+
+                <div class="highlight">
+                    <strong>🧬 Zašto je to evolucijski pametno?</strong>
+                    <p>Ako je biljka već dobra na mjestu gdje je - zašto se ne bi klonirala umjesto da rizikuje spolnu reprodukciju koja bi mogla dati losiju biljku?</p>
+                    <p>Jagode koje rastu blizu majke su sigurne - znaju da je tlo dobro za tu vrstu.</p>
+                </div>
+
+                <div class="image-container">
+                    <svg viewBox="0 0 500 250" xmlns="http://www.w3.org/2000/svg" style="max-width: 500px;">
+                        <!-- Majka jagode -->
+                        <circle cx="150" cy="100" r="25" fill="#FF69B4"/>
+                        <circle cx="150" cy="100" r="20" fill="#FF1493"/>
+                        <text x="150" y="105" text-anchor="middle" font-size="12" font-weight="bold">Majka</text>
+
+                        <!-- Trkač 1 -->
+                        <path d="M 175 100 Q 225 80 275 100" stroke="#228B22" stroke-width="3" fill="none"/>
+                        <circle cx="275" cy="100" r="22" fill="#FF69B4"/>
+                        <circle cx="275" cy="100" r="17" fill="#FF1493"/>
+                        <text x="275" y="105" text-anchor="middle" font-size="11">Klonirana 1</text>
+
+                        <!-- Trkač 2 -->
+                        <path d="M 175 100 Q 225 120 275 100" stroke="#228B22" stroke-width="3" fill="none"/>
+
+                        <!-- Trkač 3 -->
+                        <path d="M 150 125 Q 130 160 130 200" stroke="#228B22" stroke-width="3" fill="none"/>
+                        <circle cx="130" cy="200" r="22" fill="#FF69B4"/>
+                        <circle cx="130" cy="200" r="17" fill="#FF1493"/>
+                        <text x="130" y="205" text-anchor="middle" font-size="11">Klonirana 2</text>
+
+                        <!-- Trkač 4 -->
+                        <path d="M 150 125 Q 170 160 210 200" stroke="#228B22" stroke-width="3" fill="none"/>
+                        <circle cx="210" cy="200" r="22" fill="#FF69B4"/>
+                        <circle cx="210" cy="200" r="17" fill="#FF1493"/>
+                        <text x="210" y="205" text-anchor="middle" font-size="11">Klonirana 3</text>
+
+                        <!-- Labels -->
+                        <text x="250" y="30" text-anchor="middle" font-size="14" font-weight="bold">Trkači jagoda - Vegetativna razmnožavanja</text>
+                        <text x="250" y="240" text-anchor="middle" font-size="12">Svaka jagoda je genetski identična majci</text>
+                    </svg>
+                    <p class="image-caption">Kako jagode koriste trkače (runners) za kloniranje</p>
+                </div>
+
+                <div class="card orange-card">
+                    <h3>Primjer: Krompir na vašem kuhinjskom stolu</h3>
+
+                    <p>Krompir je savršen primjer vegetativne razmnožavanja. Kada kupiš krompir u trgovini, ne kupiš sjeme - kupiš tubera koji je dio maternje biljke.</p>
+
+                    <p>Kada sadneš oko krompira u zemlju, to oko će rastuća novu biljku koja je genetski identična originalnoj - to je kloniranje!</p>
+
+                    <p>Zato su svi krompiri "Red Potatoes" ili "Russets" identični - nisu siromašne slučajno od sjemena, nego su specifične sorte koje se kloniraju tijekom stoljeća.</p>
+
+                    <button class="tts-btn" aria-label="Čitaj naglas" onclick="speak(this.parentElement.textContent)">
+                        🔊 Čitaj naglas
+                    </button>
+                </div>
+
+                <div class="fact-box">
+                    <strong>🍓 Bizniska primjena:</strong> Svaka Strawberry biljka u komercijalnoj proizvodnji dolazi iz trkača majke biljke - one koja je proizvedla najbolje jagode. To je vrhunski primjer kako se koristi vegetativna razmnožavanja!
+                </div>
+            </section>
+
+            <!-- Section: Victory of Angiosperms -->
+            <section id="victory">
+                <div class="card purple-card">
+                    <h2><span class="emoji">👑</span> Sjemenjače se sele (ili: kako su kritosjemenjače osvojile svijet)</h2>
+
+                    <p>Golosjemenjače su vladali planeta 250 milijuna godina. Ali u samo 130 milijuna godina, kritosjemenjače su osvojili čak 90% svih vrsta biljaka.</p>
+
+                    <p>Kako se to dogodilo?</p>
+
+                    <button class="tts-btn" aria-label="Čitaj naglas" onclick="speak(this.parentElement.textContent)">
+                        🔊 Čitaj naglas
+                    </button>
+                </div>
+
+                <div class="card blue-card">
+                    <h3>Zašto su kritosjemenjače bolje?</h3>
+
+                    <ol>
+                        <li>
+                            <strong>Cvijeće privlači životinje</strong> - umjesto bacanja milijardi peludije, koriste preciznu dostavu
+                        </li>
+                        <li>
+                            <strong>Voće je odličan transport</strong> - životinje jedenje voće i prenose sjemenke na nove lokacije
+                        </li>
+                        <li>
+                            <strong>Dvostruka oplodnja</strong> - puno učinkovitija energija upotreba
+                        </li>
+                        <li>
+                            <strong>Brži rast</strong> - kritosjemenjače rastuća brže od golosjemenjača
+                        </li>
+                        <li>
+                            <strong>Raznovrsnost</strong> - mogućnost prilagođavanja različitim okruženjima i sobivima životinjama
+                        </li>
+                    </ol>
+
+                    <button class="tts-btn" aria-label="Čitaj naglas" onclick="speak(this.parentElement.textContent)">
+                        🔊 Čitaj naglas
+                    </button>
+                </div>
+
+                <div class="card orange-card">
+                    <h3>Gdje su golosjemenjače sada?</h3>
+
+                    <p>To ne znači da su golosjemenjače mrtve - ona su sve živa. Ali su se povukle u mjesta gdje kritosjemenjače ne mogu preživjeti:</p>
+
+                    <ul>
+                        <li><strong>Taiga</strong> - divlje hladne šume sjevera (bor, smreka, jela dominiraju)</li>
+                        <li><strong>Planine</strong> - prohladne vršne gdje je premalo vode za trave i drveće</li>
+                        <li><strong>Pustinje</strong> - neka četinjača mogu da žive u veoma suhim mjestima</li>
+                    </ul>
+
+                    <p>Ali u toplim mjestima sa dovoljno vode i životinja? Gdje su kritosjemenjače najskoro dokazane raznovrsne? Tu je kritosjemenjače osvojili.</p>
+
+                    <button class="tts-btn" aria-label="Čitaj naglas" onclick="speak(this.parentElement.textContent)">
+                        🔊 Čitaj naglas
+                    </button>
+                </div>
+
+                <div class="comparison">
+                    <div class="comparison-item">
+                        <h4>🏔️ Golosjemenjače (Gymnosperms)</h4>
+                        <p><strong>Gdje:</strong> Taiga, sjevernjak, planine</p>
+                        <p><strong>Broj vrsta:</strong> ~1.000</p>
+                        <p><strong>Primjeri:</strong> bor, smreka, jela, ginkgo</p>
+                    </div>
+                    <div class="comparison-item">
+                        <h4>🌻 Kritosjemenjače (Angiosperms)</h4>
+                        <p><strong>Gdje:</strong> Posvuda, pogotovo tropske i umjerene zone</p>
+                        <p><strong>Broj vrsta:</strong> ~350.000</p>
+                        <p><strong>Primjeri:</strong> sve trave, sve voće, svi cvijeće</p>
+                    </div>
+                </comparison>
+
+                <div class="highlight important">
+                    <strong>📊 Brojeva koja govore priču:</strong>
+                    <ul style="margin-top: 0.5rem;">
+                        <li>Prije 130 milijuna godina: 5% su bili kritosjemenjače</li>
+                        <li>Prije 90 milijuna godina: 50%</li>
+                        <li>Prije 65 milijuna godina: 80%</li>
+                        <li>Danas: 90%</li>
+                    </ul>
+                </div>
+
+                <div class="fact-box>
+                    <strong>🌍 Globalna dominacija:</strong> Dok je klimatski i voda dostupna, kritosjemenjače će biti dominantne. Jedino u ekstremnim okruženjima (hladne, suhe) golosjemenjače mogu konkurirati.
+                </div>
+            </section>
+
+            <!-- Section: Conclusion -->
+            <section id="conclusion">
+                <div class="card green-card">
+                    <h2><span class="emoji">🎓</span> Što smo naučili - i gdje je to do nas došlo</h2>
+
+                    <p>Sjemenjače se razvili u samo 380 milijuna godina od spore do kritosjemenjača. To je evolucijski trepet oko.</p>
+
+                    <p>A sada? Sada su sjemenjače - posebno kritosjemenjače - oblikovale cijelom ljudsku civilizaciju.</p>
+
+                    <button class="tts-btn" aria-label="Čitaj naglas" onclick="speak(this.parentElement.textContent)">
+                        🔊 Čitaj naglas
+                    </button>
+                </div>
+
+                <div class="card blue-card">
+                    <h3>Ljudska civilizacija = Humanoidna opsjednutost sjemenjačama</h3>
+
+                    <p>Prije 10.000 godina, ljudski su se počeli baviti poljoprivredom. Što su sadili? Kritosjemenjače!</p>
+
+                    <ul>
+                        <li><strong>Pšenica, riž, kukuruz</strong> - sve trave (kritosjemenjače)</li>
+                        <li><strong>Krompir, batata</strong> - kloniranje kritosjemenjača</li>
+                        <li><strong>Voće: jabuke, narandže, banana</strong> - kritosjemenjače</li>
+                        <li><strong>Sjeme: suncokret, sezam</strong> - kritosjemenjače</li>
+                    </ul>
+
+                    <p>Preko 95% hrane čovječanstva dolazi iz kritosjemenjača. Bez njih, civilizacija kako je znamo ne bi mogla postojati.</p>
+
+                    <button class="tts-btn" aria-label="Čitaj naglas" onclick="speak(this.parentElement.textContent)">
+                        🔊 Čitaj naglas
+                    </button>
+                </div>
+
+                <div class="card orange-card">
+                    <h3>Zašto je ovo važno za tebe, kao učenica</h3>
+
+                    <p>Znanje o sjemenjačama te poučava važnim lekcijama:</p>
+
+                    <ul>
+                        <li><strong>Evolucija je postojana</strong> - male promjene tijekom milijuna godina stvaraju ogromne razlike</li>
+                        <li><strong>Partnership je bolje od konkurencije</strong> - kritosjemenjače nisu "pobjedale" golosjemenjače direktno. Umjesto toga, postali su bolje partneri sa životinjama</li>
+                        <li><strong>Inovacija je važna</strong> - kada je nešto novo (cvijeće, voće) dogodilo, sve se promije u brzo</li>
+                        <li><strong>Različitost je sila</strong> - kritosjemenjače su osvojile svijet jer su se mogle prilagoditi bilo kojem okruženju</li>
+                        <li><strong>Marketing je biologiji</strong> - čak i priroda zna važnost privlačenja pažnje (cvijeće), pružanja vrijednosti (nektar, voće) i izgradnje odnosa (sa životinjama)</li>
+                    </ul>
+
+                    <button class="tts-btn" aria-label="Čitaj naglas" onclick="speak(this.parentElement.textContent)">
+                        🔊 Čitaj naglas
+                    </button>
+                </div>
+
+                <div class="card purple-card">
+                    <h3>Zadnji primjer: Tvoj omiljeni proizvodi</h3>
+
+                    <p>Sljedeće vrijeme kada je jednu:</p>
+
+                    <ul>
+                        <li><strong>Jagode</strong> - 🍓 vegetativna razmnožavanja sa trkačima</li>
+                        <li><strong>Bananu</strong> - 🍌 kritosjemenjača bez sjemenki (zahvaljujući ljudskoj selekciji)</li>
+                        <li><strong>Čokoladu</strong> - 🍫 sjemenkama kakao kritosjemenjače</li>
+                        <li><strong>Kavu</strong> - ☕ sjemenkama kavljeve biljke (kritosjemenjača)</li>
+                        <li><strong>Vanilu</strong> - 🧁 cvijeće/plod orhideje (kritosjemenjača)</li>
+                        <li><strong>Krompir</strong> - 🥔 tubera (kloniranje vegetativne razmnožavanja)</li>
+                    </ul>
+
+                    <p>Svi su kritosjemenjače. Sve što je dobro u modernom svijetu je ili direktno ili indirectly ovise od sjemenjača.</p>
+
+                    <button class="tts-btn" aria-label="Čitaj naglas" onclick="speak(this.parentElement.textContent)">
+                        🔊 Čitaj naglas
+                    </button>
+                </div>
+
+                <div class="fact-box">
+                    <strong>🌱 Zadnja misao:</strong> Sjemenjače nisu samo dio biologije. Oni su osnova civilizacije kako je znamo. Sve od agrikulture do arhitekture, od hrane do lijekova, počinje sa biljkama. Razumijevanje kako funkcioniraju je razumijevanje kako funkcionira život.
+                </div>
+
+                <div class="highlight">
+                    <strong>🎉 Čestitam!</strong>
+                    <p>Sada razumiješ jednu od najvećih priča u biologiji: kako su sjemenjače, posebno kritosjemenjače sa njihovim cvijeću, voću i partnershipima sa životinjama, osvojile planet i postale temelj civilizacije.</p>
+                    <p>Sljedeće vrijeme kada vidiš cvijeće ili pojedeš voće, pamti cijelu evolucijsku priču iza toga. 🌸🍎🌿</p>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p><strong>Natalijina Učionica</strong> - Pričanje biologije kroz priče</p>
+        <p>© 2026 Edukacijski materijal za Nataliju</p>
+    </footer>
+
+    <div class="reading-ruler" id="reading-ruler"></div>
+
+    <script>
+        // Font Size Control
+        const fontSizeInput = document.getElementById('font-size');
+        const fontSizeValue = document.getElementById('font-size-value');
+
+        fontSizeInput.addEventListener('input', (e) => {
+            const size = e.target.value;
+            document.body.style.fontSize = size + 'px';
+            fontSizeValue.textContent = size + 'px';
+            localStorage.setItem('fontSize', size);
+        });
+
+        // Line Height Control
+        const lineHeightInput = document.getElementById('line-height');
+        const lineHeightValue = document.getElementById('line-height-value');
+
+        lineHeightInput.addEventListener('input', (e) => {
+            const height = e.target.value;
+            document.body.style.lineHeight = height;
+            lineHeightValue.textContent = height;
+            localStorage.setItem('lineHeight', height);
+        });
+
+        // Theme Control
+        const lightModeBtn = document.getElementById('light-mode');
+        const darkModeBtn = document.getElementById('dark-mode');
+        const sepiaModeBtn = document.getElementById('sepia-mode');
+
+        lightModeBtn.addEventListener('click', () => {
+            document.body.classList.remove('dark-mode', 'sepia-mode');
+            updateThemeButtons('light');
+            localStorage.setItem('theme', 'light');
+        });
+
+        darkModeBtn.addEventListener('click', () => {
+            document.body.classList.add('dark-mode');
+            document.body.classList.remove('sepia-mode');
+            updateThemeButtons('dark');
+            localStorage.setItem('theme', 'dark');
+        });
+
+        sepiaModeBtn.addEventListener('click', () => {
+            document.body.classList.add('sepia-mode');
+            document.body.classList.remove('dark-mode');
+            updateThemeButtons('sepia');
+            localStorage.setItem('theme', 'sepia');
+        });
+
+        function updateThemeButtons(theme) {
+            lightModeBtn.classList.remove('active');
+            darkModeBtn.classList.remove('active');
+            sepiaModeBtn.classList.remove('active');
+
+            if (theme === 'light') lightModeBtn.classList.add('active');
+            else if (theme === 'dark') darkModeBtn.classList.add('active');
+            else if (theme === 'sepia') sepiaModeBtn.classList.add('active');
+        }
+
+        // Reading Ruler
+        const rulerCheckbox = document.getElementById('reading-ruler');
+        const ruler = document.getElementById('reading-ruler');
+
+        rulerCheckbox.addEventListener('change', (e) => {
+            if (e.target.checked) {
+                ruler.classList.add('active');
+                localStorage.setItem('readingRuler', 'true');
+                document.addEventListener('mousemove', updateRulerPosition);
+            } else {
+                ruler.classList.remove('active');
+                localStorage.setItem('readingRuler', 'false');
+                document.removeEventListener('mousemove', updateRulerPosition);
+            }
+        });
+
+        function updateRulerPosition(e) {
+            ruler.style.top = (e.clientY - 2) + 'px';
+        }
+
+        // Section Navigation
+        const navButtons = document.querySelectorAll('.nav-btn');
+        const sections = document.querySelectorAll('section');
+
+        navButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetSection = button.getAttribute('data-section');
+
+                // Remove active from all
+                navButtons.forEach(btn => btn.classList.remove('active'));
+                sections.forEach(sec => sec.classList.remove('active'));
+
+                // Add active to clicked button and corresponding section
+                button.classList.add('active');
+                document.getElementById(targetSection).classList.add('active');
+
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                // Update progress
+                updateProgress();
+            });
+        });
+
+        // Progress Bar
+        function updateProgress() {
+            const activeSection = document.querySelector('section.active');
+            if (!activeSection) return;
+
+            const allSections = document.querySelectorAll('section');
+            const sectionIndex = Array.from(allSections).indexOf(activeSection);
+            const progress = ((sectionIndex + 1) / allSections.length) * 100;
+
+            document.getElementById('progress-fill').style.width = progress + '%';
+            document.getElementById('progress-percent').textContent = Math.round(progress) + '%';
+
+            localStorage.setItem('currentSection', sectionIndex);
+        }
+
+        // Track scroll progress for reading
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+
+            // Find which section is in view
+            sections.forEach((section, index) => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top < window.innerHeight / 2) {
+                    navButtons.forEach(btn => btn.classList.remove('active'));
+                    navButtons[index].classList.add('active');
+                }
+            });
+        });
+
+        // Text-to-Speech
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                // Cancel any ongoing speech
+                speechSynthesis.cancel();
+
+                // Clean text
+                const cleanText = text
+                    .replace(/🔊 Čitaj naglas/g, '')
+                    .replace(/[\s]+/g, ' ')
+                    .trim();
+
+                const utterance = new SpeechSynthesisUtterance(cleanText);
+                utterance.lang = 'hr-HR';
+                utterance.rate = 1;
+                utterance.pitch = 1;
+
+                speechSynthesis.speak(utterance);
+            } else {
+                alert('Tekst-na-govor nije dostupna u vašem pregledniku.');
+            }
+        }
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                const active = document.querySelector('.nav-btn.active');
+                const prev = active?.previousElementSibling;
+                if (prev && prev.classList.contains('nav-btn')) prev.click();
+            } else if (e.key === 'ArrowRight') {
+                const active = document.querySelector('.nav-btn.active');
+                const next = active?.nextElementSibling;
+                if (next && next.classList.contains('nav-btn')) next.click();
+            }
+        });
+
+        // Load preferences
+        function loadPreferences() {
+            const fontSize = localStorage.getItem('fontSize') || '16';
+            const lineHeight = localStorage.getItem('lineHeight') || '1.6';
+            const theme = localStorage.getItem('theme') || 'light';
+            const readingRuler = localStorage.getItem('readingRuler') === 'true';
+            const currentSection = localStorage.getItem('currentSection') || '0';
+
+            fontSizeInput.value = fontSize;
+            document.body.style.fontSize = fontSize + 'px';
+            fontSizeValue.textContent = fontSize + 'px';
+
+            lineHeightInput.value = lineHeight;
+            document.body.style.lineHeight = lineHeight;
+            lineHeightValue.textContent = lineHeight;
+
+            if (theme === 'dark') {
+                darkModeBtn.click();
+            } else if (theme === 'sepia') {
+                sepiaModeBtn.click();
+            }
+
+            rulerCheckbox.checked = readingRuler;
+            if (readingRuler) {
+                ruler.classList.add('active');
+            }
+
+            // Restore section
+            const sectionIndex = parseInt(currentSection);
+            if (navButtons[sectionIndex]) {
+                navButtons[sectionIndex].click();
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadPreferences();
+            updateProgress();
+        });
+
+        // Save section on navigation
+        navButtons.forEach((btn, index) => {
+            btn.addEventListener('click', () => {
+                localStorage.setItem('currentSection', index);
+            });
+        });
+    </script>
+</body>
+</html>
