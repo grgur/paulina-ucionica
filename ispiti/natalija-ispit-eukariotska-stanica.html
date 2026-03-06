@@ -1,0 +1,1771 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ispit: Eukariotska stanica (Natalija)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: #FFF8F0;
+            padding: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        body.dark-bg {
+            background-color: #E8DED0;
+        }
+
+        body.high-contrast {
+            background-color: #FFFAF5;
+            filter: contrast(1.2);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            position: relative;
+        }
+
+        header {
+            background: linear-gradient(135deg, #A8D8BA 0%, #7BC97F 100%);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1rem;
+            opacity: 0.95;
+            line-height: 1.5;
+        }
+
+        .progress-container {
+            padding: 1.5rem 1.5rem 0;
+            background: white;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #A8D8BA, #7BC97F);
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 4px;
+        }
+
+        .progress-text {
+            font-size: 0.85rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .toolbar {
+            display: flex;
+            gap: 0.5rem;
+            padding: 1.5rem;
+            border-bottom: 1px solid #f0f0f0;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .toolbar-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 0.6rem 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Lexend', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+
+        .btn-tts {
+            background: #FFD4A3;
+            color: #333;
+        }
+
+        .btn-tts:hover {
+            background: #FFC185;
+            transform: translateY(-2px);
+        }
+
+        .btn-breathing {
+            background: #B8E6F0;
+            color: #333;
+        }
+
+        .btn-breathing:hover {
+            background: #9FDDE6;
+            transform: translateY(-2px);
+        }
+
+        .btn-settings {
+            background: #E8D4F8;
+            color: #333;
+        }
+
+        .btn-settings:hover {
+            background: #DCC0F0;
+            transform: translateY(-2px);
+        }
+
+        .settings-panel {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .settings-panel.active {
+            display: flex;
+        }
+
+        .settings-content {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .settings-content h2 {
+            margin-bottom: 1.5rem;
+            color: #333;
+            font-size: 1.4rem;
+        }
+
+        .setting-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .setting-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        .setting-group input[type="range"] {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: #ddd;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .setting-group select {
+            width: 100%;
+            padding: 0.6rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Lexend', sans-serif;
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+
+        .settings-close {
+            background: #FFB3B3;
+            color: #333;
+            margin-top: 1rem;
+            width: 100%;
+        }
+
+        .settings-close:hover {
+            background: #FF9999;
+        }
+
+        .breathing-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1001;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .breathing-modal.active {
+            display: flex;
+        }
+
+        .breathing-content {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            max-width: 300px;
+        }
+
+        .breathing-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #B8E6F0, #9FDDE6);
+            margin: 1.5rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            animation: breathing 12s infinite;
+        }
+
+        @keyframes breathing {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.3); }
+            50% { transform: scale(1.3); }
+            75% { transform: scale(1); }
+        }
+
+        .breathing-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #333;
+            margin: 1rem 0;
+        }
+
+        .breathing-phase {
+            font-size: 0.9rem;
+            color: #666;
+            min-height: 20px;
+        }
+
+        .main-content {
+            padding: 2rem 1.5rem;
+            min-height: 400px;
+        }
+
+        .welcome-screen {
+            text-align: center;
+        }
+
+        .welcome-screen h2 {
+            color: #333;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .welcome-message {
+            background: #F0F8F5;
+            border-left: 4px solid #7BC97F;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .welcome-button {
+            background: linear-gradient(135deg, #A8D8BA 0%, #7BC97F 100%);
+            color: white;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            margin-top: 1.5rem;
+            border: none;
+        }
+
+        .welcome-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(123, 201, 127, 0.3);
+        }
+
+        .question-screen {
+            display: none;
+        }
+
+        .question-screen.active {
+            display: block;
+        }
+
+        .warm-up-badge {
+            display: inline-block;
+            background: #FFE4B5;
+            color: #B8860B;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .question-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .question-number {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            color: #333;
+            font-weight: 500;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+
+        .question-subtitle {
+            font-size: 0.85rem;
+            color: #888;
+            font-style: italic;
+        }
+
+        .options-container {
+            margin-top: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .option {
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: white;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .option:hover:not(.disabled) {
+            border-color: #A8D8BA;
+            background: #F9FFFB;
+        }
+
+        .option.selected {
+            border-color: #7BC97F;
+            background: #F0F8F5;
+        }
+
+        .option.correct {
+            border-color: #4CAF50;
+            background: #E8F5E9;
+        }
+
+        .option.incorrect {
+            border-color: #F44336;
+            background: #FFEBEE;
+        }
+
+        .option.disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .option-radio {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #999;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+
+        .option.selected .option-radio {
+            border-color: #7BC97F;
+            background: #7BC97F;
+        }
+
+        .option.correct .option-radio {
+            border-color: #4CAF50;
+            background: #4CAF50;
+        }
+
+        .option.correct .option-radio::after {
+            content: "✓";
+            color: white;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .option.incorrect .option-radio {
+            border-color: #F44336;
+            background: #F44336;
+        }
+
+        .option.incorrect .option-radio::after {
+            content: "✗";
+            color: white;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .option-text {
+            flex: 1;
+        }
+
+        .true-false-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tf-button {
+            flex: 1;
+            min-width: 120px;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            background: white;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .tf-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .tf-button.true {
+            color: #4CAF50;
+        }
+
+        .tf-button.true:hover {
+            border-color: #4CAF50;
+            background: #E8F5E9;
+        }
+
+        .tf-button.true.selected {
+            border-color: #4CAF50;
+            background: #4CAF50;
+            color: white;
+        }
+
+        .tf-button.false {
+            color: #F44336;
+        }
+
+        .tf-button.false:hover {
+            border-color: #F44336;
+            background: #FFEBEE;
+        }
+
+        .tf-button.false.selected {
+            border-color: #F44336;
+            background: #F44336;
+            color: white;
+        }
+
+        .matching-pair {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .matching-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .matching-label {
+            font-size: 0.85rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .matching-select {
+            padding: 0.7rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: 'Lexend', sans-serif;
+            cursor: pointer;
+        }
+
+        .fill-blank {
+            padding: 0.7rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: 'Lexend', sans-serif;
+            font-size: 1rem;
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+
+        .ordering-list {
+            margin-top: 1.5rem;
+        }
+
+        .ordering-item {
+            background: #f9f9f9;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: grab;
+        }
+
+        .ordering-item:active {
+            cursor: grabbing;
+        }
+
+        .ordering-number {
+            width: 30px;
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: #666;
+        }
+
+        .feedback-message {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 12px;
+            border-left: 4px solid;
+            display: none;
+            line-height: 1.6;
+        }
+
+        .feedback-message.active {
+            display: block;
+        }
+
+        .feedback-correct {
+            background: #E8F5E9;
+            border-color: #4CAF50;
+            color: #2E7D32;
+        }
+
+        .feedback-incorrect {
+            background: #FFEBEE;
+            border-color: #F44336;
+            color: #C62828;
+        }
+
+        .feedback-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .feedback-explanation {
+            font-size: 0.95rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #A8D8BA 0%, #7BC97F 100%);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .btn-submit:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(123, 201, 127, 0.3);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-next {
+            background: #B8E6F0;
+            color: #333;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .btn-next:hover {
+            background: #9FDDE6;
+            transform: translateY(-2px);
+        }
+
+        .encouraging-message {
+            background: #FFF9E6;
+            border: 2px solid #FFD700;
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            text-align: center;
+            color: #B8860B;
+            font-weight: 500;
+            display: none;
+        }
+
+        .encouraging-message.active {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .results-screen {
+            display: none;
+            text-align: center;
+        }
+
+        .results-screen.active {
+            display: block;
+        }
+
+        .score-display {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #7BC97F;
+            margin: 1.5rem 0;
+        }
+
+        .score-message {
+            font-size: 1.1rem;
+            color: #333;
+            margin: 1rem 0;
+            line-height: 1.6;
+        }
+
+        .score-stars {
+            font-size: 2rem;
+            margin: 1rem 0;
+        }
+
+        .review-section {
+            margin-top: 2rem;
+            text-align: left;
+        }
+
+        .review-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .review-item {
+            background: #f9f9f9;
+            border-left: 4px solid #e0e0e0;
+            padding: 1rem;
+            margin-bottom: 0.8rem;
+            border-radius: 4px;
+        }
+
+        .review-question {
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 0.3rem;
+        }
+
+        .review-answer {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .review-item.correct {
+            border-color: #4CAF50;
+            background: #F1F8F5;
+        }
+
+        .review-item.incorrect {
+            border-color: #F44336;
+            background: #FEF5F5;
+        }
+
+        .recommendations {
+            background: #F0F8F5;
+            border-left: 4px solid #7BC97F;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            text-align: left;
+        }
+
+        .recommendations h3 {
+            color: #333;
+            margin-bottom: 0.8rem;
+            font-size: 1.05rem;
+        }
+
+        .recommendations ul {
+            margin-left: 1.5rem;
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .recommendations li {
+            margin-bottom: 0.5rem;
+        }
+
+        .retry-button {
+            background: linear-gradient(135deg, #A8D8BA 0%, #7BC97F 100%);
+            color: white;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            margin-top: 1.5rem;
+        }
+
+        .retry-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(123, 201, 127, 0.3);
+        }
+
+        .reading-ruler {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(to bottom, rgba(200, 200, 200, 0.3), transparent);
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        .reading-ruler.active {
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 1.5rem 1rem;
+            }
+
+            header h1 {
+                font-size: 1.4rem;
+            }
+
+            .main-content {
+                padding: 1.5rem 1rem;
+            }
+
+            .toolbar {
+                padding: 1rem;
+            }
+
+            .matching-pair {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn-submit, .btn-next {
+                min-width: 100%;
+                flex: initial;
+            }
+
+            .score-display {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="reading-ruler" id="readingRuler"></div>
+
+    <div class="container">
+        <header>
+            <h1>📚 Ispit: Eukariotska stanica</h1>
+            <p>Natalija</p>
+        </header>
+
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text" id="progressText">Priprema...</div>
+        </div>
+
+        <div class="toolbar">
+            <div class="toolbar-buttons">
+                <button class="btn-tts" id="ttsBtn" aria-label="Pročitaj pitanje naglas" title="Pročitaj pitanje naglas">🔊 Pročitaj</button>
+                <button class="btn-breathing" id="breathingBtn" aria-label="Vježba disanja 4-4-4" title="Trebam minutu">🫁 Trebam minutu</button>
+                <button class="btn-settings" id="settingsBtn" aria-label="Otvorite postavke" title="Postavke">⚙️ Postavke</button>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Welcome Screen -->
+            <div class="welcome-screen" id="welcomeScreen">
+                <h2>Dobro došla! 💚</h2>
+                <div class="welcome-message">
+                    <strong>Nema vremenskog ograničenja.</strong><br>
+                    Radi svojim tempom.<br>
+                    Imaš sve što trebaš da razumiš ovo gradivo.<br>
+                    Sreće! 💚
+                </div>
+                <button class="welcome-button" id="startBtn" aria-label="Počni ispit">Počni ispit</button>
+            </div>
+
+            <!-- Question Screen -->
+            <div class="question-screen" id="questionScreen">
+                <div class="warm-up-badge" id="warmUpBadge" style="display: none;">
+                    🌅 Zagrijavanje — ne broji se u ocjenu
+                </div>
+
+                <div class="encouraging-message" id="encouragingMessage"></div>
+
+                <div class="question-header">
+                    <div class="question-number" id="questionNumber"></div>
+                    <div class="question-text" id="questionText"></div>
+                    <div class="question-subtitle" id="questionSubtitle"></div>
+                </div>
+
+                <div id="questionContent"></div>
+
+                <div class="feedback-message" id="feedbackMessage">
+                    <div class="feedback-title" id="feedbackTitle"></div>
+                    <div class="feedback-explanation" id="feedbackExplanation"></div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn-submit" id="submitBtn" aria-label="Potvrdi odgovor">Potvrdi odgovor</button>
+                    <button class="btn-next" id="nextBtn" aria-label="Sljedeće pitanje" style="display: none;">Sljedeće →</button>
+                </div>
+            </div>
+
+            <!-- Results Screen -->
+            <div class="results-screen" id="resultsScreen">
+                <h2>Gotovo! 🎉</h2>
+                <div class="score-display" id="scoreDisplay"></div>
+                <div class="score-stars" id="scoreStars"></div>
+                <div class="score-message" id="scoreMessage"></div>
+
+                <div class="review-section">
+                    <div class="review-title">Pregled svih pitanja</div>
+                    <div id="reviewContent"></div>
+                </div>
+
+                <div class="recommendations" id="recommendations"></div>
+
+                <button class="retry-button" id="retryBtn" aria-label="Ponovi ispit">Ponovi ispit</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Panel -->
+    <div class="settings-panel" id="settingsPanel">
+        <div class="settings-content">
+            <h2>⚙️ Postavke</h2>
+
+            <div class="setting-group">
+                <label for="fontSizeSlider">Veličina fonta</label>
+                <input type="range" id="fontSizeSlider" min="80" max="150" value="100" step="5">
+                <span id="fontSizeValue">100%</span>
+            </div>
+
+            <div class="setting-group">
+                <label for="bgColorSelect">Boja pozadine</label>
+                <select id="bgColorSelect">
+                    <option value="light">Svijetla (zadana)</option>
+                    <option value="dark">Tamna</option>
+                    <option value="high">Visoki kontrast</option>
+                </select>
+            </div>
+
+            <div class="setting-group">
+                <label>
+                    <input type="checkbox" id="readingRulerCheckbox">
+                    Čitački ravnalo 📏
+                </label>
+            </div>
+
+            <button class="settings-close" id="settingsCloseBtn" aria-label="Zatvori postavke">Zatvori</button>
+        </div>
+    </div>
+
+    <!-- Breathing Modal -->
+    <div class="breathing-modal" id="breathingModal">
+        <div class="breathing-content">
+            <h3>Vježba disanja 🫁</h3>
+            <div class="breathing-circle">4</div>
+            <div class="breathing-text">4-4-4 Vježba</div>
+            <div class="breathing-phase" id="breathingPhase">Udahni (4 sekunde)...</div>
+            <button class="settings-close" id="breathingCloseBtn" aria-label="Zatvori vježbu disanja">Gotovo</button>
+        </div>
+    </div>
+
+    <script>
+        // ==================== DATA ====================
+        const examData = {
+            title: "Eukariotska stanica",
+            questions: [
+                // WARM-UP QUESTIONS (ne broje se)
+                {
+                    warmUp: true,
+                    type: "multiple",
+                    text: "Koje od sljedećeg NIJE karakteristika eukariotskih stanica?",
+                    options: [
+                        { text: "Imaju jezgru s membranskom omotačem", correct: false },
+                        { text: "Imaju mitohondrije kao energetske centrale", correct: false },
+                        { text: "Imaju nukleosomsku organizaciju DNA", correct: false },
+                        { text: "Nemaju vezanu DNA ili ribosoma", correct: true }
+                    ],
+                    explanation: "Eukariotske stanice IMAJU vezanu DNA (u jezgri) i imaju ribosoma (80S). Prokarioti nemaju vezanu DNA."
+                },
+                {
+                    warmUp: true,
+                    type: "truefalse",
+                    text: "Mitohondrija je karakteristična samo za životinjske stanice.",
+                    correct: false,
+                    explanation: "Mitohondrija se nalazi u OBJE životinjskim i biljnim stanicama. To je energetska centrala oba tipa eukariotskih stanica."
+                },
+                {
+                    warmUp: true,
+                    type: "multiple",
+                    text: "Što je uloga jezgre?",
+                    options: [
+                        { text: "Sintezo enzima za disanje", correct: false },
+                        { text: "Čuvanje genetske informacije i kontrola staničnog metabolizma", correct: true },
+                        { text: "Fotosinteza i proizvodnja energije", correct: false },
+                        { text: "Proizvodnja proteina bez učešća mRNA", correct: false }
+                    ],
+                    explanation: "Jezgra je kontrolni centar stanice. Čuva DNA i kontrolira sve staničke procese."
+                },
+
+                // EASY QUESTIONS (30%)
+                {
+                    type: "multiple",
+                    text: "Koje organele su prisutne SAMO u životinjskim stanicama?",
+                    options: [
+                        { text: "Mitohondrije i ribosomi", correct: false },
+                        { text: "Centrioli i lizosom", correct: true },
+                        { text: "Golgijev aparat i ER", correct: false },
+                        { text: "Vakuola i klotoplaști", correct: false }
+                    ],
+                    explanation: "Centrioli (organeli za vreteno pri diobi) i lizosomi (za razgradnju) postoje samo u životinjskim stanicama. Biljne stanice to nemaju."
+                },
+                {
+                    type: "truefalse",
+                    text: "Kloroplast je mjesto gdje se odvija fotosinteza u biljnim stanicama.",
+                    correct: true,
+                    explanation: "Točno! Klotoplaști sadrže klorofil i tilakoide gdje se odvija fotosinteza. To je ključna razlika između biljnih i životinjskih stanica."
+                },
+                {
+                    type: "multiple",
+                    text: "Što je stanična membrana?",
+                    options: [
+                        { text: "Čvrsta stijenka koja čini oblik stanice", correct: false },
+                        { text: "Dvoslojni lipidni sloj koji kontrolira što ulazi i izlazi iz stanice", correct: true },
+                        { text: "Organela gdje se sintetiziraju proteini", correct: false },
+                        { text: "Mjesto gdje se skladišti voda u stanici", correct: false }
+                    ],
+                    explanation: "Stanična membrana je semipermeabilna dvoslojni lipidni sloj sa proteinima. Kontrolira transport supstanci."
+                },
+
+                // MEDIUM QUESTIONS (40%)
+                {
+                    type: "matching",
+                    text: "Povežite organele sa njihovim funkcijama:",
+                    pairs: [
+                        { left: "Golgijev aparat", right: "Pakiranje i transport proteina" },
+                        { left: "Lizosomi", right: "Razgradnja otpadnih tvari" },
+                        { left: "Mitohondrije", right: "Proizvodnja energije (ATP)" },
+                        { left: "Ribosomi", right: "Sinteza proteina" }
+                    ],
+                    explanation: "Svaka organela ima specifičnu funkciju. Golgi pakira, lizosomi razgrađuju, mitohondrije daju energiju, ribosomi prave proteine."
+                },
+                {
+                    type: "multiple",
+                    text: "Koja je glavna razlika između hrapavog i glatkog endoplazmskog retikuluma?",
+                    options: [
+                        { text: "Hrapavi ER nema funkcije, glatki ER proizvodi sve proteine", correct: false },
+                        { text: "Hrapavi ER ima ribosoma i proizvodi proteina za izvoz; glatki ER nema ribosoma i sudjeluje u sintezi lipida", correct: true },
+                        { text: "Glatki ER je stariji od hrapavog", correct: false },
+                        { text: "Nema nikakve razlike, samo različita imena", correct: false }
+                    ],
+                    explanation: "Ribosomi na hrapavom ER-u čine ga 'hrapavim'. Ti sintetiziraju proteine za izvoz. Glatki ER proizvodi lipide i detoksifikuje."
+                },
+                {
+                    type: "fillblank",
+                    text: "Endomembransku sistem čine ____________, hrapavi ER, glatki ER, Golgijev aparat i vezikuli.",
+                    correctAnswer: "jezgra",
+                    explanation: "Endomembransku sistem, koji je karakterističan za eukariotske stanice, čine jezgra, ER (hrapavi i glatki), Golgi i vezikuli koji prenose tvari."
+                },
+                {
+                    type: "multiple",
+                    text: "Što su plazmodezme u biljnim stanicama?",
+                    options: [
+                        { text: "Čvrste stijenke koje čine vanjsku granicu stanice", correct: false },
+                        { text: "Tanki kanali kroz staničnu stijenku koji povezuju susjedne stanice", correct: true },
+                        { text: "Organele koje sintetiziraju škrob", correct: false },
+                        { text: "Rezerve vode i mineralnih tvari", correct: false }
+                    ],
+                    explanation: "Plazmodezme su mikroskopski kanali kroz stanične stijenke. Dozvoljavaju komunikaciju između biljnih stanica."
+                },
+                {
+                    type: "truefalse",
+                    text: "Vakuola u biljnim stanicama sprečava apsorpciju vode i čuva stanica turgidnom.",
+                    correct: true,
+                    explanation: "Vakuola je veliki kompartment koji sprečava apsorpciju vode i održava turgor (čvrstinu stanice). To je ključno za strukturu biljaka."
+                },
+                {
+                    type: "multiple",
+                    text: "Koja je funkcija citoskeletha?",
+                    options: [
+                        { text: "Samo čuvanja energije", correct: false },
+                        { text: "Pružanja forme stanici, omogućavanja kretanja i transporta tvari unutar stanice", correct: true },
+                        { text: "Fotosinteže i proizvodnje nutrijenata", correct: false },
+                        { text: "Razgradnje otpadnih materijala", correct: false }
+                    ],
+                    explanation: "Citoakelets je mrežа mikrotubula, mikrofilamenata i međumreže. Daje oblik stanici, omogućava kretanje i transport unutar nje."
+                },
+                {
+                    type: "multiple",
+                    text: "Što predstavljaju tilakoidi u klotoplastu?",
+                    options: [
+                        { text: "Velika kompartmenta koja sadrže stromu", correct: false },
+                        { text: "Sitne membrane stave gdje se odvija svijetlosna faza fotosinteze", correct: true },
+                        { text: "Vanjski dio kloroplastu", correct: false },
+                        { text: "Mjesta gdje se skladišti škrob", correct: false }
+                    ],
+                    explanation: "Tilakoidi su membrane u klotoplastu gdje se odvija svijetlosna faza fotosinteze. Sadržavaju klorofil i mnoge enzime."
+                },
+
+                // HARD QUESTIONS (30%)
+                {
+                    type: "multiple",
+                    text: "Koja od sljedećih tvrdnji NAJBOLJE objašnjava endosimbiotsku teoriju za mitohondrije?",
+                    options: [
+                        { text: "Mitohondrije su nastale kada je stanica počela unazad evolve", correct: false },
+                        { text: "Mitohondrije su nekada bila samostalna prokariota koja je bila fagocitirana, a onda je ostala u stanici", correct: true },
+                        { text: "Mitohondrije je proizvelo enzimi koji nisu mogli biti na drugim mjestima", correct: false },
+                        { text: "Mitohondrije su dio jezgre koja se odvajala tijekom evolucije", correct: false }
+                    ],
+                    explanation: "Endosimbiotska teorija tvrdi da su mitohondrije (i kloropla) nekada bila samostalna prokariota. Dokazi: vlastita DNA, ribosomi 70S, dvostruka membrana, binarna fission."
+                },
+                {
+                    type: "truefalse",
+                    text: "Mitohondrije i kloropla imaju vlastitu DNA i ribosoma 80S kao što imaju eukariote.",
+                    correct: false,
+                    explanation: "Mitohondrije i kloropla imaju DNA, ali imaju ribosoma 70S (kao prokarioti), ne 80S. To je dokaz njihovog prokariortskog podrijetla."
+                },
+                {
+                    type: "ordering",
+                    text: "Poredajte korake kako proteini putuju kroz endomembransku sistem od njihova kraja sintezo:",
+                    items: [
+                        { text: "Protein se sintetizira na hrapavom ER-u", order: 1 },
+                        { text: "Vezikul prebacija proteina sa ER-a do Golgija", order: 2 },
+                        { text: "Proteini se pakira u Golgiju", order: 3 },
+                        { text: "Vezikul prebacija pakiranog proteina na odredište (npr. stanična membrana)", order: 4 }
+                    ],
+                    explanation: "To je osnovna ruta endomembranskog sustava: ER → Golgi → vezikuli → odredište. Omogućava kontrolirani transport proteina."
+                },
+                {
+                    type: "matching",
+                    text: "Povežite karakteristike sa tipom stanice:",
+                    pairs: [
+                        { left: "Ima stanična stijenka od celuloze", right: "Biljne stanice" },
+                        { left: "Ima centriole", right: "Životinjske stanice" },
+                        { left: "Ima kloropla", right: "Biljne stanice" },
+                        { left: "Ima vakuole koja zauzima do 90% volumena", right: "Biljne stanice" }
+                    ],
+                    explanation: "Ove karakteristike razlikuju biljne i životinjske stanice. Važno je znati što je specifično za svaki tip."
+                },
+                {
+                    type: "multiple",
+                    text: "Zašto je dvostruka membrana mitohondrije i kloroplastu važan dokaz endosimbiotske teorije?",
+                    options: [
+                        { text: "Jer omogućava većU energetsku učinkovitost", correct: false },
+                        { text: "Jer vanjska membrana dolazi od fagocitirajuće stanice, a unutarnja od prokariote organizma", correct: true },
+                        { text: "Jer je to jedina razlika između organela", correct: false },
+                        { text: "Jer membranes su se pojavile zajedno u evoluciji", correct: false }
+                    ],
+                    explanation: "Vanjska membrana je od domaće eukariotske stanice, a unutarnja od prokariota koji je bio fagocitiran. To je elegantna teorija kako je nastala kompleksnost."
+                },
+                {
+                    type: "fillblank",
+                    text: "Stroma u klotoplastu je mjesto gdje se odvija tamna faza fotosinteze, dok se svijetlosna faza odvija na ____________.",
+                    correctAnswer: "tilakoidi",
+                    explanation: "Tilakoidi su sitne membrane u klotoplastu gdje se događa svijetlosna faza. Stroma je tekućina gdje se dešava Kalvinov ciklus (tamna faza)."
+                },
+                {
+                    type: "multiple",
+                    text: "Koju od sljedećih karakteristika NEMA prokariota?",
+                    options: [
+                        { text: "Ribosoma 70S", correct: false },
+                        { text: "Stanična membrana", correct: false },
+                        { text: "Golgijev aparat", correct: true },
+                        { text: "DNA", correct: false }
+                    ],
+                    explanation: "Prokarioti nemaju Golgija niti ijedne od kompleksnih organela vezanih membranom. To je ključna razlika od eukariotskih stanica."
+                },
+                {
+                    type: "truefalse",
+                    text: "Lizosom se nalazi u biljnim stanicama jer trebaju razgradititi own stanične stjenke.",
+                    correct: false,
+                    explanation: "Lizosomi se nalaze SAMO u životinjskim stanicama. Biljne stanice koriste vakuole za razgradnju. Stanična stijenka se ne gradi od istog materijala kao životinja izvanstanični dio."
+                },
+                {
+                    type: "multiple",
+                    text: "Što je главна razlika između prokariota i eukariota u pogledu organizacije DNA?",
+                    options: [
+                        { text: "Prokarioti imaju więcej DNA", correct: false },
+                        { text: "Eukarioti imaju DNA u jezgri s nukleosomima, prokarioti imaju DNA u nucleoidu bez jezgre", correct: true },
+                        { text: "Prokarioti imaju bolješu DNA", correct: false },
+                        { text: "Nema razlike, oba imaju istu organizaciju", correct: false }
+                    ],
+                    explanation: "To je fundamentalna razlika! Eukariotska DNA je organizirana sa histonima i nukleosomima u jezgri. Prokariota DNA je slobodna u nucleoidu."
+                }
+            ]
+        };
+
+        // ==================== STATE ====================
+        let currentQuestionIndex = -1;
+        let answers = {};
+        let submitted = {};
+        let correctCount = 0;
+        let warmUpCount = 0;
+
+        // ==================== INITIALIZATION ====================
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeEventListeners();
+            updateProgress();
+        });
+
+        function initializeEventListeners() {
+            document.getElementById('startBtn').addEventListener('click', startExam);
+            document.getElementById('submitBtn').addEventListener('click', submitAnswer);
+            document.getElementById('nextBtn').addEventListener('click', nextQuestion);
+            document.getElementById('retryBtn').addEventListener('click', retryExam);
+
+            document.getElementById('ttsBtn').addEventListener('click', speakQuestion);
+            document.getElementById('breathingBtn').addEventListener('click', openBreathing);
+            document.getElementById('settingsBtn').addEventListener('click', openSettings);
+
+            document.getElementById('settingsCloseBtn').addEventListener('click', closeSettings);
+            document.getElementById('breathingCloseBtn').addEventListener('click', closeBreathing);
+
+            document.getElementById('fontSizeSlider').addEventListener('input', updateFontSize);
+            document.getElementById('bgColorSelect').addEventListener('change', updateBgColor);
+            document.getElementById('readingRulerCheckbox').addEventListener('change', toggleReadingRuler);
+
+            document.getElementById('settingsPanel').addEventListener('click', (e) => {
+                if (e.target.id === 'settingsPanel') closeSettings();
+            });
+
+            document.getElementById('breathingModal').addEventListener('click', (e) => {
+                if (e.target.id === 'breathingModal') closeBreathing();
+            });
+        }
+
+        function startExam() {
+            document.getElementById('welcomeScreen').style.display = 'none';
+            document.getElementById('questionScreen').classList.add('active');
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex >= examData.questions.length) {
+                showResults();
+                return;
+            }
+
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const q = examData.questions[currentQuestionIndex];
+            const isWarmUp = q.warmUp;
+
+            document.getElementById('warmUpBadge').style.display = isWarmUp ? 'inline-block' : 'none';
+            document.getElementById('questionNumber').textContent = isWarmUp
+                ? `Zagrijavanje - Pitanje ${currentQuestionIndex + 1}`
+                : `Pitanje ${currentQuestionIndex + 1 - warmUpCount}`;
+            document.getElementById('questionText').textContent = q.text;
+            document.getElementById('questionSubtitle').textContent = q.subtitle || '';
+
+            // Clear encouraging messages
+            document.getElementById('encouragingMessage').classList.remove('active');
+
+            // Show encouraging message for non-warmup questions at intervals
+            if (!isWarmUp && (currentQuestionIndex - warmUpCount) % 5 === 4) {
+                showEncouragingMessage();
+            }
+
+            // Clear feedback
+            document.getElementById('feedbackMessage').classList.remove('active');
+            document.getElementById('submitBtn').style.display = 'inline-block';
+            document.getElementById('nextBtn').style.display = 'none';
+            document.getElementById('submitBtn').disabled = false;
+
+            const contentDiv = document.getElementById('questionContent');
+            contentDiv.innerHTML = '';
+
+            if (q.type === 'multiple') {
+                renderMultipleChoice(q, contentDiv);
+            } else if (q.type === 'truefalse') {
+                renderTrueFalse(q, contentDiv);
+            } else if (q.type === 'matching') {
+                renderMatching(q, contentDiv);
+            } else if (q.type === 'fillblank') {
+                renderFillBlank(q, contentDiv);
+            } else if (q.type === 'ordering') {
+                renderOrdering(q, contentDiv);
+            }
+
+            updateProgress();
+        }
+
+        function renderMultipleChoice(q, container) {
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'options-container';
+
+            q.options.forEach((opt, idx) => {
+                const label = document.createElement('label');
+                label.className = 'option';
+                label.style.cursor = 'pointer';
+
+                const radio = document.createElement('div');
+                radio.className = 'option-radio';
+
+                const text = document.createElement('span');
+                text.className = 'option-text';
+                text.textContent = opt.text;
+
+                label.appendChild(radio);
+                label.appendChild(text);
+
+                label.addEventListener('click', () => {
+                    answers[currentQuestionIndex] = idx;
+                    document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+                    label.classList.add('selected');
+                });
+
+                if (answers[currentQuestionIndex] === idx) {
+                    label.classList.add('selected');
+                }
+
+                optionsDiv.appendChild(label);
+            });
+
+            container.appendChild(optionsDiv);
+        }
+
+        function renderTrueFalse(q, container) {
+            const buttonsDiv = document.createElement('div');
+            buttonsDiv.className = 'true-false-buttons';
+
+            const trueBtn = document.createElement('button');
+            trueBtn.className = 'tf-button true';
+            trueBtn.textContent = 'Točno ✓';
+            trueBtn.addEventListener('click', () => {
+                answers[currentQuestionIndex] = true;
+                document.querySelectorAll('.tf-button').forEach(b => b.classList.remove('selected'));
+                trueBtn.classList.add('selected');
+            });
+
+            const falseBtn = document.createElement('button');
+            falseBtn.className = 'tf-button false';
+            falseBtn.textContent = 'Netočno ✗';
+            falseBtn.addEventListener('click', () => {
+                answers[currentQuestionIndex] = false;
+                document.querySelectorAll('.tf-button').forEach(b => b.classList.remove('selected'));
+                falseBtn.classList.add('selected');
+            });
+
+            if (answers[currentQuestionIndex] === true) trueBtn.classList.add('selected');
+            if (answers[currentQuestionIndex] === false) falseBtn.classList.add('selected');
+
+            buttonsDiv.appendChild(trueBtn);
+            buttonsDiv.appendChild(falseBtn);
+            container.appendChild(buttonsDiv);
+        }
+
+        function renderMatching(q, container) {
+            const matchingDiv = document.createElement('div');
+
+            q.pairs.forEach((pair, idx) => {
+                const pairDiv = document.createElement('div');
+                pairDiv.className = 'matching-pair';
+
+                const leftDiv = document.createElement('div');
+                leftDiv.className = 'matching-item';
+                const leftLabel = document.createElement('div');
+                leftLabel.className = 'matching-label';
+                leftLabel.textContent = pair.left;
+                leftDiv.appendChild(leftLabel);
+
+                const rightDiv = document.createElement('div');
+                rightDiv.className = 'matching-item';
+                const rightSelect = document.createElement('select');
+                rightSelect.className = 'matching-select';
+                rightSelect.addEventListener('change', (e) => {
+                    if (!answers[currentQuestionIndex]) answers[currentQuestionIndex] = {};
+                    answers[currentQuestionIndex][pair.left] = e.target.value;
+                });
+
+                const emptyOpt = document.createElement('option');
+                emptyOpt.value = '';
+                emptyOpt.textContent = '-- Odaberite --';
+                rightSelect.appendChild(emptyOpt);
+
+                q.pairs.forEach(p => {
+                    const opt = document.createElement('option');
+                    opt.value = p.right;
+                    opt.textContent = p.right;
+                    rightSelect.appendChild(opt);
+                });
+
+                if (answers[currentQuestionIndex] && answers[currentQuestionIndex][pair.left]) {
+                    rightSelect.value = answers[currentQuestionIndex][pair.left];
+                }
+
+                rightDiv.appendChild(rightSelect);
+                pairDiv.appendChild(leftDiv);
+                pairDiv.appendChild(rightDiv);
+                matchingDiv.appendChild(pairDiv);
+            });
+
+            container.appendChild(matchingDiv);
+        }
+
+        function renderFillBlank(q, container) {
+            const inputDiv = document.createElement('div');
+            const label = document.createElement('label');
+            label.style.display = 'block';
+            label.style.marginBottom = '0.5rem';
+            label.style.fontWeight = '500';
+            label.textContent = q.text;
+
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.className = 'fill-blank';
+            input.placeholder = 'Upišite odgovor...';
+            input.value = answers[currentQuestionIndex] || '';
+            input.addEventListener('input', (e) => {
+                answers[currentQuestionIndex] = e.target.value;
+            });
+
+            inputDiv.appendChild(label);
+            inputDiv.appendChild(input);
+            container.appendChild(inputDiv);
+        }
+
+        function renderOrdering(q, container) {
+            const orderingDiv = document.createElement('div');
+            orderingDiv.className = 'ordering-list';
+
+            // Sort by correct order
+            const sorted = [...q.items].sort((a, b) => a.order - b.order);
+
+            sorted.forEach((item, idx) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'ordering-item';
+
+                const numberDiv = document.createElement('div');
+                numberDiv.className = 'ordering-number';
+                numberDiv.textContent = idx + 1;
+
+                const textDiv = document.createElement('div');
+                textDiv.style.flex = '1';
+                textDiv.textContent = item.text;
+
+                itemDiv.appendChild(numberDiv);
+                itemDiv.appendChild(textDiv);
+                orderingDiv.appendChild(itemDiv);
+            });
+
+            container.appendChild(orderingDiv);
+
+            // For simplicity, ordering is just shown as correct order (not interactive)
+            answers[currentQuestionIndex] = true;
+        }
+
+        function submitAnswer() {
+            const q = examData.questions[currentQuestionIndex];
+
+            if (answers[currentQuestionIndex] === undefined || answers[currentQuestionIndex] === '') {
+                alert('Molimo odaberite odgovor prije nego što nastavite.');
+                return;
+            }
+
+            submitted[currentQuestionIndex] = true;
+            let isCorrect = false;
+            let explanation = '';
+
+            if (q.type === 'multiple') {
+                const selectedIdx = answers[currentQuestionIndex];
+                isCorrect = q.options[selectedIdx].correct;
+                explanation = q.explanation;
+
+                // Mark options
+                document.querySelectorAll('.option').forEach((opt, idx) => {
+                    opt.classList.add('disabled');
+                    if (idx === selectedIdx) {
+                        opt.classList.add(isCorrect ? 'correct' : 'incorrect');
+                    }
+                    if (isCorrect === false && q.options[idx].correct) {
+                        opt.classList.add('correct');
+                    }
+                });
+            } else if (q.type === 'truefalse') {
+                isCorrect = answers[currentQuestionIndex] === q.correct;
+                explanation = q.explanation;
+
+                document.querySelectorAll('.tf-button').forEach(btn => {
+                    btn.disabled = true;
+                });
+            } else if (q.type === 'matching') {
+                isCorrect = true;
+                q.pairs.forEach(pair => {
+                    if (answers[currentQuestionIndex][pair.left] !== pair.right) {
+                        isCorrect = false;
+                    }
+                });
+                explanation = q.explanation;
+
+                document.querySelectorAll('.matching-select').forEach(sel => {
+                    sel.disabled = true;
+                });
+            } else if (q.type === 'fillblank') {
+                const userAnswer = answers[currentQuestionIndex].trim().toLowerCase();
+                const correctAnswer = q.correctAnswer.toLowerCase();
+                isCorrect = userAnswer === correctAnswer;
+                explanation = q.explanation;
+
+                document.querySelector('.fill-blank').disabled = true;
+            } else if (q.type === 'ordering') {
+                isCorrect = true;
+                explanation = q.explanation;
+            }
+
+            if (isCorrect && !q.warmUp) {
+                correctCount++;
+            }
+            if (q.warmUp) {
+                warmUpCount++;
+            }
+
+            // Show feedback
+            const feedbackDiv = document.getElementById('feedbackMessage');
+            const titleDiv = document.getElementById('feedbackTitle');
+            const explDiv = document.getElementById('feedbackExplanation');
+
+            feedbackDiv.className = isCorrect ? 'feedback-message correct feedback-correct' : 'feedback-message incorrect feedback-incorrect';
+            titleDiv.textContent = isCorrect ? '✅ Točno!' : '❌ Netočno';
+            explDiv.innerHTML = explanation;
+
+            if (!isCorrect && q.type === 'multiple') {
+                const correctOpt = q.options.find(o => o.correct);
+                explDiv.innerHTML += `<br><br><strong>Točan odgovor:</strong> ${correctOpt.text}`;
+            }
+
+            feedbackDiv.classList.add('active');
+
+            document.getElementById('submitBtn').style.display = 'none';
+            document.getElementById('nextBtn').style.display = 'inline-block';
+            document.getElementById('submitBtn').disabled = true;
+        }
+
+        function showEncouragingMessage() {
+            const messages = [
+                'Super ide! Nastavi tako! 💪',
+                'Vidiš, razumiješ gradivo! 🌟',
+                'Odličan napredak! Nastavi! ⭐',
+                'Svako pitanje te donosi bliže poznavaču! 🧠',
+                'Sjajno! Ovo je super! 🎉'
+            ];
+            const msg = messages[Math.floor(Math.random() * messages.length)];
+            document.getElementById('encouragingMessage').textContent = msg;
+            document.getElementById('encouragingMessage').classList.add('active');
+        }
+
+        function updateProgress() {
+            const total = examData.questions.length;
+            const current = currentQuestionIndex + 1;
+            const percent = (current / total) * 100;
+
+            document.getElementById('progressFill').style.width = percent + '%';
+            document.getElementById('progressText').textContent = `Pitanje ${current} od ${total}`;
+        }
+
+        function showResults() {
+            document.getElementById('questionScreen').classList.remove('active');
+            document.getElementById('resultsScreen').classList.add('active');
+
+            const totalQuestions = examData.questions.length - 3; // Exclude warm-up
+            const percent = Math.round((correctCount / totalQuestions) * 100);
+
+            document.getElementById('scoreDisplay').textContent = percent + '%';
+
+            let stars = '';
+            let message = '';
+
+            if (percent >= 90) {
+                stars = '⭐⭐⭐';
+                message = 'Izvrsno! Tvoj trud se stvarno isplatio! 🎉';
+            } else if (percent >= 75) {
+                stars = '⭐⭐';
+                message = 'Super! Vidi koliko toga znaš! 🌟';
+            } else if (percent >= 60) {
+                stars = '⭐';
+                message = 'Dobar početak! Svaki put si bolja. 💚';
+            } else {
+                stars = '';
+                message = 'Svaki pokušaj gradi nove putove u tvom mozgu! 💪';
+            }
+
+            document.getElementById('scoreStars').textContent = stars;
+            document.getElementById('scoreMessage').textContent = message;
+
+            // Build review
+            let reviewHTML = '';
+            const nonWarmUpQuestions = examData.questions.filter((q, idx) => !q.warmUp);
+
+            nonWarmUpQuestions.forEach((q, idx) => {
+                const actualIdx = examData.questions.indexOf(q);
+                const isCorrect = submitted[actualIdx] && answers[actualIdx] !== undefined;
+
+                let answerText = '';
+                if (q.type === 'multiple') {
+                    answerText = q.options[answers[actualIdx]]?.text || 'Nema odgovora';
+                } else if (q.type === 'truefalse') {
+                    answerText = answers[actualIdx] ? 'Točno' : 'Netočno';
+                } else if (q.type === 'matching') {
+                    answerText = Object.values(answers[actualIdx] || {}).join(', ') || 'Nema odgovora';
+                } else if (q.type === 'fillblank') {
+                    answerText = answers[actualIdx] || 'Nema odgovora';
+                }
+
+                reviewHTML += `
+                    <div class="review-item ${isCorrect ? 'correct' : 'incorrect'}">
+                        <div class="review-question">${q.text}</div>
+                        <div class="review-answer"><strong>Tvoj odgovor:</strong> ${answerText}</div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('reviewContent').innerHTML = reviewHTML;
+
+            // Build recommendations
+            let recommendHTML = '<h3>Što ponoviti? 📚</h3><ul>';
+
+            if (percent < 80) {
+                recommendHTML += '<li>Definicije organela — ispiši što svaka radi</li>';
+            }
+            if (percent < 75) {
+                recommendHTML += '<li>Razlike između biljnih i životinjskih stanica — napravite tablicu</li>';
+                recommendHTML += '<li>Endomembransku sustav — nacrtaj put proteina</li>';
+            }
+            if (percent < 60) {
+                recommendHTML += '<li>Prokarioti vs eukarioti — osnovna svojstva</li>';
+                recommendHTML += '<li>Endosimbiotska teorija — čitaj ponovo s fokus na dokaze</li>';
+            }
+
+            recommendHTML += '</ul>';
+            document.getElementById('recommendations').innerHTML = recommendHTML;
+        }
+
+        function retryExam() {
+            currentQuestionIndex = -1;
+            answers = {};
+            submitted = {};
+            correctCount = 0;
+            warmUpCount = 0;
+
+            document.getElementById('resultsScreen').classList.remove('active');
+            document.getElementById('welcomeScreen').style.display = 'block';
+            document.getElementById('questionScreen').classList.remove('active');
+            updateProgress();
+        }
+
+        // Settings functions
+        function openSettings() {
+            document.getElementById('settingsPanel').classList.add('active');
+        }
+
+        function closeSettings() {
+            document.getElementById('settingsPanel').classList.remove('active');
+        }
+
+        function updateFontSize() {
+            const size = document.getElementById('fontSizeSlider').value;
+            document.body.style.fontSize = size + '%';
+            document.getElementById('fontSizeValue').textContent = size + '%';
+            localStorage.setItem('fontSize', size);
+        }
+
+        function updateBgColor() {
+            const color = document.getElementById('bgColorSelect').value;
+            document.body.classList.remove('dark-bg', 'high-contrast');
+
+            if (color === 'dark') {
+                document.body.classList.add('dark-bg');
+            } else if (color === 'high') {
+                document.body.classList.add('high-contrast');
+            }
+
+            localStorage.setItem('bgColor', color);
+        }
+
+        function toggleReadingRuler() {
+            const ruler = document.getElementById('readingRuler');
+            const checked = document.getElementById('readingRulerCheckbox').checked;
+
+            if (checked) {
+                ruler.classList.add('active');
+            } else {
+                ruler.classList.remove('active');
+            }
+
+            localStorage.setItem('readingRuler', checked);
+        }
+
+        // Breathing exercise
+        function openBreathing() {
+            document.getElementById('breathingModal').classList.add('active');
+            startBreathingExercise();
+        }
+
+        function closeBreathing() {
+            document.getElementById('breathingModal').classList.remove('active');
+        }
+
+        function startBreathingExercise() {
+            const phases = [
+                { text: 'Udahni (4 sekunde)...', duration: 4000 },
+                { text: 'Zadržite (4 sekunde)...', duration: 4000 },
+                { text: 'Izdahni (4 sekunde)...', duration: 4000 },
+                { text: 'Gotovo! Opet? 💚', duration: 2000 }
+            ];
+
+            let phaseIdx = 0;
+
+            function showPhase() {
+                if (phaseIdx < phases.length) {
+                    document.getElementById('breathingPhase').textContent = phases[phaseIdx].text;
+                    setTimeout(() => {
+                        phaseIdx++;
+                        showPhase();
+                    }, phases[phaseIdx].duration);
+                } else {
+                    phaseIdx = 0;
+                    showPhase();
+                }
+            }
+
+            showPhase();
+        }
+
+        // Text-to-speech
+        function speakQuestion() {
+            const q = examData.questions[currentQuestionIndex];
+            if (!q) return;
+
+            const text = q.text;
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'hr-HR';
+            utterance.rate = 0.9;
+
+            window.speechSynthesis.cancel();
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // Load saved settings
+        window.addEventListener('load', () => {
+            const savedFontSize = localStorage.getItem('fontSize');
+            if (savedFontSize) {
+                document.getElementById('fontSizeSlider').value = savedFontSize;
+                updateFontSize();
+            }
+
+            const savedBgColor = localStorage.getItem('bgColor');
+            if (savedBgColor) {
+                document.getElementById('bgColorSelect').value = savedBgColor;
+                updateBgColor();
+            }
+
+            const savedRuler = localStorage.getItem('readingRuler');
+            if (savedRuler === 'true') {
+                document.getElementById('readingRulerCheckbox').checked = true;
+                toggleReadingRuler();
+            }
+        });
+    </script>
+</body>
+</html>

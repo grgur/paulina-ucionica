@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>Ispit: Voda, postanak života i biomolekule — Natalijina Učionica</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-main: #FFF8F0;
+  --bg-card: #FFFFFF;
+  --text-main: #3A3A3A;
+  --text-light: #6B6B6B;
+  --blue: #4A90D9;
+  --blue-light: #E8F4FD;
+  --green: #5CB85C;
+  --green-light: #E8F8E8;
+  --orange: #FF9800;
+  --orange-light: #FFF3E0;
+  --red: #E74C3C;
+  --red-light: #FDE8E8;
+  --purple: #9B59B6;
+  --purple-light: #F3E8FD;
+  --teal: #26A69A;
+  --teal-light: #E0F2F1;
+  --radius: 12px;
+  --shadow: 0 2px 12px rgba(0,0,0,0.06);
+  --shadow-hover: 0 4px 20px rgba(0,0,0,0.1);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Lexend', 'Verdana', sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+  line-height: 1.8;
+  letter-spacing: 0.03em;
+  padding: 12px;
+  margin: 0 auto;
+  font-size: 17px;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+}
+.skip-link {
+  position: absolute; top: -40px; left: 0;
+  background: var(--blue); color: white;
+  padding: 8px 16px; z-index: 100;
+  border-radius: 0 0 8px 0; font-size: 16px;
+  text-decoration: none;
+}
+.skip-link:focus { top: 0; }
+.container { max-width: 720px; margin: 0 auto; }
+h1 { font-size: 26px; font-weight: 700; color: var(--blue); margin-bottom: 8px; }
+h2 { font-size: 22px; font-weight: 600; color: var(--teal); margin: 24px 0 12px; }
+h3 { font-size: 19px; font-weight: 600; margin: 16px 0 8px; }
+.subtitle { color: var(--text-light); font-size: 15px; margin-bottom: 20px; }
+.kartica {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+  border-left: 5px solid var(--blue);
+}
+.kartica-correct { border-left-color: var(--green); background: var(--green-light); }
+.kartica-wrong { border-left-color: var(--red); background: var(--red-light); }
+.kartica-warmup { border-left-color: var(--orange); background: var(--orange-light); }
+.kartica-info { border-left-color: var(--purple); background: var(--purple-light); }
+.kartica-teal { border-left-color: var(--teal); background: var(--teal-light); }
+.section { display: none; }
+.section.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.progress-container {
+  background: #e0e0e0; border-radius: 20px;
+  height: 10px; margin: 12px 0 20px; overflow: hidden;
+}
+.progress-fill {
+  background: linear-gradient(90deg, var(--teal), var(--blue));
+  height: 100%; border-radius: 20px;
+  transition: width 0.4s ease;
+}
+.nav-btns {
+  display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap;
+}
+.btn {
+  font-family: 'Lexend', sans-serif;
+  font-size: 17px; padding: 14px 24px;
+  border-radius: 12px; border: none; cursor: pointer;
+  font-weight: 600; transition: all 0.2s ease;
+  min-height: 48px; flex: 1; text-align: center;
+}
+.btn:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+.btn-primary { background: var(--blue); color: white; }
+.btn-primary:hover { background: #3a7bc8; }
+.btn-secondary { background: #e0e0e0; color: var(--text-main); }
+.btn-secondary:hover { background: #d0d0d0; }
+.btn-green { background: var(--green); color: white; }
+.btn-green:hover { background: #4cae4c; }
+.btn-tts {
+  background: var(--purple-light); border: none;
+  border-radius: 8px; padding: 6px 12px; cursor: pointer;
+  font-size: 16px; min-height: 40px; min-width: 40px;
+  transition: all 0.2s;
+}
+.btn-tts:hover { background: var(--purple); color: white; }
+.quiz-option {
+  display: block; width: 100%; text-align: left;
+  padding: 14px 18px; margin: 8px 0; border-radius: 12px;
+  border: 2px solid #ddd; background: white; cursor: pointer;
+  font-size: 16px; font-family: 'Lexend', sans-serif;
+  transition: all 0.2s; min-height: 48px;
+}
+.quiz-option:hover:not(:disabled) { border-color: var(--blue); background: var(--blue-light); }
+.quiz-option.correct { border-color: var(--green); background: var(--green-light); }
+.quiz-option.wrong { border-color: var(--red); background: var(--red-light); }
+.quiz-option.selected { border-color: var(--blue); background: var(--blue-light); }
+.quiz-option:disabled { cursor: default; opacity: 0.9; }
+.feedback {
+  padding: 14px 18px; border-radius: 12px;
+  margin-top: 12px; display: none; font-size: 15px;
+}
+.feedback.show { display: block; animation: fadeIn 0.3s; }
+.feedback-correct { background: var(--green-light); border: 1px solid var(--green); }
+.feedback-wrong { background: var(--red-light); border: 1px solid var(--red); }
+.feedback-partial { background: var(--orange-light); border: 1px solid var(--orange); }
+.question-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--blue); color: white;
+  font-weight: 700; font-size: 16px; margin-right: 10px;
+  flex-shrink: 0;
+}
+.question-header {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 12px;
+}
+.match-container {
+  display: grid; grid-template-columns: 1fr auto 1fr;
+  gap: 8px; align-items: center; margin: 12px 0;
+}
+.match-item {
+  background: white; border: 2px solid #ddd;
+  border-radius: 10px; padding: 12px; font-size: 15px;
+  text-align: center; min-height: 48px;
+  display: flex; align-items: center; justify-content: center;
+}
+.match-item-left { border-color: var(--blue); background: var(--blue-light); }
+.match-select {
+  font-family: 'Lexend', sans-serif; font-size: 15px;
+  padding: 10px; border-radius: 10px; border: 2px solid #ddd;
+  min-height: 48px; width: 100%; background: white;
+  cursor: pointer;
+}
+.match-select:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+.sort-item {
+  background: white; border: 2px solid #ddd;
+  border-radius: 12px; padding: 14px 16px;
+  margin: 6px 0; display: flex; align-items: center;
+  justify-content: space-between; font-size: 15px;
+  min-height: 48px; cursor: grab; user-select: none;
+  touch-action: none;
+}
+.sort-item:active { cursor: grabbing; }
+.sort-item .sort-arrows {
+  display: flex; gap: 4px;
+}
+.sort-arrow-btn {
+  background: var(--blue-light); border: 1px solid var(--blue);
+  border-radius: 6px; width: 36px; height: 36px;
+  font-size: 18px; cursor: pointer; display: flex;
+  align-items: center; justify-content: center;
+  font-family: 'Lexend', sans-serif;
+}
+.sort-arrow-btn:hover { background: var(--blue); color: white; }
+.encouragement {
+  background: linear-gradient(135deg, var(--teal-light), var(--blue-light));
+  border-radius: 16px; padding: 16px 20px;
+  margin: 20px 0; text-align: center;
+  border: 2px solid var(--teal);
+  font-size: 16px; font-weight: 500;
+}
+.breathing-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.6); z-index: 10000;
+  display: flex; align-items: center; justify-content: center;
+}
+.breathing-overlay[hidden] { display: none; }
+.breathing-box {
+  background: white; border-radius: 24px;
+  padding: 40px; text-align: center; max-width: 360px;
+  width: 90%; box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+}
+.breathing-circle {
+  width: 120px; height: 120px; border-radius: 50%;
+  background: var(--teal-light); border: 4px solid var(--teal);
+  margin: 20px auto; display: flex;
+  align-items: center; justify-content: center;
+  font-size: 20px; font-weight: 600; color: var(--teal);
+}
+.breathing-circle.inhale { animation: breatheIn 4s ease-in-out; }
+.breathing-circle.hold { animation: none; }
+.breathing-circle.exhale { animation: breatheOut 4s ease-in-out; }
+@keyframes breatheIn { from { transform: scale(0.8); } to { transform: scale(1.2); } }
+@keyframes breatheOut { from { transform: scale(1.2); } to { transform: scale(0.8); } }
+.result-card {
+  background: white; border-radius: 16px;
+  padding: 24px; margin: 16px 0;
+  box-shadow: var(--shadow);
+}
+.result-score {
+  font-size: 48px; font-weight: 700;
+  color: var(--teal); text-align: center;
+  margin: 16px 0;
+}
+.result-bar {
+  height: 20px; border-radius: 10px;
+  background: #e0e0e0; overflow: hidden;
+  margin: 12px 0;
+}
+.result-bar-fill {
+  height: 100%; border-radius: 10px;
+  transition: width 1s ease;
+}
+.review-item {
+  background: white; border-radius: 12px;
+  padding: 16px; margin: 12px 0;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+  border-left: 4px solid #ddd;
+}
+.review-correct { border-left-color: var(--green); }
+.review-wrong { border-left-color: var(--red); }
+.settings-toggle {
+  position: fixed; top: 12px; right: 12px;
+  z-index: 1000; background: white;
+  border: 2px solid #ddd; border-radius: 50%;
+  width: 44px; height: 44px; font-size: 20px;
+  cursor: pointer; box-shadow: var(--shadow);
+  display: flex; align-items: center; justify-content: center;
+}
+.settings-panel {
+  position: fixed; top: 60px; right: 12px;
+  z-index: 999; background: white;
+  border-radius: 16px; padding: 20px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+  width: 280px; max-width: 90vw;
+}
+.settings-panel[hidden] { display: none; }
+.settings-panel label { display: block; margin: 10px 0 4px; font-size: 14px; font-weight: 500; }
+.settings-panel input[type="range"] { width: 100%; }
+.settings-panel fieldset { border: none; padding: 0; margin: 8px 0; }
+.settings-panel fieldset label { display: inline-block; margin-right: 12px; }
+.reading-ruler {
+  position: fixed; left: 0; width: 100%;
+  height: 40px; background: rgba(255, 200, 50, 0.2);
+  border-top: 2px solid rgba(255, 200, 50, 0.5);
+  border-bottom: 2px solid rgba(255, 200, 50, 0.5);
+  pointer-events: none; z-index: 9990;
+  transition: top 0.05s ease; display: none;
+}
+.reading-ruler.active { display: block; }
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0;
+  margin: -1px; overflow: hidden; clip: rect(0,0,0,0);
+  white-space: nowrap; border-width: 0;
+}
+*:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; border-radius: 4px; }
+*:focus:not(:focus-visible) { outline: none; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+@media (min-width: 640px) {
+  body { padding: 24px; font-size: 18px; }
+  h1 { font-size: 30px; }
+  .kartica { padding: 24px 28px; }
+}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Preskoči na sadržaj</a>
+
+<button class="settings-toggle" onclick="toggleSettings()" aria-label="Postavke prikaza" aria-expanded="false" aria-controls="settings-panel">⚙️</button>
+<div id="settings-panel" class="settings-panel" role="dialog" aria-label="Postavke prikaza" hidden>
+  <h3>Postavke prikaza</h3>
+  <label for="font-size">Veličina teksta</label>
+  <input type="range" id="font-size" min="15" max="28" value="17" oninput="updateFontSize(this.value)">
+  <span aria-live="polite" id="font-size-value">17px</span>
+  <fieldset><legend>Pozadina</legend>
+    <label><input type="radio" name="bg" value="cream" checked onchange="updateBg('cream')"> Krem</label>
+    <label><input type="radio" name="bg" value="blue" onchange="updateBg('blue')"> Plava</label>
+    <label><input type="radio" name="bg" value="white" onchange="updateBg('white')"> Bijela</label>
+  </fieldset>
+  <label for="line-height-ctrl">Razmak između redova</label>
+  <input type="range" id="line-height-ctrl" min="1.5" max="2.5" step="0.1" value="1.8" oninput="updateLineHeight(this.value)">
+  <label><input type="checkbox" id="reading-ruler" onchange="toggleReadingRuler(this.checked)"> Reading ruler (traka za čitanje)</label>
+  <br><button class="btn btn-secondary" style="margin-top:10px;width:100%" onclick="resetSettings()">Vrati na početno</button>
+</div>
+
+<!-- Breathing overlay -->
+<div id="breathing-overlay" class="breathing-overlay" hidden aria-label="Vježba disanja" role="dialog">
+  <div class="breathing-box">
+    <h3>🫁 Vježba disanja</h3>
+    <p style="margin-top:8px;color:var(--text-light)">4 – 4 – 4 metoda</p>
+    <div class="breathing-circle" id="breathing-circle">
+      <span id="breathing-text">Udahni</span>
+    </div>
+    <p id="breathing-instruction" style="font-size:15px;color:var(--text-light)">Polako udahni kroz nos...</p>
+    <button class="btn btn-secondary" style="margin-top:16px" onclick="stopBreathing()">Zatvori</button>
+  </div>
+</div>
+
+<div class="reading-ruler" id="reading-ruler-el"></div>
+
+<main id="main-content" role="main" class="container">
+
+<!-- PROGRESS -->
+<div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Napredak ispita" id="main-progress">
+  <div class="progress-container"><div class="progress-fill" id="progress-bar" style="width:0%"></div></div>
+</div>
+
+<!-- ========== SECTION 0: INTRO ========== -->
+<section class="section active" id="sec-0" aria-labelledby="sec-0-title">
+  <h1 id="sec-0-title">📝 Ispit: Voda, postanak života i biomolekule</h1>
+  <p class="subtitle">Biologija — Izazovni ispit za Nataliju</p>
+
+  <div class="kartica kartica-info">
+    <p><strong>15 pitanja</strong> iz 5 tema:</p>
+    <ol style="margin:8px 0 0 20px;font-size:15px">
+      <li>Svojstva vode</li>
+      <li>Voda kao otapalo i pH</li>
+      <li>Postanak života — eksperimenti</li>
+      <li>Kemijska evolucija</li>
+      <li>Biomolekule</li>
+    </ol>
+    <p style="margin-top:12px;font-size:15px;color:var(--text-light)"><strong>Nema vremenskog ograničenja.</strong> Radi svojim tempom. Hintovi su tu ako zatreba.</p>
+    <button class="btn-tts" onclick="procitaj('Ispit ima petnaest pitanja iz pet tema: svojstva vode, voda kao otapalo i pê-há, postanak života, kemijska evolucija i biomolekule. Nema vremenskog ograničenja. Radi svojim tempom.')" aria-label="Čitaj naglas">🔊</button>
+  </div>
+
+  <div class="kartica kartica-teal" style="text-align:center">
+    <p style="font-size:18px">💚 Ovo je prilika da pokažeš što znaš.</p>
+    <p style="font-size:15px;color:var(--text-light);margin-top:4px">Duboki udah i idemo!</p>
+    <button class="btn btn-secondary" style="margin-top:12px" onclick="startBreathing()">🫁 Trebam minutu za disanje</button>
+  </div>
+
+  <div class="nav-btns">
+    <button class="btn btn-primary" onclick="goTo(1)" style="width:100%">Započni ispit ▶</button>
+  </div>
+</section>
+
+<!-- ========== SECTION 1: WARM-UP ========== -->
+<section class="section" id="sec-1" aria-labelledby="sec-1-title">
+  <h2 id="sec-1-title">🔥 Zagrijavanje</h2>
+  <p class="subtitle">Ova pitanja se NE broje u ocjenu. Samo za zagrijavanje!</p>
+
+  <div class="kartica kartica-warmup">
+    <div class="question-header">
+      <span style="font-size:20px">☀️</span>
+      <p><strong>W1.</strong> Koja je kemijska formula vode?
+      <button class="btn-tts" onclick="procitaj('Koja je kemijska formula vode?')" aria-label="Čitaj naglas">🔊</button></p>
+    </div>
+    <div role="radiogroup" aria-label="Warm-up pitanje 1">
+      <button class="quiz-option" onclick="warmupCheck(this,'w1','wrong')">CO₂</button>
+      <button class="quiz-option" onclick="warmupCheck(this,'w1','correct')">H₂O</button>
+      <button class="quiz-option" onclick="warmupCheck(this,'w1','wrong')">NaCl</button>
+    </div>
+    <div id="w1-fb" class="feedback" role="alert" aria-live="polite"></div>
+  </div>
+
+  <div class="kartica kartica-warmup">
+    <div class="question-header">
+      <span style="font-size:20px">☀️</span>
+      <p><strong>W2.</strong> Pluta li led na vodi?
+      <button class="btn-tts" onclick="procitaj('Pluta li led na vodi?')" aria-label="Čitaj naglas">🔊</button></p>
+    </div>
+    <div role="radiogroup" aria-label="Warm-up pitanje 2">
+      <button class="quiz-option" onclick="warmupCheck(this,'w2','correct')">Da, led pluta</button>
+      <button class="quiz-option" onclick="warmupCheck(this,'w2','wrong')">Ne, led tone</button>
+    </div>
+    <div id="w2-fb" class="feedback" role="alert" aria-live="polite"></div>
+  </div>
+
+  <div class="kartica kartica-warmup">
+    <div class="question-header">
+      <span style="font-size:20px">☀️</span>
+      <p><strong>W3.</strong> Što su biomolekule?
+      <button class="btn-tts" onclick="procitaj('Što su biomolekule?')" aria-label="Čitaj naglas">🔊</button></p>
+    </div>
+    <div role="radiogroup" aria-label="Warm-up pitanje 3">
+      <button class="quiz-option" onclick="warmupCheck(this,'w3','wrong')">Anorganske tvari u tlu</button>
+      <button class="quiz-option" onclick="warmupCheck(this,'w3','correct')">Molekule koje grade žive organizme</button>
+      <button class="quiz-option" onclick="warmupCheck(this,'w3','wrong')">Minerali u stijenama</button>
+    </div>
+    <div id="w3-fb" class="feedback" role="alert" aria-live="polite"></div>
+  </div>
+
+  <div class="encouragement" id="warmup-done" style="display:none">
+    <p>🌟 Super! Zagrijala si se! Sada idemo na prava pitanja.</p>
+    <p style="font-size:14px;margin-top:4px">Sjeti se: svaka greška je prilika za učenje!</p>
+  </div>
+
+  <div class="nav-btns">
+    <button class="btn btn-secondary" onclick="goTo(0)">← Natrag</button>
+    <button class="btn btn-primary" onclick="goTo(2)">Na pitanja ▶</button>
+  </div>
+</section>
+
+<!-- ========== SECTION 2: PITANJA 1-5 (Voda) ========== -->
+<section class="section" id="sec-2" aria-labelledby="sec-2-title">
+  <h2 id="sec-2-title">Pitanja 1–5: Svojstva vode i pH</h2>
+
+  <!-- Q1: Multiple Choice -->
+  <div class="kartica" id="q1-card">
+    <div class="question-header">
+      <span class="question-num">1</span>
+      <p><strong>Voda je polarna molekula. Što to znači?</strong>
+      <button class="btn-tts" onclick="procitaj('Voda je polarna molekula. Što to znači?')" aria-label="Čitaj naglas">🔊</button></p>
+    </div>
+    <div role="radiogroup" aria-label="Pitanje 1">
+      <button class="quiz-option" onclick="answerQ(1,this,0)">Voda se raspada na dva atoma</button>
+      <button class="quiz-option" onclick="answerQ(1,this,1)">Električni naboj je neravnomjerno raspoređen u molekuli</button>
+      <button class="quiz-option" onclick="answerQ(1,this,2)">Voda je električki neutralna i nema naboja</button>
+      <button class="quiz-option" onclick="answerQ(1,this,3)">Voda privlači samo metale</button>
+    </div>
+    <div id="q1-fb" class="feedback" role="alert" aria-live="polite"></div>
+  </div>
+
+  <!-- Q2: Multiple Choice -->
+  <div class="kartica" id="q2-card">
+    <div class="question-header">
+      <span class="question-num">2</span>
+      <p><strong>Zašto led pluta na vodi? (anomalija vode)</strong>
+      <button class="btn-tts" onclick="procitaj('Zašto led pluta na vodi?')" aria-label="Čitaj naglas">🔊</button></p>
+    </div>
+    <div role="radiogroup" aria-label="Pitanje 2">
+      <button class="quiz-option" onclick="answerQ(2,this,0)">Led je topliji od tekuće vode</button>
+      <button class="quiz-option" onclick="answerQ(2,this,1)">Gustoća leda je VEĆA od gustoće tekuće vode</button>
+      <button class="quiz-option" onclick="answerQ(2,this,2)">Gustoća leda je MANJA od gustoće tekuće vode</button>
+      <button class="quiz-option" onclick="answerQ(2,this,3)">Led sadrži zrak pa je lakši</button>
+    </div>
+    <div id="q2-fb" class="feedback" role="alert" aria-live="polite"></div>
+  </div>
+
+  <!-- Q3: True/False -->
+  <div class="kartica" id="q3-card">
+    <div class="question-header">
+      <span class="question-num">3</span>
+      <p><strong>Točno ili netočno: "Kohezija je privlačna sila među raznovrsnim molekulama."</strong>
+      <button class="btn-tts" onclick="procitaj('Točno ili netočno: Kohezija je privlačna sila među raznovrsnim molekulama.')" aria-label="Čitaj naglas">🔊</button></p>
+    </div>
+    <div role="radiogroup" aria-label="Pitanje 3">
+      <button class="quiz-option" onclick="answerQ(3,this,0)">Točno</button>
+      <button class="quiz-option" onclick="answerQ(3,this,1)">Netočno</button>
+    </div>
+    <div id="q3-fb" class="feedback" role="alert" aria-live="polite"></div>
+  </div>
+
+  <!-- Q4: Multiple Choice -->
+  <div class="kartica" id="q4-card">
+    <div class="question-header">
+      <span class="question-num">4</span>
+      <p><strong>Otopina ima pH = 3. Što to znači?</strong>
+      <button class="btn-tts" onclick="procitaj('Otopina ima pê-há tri. Što to znači?')" aria-label="Čitaj naglas">🔊</button></p>
+    </div>
+    <div role="radiogroup" aria-label="Pitanje 4">
+      <button class="quiz-option" onclick="answerQ(4,this,0)">Otopina je kisela</button>
+      <button class="quiz-option" onclick="answerQ(4,this,1)">Otopina je neutralna</button>
+      <button class="quiz-option" onclick="answerQ(4,this,2)">Otopina je lužnata</button>
+      <button class="quiz-option" onclick="answerQ(4,this,3)">pH = 3 ne postoji na skali</button>
+    </div>
+    <div id="q4-fb" class="feedback" role="alert" aria-live="polite"></div>
+  </div>
+
+  <!-- Q5: Multiple Choice -->
+  <div class="kartica" id="q5-card">
+    <div class="question-header">
+      <span class="question-num">5</span>
+      <p><strong>Zašto se ulje ne otapa u vodi?</strong>
+      <button class="btn-tts" onclick="procitaj('Zašto se ulje ne otapa u vodi?')" aria-label="Čitaj naglas">🔊</button></p>
+    </div>
+    <div role="radiogroup" aria-label="Pitanje 5">
+      <button class="quiz-option" onclick="answerQ(5,this,0)">Ulje je preteško za vodu</button>
+      <button class="quiz-option" onclick="answerQ(5,this,1)">Ulje je hidrofobno — ne otapa se u polarnim otapalima</button>
+      <button class="quiz-option" onclick="answerQ(5,this,2)">Voda je previše hladna za ulje</button>
+      <button class="quiz-option" onclick="answerQ(5,this,3)">Ulje ima isti pH kao voda</button>
+    </div>
+    <div id="q5-fb" class="feedback" role="alert" aria-live="polite"></div>
+  </div>
+
+  <div class="encouragement">💪 Super ideš! Riješila si prvu cjelinu. Nastavi tako!</div>
+  <div class="nav-btns">
+    <button class="btn btn-secondary" onclick="goTo(1)">← Natrag</button>
+    <button class="btn btn-primary" onclick="goTo(3)">Sljedeća cjelina ▶</button>
+  </div>
+</section>
+
+<!-- ========== SECTION 3: PITANJA 6-10 (Postanak života) ========== -->
+<section class="section" id="sec-3" aria-labelledby="sec-3-title">
+  <h2 id="sec-3-title">Pitanja 6–10: Postanak života i kemijska evolucija</h2>
+
+  <!-- Q6: Multiple Choice -->
+  <div class="kartica" id="q6-card">
+    <div class="question-header">
+      <span class="question-num">6</span>
+      <p><strong>Što je Francesco Redi dokazao svojim eksperimentom?</strong>
+      <button class="btn-tts" onclick="procitaj('Što je Frančesko Redi dokazao svojim eksperimentom?')" aria-label="Čitaj naglas">🔊</button></p>
+    </div>
+    <div role="radiogroup" aria-label="Pitanje 6">
+      <button class="quiz-option" onclick="answerQ(6,this,0)">Da crvi nastaju spontano iz mesa</button>
+      <button class="quiz-option" onclick="answerQ(6,this,1)">Da se crvi razvijaju iz jaja muha, a ne spontano</button>
+      <button class="quiz-option" onclick="answerQ(6,this,2)">Da mikroorganizmi mogu preživjeti u vakuumu</button>
+      <button class="quiz-option" onclick="answerQ(6,this,3)">Da voda može stvoriti žive organizme</button>
+    </div>
+    <div id="q6-fb" class="feedback" role="alert" aria-live="polite"></div>
+  </div>
+
+  <!-- Q7: Multiple Choice -->
+  <div class="kartica" id="q7-card">
+    <div class="question-header">
+      <span class="question-num">7</span>
+      <p><strong>Louis Pasteur je koristi S-boce (labuđi vrat) da dokaže:</strong>
+      <button class="btn-tts" onclick="procitaj('Louis Pasteur je koristio es-boce da dokaže...')" aria-label="Čitaj naglas">🔊</button></p>
+    </div>
+    <div role="radiogroup" aria-label="Pitanje 7">
+      <button class="quiz-option" onclick="answerQ(7,this,0)">Da život nastaje spontano iz zraka</button>
+      <button class="quiz-option" onclick="answerQ(7,this,1)">Da mikroorganizmi dolaze iz zraka, ne nastaju spontano</button>
+      <button class="quiz-option" onclick="answerQ(7,this,2)">Da voda može biti sterilna</button>
+      <button class="quiz-option" onclick="answerQ(7,this,3)">Da se bakterije razmnožavaju diobom</button>
+    </div>
+    <div id="q7-fb" class="feedback" role="alert" aria-live="polite"></div>
+  </div>
+
+  <!-- Q8: Match pairs -->
+  <div class="kartica" id="q8-card">
+    <div class="question-header">
+      <span class="question-num">8</span>
+      <p><strong>Spoji znanstvenika s njegovim doprinosom:</strong>
+      <button class="btn-tts" onclick="procitaj('Spoji znanstvenika s njegovim doprinosom.')" aria-label="Čitaj naglas">🔊</button></p>
+    </div>
+    <div style="margin:12px 0">
+      <div style="display:flex;gap:8px;align-items:center;margin:8px 0;flex-wrap:wrap">
+        <span class="match-item match-item-left" style="flex:1;min-width:140px">Francesco Redi</span>
+        <select class="match-select" id="match-8a" aria-label="Odaberi doprinos za Redija" style="flex:1;min-width:140px">
+          <option value="">— Odaberi —</option>
+          <option value="a">Hipoteza o praatmosferi</option>
+          <option value="b">Eksperiment s mesom i muhama</option>
+          <option value="c">S-boce (labuđi vrat)</option>
+          <option value="d">Pokus s električnim pražnjenjem</option>
+        </select>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;margin:8px 0;flex-wrap:wrap">
+        <span class="match-item match-item-left" style="flex:1;min-width:140px">Louis Pasteur</span>
+        <select class="match-select" id="match-8b" aria-label="Odaberi doprinos za Pasteura" style="flex:1;min-width:140px">
+          <option value="">— Odaberi —</option>
+          <option value="a">Hipoteza o praatmosferi</option>
+          <option value="b">Eksperiment s mesom i muhama</option>
+          <option value="c">S-boce (labuđi vrat)</option>
+          <option value="d">Pokus s električnim pražnjenjem</option>
+        </select>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;margin:8px 0;flex-wrap:wrap">
+        <span class="match-item match-item-left" style="flex:1;min-width:140px">Oparin i Haldane</span>
+        <select class="match-select" id="match-8c" aria-label="Odaberi doprinos za Oparina i Haldanea" style="flex:1;min-width:140px">
+          <option value="">— Odaberi —</option>
+          <option value="a">Hipoteza o praatmosferi</option>
+          <option value="b">Eksperiment s mesom i muhama</option>
+          <option value="c">S-boce (labuđi vrat)</option>
+          <option value="d">Pokus s električnim pražnjenjem</option>
+        </select>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;margin:8px 0;flex-wrap:wrap">
+        <span class="match-item match-item-left" style="flex:1;min-width:140px">Miller i Urey</span>
+        <select class="match-select" id="match-8d" aria-label="Odaberi doprinos za Millera i Ureya" style="flex:1;min-width:140px">
+          <option value="">— Odaberi —</option>
+          <option value="a">Hipoteza o praatmosferi</option>
+          <option value="b">Eksperiment s mesom i muhama</option>
+          <option value="c">S-boce (labuđi vrat)</option>
+          <option value="d">Pokus s električnim pražnjenjem</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" style="margin-top:12px;width:100%" onclick="checkMatch8()">Provjeri odgovore</button>
+    </div>
+    <div id="q8-fb" class="feedback" role="alert" aria-live="polite"></div>
+  </div>
+
+  <!-- Q9: Sort steps -->
+  <div class="kartica" id="q9-card">
+    <div class="question-header">
+      <span class="question-num">9</span>
+      <p><strong>Poredaj korake kemijske evolucije od prvog do zadnjeg:</strong>
+      <button class="btn-tts" onclick="procitaj('Poredaj korake kemijske evolucije od prvog do zadnjeg.')" aria-label="Čitaj naglas">🔊</button></p>
+    </div>
+    <p style="font-size:14px;color:var(--text-light);margin-bottom:8px">Koristi strelice ↑↓ za pomicanje.</p>
+    <div id="sort-container">
+      <div class="sort-item" data-order="3">
+        <span>Protocelularni sustavi (koacervati, mikrosfer)</span>
+        <div class="sort-arrows">
+          <button class="sort-arrow-btn" onclick="moveItem(this,-1)" aria-label="Pomakni gore">↑</button>
+          <button class="sort-arrow-btn" onclick="moveItem(this,1)" aria-label="Pomakni dolje">↓</button>
+        </div>
+      </div>
+      <div class="sort-item" data-order="1">
+        <span>Sinteza monomera (aminokiseline, nukleotidi)</span>
+        <div class="sort-arrows">
+          <button class="sort-arrow-btn" onclick="moveItem(this,-1)" aria-label="Pomakni gore">↑</button>
+          <button class="sort-arrow-btn" onclick="moveItem(this,1)" aria-label="Pomakni dolje">↓</button>
+        </div>
+      </div>
+      <div class="sort-item" data-order="4">
+        <span>Prve stanice (prokarioti)</span>
+        <div class="sort-arrows">
+          <button class="sort-arrow-btn" onclick="moveItem(this,-1)" aria-label="Pomakni gore">↑</button>
+          <button class="sort-arrow-btn" onclick="moveItem(this,1)" aria-label="Pomakni dolje">↓</button>
+        </div>
+      </div>
+      <div class="sort-item" data-order="2">
+        <span>Nastanak polimera (proteini, nukleinske kiseline)</span>
+        <div class="sort-arrows">
+          <button class="sort-arrow-btn" onclick="moveItem(this,-1)" aria-label="Pomakni gore">↑</button>
+          <button class="sort-arrow-btn" onclick="moveItem(this,1)" aria-label="Pomakni dolje">↓</button>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-primary" style="margin-top:12px;width:100%" onclick="checkSort9()">Provjeri redoslijed</button>
+    <div id="q9-fb" class="feedback" role="alert" aria-live="polite"></div>
+  </div>
+
+  <!-- Q10: Multiple Choice -->
+  <div class="kartica" id="q10-card">
+    <div class="question-header">
+      <span class="question-num">10</span>
+      <p><strong>Miller-Ureyev eksperiment je dokazao da:</strong>
+      <button class="btn-tts" onclick="procitaj('Miller Ureyev eksperiment je dokazao...')" aria-label="Čitaj naglas">🔊</button></p>
+    </div>
+    <div role="radiogroup" aria-label="Pitanje 10">
+      <button class="quiz-option" onclick="answerQ(10,this,0)">Životne stanice mogu nastati iz mrtve tvari u laboratoriju</button>
+      <button class="quiz-option" onclick="answerQ(10,this,1)">Aminokiseline mogu nastati iz jednostavnih plinova uz energiju</button>
+      <button class="quiz-option" onclick="answerQ(10,this,2)">DNA se može sintetizirati iz vode</button>
+      <button class="quiz-option" onclick="answerQ(10,this,3)">Život je nastao iz svemira (panspermija)</button>
+    </div>
+    <div id="q10-fb" class="feedback" role="alert" aria-live="polite"></div>
+  </div>
+
+  <div class="encouragement">🎯 Odlično napreduješ! Još samo jedna cjelina — možeš to!</div>
+  <div class="nav-btns">
+    <button class="btn btn-secondary" onclick="goTo(2)">← Natrag</button>
+    <button class="btn btn-primary" onclick="goTo(4)">Sljedeća cjelina ▶</button>
+  </div>
+</section>
+
+<!-- ========== SECTION 4: PITANJA 11-15 (Biomolekule) ========== -->
+<section class="section" id="sec-4" aria-labelledby="sec-4-title">
+  <h2 id="sec-4-title">Pitanja 11–15: Biomolekule</h2>
+
+  <!-- Q11: Multiple Choice -->
+  <div class="kartica" id="q11-card">
+    <div class="question-header">
+      <span class="question-num">11</span>
+      <p><strong>Koje su 4 glavne skupine biomolekula?</strong>
+      <button class="btn-tts" onclick="procitaj('Koje su četiri glavne skupine biomolekula?')" aria-label="Čitaj naglas">🔊</button></p>
+    </div>
+    <div role="radiogroup" aria-label="Pitanje 11">
+      <button class="quiz-option" onclick="answerQ(11,this,0)">Lipidi, ugljikohidrati, proteini, nukleinske kiseline</button>
+      <button class="quiz-option" onclick="answerQ(11,this,1)">Minerali, vitamini, sol, voda</button>
+      <button class="quiz-option" onclick="answerQ(11,this,2)">Kisik, ugljik, vodik, dušik</button>
+      <button class="quiz-option" onclick="answerQ(11,this,3)">Glukoza, fruktoza, saharoza, celuloza</button>
+    </div>
+    <div id="q11-fb" class="feedback" role="alert" aria-live="polite"></div>
+  </div>
+
+  <!-- Q12: True/False -->
+  <div class="kartica" id="q12-card">
+    <div class="question-header">
+      <span class="question-num">12</span>
+      <p><strong>Točno ili netočno: "Proteini su polimeri izgrađeni od aminokiselina."</strong>
+      <button class="btn-tts" onclick="procitaj('Točno ili netočno: Proteini su polimeri izgrađeni od aminokiselina.')" aria-label="Čitaj naglas">🔊</button></p>
+    </div>
+    <div role="radiogroup" aria-label="Pitanje 12">
+      <button class="quiz-option" onclick="answerQ(12,this,0)">Točno</button>
+      <button class="quiz-option" onclick="answerQ(12,this,1)">Netočno</button>
+    </div>
+    <div id="q12-fb" class="feedback" role="alert" aria-live="polite"></div>
+  </div>
+
+  <!-- Q13: Match pairs -->
+  <div class="kartica" id="q13-card">
+    <div class="question-header">
+      <span class="question-num">13</span>
+      <p><strong>Spoji biomolekulu s njezinom ulogom:</strong>
+      <button class="btn-tts" onclick="procitaj('Spoji biomolekulu s njezinom ulogom.')" aria-label="Čitaj naglas">🔊</button></p>
+    </div>
+    <div style="margin:12px 0">
+      <div style="display:flex;gap:8px;align-items:center;margin:8px 0;flex-wrap:wrap">
+        <span class="match-item match-item-left" style="flex:1;min-width:120px">Lipidi</span>
+        <select class="match-select" id="match-13a" aria-label="Odaberi ulogu lipida" style="flex:1;min-width:150px">
+          <option value="">— Odaberi —</option>
+          <option value="a">Pohranjuju energiju, grade membrane</option>
+          <option value="b">Daju brzu energiju</option>
+          <option value="c">Čuvaju genetsku informaciju</option>
+          <option value="d">Ubrzavaju reakcije (enzimi)</option>
+        </select>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;margin:8px 0;flex-wrap:wrap">
+        <span class="match-item match-item-left" style="flex:1;min-width:120px">Ugljikohidrati</span>
+        <select class="match-select" id="match-13b" aria-label="Odaberi ulogu ugljikohidrata" style="flex:1;min-width:150px">
+          <option value="">— Odaberi —</option>
+          <option value="a">Pohranjuju energiju, grade membrane</option>
+          <option value="b">Daju brzu energiju</option>
+          <option value="c">Čuvaju genetsku informaciju</option>
+          <option value="d">Ubrzavaju reakcije (enzimi)</option>
+        </select>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;margin:8px 0;flex-wrap:wrap">
+        <span class="match-item match-item-left" style="flex:1;min-width:120px">Proteini</span>
+        <select class="match-select" id="match-13c" aria-label="Odaberi ulogu proteina" style="flex:1;min-width:150px">
+          <option value="">— Odaberi —</option>
+          <option value="a">Pohranjuju energiju, grade membrane</option>
+          <option value="b">Daju brzu energiju</option>
+          <option value="c">Čuvaju genetsku informaciju</option>
+          <option value="d">Ubrzavaju reakcije (enzimi)</option>
+        </select>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;margin:8px 0;flex-wrap:wrap">
+        <span class="match-item match-item-left" style="flex:1;min-width:120px">Nukleinske kiseline</span>
+        <select class="match-select" id="match-13d" aria-label="Odaberi ulogu nukleinskih kiselina" style="flex:1;min-width:150px">
+          <option value="">— Odaberi —</option>
+          <option value="a">Pohranjuju energiju, grade membrane</option>
+          <option value="b">Daju brzu energiju</option>
+          <option value="c">Čuvaju genetsku informaciju</option>
+          <option value="d">Ubrzavaju reakcije (enzimi)</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" style="margin-top:12px;width:100%" onclick="checkMatch13()">Provjeri odgovore</button>
+    </div>
+    <div id="q13-fb" class="feedback" role="alert" aria-live="polite"></div>
+  </div>
+
+  <!-- Q14: Multiple Choice (harder) -->
+  <div class="kartica" id="q14-card">
+    <div class="question-header">
+      <span class="question-num">14</span>
+      <p><strong>Ako je pH otopine = 4, koliki je pOH?</strong>
+      <button class="btn-tts" onclick="procitaj('Ako je pê-há otopine jednako četiri, koliki je pê-ó-há?')" aria-label="Čitaj naglas">🔊</button></p>
+    </div>
+    <p style="font-size:14px;color:var(--text-light);margin-bottom:8px">💡 Hint: pH + pOH = 14</p>
+    <div role="radiogroup" aria-label="Pitanje 14">
+      <button class="quiz-option" onclick="answerQ(14,this,0)">pOH = 4</button>
+      <button class="quiz-option" onclick="answerQ(14,this,1)">pOH = 10</button>
+      <button class="quiz-option" onclick="answerQ(14,this,2)">pOH = 7</button>
+      <button class="quiz-option" onclick="answerQ(14,this,3)">pOH = 14</button>
+    </div>
+    <div id="q14-fb" class="feedback" role="alert" aria-live="polite"></div>
+  </div>
+
+  <!-- Q15: Application question -->
+  <div class="kartica" id="q15-card">
+    <div class="question-header">
+      <span class="question-num">15</span>
+      <p><strong>Zašto je anomalija vode KLJUČNA za život na Zemlji?</strong>
+      <button class="btn-tts" onclick="procitaj('Zašto je anomalija vode ključna za život na Zemlji?')" aria-label="Čitaj naglas">🔊</button></p>
+    </div>
+    <div role="radiogroup" aria-label="Pitanje 15">
+      <button class="quiz-option" onclick="answerQ(15,this,0)">Jer je led ljepši od tekuće vode</button>
+      <button class="quiz-option" onclick="answerQ(15,this,1)">Jer led na površini izolira vodu ispod i organizmi preživljavaju zimu</button>
+      <button class="quiz-option" onclick="answerQ(15,this,2)">Jer led stvara oblike koji pomažu biljkama rasti</button>
+      <button class="quiz-option" onclick="answerQ(15,this,3)">Jer se voda ne može smrznuti do kraja</button>
+    </div>
+    <div id="q15-fb" class="feedback" role="alert" aria-live="polite"></div>
+  </div>
+
+  <div class="encouragement">🏁 Gotovo! Bravo! Sada pogledajmo tvoje rezultate.</div>
+  <div class="nav-btns">
+    <button class="btn btn-secondary" onclick="goTo(3)">← Natrag</button>
+    <button class="btn btn-green" onclick="goTo(5)">Pogledaj rezultate ▶</button>
+  </div>
+</section>
+
+<!-- ========== SECTION 5: REFLEKSIJA ========== -->
+<section class="section" id="sec-5" aria-labelledby="sec-5-title">
+  <h2 id="sec-5-title">🧠 Metakognitivna refleksija</h2>
+  <p class="subtitle">Prije rezultata — razmisli o svom iskustvu!</p>
+
+  <div class="kartica kartica-info">
+    <p><strong>Koja pitanja su ti bila najlakša?</strong></p>
+    <p style="font-size:14px;color:var(--text-light);margin-top:4px">Ovo pomaže da prepoznaš svoje jake strane.</p>
+    <div style="margin-top:8px">
+      <button class="quiz-option" onclick="this.classList.toggle('selected')">Svojstva vode</button>
+      <button class="quiz-option" onclick="this.classList.toggle('selected')">pH i otapalo</button>
+      <button class="quiz-option" onclick="this.classList.toggle('selected')">Postanak života</button>
+      <button class="quiz-option" onclick="this.classList.toggle('selected')">Kemijska evolucija</button>
+      <button class="quiz-option" onclick="this.classList.toggle('selected')">Biomolekule</button>
+    </div>
+  </div>
+
+  <div class="kartica kartica-info">
+    <p><strong>Na kojim pitanjima si se osjećala nesigurno?</strong></p>
+    <p style="font-size:14px;color:var(--text-light);margin-top:4px">Ovo razvija self-awareness — i to je SUPER vještina!</p>
+    <div style="margin-top:8px">
+      <button class="quiz-option" onclick="this.classList.toggle('selected')">Svojstva vode</button>
+      <button class="quiz-option" onclick="this.classList.toggle('selected')">pH i otapalo</button>
+      <button class="quiz-option" onclick="this.classList.toggle('selected')">Postanak života</button>
+      <button class="quiz-option" onclick="this.classList.toggle('selected')">Kemijska evolucija</button>
+      <button class="quiz-option" onclick="this.classList.toggle('selected')">Biomolekule</button>
+    </div>
+  </div>
+
+  <div class="nav-btns">
+    <button class="btn btn-green" onclick="showResults()" style="width:100%">Prikaži rezultate 🏆</button>
+  </div>
+</section>
+
+<!-- ========== SECTION 6: RESULTS ========== -->
+<section class="section" id="sec-6" aria-labelledby="sec-6-title">
+  <h2 id="sec-6-title">🏆 Tvoji rezultati</h2>
+
+  <div class="result-card" style="text-align:center">
+    <p style="font-size:18px;font-weight:600">Točno odgovorenih pitanja:</p>
+    <div class="result-score" id="result-score">0 / 15</div>
+    <div class="result-bar">
+      <div class="result-bar-fill" id="result-bar-fill" style="width:0%;background:var(--teal)"></div>
+    </div>
+    <p id="result-percent" style="font-size:16px;color:var(--text-light)">0%</p>
+  </div>
+
+  <div class="kartica kartica-teal" id="result-message" style="text-align:center">
+    <p id="result-msg-text" style="font-size:17px"></p>
+  </div>
+
+  <h3 style="margin-top:24px">📋 Pregled svih pitanja:</h3>
+  <div id="review-container"></div>
+
+  <div id="repeat-suggestions" class="kartica kartica-info" style="display:none">
+    <h3>📚 Što ponoviti?</h3>
+    <div id="repeat-list"></div>
+  </div>
+
+  <div class="nav-btns" style="margin-top:24px">
+    <button class="btn btn-primary" onclick="location.reload()" style="width:100%">🔄 Pokušaj ponovo</button>
+  </div>
+  <p style="text-align:center;margin-top:12px;font-size:14px;color:var(--text-light)">Svaki pokušaj gradi nove putove u tvom mozgu! 🧠✨</p>
+</section>
+
+</main>
+
+<script>
+// ===== DATA =====
+const totalQ = 15;
+const answers = {};
+const correctAnswers = {
+  1: 1, 2: 2, 3: 1, 4: 0, 5: 1,
+  6: 1, 7: 1, 10: 1, 11: 0, 12: 0, 14: 1, 15: 1
+};
+const explanations = {
+  1: {
+    correct: '✅ Točno! Polarna molekula znači da joj je električni naboj neravnomjerno raspoređen — kisik privlači elektrone jače od vodika.',
+    wrong: '❌ Nije točno. Polarna molekula znači da joj je naboj neravnomjerno raspoređen. Kisik privlači elektrone jače od vodika, pa je jedna strana molekule negativnija.'
+  },
+  2: {
+    correct: '✅ Točno! Led ima MANJU gustoću od tekuće vode — molekule u ledu su rasporedom "razmaknute" i zauzimaju više prostora.',
+    wrong: '❌ Zapravo, gustoća leda je MANJA od gustoće tekuće vode. Led pluta jer njegove molekule zauzimaju više prostora nego u tekućem stanju.'
+  },
+  3: {
+    correct: '❌ Netočno je ta tvrdnja — i to si prepoznala! Kohezija je sila među ISTOVRSNIM molekulama (voda-voda). Adhezija je među RAZNOVRSNIM (voda-staklo).',
+    wrong: '⚠️ Ova tvrdnja je zapravo NETOČNA! Kohezija je sila među ISTOVRSNIM molekulama (voda-voda). Ti misliš na ADHEZIJU — silu među raznovrsnim molekulama.'
+  },
+  4: {
+    correct: '✅ Točno! pH 3 je ispod 7, što znači da je otopina KISELA. Što niži pH, to kiselije!',
+    wrong: '❌ pH 3 je ispod 7, a sve ispod 7 je KISELO. Zapamti: ispod 7 = kiselo, 7 = neutralno, iznad 7 = lužnato.'
+  },
+  5: {
+    correct: '✅ Točno! Ulje je hidrofobno ("boji se vode") — to su nepolarne molekule koje se ne miješaju s polarnom vodom.',
+    wrong: '❌ Ulje se ne otapa u vodi jer je HIDROFOBNO — nepolarne molekule ulja ne privlače polarne molekule vode.'
+  },
+  6: {
+    correct: '✅ Točno! Redi je 1668. dokazao da crvi ne nastaju spontano iz mesa, nego se razvijaju iz jaja muha. Pokus s otvorenim i zatvorenim borcanima.',
+    wrong: '❌ Redi je dokazao da se crvi razvijaju iz JAJA MUHA, ne spontano iz mesa. Koristio je borcane s mesom — zatvorene borcane muhe nisu mogle doseći i u njima NIJE bilo crva.'
+  },
+  7: {
+    correct: '✅ Točno! Pasteur je S-bocama ("labuđi vrat") dokazao da mikroorganizmi dolaze iz zraka, a ne nastaju spontano. Time je konačno pobio teoriju spontane generacije.',
+    wrong: '❌ Pasteur je dokazao da mikroorganizmi dolaze IZ ZRAKA, ne nastaju spontano. Zakrivljeni vrat boce je puštao zrak ali zaustavljao čestice iz zraka.'
+  },
+  10: {
+    correct: '✅ Točno! Miller i Urey su 1953. pokazali da se aminokiseline mogu sintetizirati iz jednostavnih plinova (metan, amonijak, vodik, vodena para) uz električno pražnjenje.',
+    wrong: '❌ Miller-Ureyev eksperiment je dokazao da AMINOKISELINE mogu nastati iz jednostavnih plinova (metan, amonijak, vodik, vodena para) uz energiju (električno pražnjenje). Nisu stvorili stanice!'
+  },
+  11: {
+    correct: '✅ Točno! Četiri glavne skupine biomolekula su: lipidi, ugljikohidrati, proteini i nukleinske kiseline. Zapamti ih — pitanje za svaki ispit!',
+    wrong: '❌ Četiri glavne skupine biomolekula su: LIPIDI, UGLJIKOHIDRATI, PROTEINI i NUKLEINSKE KISELINE. Kisik, ugljik itd. su kemijski elementi, a minerali nisu biomolekule.'
+  },
+  12: {
+    correct: '✅ Točno! Proteini JESU polimeri (dugački lanci) izgrađeni od aminokiselina. Postoji 20 različitih aminokiselina.',
+    wrong: '⚠️ Zapravo je TOČNO! Proteini su polimeri izgrađeni od aminokiselina. 20 različitih aminokiselina se kombinira u dugačke lance.'
+  },
+  14: {
+    correct: '✅ Točno! pH + pOH = 14, dakle 4 + pOH = 14, pOH = 10.',
+    wrong: '❌ Zapamti: pH + pOH = 14. Dakle ako je pH = 4, onda pOH = 14 - 4 = 10.'
+  },
+  15: {
+    correct: '✅ Točno! Jer led pluta i stvara izolacijski sloj na površini jezera. Ispod njega voda ostaje tekuća i organizmi preživljavaju zimu.',
+    wrong: '❌ Anomalija vode je ključna jer led PLUTA na površini i izolira vodu ispod. Bez toga bi jezera zamrzla do dna i sav život bi uginuo!'
+  }
+};
+
+let currentSection = 0;
+const totalSections = 7;
+let warmupAnswered = 0;
+
+// ===== NAVIGATION =====
+function goTo(sec) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('sec-' + sec).classList.add('active');
+  currentSection = sec;
+  updateProgress();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function updateProgress() {
+  const pct = Math.round((currentSection / (totalSections - 1)) * 100);
+  document.getElementById('progress-bar').style.width = pct + '%';
+  document.getElementById('main-progress').setAttribute('aria-valuenow', pct);
+}
+
+// ===== WARMUP =====
+function warmupCheck(btn, id, result) {
+  const parent = btn.parentElement;
+  const btns = parent.querySelectorAll('.quiz-option');
+  btns.forEach(b => { b.disabled = true; });
+  const fb = document.getElementById(id + '-fb');
+  if (result === 'correct') {
+    btn.classList.add('correct');
+    fb.className = 'feedback feedback-correct show';
+    fb.innerHTML = '✅ Točno! Bravo!';
+  } else {
+    btn.classList.add('wrong');
+    btns.forEach(b => { if (b !== btn) b.disabled = false; });
+    // mark correct
+    const correctBtn = [...btns].find(b => b.getAttribute('onclick').includes("'correct'"));
+    if (correctBtn) correctBtn.classList.add('correct');
+    btns.forEach(b => b.disabled = true);
+    fb.className = 'feedback feedback-wrong show';
+    fb.innerHTML = '❌ Nije točno, ali ne brini — ovo je samo zagrijavanje!';
+  }
+  warmupAnswered++;
+  if (warmupAnswered >= 3) {
+    document.getElementById('warmup-done').style.display = 'block';
+  }
+}
+
+// ===== MULTIPLE CHOICE =====
+function answerQ(qNum, btn, choiceIdx) {
+  if (answers[qNum] !== undefined) return;
+  answers[qNum] = choiceIdx;
+  const parent = btn.parentElement;
+  const btns = parent.querySelectorAll('.quiz-option');
+  btns.forEach(b => b.disabled = true);
+  const fb = document.getElementById('q' + qNum + '-fb');
+  const isCorrect = correctAnswers[qNum] === choiceIdx;
+  if (isCorrect) {
+    btn.classList.add('correct');
+    fb.className = 'feedback feedback-correct show';
+    fb.innerHTML = explanations[qNum].correct;
+  } else {
+    btn.classList.add('wrong');
+    // highlight correct
+    const correctIdx = correctAnswers[qNum];
+    btns[correctIdx].classList.add('correct');
+    fb.className = 'feedback feedback-wrong show';
+    fb.innerHTML = explanations[qNum].wrong;
+  }
+}
+
+// ===== MATCH Q8 =====
+function checkMatch8() {
+  if (answers[8] !== undefined) return;
+  const a = document.getElementById('match-8a').value;
+  const b = document.getElementById('match-8b').value;
+  const c = document.getElementById('match-8c').value;
+  const d = document.getElementById('match-8d').value;
+  if (!a || !b || !c || !d) {
+    alert('Molim te odaberi odgovor za svakog znanstvenika!');
+    return;
+  }
+  // Correct: Redi=b, Pasteur=c, Oparin/Haldane=a, Miller/Urey=d
+  let score = 0;
+  if (a === 'b') score++;
+  if (b === 'c') score++;
+  if (c === 'a') score++;
+  if (d === 'd') score++;
+  answers[8] = {a, b, c, d, score};
+  // disable selects
+  document.querySelectorAll('#q8-card select').forEach(s => s.disabled = true);
+  const fb = document.getElementById('q8-fb');
+  if (score === 4) {
+    fb.className = 'feedback feedback-correct show';
+    fb.innerHTML = '✅ Sve točno! Redi = meso i muhe, Pasteur = S-boce, Oparin/Haldane = hipoteza o praatmosferi, Miller/Urey = električno pražnjenje.';
+  } else if (score >= 2) {
+    fb.className = 'feedback feedback-partial show';
+    fb.innerHTML = '⚠️ ' + score + '/4 točno. Točni odgovori: Redi → meso i muhe, Pasteur → S-boce (labuđi vrat), Oparin/Haldane → hipoteza o praatmosferi, Miller/Urey → pokus s električnim pražnjenjem. Gotovo si uspjela!';
+  } else {
+    fb.className = 'feedback feedback-wrong show';
+    fb.innerHTML = '❌ Točni odgovori: Redi → eksperiment s mesom i muhama (1668), Pasteur → S-boce (1859), Oparin/Haldane → hipoteza o praatmosferi (1920-ih), Miller/Urey → pokus s električnim pražnjenjem (1953). Ovo je česta zbrka — pokušaj zapamtiti po kronološkom redu!';
+  }
+}
+
+// ===== SORT Q9 =====
+function moveItem(btn, direction) {
+  const item = btn.closest('.sort-item');
+  const container = document.getElementById('sort-container');
+  const items = [...container.children];
+  const idx = items.indexOf(item);
+  if (direction === -1 && idx > 0) {
+    container.insertBefore(item, items[idx - 1]);
+  } else if (direction === 1 && idx < items.length - 1) {
+    container.insertBefore(items[idx + 1], item);
+  }
+}
+
+function checkSort9() {
+  if (answers[9] !== undefined) return;
+  const container = document.getElementById('sort-container');
+  const items = [...container.children];
+  const userOrder = items.map(i => parseInt(i.dataset.order));
+  const correctOrder = [1, 2, 3, 4];
+  let score = 0;
+  for (let i = 0; i < 4; i++) {
+    if (userOrder[i] === correctOrder[i]) score++;
+  }
+  answers[9] = {userOrder, score};
+  // disable arrows
+  container.querySelectorAll('.sort-arrow-btn').forEach(b => b.disabled = true);
+  const fb = document.getElementById('q9-fb');
+  if (score === 4) {
+    fb.className = 'feedback feedback-correct show';
+    fb.innerHTML = '✅ Savršen redoslijed! Monomeri → Polimeri → Protocelularni sustavi → Prve stanice. Tako se život razvijao!';
+  } else if (score >= 2) {
+    fb.className = 'feedback feedback-partial show';
+    fb.innerHTML = '⚠️ ' + score + '/4 na pravom mjestu. Točan redoslijed: 1) Monomeri (aminokiseline) → 2) Polimeri (proteini, NK) → 3) Protocelularni sustavi (koacervati) → 4) Prve stanice (prokarioti). Zapamti: od malog prema velikom!';
+  } else {
+    fb.className = 'feedback feedback-wrong show';
+    fb.innerHTML = '❌ Točan redoslijed: 1) Sinteza monomera → 2) Nastanak polimera → 3) Protocelularni sustavi → 4) Prve stanice. Razmišljaj o tome kao o gradnji: prvo cigle, pa zidovi, pa sobe, pa kuća!';
+  }
+}
+
+// ===== MATCH Q13 =====
+function checkMatch13() {
+  if (answers[13] !== undefined) return;
+  const a = document.getElementById('match-13a').value;
+  const b = document.getElementById('match-13b').value;
+  const c = document.getElementById('match-13c').value;
+  const d = document.getElementById('match-13d').value;
+  if (!a || !b || !c || !d) {
+    alert('Molim te odaberi odgovor za svaku biomolekulu!');
+    return;
+  }
+  // Correct: Lipidi=a, Ugljikohidrati=b, Proteini=d, NK=c
+  let score = 0;
+  if (a === 'a') score++;
+  if (b === 'b') score++;
+  if (c === 'd') score++;
+  if (d === 'c') score++;
+  answers[13] = {a, b, c, d, score};
+  document.querySelectorAll('#q13-card select').forEach(s => s.disabled = true);
+  const fb = document.getElementById('q13-fb');
+  if (score === 4) {
+    fb.className = 'feedback feedback-correct show';
+    fb.innerHTML = '✅ Sve točno! Lipidi = energija i membrane, Ugljikohidrati = brza energija, Proteini = enzimi, Nukleinske kiseline = genetska informacija.';
+  } else if (score >= 2) {
+    fb.className = 'feedback feedback-partial show';
+    fb.innerHTML = '⚠️ ' + score + '/4 točno. Točno: Lipidi → energija i membrane, Ugljikohidrati → brza energija, Proteini → ubrzavaju reakcije (enzimi), Nukleinske kiseline → čuvaju genetsku informaciju (DNA/RNA).';
+  } else {
+    fb.className = 'feedback feedback-wrong show';
+    fb.innerHTML = '❌ Točni odgovori: Lipidi → pohranjuju energiju i grade membrane, Ugljikohidrati → daju brzu energiju, Proteini → ubrzavaju reakcije (enzimi), Nukleinske kiseline → čuvaju genetsku informaciju. Pokušaj zapamtiti tako: LUPI NK — Lipidi, Ugljikohidrati, Proteini, Nukleinske kiseline!';
+  }
+}
+
+// ===== RESULTS =====
+function showResults() {
+  goTo(6);
+  let correct = 0;
+  const topicScores = {voda: 0, vodaMax: 5, postanak: 0, postanakMax: 5, bio: 0, bioMax: 5};
+
+  // Q1-5: Water
+  for (let i = 1; i <= 5; i++) {
+    if (answers[i] !== undefined && correctAnswers[i] === answers[i]) {
+      correct++; topicScores.voda++;
+    }
+  }
+  // Q6-7: Origin of life
+  for (let i = 6; i <= 7; i++) {
+    if (answers[i] !== undefined && correctAnswers[i] === answers[i]) {
+      correct++; topicScores.postanak++;
+    }
+  }
+  // Q8: Match
+  if (answers[8]) { correct += answers[8].score; topicScores.postanak += answers[8].score; topicScores.postanakMax += 3; }
+  else { topicScores.postanakMax += 3; }
+  // Q9: Sort
+  if (answers[9]) {
+    if (answers[9].score === 4) { correct++; topicScores.postanak++; }
+    // partial credit: if 3+ correct, count as 1
+    else if (answers[9].score >= 3) { correct += 0.5; topicScores.postanak += 0.5; }
+  }
+  // Q10: MC
+  if (answers[10] !== undefined && correctAnswers[10] === answers[10]) {
+    correct++; topicScores.postanak++;
+  }
+  // Adjust postanak max for match (was 4 items = 4 pts but counted above)
+  // Recalculate properly
+  // Let's simplify: Q6,7,10 = 3 MC + Q8 match(max 4) + Q9 sort(max 1) = total max ~8 for postanak
+  // But let's keep it simple for display: just count per question
+
+  // Q11-15: Bio
+  for (const i of [11, 12, 14, 15]) {
+    if (answers[i] !== undefined && correctAnswers[i] === answers[i]) {
+      correct++; topicScores.bio++;
+    }
+  }
+  // Q13: Match
+  if (answers[13]) { correct += answers[13].score; topicScores.bio += answers[13].score; }
+
+  // Total possible: Q1-7(7) + Q8(4) + Q9(1) + Q10(1) + Q11-12(2) + Q13(4) + Q14-15(2) = 21 max with match
+  // But for simplicity, let's present as "15 pitanja" with partial scores
+  // Actually let's cap at 15 for display
+  const maxScore = 15;
+  const displayCorrect = Math.min(Math.round(correct), maxScore);
+  const pct = Math.round((correct / 21) * 100); // actual percentage
+
+  document.getElementById('result-score').textContent = displayCorrect + ' / 15';
+  document.getElementById('result-bar-fill').style.width = pct + '%';
+  document.getElementById('result-percent').textContent = pct + '%';
+
+  // Color bar
+  const barFill = document.getElementById('result-bar-fill');
+  if (pct >= 90) barFill.style.background = 'var(--green)';
+  else if (pct >= 75) barFill.style.background = 'var(--teal)';
+  else if (pct >= 60) barFill.style.background = 'var(--orange)';
+  else barFill.style.background = 'var(--red)';
+
+  // Message
+  const msgEl = document.getElementById('result-msg-text');
+  if (pct >= 90) {
+    msgEl.innerHTML = '⭐⭐⭐ Izvrsno! Tvoj trud se stvarno isplatio! Sjajno poznaješ ovu temu!';
+  } else if (pct >= 75) {
+    msgEl.innerHTML = '⭐⭐ Super! Vidi koliko toga znaš! Još malo vježbe za savršenstvo.';
+  } else if (pct >= 60) {
+    msgEl.innerHTML = '⭐ Dobar početak! Svaki put si bolja. Pogledajmo zajedno što ponoviti.';
+  } else {
+    msgEl.innerHTML = 'Svaki pokušaj gradi nove putove u tvom mozgu! Ponovimo lekciju i probaj ponovo — bit će lakše! 💪';
+  }
+
+  // Review
+  buildReview();
+
+  // Repeat suggestions
+  showRepeatSuggestions(topicScores);
+}
+
+function buildReview() {
+  const container = document.getElementById('review-container');
+  const qData = [
+    {n:1, q:'Voda je polarna molekula. Što to znači?', correct:1, opts:['Voda se raspada na dva atoma','Naboj neravnomjerno raspoređen','Električki neutralna','Privlači samo metale']},
+    {n:2, q:'Zašto led pluta na vodi?', correct:2, opts:['Led je topliji','Gustoća leda VEĆA','Gustoća leda MANJA','Led sadrži zrak']},
+    {n:3, q:'Kohezija je sila među raznovrsnim molekulama?', correct:1, opts:['Točno','Netočno']},
+    {n:4, q:'pH = 3 znači?', correct:0, opts:['Kisela','Neutralna','Lužnata','Ne postoji']},
+    {n:5, q:'Zašto se ulje ne otapa u vodi?', correct:1, opts:['Preteško','Hidrofobno','Prehladna','Isti pH']},
+    {n:6, q:'Što je Redi dokazao?', correct:1, opts:['Crvi spontano','Crvi iz jaja muha','Mikroorganizmi u vakuumu','Voda stvara organizme']},
+    {n:7, q:'Pasteur je S-bocama dokazao?', correct:1, opts:['Spontani nastanak','Mikroorganizmi iz zraka','Sterilna voda','Dioba bakterija']},
+    {n:8, q:'Spoji znanstvenika s doprinosom (4 para)', type:'match'},
+    {n:9, q:'Poredaj korake kemijske evolucije', type:'sort'},
+    {n:10, q:'Miller-Ureyev eksperiment je dokazao?', correct:1, opts:['Životne stanice','Aminokiseline iz plinova','DNA iz vode','Panspermija']},
+    {n:11, q:'Koje su 4 glavne skupine biomolekula?', correct:0, opts:['Lipidi, ugljikohidrati, proteini, NK','Minerali, vitamini, sol, voda','Kisik, ugljik, vodik, dušik','Glukoza, fruktoza, saharoza, celuloza']},
+    {n:12, q:'Proteini su polimeri od aminokiselina?', correct:0, opts:['Točno','Netočno']},
+    {n:13, q:'Spoji biomolekulu s ulogom (4 para)', type:'match'},
+    {n:14, q:'Ako pH = 4, koliki je pOH?', correct:1, opts:['pOH = 4','pOH = 10','pOH = 7','pOH = 14']},
+    {n:15, q:'Zašto je anomalija vode ključna za život?', correct:1, opts:['Led ljepši','Led izolira i organizmi preživljavaju','Led pomaže rast','Voda se ne smrzne']},
+  ];
+
+  let html = '';
+  for (const qd of qData) {
+    const n = qd.n;
+    const userAns = answers[n];
+    let isCorrect = false;
+    let detail = '';
+
+    if (qd.type === 'match') {
+      if (userAns) {
+        const s = userAns.score;
+        isCorrect = s >= 3;
+        detail = `<p>Tvoj rezultat: ${s}/${n === 8 ? 4 : 4}</p>`;
+      } else {
+        detail = '<p style="color:var(--text-light)">Nisi odgovorila na ovo pitanje.</p>';
+      }
+    } else if (qd.type === 'sort') {
+      if (userAns) {
+        isCorrect = userAns.score === 4;
+        detail = `<p>Na pravom mjestu: ${userAns.score}/4</p>`;
+      } else {
+        detail = '<p style="color:var(--text-light)">Nisi odgovorila na ovo pitanje.</p>';
+      }
+    } else {
+      if (userAns !== undefined) {
+        isCorrect = correctAnswers[n] === userAns;
+        detail = `<p>Tvoj odgovor: ${qd.opts[userAns]}</p>`;
+        if (!isCorrect) detail += `<p style="color:var(--green)">Točan odgovor: ${qd.opts[qd.correct]}</p>`;
+      } else {
+        detail = '<p style="color:var(--text-light)">Nisi odgovorila na ovo pitanje.</p>';
+      }
+    }
+
+    html += `<div class="review-item ${isCorrect ? 'review-correct' : 'review-wrong'}">
+      <p style="font-weight:600">${n}. ${qd.q}</p>
+      ${detail}
+    </div>`;
+  }
+  container.innerHTML = html;
+}
+
+function showRepeatSuggestions(ts) {
+  const suggestions = [];
+  // Simple check: if answered wrong on topic
+  let vodaWrong = 0, postanakWrong = 0, bioWrong = 0;
+  for (let i = 1; i <= 5; i++) {
+    if (answers[i] === undefined || correctAnswers[i] !== answers[i]) vodaWrong++;
+  }
+  for (const i of [6,7,10]) {
+    if (answers[i] === undefined || correctAnswers[i] !== answers[i]) postanakWrong++;
+  }
+  for (const i of [11,12,14,15]) {
+    if (answers[i] === undefined || correctAnswers[i] !== answers[i]) bioWrong++;
+  }
+
+  if (vodaWrong >= 2) suggestions.push('💧 <strong>Svojstva vode i pH</strong> — ponovi Cjeline 1 i 2 iz lekcije');
+  if (postanakWrong >= 2) suggestions.push('🌍 <strong>Postanak života</strong> — ponovi Cjeline 3 i 4 iz lekcije');
+  if (bioWrong >= 2) suggestions.push('🧬 <strong>Biomolekule</strong> — ponovi Cjelinu 5 iz lekcije');
+
+  if (suggestions.length > 0) {
+    document.getElementById('repeat-suggestions').style.display = 'block';
+    document.getElementById('repeat-list').innerHTML = suggestions.map(s => `<p style="margin:8px 0">${s}</p>`).join('');
+  }
+}
+
+// ===== TTS =====
+function procitaj(text) {
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'hr-HR'; u.rate = 0.9;
+    window.speechSynthesis.speak(u);
+  }
+}
+
+// ===== SETTINGS =====
+function toggleSettings() {
+  const p = document.getElementById('settings-panel');
+  const b = document.querySelector('.settings-toggle');
+  const hidden = p.hasAttribute('hidden');
+  if (hidden) { p.removeAttribute('hidden'); b.setAttribute('aria-expanded', 'true'); }
+  else { p.setAttribute('hidden', ''); b.setAttribute('aria-expanded', 'false'); }
+}
+function updateFontSize(v) {
+  document.body.style.fontSize = v + 'px';
+  document.getElementById('font-size-value').textContent = v + 'px';
+}
+function updateBg(bg) {
+  const colors = {cream:'#FFF8F0', blue:'#E8F4FD', white:'#FFFFFF'};
+  document.body.style.background = colors[bg] || colors.cream;
+}
+function updateLineHeight(v) { document.body.style.lineHeight = v; }
+function toggleReadingRuler(on) {
+  const r = document.getElementById('reading-ruler-el');
+  if (on) r.classList.add('active'); else r.classList.remove('active');
+}
+function resetSettings() {
+  document.body.style.fontSize = '17px';
+  document.body.style.background = '#FFF8F0';
+  document.body.style.lineHeight = '1.8';
+  document.getElementById('font-size').value = 17;
+  document.getElementById('font-size-value').textContent = '17px';
+  document.getElementById('line-height-ctrl').value = 1.8;
+  document.getElementById('reading-ruler').checked = false;
+  toggleReadingRuler(false);
+  document.querySelector('input[name="bg"][value="cream"]').checked = true;
+}
+
+// Reading ruler follow mouse
+document.addEventListener('mousemove', e => {
+  const r = document.getElementById('reading-ruler-el');
+  if (r.classList.contains('active')) r.style.top = (e.clientY - 20) + 'px';
+});
+document.addEventListener('touchmove', e => {
+  const r = document.getElementById('reading-ruler-el');
+  if (r.classList.contains('active')) r.style.top = (e.touches[0].clientY - 20) + 'px';
+});
+
+// ===== BREATHING =====
+let breathingTimer = null;
+function startBreathing() {
+  document.getElementById('breathing-overlay').removeAttribute('hidden');
+  breatheCycle();
+}
+function breatheCycle() {
+  const circle = document.getElementById('breathing-circle');
+  const text = document.getElementById('breathing-text');
+  const instr = document.getElementById('breathing-instruction');
+  // Inhale
+  circle.className = 'breathing-circle inhale';
+  text.textContent = 'Udahni';
+  instr.textContent = 'Polako udahni kroz nos... 4 sekunde';
+  breathingTimer = setTimeout(() => {
+    // Hold
+    circle.className = 'breathing-circle hold';
+    text.textContent = 'Zadrži';
+    instr.textContent = 'Zadrži dah... 4 sekunde';
+    breathingTimer = setTimeout(() => {
+      // Exhale
+      circle.className = 'breathing-circle exhale';
+      text.textContent = 'Izdahni';
+      instr.textContent = 'Polako izdahni kroz usta... 4 sekunde';
+      breathingTimer = setTimeout(() => {
+        breatheCycle();
+      }, 4000);
+    }, 4000);
+  }, 4000);
+}
+function stopBreathing() {
+  clearTimeout(breathingTimer);
+  document.getElementById('breathing-overlay').setAttribute('hidden', '');
+}
+
+// Escape to close breathing
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    if (!document.getElementById('breathing-overlay').hasAttribute('hidden')) stopBreathing();
+    const sp = document.getElementById('settings-panel');
+    if (!sp.hasAttribute('hidden')) toggleSettings();
+  }
+});
+</script>
+</body>
+</html>

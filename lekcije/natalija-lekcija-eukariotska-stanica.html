@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light">
+  <title>Eukariotska stanica — Natalijina Učionica</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --bg-main: #FFF8F0;
+  --bg-card: #FFFFFF;
+  --text-main: #3A3A3A;
+  --text-light: #6B6B6B;
+  --blue: #4A90D9;
+  --blue-light: #E8F4FD;
+  --green: #5CB85C;
+  --green-light: #E8F8E8;
+  --orange: #FF9800;
+  --orange-light: #FFF3E0;
+  --red: #E74C3C;
+  --red-light: #FDE8E8;
+  --purple: #9B59B6;
+  --purple-light: #F3E8FD;
+  --teal: #26A69A;
+  --teal-light: #E0F2F1;
+  --radius: 12px;
+  --shadow: 0 2px 12px rgba(0,0,0,0.06);
+  --shadow-hover: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Lexend', 'Verdana', sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+  line-height: 1.8;
+  letter-spacing: 0.03em;
+  padding: 12px;
+  margin: 0 auto;
+  font-size: 17px;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+}
+
+.skip-link {
+  position: absolute; top: -40px; left: 0;
+  background: var(--blue); color: white;
+  padding: 8px 16px; z-index: 100;
+  border-radius: 0 0 8px 0; font-size: 16px;
+  text-decoration: none;
+}
+.skip-link:focus { top: 0; }
+
+.container { max-width: 760px; margin: 0 auto; }
+
+/* Progress bar */
+.progress-wrap { position: sticky; top: 0; z-index: 50; background: var(--bg-main); padding: 8px 0 12px; }
+.progress-bar-outer {
+  background: #E0E0E0; border-radius: 8px; height: 10px; overflow: hidden;
+}
+.progress-bar-inner {
+  background: linear-gradient(90deg, var(--green), var(--teal));
+  height: 100%; border-radius: 8px; transition: width 0.4s ease;
+}
+.progress-label { font-size: 13px; color: var(--text-light); margin-top: 4px; text-align: center; }
+
+/* Section navigation dots */
+.section-nav {
+  display: flex; gap: 6px; justify-content: center; margin: 8px 0 16px;
+  flex-wrap: wrap;
+}
+.section-dot {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 2px solid var(--blue); background: white;
+  font-size: 14px; font-weight: 600; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.section-dot.active { background: var(--blue); color: white; }
+.section-dot.done { background: var(--green); color: white; border-color: var(--green); }
+
+/* Cards */
+.kartica {
+  background: white; border-radius: 16px;
+  padding: 20px 22px; margin-bottom: 20px;
+  box-shadow: var(--shadow); border-left: 5px solid var(--blue);
+}
+.kartica.definicija { border-left-color: var(--blue); }
+.kartica.primjer { border-left-color: var(--green); }
+.kartica.vazno { border-left-color: var(--orange); }
+.kartica.upozorenje { border-left-color: var(--red); }
+.kartica.savjet { border-left-color: var(--purple); }
+.kartica.formula { border-left-color: var(--teal); }
+
+.kartica h3 { font-size: 20px; margin-bottom: 10px; }
+.kartica p { margin-bottom: 10px; }
+
+/* Section */
+.section { display: none; }
+.section.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Buttons */
+.gumb {
+  font-size: 16px; padding: 12px 24px; border-radius: var(--radius);
+  border: none; cursor: pointer; font-weight: 600;
+  transition: all 0.2s ease; min-height: 48px;
+  font-family: 'Lexend', sans-serif;
+}
+.gumb:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+.gumb-primary { background: var(--blue); color: white; }
+.gumb-primary:hover { background: #3A7BC8; }
+.gumb-green { background: var(--green); color: white; }
+.gumb-green:hover { background: #4CA74C; }
+.gumb-orange { background: var(--orange); color: white; }
+.gumb-orange:hover { background: #E88A00; }
+
+/* Nav buttons */
+.nav-btns { display: flex; gap: 12px; justify-content: space-between; margin: 24px 0; flex-wrap: wrap; }
+.nav-btns .gumb { flex: 1; min-width: 120px; text-align: center; }
+
+/* TTS button */
+.tts-btn {
+  background: none; border: none; font-size: 20px; cursor: pointer;
+  padding: 4px 8px; border-radius: 8px; vertical-align: middle;
+}
+.tts-btn:hover { background: var(--blue-light); }
+
+/* Expand/collapse */
+.expand-btn {
+  background: var(--purple-light); border: 2px solid var(--purple);
+  border-radius: var(--radius); padding: 12px 18px;
+  cursor: pointer; font-size: 16px; font-weight: 600;
+  width: 100%; text-align: left; display: flex;
+  align-items: center; gap: 8px;
+  font-family: 'Lexend', sans-serif; color: var(--text-main);
+}
+.expand-btn:hover { background: #E8D5F5; }
+.expand-btn .arrow { transition: transform 0.2s; }
+.expand-btn[aria-expanded="true"] .arrow { transform: rotate(90deg); }
+.expand-content { display: none; padding: 16px; background: var(--purple-light); border-radius: 0 0 var(--radius) var(--radius); margin-top: -4px; }
+.expand-content.open { display: block; }
+
+/* Comparison table */
+.comp-table {
+  width: 100%; border-collapse: separate; border-spacing: 0;
+  border-radius: var(--radius); overflow: hidden;
+  margin: 16px 0; font-size: 15px;
+}
+.comp-table th {
+  background: var(--blue); color: white; padding: 12px 10px;
+  text-align: center; font-weight: 600;
+}
+.comp-table td {
+  padding: 10px; border-bottom: 1px solid #E8E8E8; text-align: center;
+}
+.comp-table tr:nth-child(even) td { background: #F9F7F3; }
+.comp-table .check { color: var(--green); font-size: 20px; }
+.comp-table .cross { color: var(--red); font-size: 20px; }
+
+/* Interactive cell diagram */
+.cell-diagram {
+  position: relative; background: white;
+  border-radius: var(--radius); padding: 16px;
+  box-shadow: var(--shadow); margin: 16px 0;
+}
+.cell-svg { width: 100%; height: auto; }
+.organelle-label {
+  display: inline-block; padding: 6px 14px;
+  border-radius: 20px; margin: 4px;
+  font-size: 14px; font-weight: 500;
+  cursor: pointer; transition: all 0.2s;
+  border: 2px solid transparent;
+}
+.organelle-label:hover, .organelle-label.active {
+  transform: scale(1.05); box-shadow: var(--shadow-hover);
+}
+.organelle-info {
+  display: none; padding: 16px;
+  border-radius: var(--radius); margin: 8px 0;
+  animation: fadeIn 0.3s ease;
+}
+.organelle-info.visible { display: block; }
+
+.organelle-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 8px; margin: 16px 0;
+}
+
+/* Quiz mini */
+.quiz-mini { background: var(--teal-light); border-radius: var(--radius); padding: 20px; margin: 20px 0; }
+.quiz-mini h3 { color: var(--teal); }
+.quiz-option {
+  display: block; width: 100%; padding: 12px 16px;
+  background: white; border: 2px solid #E0E0E0;
+  border-radius: var(--radius); margin: 8px 0;
+  cursor: pointer; font-size: 16px; text-align: left;
+  font-family: 'Lexend', sans-serif; transition: all 0.2s;
+  min-height: 48px;
+}
+.quiz-option:hover { border-color: var(--blue); background: var(--blue-light); }
+.quiz-option.correct { background: var(--green-light); border-color: var(--green); }
+.quiz-option.wrong { background: var(--red-light); border-color: var(--red); }
+.quiz-option:disabled { cursor: default; opacity: 0.8; }
+.quiz-feedback { margin-top: 12px; padding: 12px; border-radius: var(--radius); font-weight: 500; }
+
+/* Flip cards */
+.flip-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin: 16px 0; }
+.flip-card {
+  perspective: 1000px; height: 140px; cursor: pointer;
+}
+.flip-inner {
+  position: relative; width: 100%; height: 100%;
+  transition: transform 0.5s; transform-style: preserve-3d;
+}
+.flip-card.flipped .flip-inner { transform: rotateY(180deg); }
+.flip-front, .flip-back {
+  position: absolute; width: 100%; height: 100%;
+  backface-visibility: hidden; border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+  padding: 12px; text-align: center; font-size: 14px;
+  font-weight: 500;
+}
+.flip-front { background: var(--blue-light); border: 2px solid var(--blue); }
+.flip-back { background: var(--green-light); border: 2px solid var(--green); transform: rotateY(180deg); font-size: 13px; }
+
+/* Settings */
+.settings-toggle {
+  position: fixed; top: 12px; right: 12px; z-index: 60;
+  background: white; border: 2px solid #E0E0E0; border-radius: 50%;
+  width: 44px; height: 44px; font-size: 22px; cursor: pointer;
+  box-shadow: var(--shadow); display: flex; align-items: center; justify-content: center;
+}
+.settings-panel {
+  position: fixed; top: 64px; right: 12px; z-index: 60;
+  background: white; border-radius: var(--radius);
+  padding: 20px; box-shadow: var(--shadow-hover);
+  width: 280px; max-width: 90vw;
+}
+.settings-panel label { display: block; margin: 10px 0 4px; font-size: 14px; font-weight: 500; }
+.settings-panel input[type="range"] { width: 100%; }
+.settings-panel fieldset { border: none; margin: 10px 0; }
+.settings-panel fieldset label { display: inline-flex; align-items: center; gap: 4px; margin-right: 12px; }
+
+/* Header */
+.lesson-header {
+  text-align: center; padding: 20px 0;
+}
+.lesson-header h1 { font-size: 26px; color: var(--blue); margin-bottom: 4px; }
+.lesson-header .subtitle { color: var(--text-light); font-size: 15px; }
+.lesson-header .emoji-big { font-size: 48px; display: block; margin-bottom: 8px; }
+
+/* Advance organizer */
+.advance-organizer {
+  background: var(--blue-light); border-radius: var(--radius);
+  padding: 16px; margin: 12px 0;
+}
+.advance-organizer h3 { color: var(--blue); font-size: 17px; margin-bottom: 8px; }
+.advance-organizer ul { padding-left: 20px; }
+.advance-organizer li { margin-bottom: 4px; }
+
+/* Reading ruler */
+.reading-ruler {
+  position: fixed; left: 0; width: 100%;
+  height: 40px; background: rgba(255, 200, 50, 0.2);
+  border-top: 2px solid rgba(255, 200, 50, 0.5);
+  border-bottom: 2px solid rgba(255, 200, 50, 0.5);
+  pointer-events: none; z-index: 9990;
+  transition: top 0.05s ease; display: none;
+}
+.reading-ruler.active { display: block; }
+
+/* Focus */
+*:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; border-radius: 4px; }
+*:focus:not(:focus-visible) { outline: none; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0;
+  margin: -1px; overflow: hidden; clip: rect(0,0,0,0);
+  white-space: nowrap; border-width: 0;
+}
+
+/* Recap */
+.recap-card {
+  background: linear-gradient(135deg, var(--green-light), var(--teal-light));
+  border-radius: var(--radius); padding: 24px; margin: 20px 0;
+  border: 2px solid var(--green);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (min-width: 768px) {
+  body { font-size: 18px; padding: 20px; }
+  .kartica { padding: 24px 28px; }
+  .lesson-header h1 { font-size: 32px; }
+}
+  </style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Preskoči na sadržaj</a>
+
+<button class="settings-toggle" onclick="toggleSettings()" aria-label="Postavke prikaza" aria-expanded="false" aria-controls="settings-panel">⚙️</button>
+<div id="settings-panel" class="settings-panel" role="dialog" aria-label="Postavke prikaza" hidden>
+  <h3>Postavke prikaza</h3>
+  <label for="font-size">Veličina teksta</label>
+  <input type="range" id="font-size" min="14" max="28" value="17" oninput="updateFontSize(this.value)">
+  <span id="font-size-value">17px</span>
+  <fieldset><legend>Pozadina</legend>
+    <label><input type="radio" name="bg" value="cream" checked onchange="updateBg('cream')"> Krem</label>
+    <label><input type="radio" name="bg" value="blue" onchange="updateBg('blue')"> Plava</label>
+    <label><input type="radio" name="bg" value="white" onchange="updateBg('white')"> Bijela</label>
+  </fieldset>
+  <label for="line-height">Razmak redova</label>
+  <input type="range" id="line-height" min="1.4" max="2.5" step="0.1" value="1.8" oninput="updateLineHeight(this.value)">
+  <label><input type="checkbox" id="reading-ruler" onchange="toggleReadingRuler(this.checked)"> Reading ruler</label>
+</div>
+
+<div class="container">
+<main id="main-content" role="main">
+
+<!-- HEADER -->
+<header class="lesson-header">
+  <span class="emoji-big">🔬</span>
+  <h1>Eukariotska stanica</h1>
+  <p class="subtitle">Građa, organeli i usporedba biljne i životinjske stanice</p>
+</header>
+
+<!-- PROGRESS -->
+<div class="progress-wrap" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Napredak lekcije">
+  <div class="progress-bar-outer"><div class="progress-bar-inner" id="progressBar" style="width:0%"></div></div>
+  <div class="progress-label" id="progressLabel">Cjelina 1 od 6</div>
+</div>
+<nav class="section-nav" aria-label="Navigacija cjelina">
+  <button class="section-dot active" onclick="goToSection(0)" aria-label="Cjelina 1">1</button>
+  <button class="section-dot" onclick="goToSection(1)" aria-label="Cjelina 2">2</button>
+  <button class="section-dot" onclick="goToSection(2)" aria-label="Cjelina 3">3</button>
+  <button class="section-dot" onclick="goToSection(3)" aria-label="Cjelina 4">4</button>
+  <button class="section-dot" onclick="goToSection(4)" aria-label="Cjelina 5">5</button>
+  <button class="section-dot" onclick="goToSection(5)" aria-label="Cjelina 6">6</button>
+</nav>
+
+<!-- ============ SECTION 1: Uvod ============ -->
+<section class="section active" id="section-0" aria-labelledby="s0-title">
+<h2 id="s0-title">🧬 Cjelina 1: Što je eukariotska stanica?</h2>
+
+<div class="advance-organizer">
+  <h3>🎯 U ovoj cjelini naučit ćeš:</h3>
+  <ul>
+    <li>Što znači "eukariot" i po čemu se razlikuje od prokariota</li>
+    <li>Koje su dvije glavne vrste eukariotskih stanica</li>
+    <li>Zašto je jezgra tako važna</li>
+  </ul>
+</div>
+
+<div class="kartica definicija">
+  <h3>📘 Eukariotska stanica <button class="tts-btn" onclick="procitaj('Eukariotska stanica je stanica koja ima pravu jezgru obavijena membranskom ovojnicom. Naziv dolazi od grčkih riječi eu što znači pravi i karyon što znači jezgra.')" aria-label="Čitaj naglas">🔊</button></h3>
+  <p><strong>Eukariot</strong> = stanica s <strong>pravom jezgrom</strong> obavijenom membranskom ovojnicom.</p>
+  <p>Naziv dolazi od grčkih riječi: <em>eu</em> (pravi) + <em>karyon</em> (jezgra).</p>
+  <p>Za razliku od <strong>prokariota</strong> (bakterije i arheje), eukarioti imaju:</p>
+  <ul>
+    <li>✅ Oblikovanu jezgru s jezgrinom ovojnicom</li>
+    <li>✅ Stanične organele omeđene membranama</li>
+    <li>✅ Složeniju građu — veće stanice (10-100 μm)</li>
+  </ul>
+</div>
+
+<div class="kartica vazno">
+  <h3>🔑 Ključna razlika <button class="tts-btn" onclick="procitaj('Prokarioti nemaju jezgru — DNA im je slobodna u citoplazmi. Eukarioti imaju DNA zaštićenu unutar jezgre.')" aria-label="Čitaj naglas">🔊</button></h3>
+  <p><strong>Prokarioti</strong> → DNA slobodna u citoplazmi, bez membranskih organela</p>
+  <p><strong>Eukarioti</strong> → DNA zaštićena u jezgri, imaju membranske organele</p>
+</div>
+
+<div class="kartica primjer">
+  <h3>🌍 Dvije vrste eukariotskih stanica</h3>
+  <p>Sve eukariotske stanice dijele se u dva osnovna tipa:</p>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;">
+    <div style="flex:1;min-width:140px;background:var(--orange-light);padding:16px;border-radius:var(--radius);text-align:center;">
+      <div style="font-size:36px;">🐾</div>
+      <strong>Životinjska stanica</strong>
+      <p style="font-size:14px;color:var(--text-light);">Nema staničnu stijenku, nema kloroplaste, ima centriole</p>
+    </div>
+    <div style="flex:1;min-width:140px;background:var(--green-light);padding:16px;border-radius:var(--radius);text-align:center;">
+      <div style="font-size:36px;">🌿</div>
+      <strong>Biljna stanica</strong>
+      <p style="font-size:14px;color:var(--text-light);">Ima staničnu stijenku, kloroplaste, vakuolu</p>
+    </div>
+  </div>
+</div>
+
+<!-- Mini quiz -->
+<div class="quiz-mini">
+  <h3>🎯 Brza provjera</h3>
+  <p>Što znači "eukariot"?</p>
+  <div role="radiogroup" aria-label="Pitanje 1">
+    <button class="quiz-option" onclick="checkQuiz(this,'wrong','Prokarioti nemaju jezgru — to bi bio odgovor za prokariote!')">Stanica bez jezgre</button>
+    <button class="quiz-option" onclick="checkQuiz(this,'correct','Točno! Eu = pravi, karyon = jezgra. Eukariot ima pravu jezgru.')">Stanica s pravom jezgrom</button>
+    <button class="quiz-option" onclick="checkQuiz(this,'wrong','To se odnosi na bakterije, koje su prokarioti.')">Jednostanični organizam</button>
+  </div>
+  <div class="quiz-feedback" id="quiz-fb-1" role="alert" aria-live="polite"></div>
+</div>
+
+<div class="nav-btns">
+  <button class="gumb gumb-primary" onclick="nextSection()" style="margin-left:auto;">Dalje →</button>
+</div>
+</section>
+
+<!-- ============ SECTION 2: Životinjska stanica ============ -->
+<section class="section" id="section-1" aria-labelledby="s1-title">
+<h2 id="s1-title">🐾 Cjelina 2: Životinjska stanica — organeli</h2>
+
+<div class="advance-organizer">
+  <h3>🎯 U ovoj cjelini naučit ćeš:</h3>
+  <ul>
+    <li>Koji organeli čine životinjsku stanicu</li>
+    <li>Što je funkcija svakog organela</li>
+    <li>Koje organele su <strong>samo</strong> u životinjskoj stanici</li>
+  </ul>
+</div>
+
+<div class="kartica definicija">
+  <h3>📘 15 organela životinjske stanice <button class="tts-btn" onclick="procitaj('Životinjska stanica ima 15 glavnih dijelova: jezgru, jezgricu, jezgrinu ovojnicu, jezgrine pore, Golgijev aparat, staničnu membranu, lizosom, citoplazmu, peroksisom, ribosome, centriole, citoskelet, mitohondrije, hrapavi i glatki endoplazmatski retikulum.')" aria-label="Čitaj naglas">🔊</button></h3>
+  <p>Klikni na svaki organel da saznaš više:</p>
+</div>
+
+<div class="organelle-grid">
+  <button class="organelle-label" style="background:#E8F4FD;border-color:#4A90D9;" onclick="showOrganelle('jezgra','🧠 <strong>Jezgra</strong> — Upravljački centar stanice. Sadrži DNA i kontrolira sve stanične procese. Prvu jezgru opisao je Robert Brown 1831.')">Jezgra</button>
+  <button class="organelle-label" style="background:#F3E8FD;border-color:#9B59B6;" onclick="showOrganelle('jezgrica','🔵 <strong>Jezgrica</strong> — Struktura unutar jezgre. Mjesto stvaranja ribosomske RNA (rRNA) i podjedinaca ribosoma.')">Jezgrica</button>
+  <button class="organelle-label" style="background:#E8F4FD;border-color:#4A90D9;" onclick="showOrganelle('ovojnica','🛡️ <strong>Jezgrina ovojnica</strong> — Dvostruka membrana koja obavija jezgru. Odvaja DNA od citoplazme.')">Jez. ovojnica</button>
+  <button class="organelle-label" style="background:#E0F2F1;border-color:#26A69A;" onclick="showOrganelle('pore','🚪 <strong>Jezgrine pore</strong> — Otvori u jezgrinoj ovojnici. Omogućuju transport tvari (mRNA, proteini) između jezgre i citoplazme.')">Jez. pore</button>
+  <button class="organelle-label" style="background:#FFF3E0;border-color:#FF9800;" onclick="showOrganelle('golgi','📦 <strong>Golgijev aparat (tijelo)</strong> — Sustav membranskih vrećica. Pakira, modificira i otprema proteine i lipide iz stanice. Poput poštanskog centra!')">Golgijev ap.</button>
+  <button class="organelle-label" style="background:#E8F8E8;border-color:#5CB85C;" onclick="showOrganelle('membrana','🧱 <strong>Stanična membrana</strong> — Dvostruki fosfolipidni sloj. Regulira što ulazi i izlazi iz stanice. Selektivno propusna.')">Membrana</button>
+  <button class="organelle-label" style="background:#FDE8E8;border-color:#E74C3C;" onclick="showOrganelle('lizosom','♻️ <strong>Lizosom</strong> — Probavni organeli. Sadrže enzime koji razgrađuju stare ili oštećene dijelove stanice i strane tvari.')">Lizosom</button>
+  <button class="organelle-label" style="background:#E0F2F1;border-color:#26A69A;" onclick="showOrganelle('citoplazma','💧 <strong>Citoplazma</strong> — Poluprozirna tvar između membrane i jezgre. U njoj su svi organeli i stanični procesi.')">Citoplazma</button>
+  <button class="organelle-label" style="background:#FFF3E0;border-color:#FF9800;" onclick="showOrganelle('peroksisom','⚡ <strong>Peroksisom</strong> — Sadrži enzime za razgradnju masnih kiselina i peroksida. Neutralizira otrovne tvari.')">Peroksisom</button>
+  <button class="organelle-label" style="background:#F3E8FD;border-color:#9B59B6;" onclick="showOrganelle('ribosomi','🏭 <strong>Ribosomi</strong> — Sitne strukture bez membrane. Mjesto sinteze proteina. Nalaze se slobodni u citoplazmi ili vezani na hrapavi ER.')">Ribosomi</button>
+  <button class="organelle-label" style="background:#FDE8E8;border-color:#E74C3C;" onclick="showOrganelle('centrioli','⭐ <strong>Centrioli</strong> — SAMO u životinjskoj stanici! Par cilindričnih struktura. Ključni za diobu stanice — formiraju diobeno vreteno.')">Centrioli ⭐</button>
+  <button class="organelle-label" style="background:#E8F8E8;border-color:#5CB85C;" onclick="showOrganelle('citoskelet','🦴 <strong>Citoskelet</strong> — Mreža proteinskih vlakana (mikrofilamenti i mikrotubuli). Daje oblik stanici i omogućuje unutarstanični transport.')">Citoskelet</button>
+  <button class="organelle-label" style="background:#FFF3E0;border-color:#FF9800;" onclick="showOrganelle('mitohondrij','🔋 <strong>Mitohondrij</strong> — Energetska centrala stanice! Stanično disanje: pretvara hranu u ATP (energiju). Ima VLASTITU DNA!')">Mitohondrij 🔋</button>
+  <button class="organelle-label" style="background:#E8F4FD;border-color:#4A90D9;" onclick="showOrganelle('hrapavi','📜 <strong>Hrapavi ER</strong> — Endoplazmatski retikulum s ribosomima. Proizvodi i transportira proteine.')">Hrapavi ER</button>
+  <button class="organelle-label" style="background:#E0F2F1;border-color:#26A69A;" onclick="showOrganelle('glatki','🧴 <strong>Glatki ER</strong> — ER bez ribosoma. Proizvodi lipide (masti) i sudjeluje u detoksikaciji.')">Glatki ER</button>
+</div>
+<div id="organelle-detail" class="organelle-info" role="alert" aria-live="polite"></div>
+
+<div class="kartica vazno">
+  <h3>⭐ Zapamti: Samo životinjska stanica ima...</h3>
+  <p><strong>Centriole</strong> — ključni za diobu stanice. Biljne stanice se dijele bez centriola!</p>
+  <p><strong>Centrosom</strong> — područje oko centriola koje organizira mikrotubule.</p>
+</div>
+
+<div class="quiz-mini">
+  <h3>🎯 Brza provjera</h3>
+  <p>Koji organel je "energetska centrala" stanice?</p>
+  <div role="radiogroup" aria-label="Pitanje">
+    <button class="quiz-option" onclick="checkQuiz(this,'wrong','Ribosomi grade proteine, ne proizvode energiju.')">Ribosom</button>
+    <button class="quiz-option" onclick="checkQuiz(this,'correct','Točno! Mitohondrij pretvara hranu u ATP — energetsku valutu stanice.')">Mitohondrij</button>
+    <button class="quiz-option" onclick="checkQuiz(this,'wrong','Golgijev aparat pakira i šalje proteine.')">Golgijev aparat</button>
+    <button class="quiz-option" onclick="checkQuiz(this,'wrong','Jezgra upravlja stanicom, ali ne proizvodi energiju direktno.')">Jezgra</button>
+  </div>
+  <div class="quiz-feedback" role="alert" aria-live="polite"></div>
+</div>
+
+<div class="nav-btns">
+  <button class="gumb gumb-orange" onclick="prevSection()">← Nazad</button>
+  <button class="gumb gumb-primary" onclick="nextSection()">Dalje →</button>
+</div>
+</section>
+
+<!-- ============ SECTION 3: Biljna stanica ============ -->
+<section class="section" id="section-2" aria-labelledby="s2-title">
+<h2 id="s2-title">🌿 Cjelina 3: Biljna stanica — posebni organeli</h2>
+
+<div class="advance-organizer">
+  <h3>🎯 U ovoj cjelini naučit ćeš:</h3>
+  <ul>
+    <li>Koje organele biljna stanica ima, a životinjska nema</li>
+    <li>Što rade kloroplasti, vakuola i stanična stijenka</li>
+    <li>Što su plazmodezme</li>
+  </ul>
+</div>
+
+<div class="kartica primjer">
+  <h3>🌿 Biljna stanica ima SVE što i životinjska, PLUS:</h3>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px;">
+    <div style="background:var(--green-light);padding:16px;border-radius:var(--radius);text-align:center;border:2px solid var(--green);">
+      <div style="font-size:28px;">☀️</div>
+      <strong>Kloroplasti</strong>
+      <p style="font-size:13px;">Fotosinteza — pretvaraju sunčevu energiju u hranu</p>
+    </div>
+    <div style="background:var(--blue-light);padding:16px;border-radius:var(--radius);text-align:center;border:2px solid var(--blue);">
+      <div style="font-size:28px;">💧</div>
+      <strong>Vakuola</strong>
+      <p style="font-size:13px;">Ogromna "spremište" — voda, soli, pigmenti</p>
+    </div>
+    <div style="background:var(--orange-light);padding:16px;border-radius:var(--radius);text-align:center;border:2px solid var(--orange);">
+      <div style="font-size:28px;">🧱</div>
+      <strong>Stan. stijenka</strong>
+      <p style="font-size:13px;">Čvrsti "oklop" od celuloze oko membrane</p>
+    </div>
+    <div style="background:var(--purple-light);padding:16px;border-radius:var(--radius);text-align:center;border:2px solid var(--purple);">
+      <div style="font-size:28px;">🔗</div>
+      <strong>Plazmodezme</strong>
+      <p style="font-size:13px;">Kanali koji povezuju dvije susjedne biljne stanice</p>
+    </div>
+  </div>
+</div>
+
+<div class="kartica definicija">
+  <h3>☀️ Kloroplast — Tvornica hrane <button class="tts-btn" onclick="procitaj('Kloroplast je organel u biljnoj stanici koji provodi fotosintezu. Koristeći sunčevu energiju, kloroplast pretvara ugljikov dioksid i vodu u šećer i kisik. Kloroplast ima vlastitu DNA, baš kao i mitohondrij!')" aria-label="Čitaj naglas">🔊</button></h3>
+  <p><strong>Fotosinteza</strong>: CO₂ + H₂O + sunce → šećer + O₂</p>
+  <p>Kloroplast ima složenu građu:</p>
+  <ul>
+    <li><strong>2 vanjske membrane</strong> — obavijaju organel</li>
+    <li><strong>Stroma</strong> — tekućina unutar kloroplasta</li>
+    <li><strong>Tilakoidi</strong> — membranske vrećice složene u snopove (<strong>grana</strong>)</li>
+    <li><strong>Vlastita DNA</strong> i ribosomi (70S) — baš kao i mitohondrij!</li>
+  </ul>
+</div>
+
+<div class="kartica vazno">
+  <h3>💧 Vakuola — Ogromno spremište</h3>
+  <p>U biljnoj stanici vakuola je <strong>najveći organel</strong> — može zauzeti i do 90% stanice!</p>
+  <p>Funkcije: regulira <strong>turgor</strong> (unutarnji tlak koji drži biljku uspravnom), skladišti vodu, soli, ugljikohidrate, pigmente i mineralne tvari.</p>
+  <p>Okružena je membranom zvanom <strong>tonoplast</strong>.</p>
+</div>
+
+<div class="kartica primjer">
+  <h3>🧱 Stanična stijenka vs. stanična membrana</h3>
+  <p><strong>Stanična stijenka</strong> je IZVAN membrane. Građena je od <strong>celuloze</strong>.</p>
+  <p>Daje biljci <strong>čvrstoću i oblik</strong>. Životinjska stanica NEMA stijenku — zato je mekša i može mijenjati oblik.</p>
+</div>
+
+<div class="kartica savjet">
+  <h3>🔗 Plazmodezme — Biljni "tuneli"</h3>
+  <p>Plazmodezme su tanki citoplazmatski kanali koji prolaze kroz staničnu stijenku.</p>
+  <p>Povezuju citoplazme dviju susjednih stanica — omogućuju transport tvari i komunikaciju između stanica.</p>
+</div>
+
+<div class="quiz-mini">
+  <h3>🎯 Brza provjera</h3>
+  <p>Koji organel provodi fotosintezu?</p>
+  <div role="radiogroup" aria-label="Pitanje">
+    <button class="quiz-option" onclick="checkQuiz(this,'wrong','Mitohondrij radi stanično disanje, ne fotosintezu.')">Mitohondrij</button>
+    <button class="quiz-option" onclick="checkQuiz(this,'correct','Točno! Kloroplast koristi sunce za pretvaranje CO₂ i vode u šećer i kisik.')">Kloroplast</button>
+    <button class="quiz-option" onclick="checkQuiz(this,'wrong','Vakuola skladišti tvari, ali ne provodi fotosintezu.')">Vakuola</button>
+  </div>
+  <div class="quiz-feedback" role="alert" aria-live="polite"></div>
+</div>
+
+<div class="nav-btns">
+  <button class="gumb gumb-orange" onclick="prevSection()">← Nazad</button>
+  <button class="gumb gumb-primary" onclick="nextSection()">Dalje →</button>
+</div>
+</section>
+
+<!-- ============ SECTION 4: Usporedba ============ -->
+<section class="section" id="section-3" aria-labelledby="s3-title">
+<h2 id="s3-title">⚖️ Cjelina 4: Biljna vs. životinjska stanica</h2>
+
+<div class="advance-organizer">
+  <h3>🎯 U ovoj cjelini naučit ćeš:</h3>
+  <ul>
+    <li>Koje strukture dijele obje stanice</li>
+    <li>Koje su jedinstvene za svaku</li>
+  </ul>
+</div>
+
+<div class="kartica definicija">
+  <h3>📊 Usporedna tablica <button class="tts-btn" onclick="procitaj('Zajedničke strukture biljne i životinjske stanice su: jezgra, endomembranski sustav, ribosomi, mitohondriji, stanična membrana, citoplazma. Biljna stanica dodatno ima vakuolu, kloroplaste, plazmodezme i staničnu stijenku. Životinjska stanica ima centriole i centrosom.')" aria-label="Čitaj naglas">🔊</button></h3>
+  <table class="comp-table">
+    <thead>
+      <tr><th>Struktura</th><th>🐾 Životinjska</th><th>🌿 Biljna</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Jezgra</td><td class="check">✅</td><td class="check">✅</td></tr>
+      <tr><td>Endomembranski sustav (ER, Golgi)</td><td class="check">✅</td><td class="check">✅</td></tr>
+      <tr><td>Ribosomi</td><td class="check">✅</td><td class="check">✅</td></tr>
+      <tr><td>Mitohondriji</td><td class="check">✅</td><td class="check">✅</td></tr>
+      <tr><td>Stanična membrana</td><td class="check">✅</td><td class="check">✅</td></tr>
+      <tr><td>Citoplazma</td><td class="check">✅</td><td class="check">✅</td></tr>
+      <tr><td>Citoskelet</td><td class="check">✅</td><td class="check">✅</td></tr>
+      <tr style="background:var(--green-light)"><td><strong>Vakuola (velika)</strong></td><td class="cross">❌</td><td class="check">✅</td></tr>
+      <tr style="background:var(--green-light)"><td><strong>Kloroplasti</strong></td><td class="cross">❌</td><td class="check">✅</td></tr>
+      <tr style="background:var(--green-light)"><td><strong>Stanična stijenka</strong></td><td class="cross">❌</td><td class="check">✅</td></tr>
+      <tr style="background:var(--green-light)"><td><strong>Plazmodezme</strong></td><td class="cross">❌</td><td class="check">✅</td></tr>
+      <tr style="background:var(--orange-light)"><td><strong>Centrioli i centrosom</strong></td><td class="check">✅</td><td class="cross">❌</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="kartica savjet">
+  <h3>💡 Trik za pamćenje</h3>
+  <p><strong>Biljna stanica ima 4 "extra" strukture</strong> — sve počinju na slovo koje možeš zapamtiti:</p>
+  <p style="font-size:20px;text-align:center;margin:12px 0;"><strong>🌿 V</strong>akuola · <strong>K</strong>loroplast · <strong>S</strong>tijenka · <strong>P</strong>lazmodezme</p>
+  <p>A životinjska ima samo jednu "extra": <strong>🐾 C</strong>entriole</p>
+</div>
+
+<!-- Flip cards for memorization -->
+<div class="kartica primjer">
+  <h3>🃏 Flip kartice — klikni za odgovor!</h3>
+  <div class="flip-grid">
+    <div class="flip-card" onclick="this.classList.toggle('flipped')" tabindex="0" role="button" aria-label="Kartica: Tko ima kloroplaste?">
+      <div class="flip-inner"><div class="flip-front">Tko ima<br>kloroplaste?</div><div class="flip-back">🌿 Samo<br>BILJNA stanica</div></div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')" tabindex="0" role="button" aria-label="Kartica: Tko ima centriole?">
+      <div class="flip-inner"><div class="flip-front">Tko ima<br>centriole?</div><div class="flip-back">🐾 Samo<br>ŽIVOTINJSKA</div></div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')" tabindex="0" role="button" aria-label="Kartica: Tko ima vakuolu?">
+      <div class="flip-inner"><div class="flip-front">Tko ima veliku<br>vakuolu?</div><div class="flip-back">🌿 Samo<br>BILJNA stanica</div></div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')" tabindex="0" role="button" aria-label="Kartica: Tko ima mitohondrije?">
+      <div class="flip-inner"><div class="flip-front">Tko ima<br>mitohondrije?</div><div class="flip-back">✅ OBJE<br>stanice!</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="quiz-mini">
+  <h3>🎯 Brza provjera</h3>
+  <p>Koja struktura postoji SAMO u životinjskoj stanici?</p>
+  <div role="radiogroup" aria-label="Pitanje">
+    <button class="quiz-option" onclick="checkQuiz(this,'wrong','Vakuola je u biljnoj stanici!')">Vakuola</button>
+    <button class="quiz-option" onclick="checkQuiz(this,'wrong','Ribosomi su u obje stanice.')">Ribosomi</button>
+    <button class="quiz-option" onclick="checkQuiz(this,'correct','Točno! Centrioli su samo u životinjskoj stanici i služe za diobu.')">Centrioli</button>
+    <button class="quiz-option" onclick="checkQuiz(this,'wrong','Kloroplast je u biljnoj stanici.')">Kloroplast</button>
+  </div>
+  <div class="quiz-feedback" role="alert" aria-live="polite"></div>
+</div>
+
+<div class="nav-btns">
+  <button class="gumb gumb-orange" onclick="prevSection()">← Nazad</button>
+  <button class="gumb gumb-primary" onclick="nextSection()">Dalje →</button>
+</div>
+</section>
+
+<!-- ============ SECTION 5: Endomembranski sustav ============ -->
+<section class="section" id="section-4" aria-labelledby="s4-title">
+<h2 id="s4-title">🏭 Cjelina 5: Endomembranski sustav</h2>
+
+<div class="advance-organizer">
+  <h3>🎯 U ovoj cjelini naučit ćeš:</h3>
+  <ul>
+    <li>Kako organeli surađuju kroz endomembranski sustav</li>
+    <li>Put proteina od ER-a do Golgija i dalje</li>
+    <li>Uloge lizosoma i peroksisoma</li>
+  </ul>
+</div>
+
+<div class="kartica definicija">
+  <h3>📘 Što je endomembranski sustav? <button class="tts-btn" onclick="procitaj('Endomembranski sustav je skup membranskih organela unutar stanice koji međusobno surađuju. Uključuje jezgrinu ovojnicu, endoplazmatski retikulum, Golgijev aparat, lizosome i peroksisome. Taj sustav proizvodi, pakira i transportira proteine i lipide.')" aria-label="Čitaj naglas">🔊</button></h3>
+  <p>Sustav membranskih organela koji zajedno rade na:</p>
+  <ul>
+    <li>🔨 Proizvodnji proteina i lipida</li>
+    <li>📦 Pakiranju i modificiranju</li>
+    <li>🚚 Transportu do odredišta</li>
+    <li>♻️ Razgradnji nepotrebnog</li>
+  </ul>
+</div>
+
+<div class="kartica primjer">
+  <h3>🚚 Put proteina kroz stanicu — korak po korak</h3>
+  <div style="margin:12px 0;">
+    <div style="background:var(--blue-light);padding:14px;border-radius:var(--radius);margin:8px 0;border-left:4px solid var(--blue);">
+      <strong>1️⃣ Hrapavi ER</strong> — ribosomi na hrapavom ER-u sintetiziraju proteine. Protein ulazi u ER gdje se savija u ispravan oblik.
+    </div>
+    <div style="text-align:center;font-size:24px;">⬇️</div>
+    <div style="background:var(--orange-light);padding:14px;border-radius:var(--radius);margin:8px 0;border-left:4px solid var(--orange);">
+      <strong>2️⃣ Transportni vezikul</strong> — mali mjehurić odvaja se od ER-a i nosi protein prema Golgijevom aparatu.
+    </div>
+    <div style="text-align:center;font-size:24px;">⬇️</div>
+    <div style="background:var(--green-light);padding:14px;border-radius:var(--radius);margin:8px 0;border-left:4px solid var(--green);">
+      <strong>3️⃣ Golgijev aparat</strong> — prima protein, modificira ga (dodaje šećere i sl.), pakira u vezikule i šalje na odredište.
+    </div>
+    <div style="text-align:center;font-size:24px;">⬇️</div>
+    <div style="background:var(--purple-light);padding:14px;border-radius:var(--radius);margin:8px 0;border-left:4px solid var(--purple);">
+      <strong>4️⃣ Odredište</strong> — protein može ići na staničnu membranu, u lizosom, ili van stanice (sekrecija).
+    </div>
+  </div>
+</div>
+
+<button class="expand-btn" aria-expanded="false" aria-controls="detail-endo" onclick="toggleExpand(this)">
+  <span class="arrow">▶</span> 💡 Detaljnije o svakom dijelu sustava
+</button>
+<div id="detail-endo" class="expand-content">
+  <p><strong>ER (Endoplazmatski retikulum)</strong></p>
+  <ul>
+    <li><strong>Hrapavi ER</strong> — ima ribosome na površini → proizvodi proteine (za membranu, sekreciju, lizosome)</li>
+    <li><strong>Glatki ER</strong> — NEMA ribosome → proizvodi lipide, detoksificira lijekove, skladišti Ca²⁺ ione</li>
+    <li>Jedina je razlika u tome jesu li vezani ribosomi prisutni na površini</li>
+  </ul>
+  <p style="margin-top:12px;"><strong>Golgijev aparat (tijelo)</strong></p>
+  <ul>
+    <li>Sustav spljoštenih membranskih vrećica (cisterna)</li>
+    <li>Ima <em>cis</em> stranu (prima iz ER-a) i <em>trans</em> stranu (šalje van)</li>
+    <li>Modificira proteine — dodaje šećerne lance, fosfatne grupe</li>
+    <li>Sortira i pakira u vezikule za različita odredišta</li>
+  </ul>
+  <p style="margin-top:12px;"><strong>Lizosom</strong></p>
+  <ul>
+    <li>Membranski mjehurić pun hidrolitičkih enzima</li>
+    <li>Razgrađuje: stare organele, strane tvari, bakterije</li>
+    <li>Sudjeluje u <strong>autofagiji</strong> — "samočišćenje" stanice</li>
+    <li>pH unutar lizosoma je kiseo (~5) — enzimi rade samo u kiselom</li>
+  </ul>
+  <p style="margin-top:12px;"><strong>Peroksisom</strong></p>
+  <ul>
+    <li>Razgrađuje masne kiseline i aminokiseline</li>
+    <li>Neutralizira otrovni vodikov peroksid (H₂O₂) pomoću enzima <strong>katalaze</strong></li>
+    <li>Posebno važan u jetri i bubregu — detoksikacija!</li>
+  </ul>
+</div>
+
+<div class="quiz-mini" style="margin-top:20px;">
+  <h3>🎯 Brza provjera</h3>
+  <p>Koji organel "pakira i šalje" proteine na odredište?</p>
+  <div role="radiogroup" aria-label="Pitanje">
+    <button class="quiz-option" onclick="checkQuiz(this,'wrong','Hrapavi ER proizvodi proteine, ali ih ne pakira za transport.')">Hrapavi ER</button>
+    <button class="quiz-option" onclick="checkQuiz(this,'correct','Točno! Golgijev aparat je poput poštanskog centra — prima, sortira i otprema proteine.')">Golgijev aparat</button>
+    <button class="quiz-option" onclick="checkQuiz(this,'wrong','Lizosom razgrađuje tvari, ne pakira ih.')">Lizosom</button>
+  </div>
+  <div class="quiz-feedback" role="alert" aria-live="polite"></div>
+</div>
+
+<div class="nav-btns">
+  <button class="gumb gumb-orange" onclick="prevSection()">← Nazad</button>
+  <button class="gumb gumb-primary" onclick="nextSection()">Dalje →</button>
+</div>
+</section>
+
+<!-- ============ SECTION 6: Endosimbioza i recap ============ -->
+<section class="section" id="section-5" aria-labelledby="s5-title">
+<h2 id="s5-title">🧬 Cjelina 6: Endosimbioza i zaključak</h2>
+
+<div class="advance-organizer">
+  <h3>🎯 U ovoj cjelini naučit ćeš:</h3>
+  <ul>
+    <li>Kako su mitohondriji i kloroplasti postali dio stanice</li>
+    <li>Što je endosimbiotska teorija</li>
+    <li>Ponavljanje — sažetak svega naučenog</li>
+  </ul>
+</div>
+
+<div class="kartica definicija">
+  <h3>🔬 Endosimbiotska teorija <button class="tts-btn" onclick="procitaj('Endosimbiotska teorija objašnjava kako su mitohondriji i kloroplasti postali dio eukariotske stanice. Prije oko 1,5 do 3,5 milijardi godina, velika stanica je progutala manju bakteriju, ali je nije probavila. Umjesto toga, počele su surađivati. Manja bakterija je postala mitohondrij ili kloroplast.')" aria-label="Čitaj naglas">🔊</button></h3>
+  <p>Prije otprilike 1,5-3,5 milijardi godina:</p>
+  <ol style="padding-left:20px;">
+    <li>Velika stanica domaćin <strong>progutala</strong> je manju aerobnu bakteriju</li>
+    <li>Umjesto da je probavi, bakterija je <strong>preživjela unutar stanice</strong></li>
+    <li>Bakterija je proizvodila energiju → korist za domaćina</li>
+    <li>S vremenom je postala <strong>mitohondrij</strong></li>
+    <li>Isti proces s fotosintetskom bakterijom → nastao <strong>kloroplast</strong></li>
+  </ol>
+</div>
+
+<div class="kartica vazno">
+  <h3>🔑 Dokazi za endosimbiozu</h3>
+  <p>Zašto vjerujemo u ovu teoriju? Mitohondriji i kloroplasti imaju:</p>
+  <ul>
+    <li>✅ <strong>Vlastitu DNA</strong> — kružnu, poput bakterijske</li>
+    <li>✅ <strong>Vlastite ribosome</strong> (70S) — slični bakterijskima</li>
+    <li>✅ <strong>Dvostruku membranu</strong> — unutarnja je originalna bakterijska</li>
+    <li>✅ Dijele se <strong>binarnom diobom</strong> — kao bakterije!</li>
+  </ul>
+</div>
+
+<div class="kartica primjer">
+  <h3>🤝 Vizualni prikaz endosimbioze</h3>
+  <div style="text-align:center;padding:16px;">
+    <div style="display:inline-block;background:#F5F5F5;padding:12px 20px;border-radius:20px;font-size:15px;">
+      Velika stanica 🟡 + Mala bakterija 🔴
+    </div>
+    <div style="font-size:28px;margin:8px 0;">⬇️ gutanje</div>
+    <div style="display:inline-block;background:#FFF3E0;padding:12px 20px;border-radius:20px;font-size:15px;">
+      🟡 stanica s 🔴 unutra — endosimbioza!
+    </div>
+    <div style="font-size:28px;margin:8px 0;">⬇️ milijuni godina</div>
+    <div style="display:inline-flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+      <div style="background:var(--orange-light);padding:12px 20px;border-radius:20px;font-size:15px;">
+        🔴 → 🔋 <strong>Mitohondrij</strong>
+      </div>
+      <div style="background:var(--green-light);padding:12px 20px;border-radius:20px;font-size:15px;">
+        🟢 → ☀️ <strong>Kloroplast</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RECAP -->
+<div class="recap-card">
+  <h3>📝 Sažetak lekcije</h3>
+  <ul style="padding-left:20px;">
+    <li><strong>Eukariotska stanica</strong> ima pravu jezgru i membranske organele</li>
+    <li><strong>Životinjska stanica</strong>: 15 organela, ima centriole, NEMA stijenku/kloroplaste</li>
+    <li><strong>Biljna stanica</strong>: ima vakuolu, kloroplaste, staničnu stijenku, plazmodezme</li>
+    <li><strong>Endomembranski sustav</strong>: ER → Golgi → vezikuli → odredište</li>
+    <li><strong>Mitohondrij</strong> = energija (ATP), <strong>Kloroplast</strong> = fotosinteza</li>
+    <li><strong>Endosimbioza</strong>: mitohondriji i kloroplasti su nekad bili slobodne bakterije!</li>
+  </ul>
+</div>
+
+<div class="quiz-mini">
+  <h3>🎯 Završna provjera</h3>
+  <p>Koji je DOKAZ da su mitohondriji nekad bili slobodne bakterije?</p>
+  <div role="radiogroup" aria-label="Pitanje">
+    <button class="quiz-option" onclick="checkQuiz(this,'wrong','To nije dokaz za endosimbiozu.')">Nalaze se u citoplazmi</button>
+    <button class="quiz-option" onclick="checkQuiz(this,'correct','Točno! Vlastita kružna DNA i 70S ribosomi su ključni dokazi da su mitohondriji potekli od bakterija.')">Imaju vlastitu DNA i ribosome</button>
+    <button class="quiz-option" onclick="checkQuiz(this,'wrong','Energiju proizvode i druge strukture, to nije specifičan dokaz.')">Proizvode energiju</button>
+    <button class="quiz-option" onclick="checkQuiz(this,'wrong','Veličina nije glavni dokaz.')">Manji su od jezgre</button>
+  </div>
+  <div class="quiz-feedback" role="alert" aria-live="polite"></div>
+</div>
+
+<div style="text-align:center;margin:30px 0;">
+  <p style="font-size:20px;">🎉 <strong>Bravo, Natalija!</strong> Završila si lekciju!</p>
+  <p>Svaki put kad ponoviš, tvoj mozak stvara jače veze. 💪</p>
+</div>
+
+<div class="nav-btns">
+  <button class="gumb gumb-orange" onclick="prevSection()">← Nazad</button>
+  <button class="gumb gumb-green" onclick="goToSection(0)">🔄 Od početka</button>
+</div>
+</section>
+
+</main>
+</div>
+
+<!-- READING RULER -->
+<div id="readingRuler" class="reading-ruler" aria-hidden="true"></div>
+
+<div aria-live="polite" id="step-announcement" class="sr-only"></div>
+
+<script>
+let currentSection = 0;
+const totalSections = 6;
+
+function goToSection(idx) {
+  document.querySelectorAll('.section').forEach((s,i) => {
+    s.classList.toggle('active', i === idx);
+  });
+  currentSection = idx;
+  updateProgress();
+  updateDots();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+  document.getElementById('step-announcement').textContent = 'Cjelina ' + (idx+1) + ' od ' + totalSections;
+}
+function nextSection() { if (currentSection < totalSections - 1) goToSection(currentSection + 1); }
+function prevSection() { if (currentSection > 0) goToSection(currentSection - 1); }
+function updateProgress() {
+  const pct = Math.round(((currentSection + 1) / totalSections) * 100);
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = 'Cjelina ' + (currentSection+1) + ' od ' + totalSections;
+  const pb = document.querySelector('.progress-wrap');
+  pb.setAttribute('aria-valuenow', pct);
+}
+function updateDots() {
+  document.querySelectorAll('.section-dot').forEach((d,i) => {
+    d.classList.remove('active','done');
+    if (i === currentSection) d.classList.add('active');
+    else if (i < currentSection) d.classList.add('done');
+  });
+}
+
+function checkQuiz(btn, result, feedback) {
+  const parent = btn.parentElement;
+  parent.querySelectorAll('.quiz-option').forEach(b => { b.disabled = true; b.classList.remove('correct','wrong'); });
+  btn.classList.add(result);
+  if (result === 'correct') {
+    const fb = parent.nextElementSibling;
+    fb.innerHTML = '✅ ' + feedback;
+    fb.style.background = 'var(--green-light)';
+  } else {
+    const fb = parent.nextElementSibling;
+    fb.innerHTML = '❌ ' + feedback;
+    fb.style.background = 'var(--red-light)';
+  }
+}
+
+function showOrganelle(id, html) {
+  const detail = document.getElementById('organelle-detail');
+  detail.innerHTML = html;
+  detail.classList.add('visible');
+  detail.style.background = 'var(--blue-light)';
+  detail.style.borderRadius = 'var(--radius)';
+  detail.style.padding = '16px';
+  detail.style.border = '2px solid var(--blue)';
+  detail.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+function toggleExpand(btn) {
+  const expanded = btn.getAttribute('aria-expanded') === 'true';
+  btn.setAttribute('aria-expanded', !expanded);
+  const content = document.getElementById(btn.getAttribute('aria-controls'));
+  content.classList.toggle('open');
+}
+
+function procitaj(tekst) {
+  if (speechSynthesis.speaking) speechSynthesis.cancel();
+  const govor = new SpeechSynthesisUtterance(tekst.replace(/<[^>]*>/g,''));
+  govor.lang = 'hr-HR';
+  govor.rate = 0.85;
+  speechSynthesis.speak(govor);
+}
+
+// Settings
+function toggleSettings() {
+  const panel = document.getElementById('settings-panel');
+  const btn = document.querySelector('.settings-toggle');
+  const open = panel.hidden;
+  panel.hidden = !open;
+  btn.setAttribute('aria-expanded', open);
+}
+function updateFontSize(val) {
+  document.body.style.fontSize = val + 'px';
+  document.getElementById('font-size-value').textContent = val + 'px';
+  try { localStorage.setItem('pu-font-size', val); } catch(e) {}
+}
+function updateBg(theme) {
+  const colors = { cream: '#FFF8F0', blue: '#F0F4FF', white: '#FAFAFA' };
+  document.body.style.background = colors[theme];
+  try { localStorage.setItem('pu-bg', theme); } catch(e) {}
+}
+function updateLineHeight(val) {
+  document.body.style.lineHeight = val;
+  try { localStorage.setItem('pu-line-height', val); } catch(e) {}
+}
+function toggleReadingRuler(on) {
+  const ruler = document.getElementById('readingRuler');
+  ruler.classList.toggle('active', on);
+  if (on) {
+    document.addEventListener('mousemove', moveRuler);
+    document.addEventListener('touchmove', moveRulerTouch);
+  } else {
+    document.removeEventListener('mousemove', moveRuler);
+    document.removeEventListener('touchmove', moveRulerTouch);
+  }
+}
+function moveRuler(e) { document.getElementById('readingRuler').style.top = (e.clientY - 20) + 'px'; }
+function moveRulerTouch(e) { if (e.touches[0]) document.getElementById('readingRuler').style.top = (e.touches[0].clientY - 20) + 'px'; }
+
+// Keyboard nav
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowRight' && !e.target.matches('input,textarea')) nextSection();
+  if (e.key === 'ArrowLeft' && !e.target.matches('input,textarea')) prevSection();
+  if ((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('flip-card')) {
+    e.preventDefault(); e.target.classList.toggle('flipped');
+  }
+});
+
+updateProgress();
+</script>
+</body>
+</html>

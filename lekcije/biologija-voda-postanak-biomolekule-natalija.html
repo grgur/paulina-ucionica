@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>Voda, postanak života i biomolekule — Natalijina Učionica</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-main: #FFF8F0;
+  --bg-card: #FFFFFF;
+  --text-main: #3A3A3A;
+  --text-light: #6B6B6B;
+  --blue: #4A90D9;
+  --blue-light: #E8F4FD;
+  --green: #5CB85C;
+  --green-light: #E8F8E8;
+  --orange: #FF9800;
+  --orange-light: #FFF3E0;
+  --red: #E74C3C;
+  --red-light: #FDE8E8;
+  --purple: #9B59B6;
+  --purple-light: #F3E8FD;
+  --teal: #26A69A;
+  --teal-light: #E0F2F1;
+  --radius: 12px;
+  --shadow: 0 2px 12px rgba(0,0,0,0.06);
+  --shadow-hover: 0 4px 20px rgba(0,0,0,0.1);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Lexend', 'Verdana', sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+  line-height: 1.8;
+  letter-spacing: 0.03em;
+  padding: 12px;
+  margin: 0 auto;
+  font-size: 17px;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+}
+.skip-link {
+  position: absolute; top: -40px; left: 0;
+  background: var(--blue); color: white;
+  padding: 8px 16px; z-index: 100;
+  border-radius: 0 0 8px 0; font-size: 16px;
+  text-decoration: none;
+}
+.skip-link:focus { top: 0; }
+.container { max-width: 720px; margin: 0 auto; }
+h1 { font-size: 26px; font-weight: 700; color: var(--blue); margin-bottom: 8px; }
+h2 { font-size: 22px; font-weight: 600; color: var(--teal); margin: 24px 0 12px; }
+h3 { font-size: 19px; font-weight: 600; margin: 16px 0 8px; }
+.subtitle { color: var(--text-light); font-size: 15px; margin-bottom: 20px; }
+.kartica {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+  border-left: 5px solid var(--blue);
+}
+.kartica-definicija { border-left-color: var(--blue); background: var(--blue-light); }
+.kartica-primjer { border-left-color: var(--green); background: var(--green-light); }
+.kartica-vazno { border-left-color: var(--orange); background: var(--orange-light); }
+.kartica-savjet { border-left-color: var(--purple); background: var(--purple-light); }
+.kartica-formula { border-left-color: var(--teal); background: var(--teal-light); }
+.kartica-greska { border-left-color: var(--red); background: var(--red-light); }
+.emoji-label { font-size: 20px; margin-right: 6px; }
+.section { display: none; }
+.section.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.progress-container {
+  background: #e0e0e0; border-radius: 20px;
+  height: 10px; margin: 12px 0 20px; overflow: hidden;
+}
+.progress-fill {
+  background: linear-gradient(90deg, var(--teal), var(--blue));
+  height: 100%; border-radius: 20px;
+  transition: width 0.4s ease;
+}
+.nav-dots {
+  display: flex; gap: 8px; justify-content: center;
+  flex-wrap: wrap; margin-bottom: 16px;
+}
+.nav-dot {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 2px solid var(--blue); background: white;
+  cursor: pointer; font-size: 14px; font-weight: 600;
+  color: var(--blue); display: flex;
+  align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.nav-dot.active { background: var(--blue); color: white; }
+.nav-dot.visited { background: var(--green-light); border-color: var(--green); color: var(--green); }
+.nav-btns {
+  display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap;
+}
+.btn {
+  font-family: 'Lexend', sans-serif;
+  font-size: 17px; padding: 14px 24px;
+  border-radius: 12px; border: none; cursor: pointer;
+  font-weight: 600; transition: all 0.2s ease;
+  min-height: 48px; flex: 1; text-align: center;
+}
+.btn:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+.btn-primary { background: var(--blue); color: white; }
+.btn-primary:hover { background: #3a7bc8; }
+.btn-secondary { background: #e0e0e0; color: var(--text-main); }
+.btn-secondary:hover { background: #d0d0d0; }
+.btn-tts {
+  background: var(--purple-light); border: none;
+  border-radius: 8px; padding: 6px 12px; cursor: pointer;
+  font-size: 16px; min-height: 40px; min-width: 40px;
+  transition: all 0.2s;
+}
+.btn-tts:hover { background: var(--purple); color: white; }
+.expand-btn {
+  background: var(--blue-light); border: 2px solid var(--blue);
+  border-radius: 10px; padding: 12px 16px; cursor: pointer;
+  font-size: 16px; font-weight: 500; width: 100%;
+  text-align: left; font-family: 'Lexend', sans-serif;
+  color: var(--text-main); transition: all 0.2s;
+  min-height: 48px; display: flex; align-items: center;
+  justify-content: space-between;
+}
+.expand-btn:hover { background: var(--blue); color: white; }
+.expand-content {
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.3s ease;
+  padding: 0 16px;
+}
+.expand-content.open { max-height: 2000px; padding: 16px; }
+.flip-card {
+  perspective: 1000px; cursor: pointer;
+  min-height: 160px; margin-bottom: 12px;
+}
+.flip-inner {
+  position: relative; width: 100%; height: 100%;
+  transition: transform 0.5s; transform-style: preserve-3d;
+  min-height: 160px;
+}
+.flip-card.flipped .flip-inner { transform: rotateY(180deg); }
+.flip-front, .flip-back {
+  position: absolute; width: 100%; min-height: 160px;
+  backface-visibility: hidden; border-radius: 16px;
+  padding: 20px; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; box-shadow: var(--shadow);
+}
+.flip-front { background: var(--blue-light); border: 2px solid var(--blue); }
+.flip-back { background: var(--green-light); border: 2px solid var(--green); transform: rotateY(180deg); }
+.flip-label { font-size: 13px; color: var(--text-light); margin-top: 8px; }
+.quiz-option {
+  display: block; width: 100%; text-align: left;
+  padding: 14px 18px; margin: 8px 0; border-radius: 12px;
+  border: 2px solid #ddd; background: white; cursor: pointer;
+  font-size: 16px; font-family: 'Lexend', sans-serif;
+  transition: all 0.2s; min-height: 48px;
+}
+.quiz-option:hover { border-color: var(--blue); background: var(--blue-light); }
+.quiz-option.correct { border-color: var(--green); background: var(--green-light); }
+.quiz-option.wrong { border-color: var(--red); background: var(--red-light); }
+.quiz-option:disabled { cursor: default; opacity: 0.9; }
+.feedback {
+  padding: 14px 18px; border-radius: 12px;
+  margin-top: 12px; display: none; font-size: 15px;
+}
+.feedback.show { display: block; animation: fadeIn 0.3s; }
+.feedback-correct { background: var(--green-light); border: 1px solid var(--green); }
+.feedback-wrong { background: var(--red-light); border: 1px solid var(--red); }
+.visual-diagram {
+  background: white; border-radius: 16px;
+  padding: 20px; margin: 16px 0;
+  text-align: center; box-shadow: var(--shadow);
+}
+.visual-diagram svg { max-width: 100%; height: auto; }
+.molecule { font-size: 48px; display: block; margin: 12px 0; }
+.arrow { font-size: 28px; color: var(--teal); margin: 0 8px; }
+.timeline {
+  position: relative; padding-left: 30px;
+  border-left: 3px solid var(--teal); margin: 16px 0;
+}
+.timeline-item {
+  position: relative; margin-bottom: 20px;
+  padding: 16px; background: white;
+  border-radius: 12px; box-shadow: var(--shadow);
+}
+.timeline-item::before {
+  content: ''; position: absolute;
+  left: -38px; top: 20px;
+  width: 14px; height: 14px;
+  border-radius: 50%; background: var(--teal);
+  border: 3px solid var(--bg-main);
+}
+.timeline-year {
+  font-weight: 700; color: var(--teal);
+  font-size: 18px; margin-bottom: 4px;
+}
+.biomolecule-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 12px; margin: 16px 0;
+}
+.bio-card {
+  background: white; border-radius: 14px;
+  padding: 16px; text-align: center;
+  box-shadow: var(--shadow); border-top: 4px solid;
+  cursor: pointer; transition: transform 0.2s;
+}
+.bio-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+.bio-card-lipidi { border-top-color: #FFD54F; }
+.bio-card-ugljiko { border-top-color: #81C784; }
+.bio-card-proteini { border-top-color: #64B5F6; }
+.bio-card-nk { border-top-color: #E57373; }
+.bio-emoji { font-size: 36px; display: block; margin-bottom: 8px; }
+.bio-detail {
+  display: none; margin-top: 12px;
+  padding: 12px; background: #f9f9f9;
+  border-radius: 10px; text-align: left;
+  font-size: 14px;
+}
+.bio-card.open .bio-detail { display: block; }
+.settings-toggle {
+  position: fixed; top: 12px; right: 12px;
+  z-index: 1000; background: white;
+  border: 2px solid #ddd; border-radius: 50%;
+  width: 44px; height: 44px; font-size: 20px;
+  cursor: pointer; box-shadow: var(--shadow);
+  display: flex; align-items: center; justify-content: center;
+}
+.settings-panel {
+  position: fixed; top: 60px; right: 12px;
+  z-index: 999; background: white;
+  border-radius: 16px; padding: 20px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+  width: 280px; max-width: 90vw;
+}
+.settings-panel[hidden] { display: none; }
+.settings-panel label { display: block; margin: 10px 0 4px; font-size: 14px; font-weight: 500; }
+.settings-panel input[type="range"] { width: 100%; }
+.settings-panel fieldset { border: none; padding: 0; margin: 8px 0; }
+.settings-panel fieldset label { display: inline-block; margin-right: 12px; }
+.reading-ruler {
+  position: fixed; left: 0; width: 100%;
+  height: 40px; background: rgba(255, 200, 50, 0.2);
+  border-top: 2px solid rgba(255, 200, 50, 0.5);
+  border-bottom: 2px solid rgba(255, 200, 50, 0.5);
+  pointer-events: none; z-index: 9990;
+  transition: top 0.05s ease; display: none;
+}
+.reading-ruler.active { display: block; }
+.recap-card {
+  background: linear-gradient(135deg, var(--teal-light), var(--blue-light));
+  border-radius: 16px; padding: 24px;
+  margin: 16px 0; border: 2px solid var(--teal);
+}
+.evolution-chain {
+  display: flex; flex-wrap: wrap;
+  align-items: center; justify-content: center;
+  gap: 8px; margin: 16px 0; padding: 16px;
+  background: white; border-radius: 14px;
+  box-shadow: var(--shadow);
+}
+.evo-step {
+  background: var(--teal-light); padding: 10px 16px;
+  border-radius: 10px; font-weight: 600;
+  font-size: 14px; text-align: center;
+  border: 2px solid var(--teal);
+}
+.ph-scale {
+  display: flex; height: 40px; border-radius: 10px;
+  overflow: hidden; margin: 12px 0;
+}
+.ph-segment {
+  flex: 1; display: flex; align-items: center;
+  justify-content: center; font-size: 12px;
+  font-weight: 600; color: white;
+}
+.water-property {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 14px; margin: 8px 0;
+  background: white; border-radius: 12px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+}
+.water-icon { font-size: 32px; flex-shrink: 0; }
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0;
+  margin: -1px; overflow: hidden; clip: rect(0,0,0,0);
+  white-space: nowrap; border-width: 0;
+}
+*:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; border-radius: 4px; }
+*:focus:not(:focus-visible) { outline: none; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+@media (min-width: 640px) {
+  body { padding: 24px; font-size: 18px; }
+  h1 { font-size: 30px; }
+  .kartica { padding: 24px 28px; }
+  .biomolecule-grid { grid-template-columns: repeat(4, 1fr); }
+}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Preskoči na sadržaj</a>
+
+<button class="settings-toggle" onclick="toggleSettings()" aria-label="Postavke prikaza" aria-expanded="false" aria-controls="settings-panel">⚙️</button>
+<div id="settings-panel" class="settings-panel" role="dialog" aria-label="Postavke prikaza" hidden>
+  <h3>Postavke prikaza</h3>
+  <label for="font-size">Veličina teksta</label>
+  <input type="range" id="font-size" min="15" max="28" value="17" oninput="updateFontSize(this.value)">
+  <span aria-live="polite" id="font-size-value">17px</span>
+  <fieldset><legend>Pozadina</legend>
+    <label><input type="radio" name="bg" value="cream" checked onchange="updateBg('cream')"> Krem</label>
+    <label><input type="radio" name="bg" value="blue" onchange="updateBg('blue')"> Plava</label>
+    <label><input type="radio" name="bg" value="white" onchange="updateBg('white')"> Bijela</label>
+  </fieldset>
+  <label for="line-height-ctrl">Razmak između redova</label>
+  <input type="range" id="line-height-ctrl" min="1.5" max="2.5" step="0.1" value="1.8" oninput="updateLineHeight(this.value)">
+  <label><input type="checkbox" id="reading-ruler" onchange="toggleReadingRuler(this.checked)"> Reading ruler (traka za čitanje)</label>
+  <br><button class="btn btn-secondary" style="margin-top:10px;width:100%" onclick="resetSettings()">Vrati na početno</button>
+</div>
+
+<main id="main-content" role="main" class="container">
+
+<!-- PROGRESS -->
+<div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Napredak lekcije" id="main-progress">
+  <div class="progress-container"><div class="progress-fill" id="progress-bar" style="width:0%"></div></div>
+</div>
+<div class="nav-dots" id="nav-dots" role="navigation" aria-label="Cjeline lekcije"></div>
+
+<!-- ============ SECTION 0: INTRO ============ -->
+<section class="section active" id="sec-0" aria-labelledby="sec-0-title">
+  <h1 id="sec-0-title">💧🧬 Voda, postanak života i biomolekule</h1>
+  <p class="subtitle">Biologija — Sveobuhvatna lekcija za Nataliju</p>
+
+  <div class="kartica">
+    <p><strong>Što ćeš naučiti u ovoj lekciji:</strong></p>
+    <ol style="margin:12px 0 0 20px;">
+      <li>Zašto je voda tako posebna molekula</li>
+      <li>Kako voda otapa tvari i što je pH</li>
+      <li>Kako je nastao život na Zemlji — od Redija do Millera</li>
+      <li>Koraci kemijske evolucije</li>
+      <li>Četiri glavne skupine biomolekula</li>
+    </ol>
+    <button class="btn-tts" onclick="procitaj('Što ćeš naučiti: zašto je voda posebna, kako otapa tvari i što je pê-há, kako je nastao život na Zemlji, koraci kemijske evolucije, i četiri glavne skupine biomolekula.')" aria-label="Čitaj naglas">🔊</button>
+  </div>
+
+  <div class="kartica kartica-savjet">
+    <p><span class="emoji-label">💡</span> <strong>Savjet:</strong> Klikaj kartice, otvori dodatna objašnjenja, i koristi gumb 🔊 za čitanje naglas. Idi svojim tempom — nema žurbe!</p>
+  </div>
+
+  <h3>Dijagnostička provjera — što već znaš?</h3>
+  <p style="color:var(--text-light);font-size:14px;">Ovo se ne ocjenjuje. Služi da vidimo odakle krećemo.</p>
+
+  <div id="diag-1" class="kartica" style="margin-top:12px;">
+    <p><strong>1.</strong> Koja je kemijska formula vode? <button class="btn-tts" onclick="procitaj('Koja je kemijska formula vode?')" aria-label="Čitaj naglas">🔊</button></p>
+    <div role="radiogroup" aria-label="Pitanje 1">
+      <button class="quiz-option" onclick="diagCheck(this,'diag1','wrong')">CO₂</button>
+      <button class="quiz-option" onclick="diagCheck(this,'diag1','correct')">H₂O</button>
+      <button class="quiz-option" onclick="diagCheck(this,'diag1','wrong')">NaCl</button>
+      <button class="quiz-option" onclick="diagCheck(this,'diag1','wrong')">O₂</button>
+    </div>
+    <div id="diag1-fb" class="feedback" role="alert" aria-live="polite"></div>
+  </div>
+
+  <div id="diag-2" class="kartica">
+    <p><strong>2.</strong> Što znači "pH 7"? <button class="btn-tts" onclick="procitaj('Što znači pê-há sedam?')" aria-label="Čitaj naglas">🔊</button></p>
+    <div role="radiogroup" aria-label="Pitanje 2">
+      <button class="quiz-option" onclick="diagCheck(this,'diag2','wrong')">Jako kiselo</button>
+      <button class="quiz-option" onclick="diagCheck(this,'diag2','correct')">Neutralno (ni kiselo ni lužnato)</button>
+      <button class="quiz-option" onclick="diagCheck(this,'diag2','wrong')">Jako lužnato</button>
+      <button class="quiz-option" onclick="diagCheck(this,'diag2','wrong')">Ne znam — naučit ću!</button>
+    </div>
+    <div id="diag2-fb" class="feedback" role="alert" aria-live="polite"></div>
+  </div>
+
+  <div id="diag-3" class="kartica">
+    <p><strong>3.</strong> Tko je bio Francesco Redi? <button class="btn-tts" onclick="procitaj('Tko je bio Frančesko Redi?')" aria-label="Čitaj naglas">🔊</button></p>
+    <div role="radiogroup" aria-label="Pitanje 3">
+      <button class="quiz-option" onclick="diagCheck(this,'diag3','wrong')">Slikar iz renesanse</button>
+      <button class="quiz-option" onclick="diagCheck(this,'diag3','wrong')">Izumitelj mikroskopa</button>
+      <button class="quiz-option" onclick="diagCheck(this,'diag3','correct')">Znanstvenik koji je istraživao nastanak života</button>
+      <button class="quiz-option" onclick="diagCheck(this,'diag3','wrong')">Ne znam — naučit ću!</button>
+    </div>
+    <div id="diag3-fb" class="feedback" role="alert" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- ============ SECTION 1: VODA ZA ŽIVOT ============ -->
+<section class="section" id="sec-1" aria-labelledby="sec-1-title">
+  <h2 id="sec-1-title">💧 Cjelina 1: Voda za život</h2>
+  <p style="color:var(--text-light);font-size:14px;margin-bottom:16px;">Što ćeš naučiti: zašto je voda tako posebna i koje su njezine uloge u organizmu.</p>
+
+  <div class="kartica kartica-definicija">
+    <h3><span class="emoji-label">📘</span> Voda — polarna molekula</h3>
+    <p>Voda (H₂O) je <strong>polarna molekula</strong>. To znači da joj je električni naboj <strong>neravnomjerno raspoređen</strong> — jedna strana je blago pozitivna, a druga blago negativna.</p>
+    <div class="visual-diagram">
+      <div class="molecule">💧</div>
+      <p style="font-size:14px">H<sup>δ+</sup> — O<sup>δ-</sup> — H<sup>δ+</sup></p>
+      <p style="font-size:13px;color:var(--text-light)">Kisik privlači elektrone jače od vodika → neravnomjerna raspodjela naboja</p>
+    </div>
+    <button class="btn-tts" onclick="procitaj('Voda je polarna molekula. To znači da joj je električni naboj neravnomjerno raspoređen. Jedna strana je blago pozitivna, a druga blago negativna. Kisik privlači elektrone jače od vodika.')" aria-label="Čitaj naglas">🔊</button>
+  </div>
+
+  <div class="kartica kartica-vazno">
+    <h3><span class="emoji-label">⭐</span> Uloge vode u organizmu</h3>
+    <div class="water-property"><span class="water-icon">🚿</span><div><strong>Odstranjuje otpadne tvari</strong> — pomaže tijelu izbaciti štetne tvari</div></div>
+    <div class="water-property"><span class="water-icon">⚖️</span><div><strong>Regulira tjelesnu masu</strong> — uključena u metaboličke procese</div></div>
+    <div class="water-property"><span class="water-icon">🚚</span><div><strong>Prenosi tvari</strong> — krv (koja je uglavnom voda) nosi kisik i hranjive tvari</div></div>
+    <div class="water-property"><span class="water-icon">🌱</span><div><strong>Pomaže rast i zacjeljivanje</strong> — potrebna za sve kemijske reakcije u tijelu</div></div>
+    <button class="btn-tts" onclick="procitaj('Uloge vode: odstranjuje otpadne tvari, regulira tjelesnu masu, prenosi tvari kroz tijelo, i pomaže rast i zacjeljivanje.')" aria-label="Čitaj naglas">🔊</button>
+  </div>
+
+  <div class="kartica kartica-definicija">
+    <h3><span class="emoji-label">🧊</span> Anomalija vode</h3>
+    <p><strong>Gustoća leda je manja od gustoće tekuće vode.</strong></p>
+    <p>Zato led <strong>pluta</strong> na vodi! To je iznimno važno za život u jezerima i oceanima — led stvara izolacijski sloj na površini, a ispod njega voda ostaje tekuća i organizmi mogu preživjeti zimu.</p>
+    <button class="btn-tts" onclick="procitaj('Anomalija vode: gustoća leda je manja od gustoće tekuće vode. Zato led pluta! Led na površini jezera izolira vodu ispod, pa organizmi mogu preživjeti zimu.')" aria-label="Čitaj naglas">🔊</button>
+  </div>
+
+  <button class="expand-btn" aria-expanded="false" aria-controls="exp-toplina" onclick="toggleExpand(this,'exp-toplina')">
+    <span>🌡️ Upravljanje toplinom — specifični toplinski kapacitet</span>
+    <span class="expand-arrow">▶</span>
+  </button>
+  <div id="exp-toplina" class="expand-content" role="region">
+    <div class="kartica kartica-formula">
+      <p><strong>Specifični toplinski kapacitet</strong> = količina topline koju treba primiti <strong>1 kg</strong> tvari da bi mu se temperatura povisila za <strong>1 K</strong> (kelvin).</p>
+      <p>Za vodu iznosi <strong>4,18 kJ</strong> — to je VRLO visoko!</p>
+      <p style="margin-top:8px">Što to znači u praksi? Voda se <strong>sporo zagrijava</strong> i <strong>sporo hladi</strong>. Zato more ljeti osvježava, a zimi grije obalu.</p>
+    </div>
+    <div class="kartica kartica-formula">
+      <p><strong>Specifična toplina isparavanja</strong> = količina topline koju 1 kg tvari treba primiti za prijelaz iz tekućeg u plinovito stanje.</p>
+      <p>Kod vode je ovo VRLO visoko jer moraju puknuti <strong>vodikove veze</strong> između molekula. Zato se znojimo — isparavanje vode hladi tijelo!</p>
+    </div>
+  </div>
+
+  <button class="expand-btn" style="margin-top:12px" aria-expanded="false" aria-controls="exp-sile" onclick="toggleExpand(this,'exp-sile')">
+    <span>🔗 Kohezija, adhezija, kapilarnost i površinska napetost</span>
+    <span class="expand-arrow">▶</span>
+  </button>
+  <div id="exp-sile" class="expand-content" role="region">
+    <div class="kartica kartica-definicija">
+      <p><strong>Kohezija</strong> = privlačna sila među <strong>istovrsnim</strong> molekulama (voda-voda).</p>
+      <p><strong>Adhezija</strong> = privlačna sila među <strong>raznovrsnim</strong> molekulama (voda-staklo).</p>
+    </div>
+    <div class="kartica kartica-primjer">
+      <p><span class="emoji-label">🌿</span> <strong>Kapilarnost</strong> = kretanje vode u uskom prostoru, nasuprot djelovanju sile teže. Nastaje zajedno: kohezija + adhezija.</p>
+      <p>Primjer: voda se penje kroz tanke cijevi u biljkama — tako biljke "piju" vodu iz tla!</p>
+    </div>
+    <div class="kartica kartica-primjer">
+      <p><span class="emoji-label">🕷️</span> <strong>Površinska napetost</strong> = sila na površini vode nastaje jer molekule na površini nemaju susjede iznad sebe, pa ih ostale vuku prema unutra. Zato neki kukci mogu "hodati" po vodi!</p>
+    </div>
+  </div>
+
+  <!-- Mini quiz sekcija 1 -->
+  <div class="kartica" style="margin-top:20px;border-left-color:var(--purple)">
+    <h3><span class="emoji-label">🎯</span> Brza provjera — Cjelina 1</h3>
+    <p style="color:var(--text-light);font-size:14px">Ne ocjenjuje se. Samo za tvoju provjeru!</p>
+    <div style="margin-top:12px">
+      <p><strong>Zašto led pluta na vodi?</strong></p>
+      <div role="radiogroup" aria-label="Kviz pitanje">
+        <button class="quiz-option" onclick="miniQuiz(this,'q1s1','wrong')">Jer je led topliji od vode</button>
+        <button class="quiz-option" onclick="miniQuiz(this,'q1s1','correct')">Jer je gustoća leda manja od gustoće tekuće vode</button>
+        <button class="quiz-option" onclick="miniQuiz(this,'q1s1','wrong')">Jer voda gura led prema gore</button>
+      </div>
+      <div id="q1s1-fb" class="feedback" role="alert" aria-live="polite"></div>
+    </div>
+  </div>
+  <div class="kartica kartica-savjet" style="margin-top:12px">
+    <p><span class="emoji-label">🧠</span> <strong>Razmisli:</strong> Što ti je bilo najzanimljivije u ovoj cjelini? Što bi htjela istražiti više?</p>
+  </div>
+</section>
+
+<!-- ============ SECTION 2: VODA KAO OTAPALO ============ -->
+<section class="section" id="sec-2" aria-labelledby="sec-2-title">
+  <h2 id="sec-2-title">🧪 Cjelina 2: Voda kao otapalo i pH</h2>
+  <p style="color:var(--text-light);font-size:14px;margin-bottom:16px;">Što ćeš naučiti: zašto voda tako dobro otapa tvari i što je pH skala.</p>
+
+  <div class="kartica kartica-definicija">
+    <h3><span class="emoji-label">📘</span> Voda — univerzalno otapalo</h3>
+    <p>Voda je <strong>vrlo dobro otapalo</strong> za polarne i ionske tvari. Zato u njoj možeš otopiti sol, šećer, i mnoge druge tvari.</p>
+    <button class="btn-tts" onclick="procitaj('Voda je vrlo dobro otapalo za polarne i ionske tvari.')" aria-label="Čitaj naglas">🔊</button>
+  </div>
+
+  <div class="kartica kartica-vazno">
+    <h3><span class="emoji-label">💦</span> Hidrofilne vs. hidrofobne molekule</h3>
+    <p><strong>Hidrofilne</strong> ("vole vodu") — otapaju se u vodi. Npr. sol, šećer.</p>
+    <p><strong>Hidrofobne</strong> ("boje se vode") — NE otapaju se u vodi. Npr. ulje, mast.</p>
+    <div class="kartica kartica-primjer" style="margin-top:12px">
+      <p><span class="emoji-label">🥗</span> <strong>Primjer:</strong> Kad sipaš ulje u vodu za salatu, ulje pluta i ne miješa se — ulje je hidrofobno!</p>
+    </div>
+  </div>
+
+  <div class="kartica kartica-formula">
+    <h3><span class="emoji-label">📊</span> pH vrijednost</h3>
+    <p><strong>pH</strong> je mjera <strong>kiselosti</strong> otopine.</p>
+    <p>Voda se raspada na ione: <strong>H₂O → H⁺ + OH⁻</strong></p>
+    <p>pH skala ide od <strong>0 do 14</strong>:</p>
+    <div class="ph-scale" role="img" aria-label="pH skala od 0 do 14">
+      <div class="ph-segment" style="background:#ff1744">0</div>
+      <div class="ph-segment" style="background:#ff5252">1</div>
+      <div class="ph-segment" style="background:#ff6e40">2</div>
+      <div class="ph-segment" style="background:#ff9100">3</div>
+      <div class="ph-segment" style="background:#ffab00">4</div>
+      <div class="ph-segment" style="background:#ffd600">5</div>
+      <div class="ph-segment" style="background:#c6ff00;color:#333">6</div>
+      <div class="ph-segment" style="background:#69f0ae;color:#333">7</div>
+      <div class="ph-segment" style="background:#00e676;color:#333">8</div>
+      <div class="ph-segment" style="background:#00bfa5">9</div>
+      <div class="ph-segment" style="background:#0091ea">10</div>
+      <div class="ph-segment" style="background:#2962ff">11</div>
+      <div class="ph-segment" style="background:#304ffe">12</div>
+      <div class="ph-segment" style="background:#6200ea">13</div>
+      <div class="ph-segment" style="background:#aa00ff">14</div>
+    </div>
+    <p style="text-align:center;font-size:14px">← <strong>KISELO</strong> (0) &nbsp;&nbsp; <strong>NEUTRALNO</strong> (7) &nbsp;&nbsp; <strong>LUŽNATO</strong> (14) →</p>
+    <ul style="margin:12px 0 0 20px;font-size:15px">
+      <li>Više H⁺ iona = <strong>niži pH</strong> = KISELIJE</li>
+      <li>Čista voda: pH = <strong>7</strong> (neutralno)</li>
+      <li>Limunov sok: pH ≈ 2 (kiselo)</li>
+      <li>Sapun: pH ≈ 10 (lužnato)</li>
+    </ul>
+    <button class="btn-tts" onclick="procitaj('Pê-há je mjera kiselosti otopine. Skala ide od nula do četrnaest. Sedam je neutralno. Ispod sedam je kiselo. Iznad sedam je lužnato. Čista voda ima pê-há sedam.')" aria-label="Čitaj naglas">🔊</button>
+  </div>
+
+  <div class="kartica kartica-primjer">
+    <h3><span class="emoji-label">🔢</span> Kako čitati pH?</h3>
+    <p>Ako je pH = 3, to znači da u otopini ima <strong>10⁻³</strong> mol/dm³ iona H⁺ i <strong>10⁻¹¹</strong> mol/dm³ iona OH⁻.</p>
+    <p>Zapamti: <strong>pH + pOH = 14</strong> (uvijek!) → 3 + 11 = 14 ✅</p>
+  </div>
+
+  <div class="kartica kartica-savjet" style="border-left-color:var(--green)">
+    <p><span class="emoji-label">🌍</span> <strong>Zanimljivost:</strong> 22. ožujka je <strong>Svjetski dan vode</strong>!</p>
+  </div>
+
+  <!-- Mini quiz sekcija 2 -->
+  <div class="kartica" style="margin-top:20px;border-left-color:var(--purple)">
+    <h3><span class="emoji-label">🎯</span> Brza provjera — Cjelina 2</h3>
+    <div style="margin-top:12px">
+      <p><strong>Ulje je hidrofobno. Što to znači?</strong></p>
+      <div role="radiogroup" aria-label="Kviz pitanje">
+        <button class="quiz-option" onclick="miniQuiz(this,'q1s2','wrong')">Otapa se u vodi</button>
+        <button class="quiz-option" onclick="miniQuiz(this,'q1s2','correct')">Ne otapa se u vodi</button>
+        <button class="quiz-option" onclick="miniQuiz(this,'q1s2','wrong')">Reagira s vodom</button>
+      </div>
+      <div id="q1s2-fb" class="feedback" role="alert" aria-live="polite"></div>
+    </div>
+    <div style="margin-top:16px">
+      <p><strong>Čista voda ima pH:</strong></p>
+      <div role="radiogroup" aria-label="Kviz pitanje">
+        <button class="quiz-option" onclick="miniQuiz(this,'q2s2','wrong')">pH = 0</button>
+        <button class="quiz-option" onclick="miniQuiz(this,'q2s2','correct')">pH = 7</button>
+        <button class="quiz-option" onclick="miniQuiz(this,'q2s2','wrong')">pH = 14</button>
+      </div>
+      <div id="q2s2-fb" class="feedback" role="alert" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 3: POSTANAK ŽIVOTA ============ -->
+<section class="section" id="sec-3" aria-labelledby="sec-3-title">
+  <h2 id="sec-3-title">🌍 Cjelina 3: Kako je nastao život na Zemlji</h2>
+  <p style="color:var(--text-light);font-size:14px;margin-bottom:16px;">Što ćeš naučiti: ključni eksperimenti i teorije o postanku života.</p>
+
+  <div class="kartica kartica-definicija">
+    <h3><span class="emoji-label">📘</span> Dva ključna pitanja</h3>
+    <p><strong>Kemijska evolucija</strong> proučava <strong>spontanu sintezu složenih molekula iz jednostavnih</strong>. Drugim riječima: kako su se od jednostavnih kemikalija stvorile složene molekule potrebne za život?</p>
+    <button class="btn-tts" onclick="procitaj('Kemijska evolucija proučava spontanu sintezu složenih molekula iz jednostavnih. Kako su se od jednostavnih kemikalija stvorile složene molekule potrebne za život?')" aria-label="Čitaj naglas">🔊</button>
+  </div>
+
+  <div class="kartica kartica-vazno">
+    <h3><span class="emoji-label">⚔️</span> Dvije suprotstavljene teorije</h3>
+    <p><strong>Teorija spontane generacije:</strong> živi organizmi mogu spontano nastati iz nežive tvari (npr. crvi iz mesa).</p>
+    <p><strong>Teorija biogeneze:</strong> život može nastati <strong>samo</strong> iz prethodnog živog organizma.</p>
+    <p style="margin-top:8px;font-size:14px;color:var(--text-light)">Stoljetni sukob ovih dviju ideja vodio je do nekih najvažnijih eksperimenata u povijesti znanosti!</p>
+  </div>
+
+  <h3 style="margin-top:20px">🕰️ Vremenski pregled — ključni eksperimenti</h3>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-year">1668 — Francesco Redi</div>
+      <p>Zastupao <strong>biogenezu</strong>. Dokazao da se crvi na mesu pojavljuju iz jaja muha, a ne spontano.</p>
+      <button class="expand-btn" style="margin-top:8px" aria-expanded="false" aria-controls="exp-redi" onclick="toggleExpand(this,'exp-redi')">
+        <span>🔬 Vidi eksperiment</span><span class="expand-arrow">▶</span>
+      </button>
+      <div id="exp-redi" class="expand-content" role="region">
+        <div class="visual-diagram">
+          <p style="font-size:14px;text-align:left">Redi je uzeo <strong>4 borcana s mesom</strong>:</p>
+          <p>🫙 Otvoren → muhe ušle → crvi ✅</p>
+          <p>🫙 Zatvoren gazom → muhe ne mogu ući → NEMA crva ✅</p>
+          <p>🫙 Potpuno zatvoren → NEMA crva ✅</p>
+          <p style="margin-top:8px"><strong>Zaključak:</strong> Crvi nastaju iz jaja muha, NE spontano iz mesa!</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-year">1861 — Louis Pasteur</div>
+      <p>Eksperimentom s <strong>tikvicama labuđeg vrata</strong> konačno dokazao biogenezu. Pokazao da mikroorganizmi dolaze iz zraka, a ne nastaju spontano.</p>
+      <button class="btn-tts" onclick="procitaj('Louis Paster je 1861. godine eksperimentom s tikvicama labuđeg vrata konačno dokazao biogenezu. Pokazao je da mikroorganizmi dolaze iz zraka.')" aria-label="Čitaj naglas">🔊</button>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-year">1924 — Oparin i Haldane</div>
+      <p>Aleksandar Oparin (i John Haldane) pretpostavili su o <strong>podrijetlu života</strong>:</p>
+      <ul style="margin:8px 0 0 20px">
+        <li>Rana Zemljina atmosfera bila je <strong>reducirajuća</strong> (vrlo malo O₂)</li>
+        <li>Sastojala se od: vodene pare, H₂, CH₄, NH₃</li>
+        <li>Izvori energije: visoka temperatura, erupcije vulkana, munje, UV zračenje</li>
+        <li>Organske molekule nastale u atmosferi, pale kišom u <strong>praocean</strong></li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-year">1953 — Miller i Urey</div>
+      <p><strong>Testirali Oparinovu teoriju u laboratoriju!</strong></p>
+      <p>U zatvorenom sustavu stvorili uvjete rane Zemljine atmosfere. Rezultat: nastale <strong>aminokiseline</strong> i <strong>jednostavni šećeri</strong> — građevni blokovi života!</p>
+      <button class="expand-btn" style="margin-top:8px" aria-expanded="false" aria-controls="exp-miller" onclick="toggleExpand(this,'exp-miller')">
+        <span>🔬 Vidi Miller-Ureyev pokus</span><span class="expand-arrow">▶</span>
+      </button>
+      <div id="exp-miller" class="expand-content" role="region">
+        <div class="kartica kartica-primjer">
+          <p>Koraci pokusa:</p>
+          <ol style="margin:8px 0 0 20px">
+            <li>Napunili posudu plinovima: H₂O, CH₄, NH₃, H₂</li>
+            <li>Električni izboji = simulacija munja ⚡</li>
+            <li>Hlađenje = simulacija kiše 🌧️</li>
+            <li>Analiza tekućine → pronašli <strong>aminokiseline i šećere</strong>!</li>
+          </ol>
+          <p style="margin-top:8px"><strong>Zaključak:</strong> Organske molekule MOGU nastati iz anorganskih tvari pod pravim uvjetima!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mini quiz sekcija 3 -->
+  <div class="kartica" style="margin-top:20px;border-left-color:var(--purple)">
+    <h3><span class="emoji-label">🎯</span> Brza provjera — Cjelina 3</h3>
+    <div style="margin-top:12px">
+      <p><strong>Tko je prvi laboratorijski stvorio aminokiseline iz anorganskih tvari?</strong></p>
+      <div role="radiogroup" aria-label="Kviz pitanje">
+        <button class="quiz-option" onclick="miniQuiz(this,'q1s3','wrong')">Francesco Redi</button>
+        <button class="quiz-option" onclick="miniQuiz(this,'q1s3','wrong')">Louis Pasteur</button>
+        <button class="quiz-option" onclick="miniQuiz(this,'q1s3','correct')">Stanley Miller i Harold Urey</button>
+        <button class="quiz-option" onclick="miniQuiz(this,'q1s3','wrong')">Aleksandar Oparin</button>
+      </div>
+      <div id="q1s3-fb" class="feedback" role="alert" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 4: KEMIJSKA EVOLUCIJA ============ -->
+<section class="section" id="sec-4" aria-labelledby="sec-4-title">
+  <h2 id="sec-4-title">🔬 Cjelina 4: Kemijska evolucija — od molekula do stanica</h2>
+  <p style="color:var(--text-light);font-size:14px;margin-bottom:16px;">Što ćeš naučiti: koraci kemijske evolucije i obilježja živih bića.</p>
+
+  <div class="kartica kartica-vazno">
+    <h3><span class="emoji-label">🧬</span> Koraci kemijske evolucije</h3>
+    <p>Od jednostavnih molekula do prvih stanica — korak po korak:</p>
+    <div class="evolution-chain">
+      <div class="evo-step">Organski monomeri<br><span style="font-size:12px;font-weight:400">(aminokiseline, šećeri)</span></div>
+      <span class="arrow">→</span>
+      <div class="evo-step">Organski polimeri<br><span style="font-size:12px;font-weight:400">(proteini, nukl. kiseline)</span></div>
+      <span class="arrow">→</span>
+      <div class="evo-step">Protstanice<br><span style="font-size:12px;font-weight:400">(nakupine s membranom)</span></div>
+      <span class="arrow">→</span>
+      <div class="evo-step">Stanice<br><span style="font-size:12px;font-weight:400">(prvi živi organizmi)</span></div>
+    </div>
+    <button class="btn-tts" onclick="procitaj('Koraci kemijske evolucije: organski monomeri, pa organski polimeri, pa protstanice, i na kraju stanice.')" aria-label="Čitaj naglas">🔊</button>
+  </div>
+
+  <div class="kartica kartica-definicija">
+    <h3><span class="emoji-label">📘</span> Što su protstanice?</h3>
+    <p><strong>Protstanice</strong> = nakupine organskih tvari okružene <strong>membranom</strong>. Još NISU žive, ali su korak prema životu.</p>
+    <p>Da bi protstanica postala prva stanica, trebala je razviti:</p>
+    <ul style="margin:8px 0 0 20px">
+      <li>🔄 <strong>Metabolizam</strong> — sposobnost kemijskih reakcija</li>
+      <li>🛡️ <strong>Stanična membrana</strong> — zaštitni omotač</li>
+      <li>📋 <strong>Nasljedna uputa</strong> — DNA ili RNA</li>
+      <li>⚡ <strong>Enzimi</strong> — ubrzavači reakcija</li>
+    </ul>
+  </div>
+
+  <div class="kartica kartica-formula">
+    <h3><span class="emoji-label">✨</span> Obilježja živih bića</h3>
+    <p>Sva živa bića dijele tri temeljna obilježja:</p>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:12px">
+      <div style="flex:1;min-width:180px;background:var(--teal-light);padding:14px;border-radius:12px;text-align:center">
+        <div style="font-size:28px">🏗️</div>
+        <strong>Organiziranost</strong>
+        <p style="font-size:13px">Određena struktura i organizacija</p>
+      </div>
+      <div style="flex:1;min-width:180px;background:var(--blue-light);padding:14px;border-radius:12px;text-align:center">
+        <div style="font-size:28px">⚖️</div>
+        <strong>Homeostaza</strong>
+        <p style="font-size:13px">Održavanje uravnoteženog stanja</p>
+      </div>
+      <div style="flex:1;min-width:180px;background:var(--orange-light);padding:14px;border-radius:12px;text-align:center">
+        <div style="font-size:28px">🔄</div>
+        <strong>Promjenjivost</strong>
+        <p style="font-size:13px">Sposobnost prilagodbe i evolucije</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="kartica kartica-savjet">
+    <h3><span class="emoji-label">🌌</span> Tri vrste evolucije</h3>
+    <p><strong>Kozmička evolucija</strong> proučava postanak i razvoj <strong>svemira</strong>.</p>
+    <p><strong>Kemijska evolucija</strong> proučava nastanak složenih molekula iz jednostavnih.</p>
+    <p><strong>Biološka evolucija</strong> proučava postanak i razvoj <strong>živih bića</strong> na Zemlji.</p>
+    <p style="margin-top:8px;font-size:14px;color:var(--text-light)">Biološka evolucija počinje onog trenutka kad je protstanica poprimila obilježja života!</p>
+  </div>
+
+  <!-- Mini quiz sekcija 4 -->
+  <div class="kartica" style="margin-top:20px;border-left-color:var(--purple)">
+    <h3><span class="emoji-label">🎯</span> Brza provjera — Cjelina 4</h3>
+    <div style="margin-top:12px">
+      <p><strong>Što su protstanice?</strong></p>
+      <div role="radiogroup" aria-label="Kviz pitanje">
+        <button class="quiz-option" onclick="miniQuiz(this,'q1s4','wrong')">Prve prave stanice s DNA</button>
+        <button class="quiz-option" onclick="miniQuiz(this,'q1s4','correct')">Nakupine organskih tvari s membranom, još nisu žive</button>
+        <button class="quiz-option" onclick="miniQuiz(this,'q1s4','wrong')">Bakterije iz praocean</button>
+      </div>
+      <div id="q1s4-fb" class="feedback" role="alert" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 5: BIOMOLEKULE ============ -->
+<section class="section" id="sec-5" aria-labelledby="sec-5-title">
+  <h2 id="sec-5-title">🧬 Cjelina 5: Biomolekule — građevni blokovi života</h2>
+  <p style="color:var(--text-light);font-size:14px;margin-bottom:16px;">Što ćeš naučiti: četiri glavne skupine biomolekula i njihove podskupine.</p>
+
+  <div class="kartica kartica-definicija">
+    <h3><span class="emoji-label">📘</span> Što su biomolekule?</h3>
+    <p><strong>Biomolekule</strong> su organske molekule koje čine sva živa bića. Postoje <strong>četiri glavne skupine</strong>:</p>
+    <button class="btn-tts" onclick="procitaj('Biomolekule su organske molekule koje čine sva živa bića. Postoje četiri glavne skupine: lipidi, ugljikohidrati, proteini, i nukleinske kiseline.')" aria-label="Čitaj naglas">🔊</button>
+  </div>
+
+  <div class="biomolecule-grid">
+    <div class="bio-card bio-card-lipidi" onclick="toggleBioCard(this)" tabindex="0" role="button" aria-expanded="false" aria-label="Lipidi - klikni za detalje">
+      <span class="bio-emoji">🫒</span>
+      <strong>Lipidi</strong>
+      <div class="bio-detail">
+        <p><strong>Podskupine:</strong></p>
+        <ul style="margin:4px 0 0 16px;font-size:13px">
+          <li><strong>Trigliceridi</strong> — masti i ulja (energija)</li>
+          <li><strong>Fosfolipidi</strong> — grade stanične membrane</li>
+          <li><strong>Steroidi</strong> — hormoni (npr. kolesterol)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="bio-card bio-card-ugljiko" onclick="toggleBioCard(this)" tabindex="0" role="button" aria-expanded="false" aria-label="Ugljikohidrati - klikni za detalje">
+      <span class="bio-emoji">🍞</span>
+      <strong>Ugljiko-hidrati</strong>
+      <div class="bio-detail">
+        <p><strong>Podskupine:</strong></p>
+        <ul style="margin:4px 0 0 16px;font-size:13px">
+          <li><strong>Monosaharidi</strong> — glukoza (1 šećer)</li>
+          <li><strong>Disaharidi</strong> — saharoza (2 šećera)</li>
+          <li><strong>Polisaharidi</strong> — škrob (mnogo šećera)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="bio-card bio-card-proteini" onclick="toggleBioCard(this)" tabindex="0" role="button" aria-expanded="false" aria-label="Proteini - klikni za detalje">
+      <span class="bio-emoji">💪</span>
+      <strong>Proteini</strong>
+      <div class="bio-detail">
+        <p>Građeni od <strong>aminokiselina</strong>.</p>
+        <p style="font-size:13px;margin-top:4px">Uloge: enzimi, hormoni, protutijela, mišići, kosa...</p>
+      </div>
+    </div>
+    <div class="bio-card bio-card-nk" onclick="toggleBioCard(this)" tabindex="0" role="button" aria-expanded="false" aria-label="Nukleinske kiseline - klikni za detalje">
+      <span class="bio-emoji">🧬</span>
+      <strong>Nukleinske kiseline</strong>
+      <div class="bio-detail">
+        <p><strong>DNA</strong> — nasljedna uputa</p>
+        <p><strong>RNA</strong> — prenosi informacije za sintezu proteina</p>
+      </div>
+    </div>
+  </div>
+  <p style="text-align:center;font-size:13px;color:var(--text-light)">Klikni na svaku karticu za detalje!</p>
+
+  <!-- Mini quiz sekcija 5 -->
+  <div class="kartica" style="margin-top:20px;border-left-color:var(--purple)">
+    <h3><span class="emoji-label">🎯</span> Brza provjera — Cjelina 5</h3>
+    <div style="margin-top:12px">
+      <p><strong>Fosfolipidi su podskupina:</strong></p>
+      <div role="radiogroup" aria-label="Kviz pitanje">
+        <button class="quiz-option" onclick="miniQuiz(this,'q1s5','correct')">Lipida</button>
+        <button class="quiz-option" onclick="miniQuiz(this,'q1s5','wrong')">Ugljikohidrata</button>
+        <button class="quiz-option" onclick="miniQuiz(this,'q1s5','wrong')">Proteina</button>
+        <button class="quiz-option" onclick="miniQuiz(this,'q1s5','wrong')">Nukleinskih kiselina</button>
+      </div>
+      <div id="q1s5-fb" class="feedback" role="alert" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 6: RECAP ============ -->
+<section class="section" id="sec-6" aria-labelledby="sec-6-title">
+  <h2 id="sec-6-title">🏆 Ponavljanje — sve na jednom mjestu</h2>
+
+  <div class="recap-card">
+    <h3 style="text-align:center;margin-bottom:16px">Flip kartice — okreni za objašnjenje!</h3>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')" tabindex="0" role="button" aria-label="Kartica: Polarna molekula. Klikni za objašnjenje.">
+      <div class="flip-inner">
+        <div class="flip-front"><h3>Polarna molekula</h3><div class="flip-label">Klikni za objašnjenje</div></div>
+        <div class="flip-back"><p>Molekula s neravnomjerno raspoređenim nabojem — jedna strana pozitivna, druga negativna. Voda je polarna!</p></div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')" tabindex="0" role="button" aria-label="Kartica: Anomalija vode. Klikni za objašnjenje.">
+      <div class="flip-inner">
+        <div class="flip-front"><h3>Anomalija vode</h3><div class="flip-label">Klikni za objašnjenje</div></div>
+        <div class="flip-back"><p>Led ima manju gustoću od tekuće vode → led pluta! To štiti organizme u jezerima zimi.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')" tabindex="0" role="button" aria-label="Kartica: pH 7. Klikni za objašnjenje.">
+      <div class="flip-inner">
+        <div class="flip-front"><h3>pH = 7</h3><div class="flip-label">Klikni za objašnjenje</div></div>
+        <div class="flip-back"><p>Neutralno! Čista voda. pH ispod 7 = kiselo, iznad 7 = lužnato. Skala 0-14.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')" tabindex="0" role="button" aria-label="Kartica: Miller-Ureyev pokus. Klikni za objašnjenje.">
+      <div class="flip-inner">
+        <div class="flip-front"><h3>Miller-Ureyev pokus (1953)</h3><div class="flip-label">Klikni za objašnjenje</div></div>
+        <div class="flip-back"><p>U laboratoriju stvorili uvjete rane Zemlje → nastale aminokiseline! Dokaz da organske molekule mogu nastati iz anorganskih.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')" tabindex="0" role="button" aria-label="Kartica: 4 biomolekule. Klikni za objašnjenje.">
+      <div class="flip-inner">
+        <div class="flip-front"><h3>4 biomolekule</h3><div class="flip-label">Klikni za objašnjenje</div></div>
+        <div class="flip-back"><p>Lipidi (masti), Ugljikohidrati (šećeri), Proteini (aminokiseline), Nukleinske kiseline (DNA, RNA).</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="kartica kartica-savjet">
+    <p><span class="emoji-label">🌟</span> <strong>Bravo, Natalija!</strong> Prošla si sve cjeline! Tvoj mozak je upravo napravio tisuće novih veza. Sad kad si gotova s lekcijom, pogledaj priču i ispit kad budeš spremna.</p>
+    <p style="margin-top:8px">Zapamti: svaki put kad ponoviš, znanje postaje jače. 💪</p>
+  </div>
+</section>
+
+</main>
+
+<div aria-live="polite" id="step-announcement" class="sr-only"></div>
+
+<nav class="nav-btns" role="navigation" aria-label="Navigacija lekcije" id="nav-buttons">
+  <button class="btn btn-secondary" onclick="prevSection()" id="btn-prev" disabled>← Nazad</button>
+  <button class="btn btn-primary" onclick="nextSection()" id="btn-next">Dalje →</button>
+</nav>
+
+<script>
+const TOTAL_SECTIONS = 7;
+let current = 0;
+let visited = new Set([0]);
+
+function showSection(idx) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('sec-'+idx).classList.add('active');
+  current = idx;
+  visited.add(idx);
+  updateProgress();
+  updateNav();
+  window.scrollTo({top:0, behavior:'smooth'});
+  document.getElementById('step-announcement').textContent = 'Cjelina '+(idx+1)+' od '+TOTAL_SECTIONS;
+}
+function nextSection() { if(current < TOTAL_SECTIONS-1) showSection(current+1); }
+function prevSection() { if(current > 0) showSection(current-1); }
+function updateProgress() {
+  const pct = Math.round(((current)/(TOTAL_SECTIONS-1))*100);
+  document.getElementById('progress-bar').style.width = pct+'%';
+  document.getElementById('main-progress').setAttribute('aria-valuenow', pct);
+}
+function updateNav() {
+  document.getElementById('btn-prev').disabled = current === 0;
+  document.getElementById('btn-next').disabled = current === TOTAL_SECTIONS-1;
+  document.getElementById('btn-next').textContent = current === TOTAL_SECTIONS-1 ? '🏆 Gotovo!' : 'Dalje →';
+  const dotsC = document.getElementById('nav-dots');
+  dotsC.innerHTML = '';
+  for(let i=0;i<TOTAL_SECTIONS;i++){
+    const d = document.createElement('button');
+    d.className = 'nav-dot'+(i===current?' active':'')+(visited.has(i)&&i!==current?' visited':'');
+    d.textContent = i+1;
+    d.setAttribute('aria-label','Cjelina '+(i+1));
+    d.onclick = ()=>showSection(i);
+    dotsC.appendChild(d);
+  }
+}
+
+function toggleExpand(btn, id) {
+  const content = document.getElementById(id);
+  const isOpen = content.classList.toggle('open');
+  btn.setAttribute('aria-expanded', isOpen);
+  btn.querySelector('.expand-arrow').textContent = isOpen ? '▼' : '▶';
+}
+
+function toggleBioCard(card) {
+  card.classList.toggle('open');
+  card.setAttribute('aria-expanded', card.classList.contains('open'));
+}
+
+function diagCheck(btn, id, result) {
+  const fb = document.getElementById(id+'-fb');
+  const siblings = btn.parentElement.querySelectorAll('.quiz-option');
+  siblings.forEach(s => { s.disabled = true; s.classList.remove('correct','wrong'); });
+  if(result==='correct') {
+    btn.classList.add('correct');
+    fb.className = 'feedback feedback-correct show';
+    fb.textContent = '✅ Točno! Super, već znaš ovo!';
+  } else {
+    btn.classList.add('wrong');
+    const correct = Array.from(siblings).find(s => s.onclick.toString().includes("'correct'"));
+    if(correct) correct.classList.add('correct');
+    fb.className = 'feedback feedback-wrong show';
+    fb.textContent = '❌ Ne brini — upravo ćeš ovo naučiti!';
+  }
+}
+
+function miniQuiz(btn, id, result) {
+  const fb = document.getElementById(id+'-fb');
+  const siblings = btn.parentElement.querySelectorAll('.quiz-option');
+  siblings.forEach(s => { s.disabled = true; s.classList.remove('correct','wrong'); });
+  if(result==='correct') {
+    btn.classList.add('correct');
+    fb.className = 'feedback feedback-correct show';
+    fb.textContent = '✅ Bravo! Točan odgovor!';
+  } else {
+    btn.classList.add('wrong');
+    const correct = Array.from(siblings).find(s => s.onclick.toString().includes("'correct'"));
+    if(correct) correct.classList.add('correct');
+    fb.className = 'feedback feedback-wrong show';
+    fb.textContent = '⚠️ Nije točno, ali pogledaj zeleni odgovor — sad će ti biti jasnije!';
+  }
+}
+
+function procitaj(tekst) {
+  if(speechSynthesis.speaking) speechSynthesis.cancel();
+  const govor = new SpeechSynthesisUtterance(tekst);
+  govor.lang = 'hr-HR';
+  govor.rate = 0.85;
+  speechSynthesis.speak(govor);
+}
+
+// Settings
+function toggleSettings() {
+  const p = document.getElementById('settings-panel');
+  const b = document.querySelector('.settings-toggle');
+  const hidden = p.hidden;
+  p.hidden = !hidden;
+  b.setAttribute('aria-expanded', hidden);
+}
+function updateFontSize(v) { document.body.style.fontSize=v+'px'; document.getElementById('font-size-value').textContent=v+'px'; try{localStorage.setItem('nu-fs',v)}catch(e){} }
+function updateBg(t) { const c={cream:'#FFF8F0',blue:'#F0F4FF',white:'#FAFAFA'}; document.body.style.background=c[t]; try{localStorage.setItem('nu-bg',t)}catch(e){} }
+function updateLineHeight(v) { document.body.style.lineHeight=v; try{localStorage.setItem('nu-lh',v)}catch(e){} }
+function resetSettings() { updateFontSize(17); updateBg('cream'); updateLineHeight(1.8); toggleReadingRuler(false); document.getElementById('reading-ruler').checked=false; }
+function toggleReadingRuler(on) {
+  let r = document.getElementById('readingRuler');
+  if(!r){ r=document.createElement('div'); r.id='readingRuler'; r.className='reading-ruler'; r.setAttribute('aria-hidden','true'); document.body.appendChild(r); }
+  r.classList.toggle('active',on);
+  if(on){ document.addEventListener('mousemove',moveR); document.addEventListener('touchmove',moveRT); }
+  else { document.removeEventListener('mousemove',moveR); document.removeEventListener('touchmove',moveRT); }
+}
+function moveR(e){ const r=document.getElementById('readingRuler'); if(r) r.style.top=(e.clientY-20)+'px'; }
+function moveRT(e){ const r=document.getElementById('readingRuler'); if(r&&e.touches[0]) r.style.top=(e.touches[0].clientY-20)+'px'; }
+
+function loadSettings() {
+  try { const fs=localStorage.getItem('nu-fs'); const bg=localStorage.getItem('nu-bg'); const lh=localStorage.getItem('nu-lh'); if(fs)updateFontSize(fs); if(bg)updateBg(bg); if(lh)updateLineHeight(lh); } catch(e){}
+}
+
+// Keyboard nav
+document.addEventListener('keydown', function(e) {
+  if(e.key==='Enter'&&e.target.classList.contains('flip-card')){ e.target.classList.toggle('flipped'); }
+  if(e.key==='Enter'&&e.target.classList.contains('bio-card')){ toggleBioCard(e.target); }
+  if(e.key==='ArrowRight'&&!e.target.matches('input,textarea,select')){ nextSection(); }
+  if(e.key==='ArrowLeft'&&!e.target.matches('input,textarea,select')){ prevSection(); }
+});
+
+window.addEventListener('DOMContentLoaded', function(){ loadSettings(); updateNav(); });
+</script>
+</body>
+</html>

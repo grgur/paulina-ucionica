@@ -65,6 +65,30 @@
       "file": "lekcije/prica-eukarioti-natalija.html",
       "date": "2026-03-05",
       "subject": "Biologija"
+    },
+    {
+      "title": "Biologija — Voda, postanak života i biomolekule (Natalija)",
+      "file": "lekcije/biologija-voda-postanak-biomolekule-natalija.html",
+      "date": "2026-03-05",
+      "subject": "Biologija"
+    },
+    {
+      "title": "Priča: Od vode do života — Kako je počela kemija živog (Natalija)",
+      "file": "lekcije/prica-voda-postanak-biomolekule-natalija.html",
+      "date": "2026-03-05",
+      "subject": "Biologija"
+    },
+    {
+      "title": "Eukariotska stanica — Građa i organeli (Natalija)",
+      "file": "lekcije/natalija-lekcija-eukariotska-stanica.html",
+      "date": "2026-03-06",
+      "subject": "Biologija"
+    },
+    {
+      "title": "Priča: Grad unutar tebe — Eukariotska stanica (Natalija)",
+      "file": "lekcije/natalija-prica-eukariotska-stanica.html",
+      "date": "2026-03-06",
+      "subject": "Biologija"
     }
   ],
   "ispiti": [
@@ -108,6 +132,18 @@
       "title": "Ispit: Eukarioti i jednostanični organizmi (Natalija)",
       "file": "ispiti/ispit-eukarioti-natalija.html",
       "date": "2026-03-05",
+      "subject": "Biologija"
+    },
+    {
+      "title": "Ispit: Voda, postanak života i biomolekule (Natalija)",
+      "file": "ispiti/ispit-voda-postanak-biomolekule-natalija.html",
+      "date": "2026-03-05",
+      "subject": "Biologija"
+    },
+    {
+      "title": "Ispit: Eukariotska stanica (Natalija)",
+      "file": "ispiti/natalija-ispit-eukariotska-stanica.html",
+      "date": "2026-03-06",
       "subject": "Biologija"
     }
   ],

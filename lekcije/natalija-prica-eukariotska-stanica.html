@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Priča: Grad unutar tebe — Eukariotska stanica (Natalija)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-warm: #FFF8F0;
+            --bg-alt: #F5E6D3;
+            --text-dark: #2C2C2C;
+            --text-muted: #666;
+            --accent: #D4844C;
+            --accent-light: #E8B4A0;
+            --border: #E0D0C0;
+            --highlight: #FFF4E6;
+        }
+
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: var(--bg-warm);
+            color: var(--text-dark);
+            line-height: 1.8;
+            font-size: 18px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        body.dark-mode {
+            --bg-warm: #2C2C2C;
+            --bg-alt: #3A3A3A;
+            --text-dark: #E8E8E8;
+            --text-muted: #B0B0B0;
+            --border: #4A4A4A;
+            --highlight: #3F3F3F;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            color: white;
+            padding: 3rem 1.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        /* Navigation & Settings */
+        .header-controls {
+            background: var(--bg-alt);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid var(--border);
+        }
+
+        .control-group {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .control-group label {
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Lexend', sans-serif;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #C07040;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--bg-warm);
+            color: var(--text-dark);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--highlight);
+        }
+
+        .input-range {
+            width: 150px;
+        }
+
+        /* Main content */
+        main {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 0 1.5rem 3rem 1.5rem;
+        }
+
+        section {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode section {
+            background: var(--bg-alt);
+            color: var(--text-dark);
+        }
+
+        section h2 {
+            font-size: 1.8rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        section h3 {
+            font-size: 1.3rem;
+            color: var(--accent);
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .emoji-break {
+            font-size: 3rem;
+            text-align: center;
+            margin: 1.5rem 0;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* TTS Button */
+        .tts-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 0.8rem;
+            background: var(--accent-light);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            margin-top: 0.8rem;
+            transition: all 0.3s ease;
+            font-family: 'Lexend', sans-serif;
+        }
+
+        .tts-btn:hover {
+            background: var(--accent);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .tts-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Collapsible sections */
+        .collapsible-header {
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--highlight);
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            border-left: 4px solid var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode .collapsible-header {
+            background: var(--bg-alt);
+        }
+
+        .collapsible-header:hover {
+            background: var(--bg-alt);
+        }
+
+        .collapsible-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .collapsible-content {
+            max-height: 1000px;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: var(--highlight);
+            padding: 1rem;
+            border-radius: 6px;
+        }
+
+        body.dark-mode .collapsible-content {
+            background: #3F3F3F;
+        }
+
+        .collapsible-content.collapsed {
+            max-height: 0;
+            padding: 0;
+        }
+
+        /* SVG illustrations */
+        .illustration {
+            width: 100%;
+            max-width: 500px;
+            margin: 1.5rem auto;
+            background: var(--highlight);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        body.dark-mode .illustration {
+            background: #3F3F3F;
+        }
+
+        /* Reading ruler */
+        .ruler {
+            display: none;
+            position: fixed;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--accent);
+            top: 50%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .ruler.active {
+            display: block;
+        }
+
+        /* Blockquote */
+        blockquote {
+            border-left: 4px solid var(--accent);
+            padding-left: 1.5rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: var(--accent);
+            font-size: 1.1rem;
+        }
+
+        /* Links */
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            body {
+                font-size: 16px;
+            }
+
+            section {
+                padding: 1.5rem;
+                margin-bottom: 2rem;
+            }
+
+            .header-controls {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+
+            .input-range {
+                width: 100%;
+            }
+        }
+
+        /* Highlight animation */
+        .highlight {
+            background: var(--highlight);
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+        }
+
+        /* SVG styling */
+        svg text {
+            font-family: 'Lexend', sans-serif;
+            font-size: 12px;
+        }
+
+        svg circle, svg rect, svg path {
+            fill: none;
+            stroke: var(--accent);
+            stroke-width: 2;
+        }
+
+        svg .fill {
+            fill: var(--accent-light);
+            stroke: var(--accent);
+        }
+
+        body.dark-mode svg circle,
+        body.dark-mode svg rect,
+        body.dark-mode svg path {
+            stroke: #E8B4A0;
+        }
+
+        body.dark-mode svg .fill {
+            fill: #C07040;
+            stroke: #E8B4A0;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="ruler"></div>
+
+    <header>
+        <h1>🏙️ Grad Unutar Tebe</h1>
+        <p>Eukariotska stanica — Priča o najčudnijem mjestu u svemiru</p>
+    </header>
+
+    <div class="header-controls">
+        <div class="control-group">
+            <label for="font-size">Veličina fonta:</label>
+            <input type="range" id="font-size" class="input-range" min="14" max="24" value="18">
+            <span id="font-size-display">18px</span>
+        </div>
+        <div class="control-group">
+            <button class="btn btn-secondary" id="dark-mode-btn">🌙 Tamni način</button>
+            <button class="btn btn-secondary" id="ruler-toggle">📏 Ravnalo</button>
+        </div>
+    </div>
+
+    <main>
+        <!-- Opening Section -->
+        <section>
+            <h2>📖 Počni ispod kože</h2>
+            <p>
+                Sada, u ovom točno trenutku, 37 <span class="highlight">biliona</span> sitnih građanina u tvom tijelu žive svoje živote, radi se, žure, prave, razmjenjuju poruke, i najčešće — bez da imaš o tome najmanju ideju. Nisu ljudska bića. Nisu životinje. Nisu biljke. Oni su <strong>stanice</strong>. I ako te čini manje normalnom — najčudnije je što <strong>svaka od njih je složenija nego što je čitav grad Dubrovnik</strong>.
+            </p>
+            <button class="tts-btn" onclick="speakText('Sada, u ovom točno trenutku, 37 biliona sitnih građanina u tvom tijelu žive svoje živote, radi se, žure, prave, razmjenjuju poruke, i najčešće — bez da imaš o tome najmanju ideju.')">🔊 Slušaj</button>
+
+            <div class="emoji-break">🧬✨</div>
+
+            <p>
+                Bill Bryson jednom reče: "Teško je reći nešto novo o stanicama jer su biolog studirali tisućama godina." Ali ja ću ti pokušati pokazati nešto što je malo vjerovatnije da si vidio do sada — da je tvoja stanica zapravo mali grad s gradskim vijećem, elektranama, tvornicama, poštom, i čak reciklažnim centrom. Nije to samo metafora. <strong>To je stvarno graditeljstvo Evolution</strong>, arhitektka koja je radila 2 milijarde godina na ovom projektu.
+            </p>
+            <button class="tts-btn" onclick="speakText('Tvoja stanica je zapravo mali grad s gradskim vijećem, elektranama, tvornicama, poštom, i čak reciklažnim centrom.')">🔊 Slušaj</button>
+        </section>
+
+        <!-- The Great Analogy -->
+        <section>
+            <h2>🏛️ Grad Eukariotske Stanice</h2>
+
+            <p>
+                Zamislimo tvoju stanicu kao grad od nekih 20 mikrometer (što je hiljaditi dio milimetra — ili kako biste rekli u Dubrovniku, dovoljno mali da ga ne vidite bez mikroskopa). Zidine gradskog zida su <strong>stanična membrana</strong> — to je granična služba koja odlučuje što ulazi i što izlazi. Nisu sve stvari dopuštene. Nije to kao granica između Hrvatske i Slovenije. To je preciznija operacija.
+            </p>
+            <button class="tts-btn" onclick="speakText('Stanična membrana je granica koja odlučuje što ulazi i što izlazi iz stanice.')">🔊 Slušaj</button>
+
+            <div class="emoji-break">🏗️</div>
+
+            <div class="illustration">
+                <svg viewBox="0 0 500 450" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Cell membrane -->
+                    <circle cx="250" cy="225" r="180" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <!-- Nucleus -->
+                    <circle cx="250" cy="100" r="60" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <text x="250" y="110" text-anchor="middle" font-weight="bold" fill="currentColor">Jezgra</text>
+                    <text x="250" y="130" text-anchor="middle" font-size="10" fill="currentColor">(Gradsko vijeće)</text>
+
+                    <!-- Mitochondria -->
+                    <ellipse cx="150" cy="220" rx="35" ry="50" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <text x="150" y="225" text-anchor="middle" font-weight="bold" fill="currentColor">MIT</text>
+                    <text x="150" y="300" text-anchor="middle" font-size="10" fill="currentColor">Elektrana</text>
+
+                    <!-- ER -->
+                    <path d="M 300 200 Q 320 180 340 200 Q 320 220 300 210" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <text x="360" y="200" font-size="10" fill="currentColor">ER (Tvornica)</text>
+
+                    <!-- Golgi -->
+                    <rect x="280" y="280" width="50" height="40" rx="5" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <text x="305" y="310" text-anchor="middle" font-size="10" fill="currentColor">Golgi</text>
+                    <text x="305" y="325" text-anchor="middle" font-size="9" fill="currentColor">(Pošta)</text>
+
+                    <!-- Lysosomes -->
+                    <circle cx="180" cy="300" r="20" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <text x="180" y="305" text-anchor="middle" font-size="9" fill="currentColor">Liz</text>
+                    <text x="180" y="330" text-anchor="middle" font-size="9" fill="currentColor">(Smeće)</text>
+                </svg>
+            </div>
+
+            <h3>🧬 Jezgra — Gradsko Vijeće</h3>
+            <p>
+                U <strong>jezgri</strong> tvoje stanice, zaštićena vlastitom stjenkom, nalazit će se tvoja DNA — svi genski kodovi, svi planovi. To je kao gradsko vijeće ili arhiv grada koji drži sve važne dokumente. Nije li fascinantno što taj kompletan kod tvoga tijela stane u komadić jezgre veličine 10 mikrometer? Ako bi razvio tvoju DNA u jedan redak, bila bi dugačka dva metra. A sve je sabijeno u mikroskopu komadić. To je inženjerstvo.
+            </p>
+            <button class="tts-btn" onclick="speakText('U jezgri stanice nalazi se DNA — svi genski kodovi, svi planovi. To je kao gradsko vijeće ili arhiv grada.')">🔊 Slušaj</button>
+
+            <h3>⚡ Mitohondriji — Elektrane</h3>
+            <p>
+                Sada, svatko zna što čini grad mogućim — energija. Bez struje, bez topline, bez moći, grad staje. To je uloga <strong>mitohondrija</strong>, a ako bi trebao samo jednu stavku koju trebao pomemory za biološki ispit — to je ova: "Mitohondrij je elektrana stanice."
+            </p>
+            <p>
+                Mitohondriji uzimaju glukozu (šećer koji jedeš) i zrak koji dišeš, i kroz proces koji se zove <strong>stanična respiracija</strong>, pretvaraju ga u energiju koju stanica može koristiti — to se zove ATP. Zamislite to kao pretvaranje benzina u struju za sve što trebaš: hodanje, razmišljanje, čak i čitanje ovoga. Bez mitohondrija — nema tebe. Doslovno.
+            </p>
+            <button class="tts-btn" onclick="speakText('Mitohondriji uzimaju glukozu i zrak, i pretvaraju ga u ATP — energiju koju stanica može koristiti.')">🔊 Slušaj</button>
+        </section>
+
+        <!-- The Endomembrane System -->
+        <section>
+            <h2>🏭 Tvornica i Pošta: Endomembrana Sustav</h2>
+
+            <p>
+                Prije nego što si se probudila ovaj jutar, tisuće enzima u tvojim stanicama su radile na stvaranju proteina. Proteini su — čine te: kosa, koža, mišići. Everything. Ali kako se ti proteini prave?
+            </p>
+
+            <h3>🧵 Endoplazmska Mrežica (ER) — Tvornica</h3>
+            <p>
+                U tvoj stanici ima jedan <strong>endoplazmske mrežice</strong> — zamijeni je kao velikom tekstilnom tvornicom. ER je mreža s malenimi "radionama" gdje ribosomi (maleni strojevi) hvataju upute iz jezgre i počinju graditi proteine, amino kiselinu za amino kiselinom. To nije brz proces. Svaki protein je zanat. Svaki je arhitekturna čuda.
+            </p>
+            <button class="tts-btn" onclick="speakText('Endoplazmska mrežica je kao tvornica gdje ribosomi prave proteine prema uputama iz jezgre.')">🔊 Slušaj</button>
+
+            <h3>📬 Golgijev Aparat — Pošta</h3>
+            <p>
+                Kada je protein gotov, on ide na "putovanje" kroz stanicu. Prvo dolazi do <strong>Golgijeva aparata</strong> — koji je kao pošta ili distribucijski centar. Tamo se proteini pakuju, obrađuju, i označavaju s adresom gdje trebaju ići. Neki trebaju na stanicu membranu. Neki trebaju biti izvoženi van stanice. Neki trebaju ostati u mitohondriju. Sve je precizno katalogiziran.
+            </p>
+            <button class="tts-btn" onclick="speakText('Golgijev aparat je kao pošta — pakuje i označava proteine gdje trebaju ići.')">🔊 Slušaj</button>
+
+            <h3>🗑️ Lizosomi — Reciklažni Centar</h3>
+            <p>
+                Ali što se dešava sa starim, polomljenim, više ne potrebnim proteinama? Tamo dolaze <strong>lizosomi</strong> — mali mjehurici ispunjeni kiselinama koje razgrađuju otpad. Oni su kao reciklažni centar stanice. Oni razgrađuju staro, recikliraju materijale, čiste grad. Bez lizosoma, stanica bi bila zapušena otpadom.
+            </p>
+            <button class="tts-btn" onclick="speakText('Lizosomi su reciklažni centri stanice — razgrađuju staro i otpad.')">🔊 Slušaj</button>
+
+            <div class="emoji-break">🔄💫</div>
+        </section>
+
+        <!-- Plant Cells -->
+        <section>
+            <h2>🌿 Ekološki Grad: Biljne Stanice</h2>
+
+            <p>
+                Sada, zašto su životinjske stanice različite od biljnih? Pa, biljke su pametnije nego što misliš. One su otkrile solarnu energiju millions godina prije nego što su ljudi. One imaju panele na "krovovima" svojih stanica.
+            </p>
+
+            <h3>☀️ Kloroplasti — Solarne Ploče</h3>
+            <p>
+                <strong>Kloroplasti</strong> su organeli koji biljkama daju zelenu boju. Ali oni nisu samo za lijepi izgled. Unutar njih se dešava nešto čudo — <strong>fotosinteza</strong>. Kloroplasti uzimaju sunčevu energiju, vodu i CO2 (ugljikov dioksid), i pretvaraju ga u šećer — hranu. To je kao imati solarne ploče na «krovu» svake stanice. Dok se ti trudiš da se ohladiš u ljeto, tvoj breskvin u vrtu koristi sunce kao gorivo. Biljke su engineering geniji.
+            </p>
+            <button class="tts-btn" onclick="speakText('Kloroplasti su kao solarne ploče biljke — pretvaraju sunčevu energiju, vodu i CO2 u šećer.')">🔊 Slušaj</button>
+
+            <h3>💧 Vakuola — Spremnik Vode</h3>
+            <p>
+                Biljne stanice također imaju gigantsku <strong>vakuolu</strong> — veliki mjehur ispunjen vodom koji čini što? Sve. Vakuola održava tlak koji čini biljku krutom (to je zašto su lišće čvrsto i tvrdo, a ne kao maslac). Vakuola također čuva nutriente, pigmente, čak i otrovne kemikalije za obranu. To je kao spremnik vode na vrhu zgrade — i strukturna i praktična.
+            </p>
+        </section>
+
+        <!-- Endosymbiosis -->
+        <section>
+            <h2>🤝 Najveća Preuzimanja Kompanije u Povijesti</h2>
+
+            <div class="emoji-break">🦠 + 🔄 = ⚡</div>
+
+            <p>
+                A sada — najjednostavnije objašnjava — <strong>endosimbioza</strong>. Nije to samo teorija. To je jedno od najvećih biznis preuzimanja ikad učinjenih, ali s bakterijama umjesto s novcem.
+            </p>
+
+            <h3>📖 Što se Dogodilo Prije 2 Milijarde Godina?</h3>
+            <p>
+                Zamislite jednu veliku stanica — vrst od Amebe — danima jede bakterije kao što ty sada jedeš kruh. Većinu jih. Ali jednog dana, oko 2 milijarde godina, nešto se drugačije desilo: stanica je pojela bakteriju, ali ta bakterija — umjesto biti razložena — je ostala živa unutar stanice. Umjesto neprijatelja, oboje su postali <strong>supartnjeri</strong>.
+            </p>
+
+            <p>
+                Zarobljena bakterija je bila briljantna — bila je fantastična u razgradnji. Dakle, stanica joj je dala zaštitu, hranu, malo je recimo "počasti", a zauzvrat, bakterija je radila kao elektrana — stvarajući energiju za veću stanica. To je bila ponuda koju nisu mogli odbiti.
+            </p>
+
+            <p>
+                Tijekom milijuna godina, te bakterije su postale — mitohondriji. Zarobljena bakterija je izgubila većinu svojih gena, jer je veća stanica preuzela brigu o većini stvari. Ali — i evo je <span class="highlight">smoking gun</span> — mitohondrij je <strong>zadržao svoju vlastitu DNA</strong>. To je kao da preuzeta kompanija zadržava dio svoje izorne ljudske baze: svjedok.
+            </p>
+            <button class="tts-btn" onclick="speakText('Mitohondriji su nekada bili samostalne bakterije koje su pojene prije 2 milijarde godina, ali nisu digerirane — postali su partneri.')">🔊 Slušaj</button>
+
+            <div class="illustration">
+                <svg viewBox="0 0 500 350" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Step 1: Free bacteria -->
+                    <text x="80" y="30" font-weight="bold" font-size="14" fill="currentColor">Prije:</text>
+                    <circle cx="80" cy="70" r="25" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <text x="80" y="75" text-anchor="middle" font-size="11" fill="currentColor">Bakterija</text>
+
+                    <!-- Step 2: Being engulfed -->
+                    <text x="250" y="30" font-weight="bold" font-size="14" fill="currentColor">Tijekom:</text>
+                    <circle cx="250" cy="70" r="50" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <circle cx="250" cy="70" r="20" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <path d="M 230 50 Q 240 40 250 50" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="5,5"/>
+                    <text x="250" y="130" text-anchor="middle" font-size="10" fill="currentColor">Proždiranje</text>
+
+                    <!-- Step 3: Mitochondrion -->
+                    <text x="420" y="30" font-weight="bold" font-size="14" fill="currentColor">Sada:</text>
+                    <g transform="translate(420, 70)">
+                        <ellipse cx="0" cy="0" rx="45" ry="55" fill="none" stroke="currentColor" stroke-width="2"/>
+                        <ellipse cx="0" cy="0" rx="30" ry="40" fill="none" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="-10" cy="-10" r="4" fill="currentColor"/>
+                        <circle cx="8" cy="8" r="4" fill="currentColor"/>
+                        <text x="0" y="70" text-anchor="middle" font-size="11" fill="currentColor">Mitohondrij</text>
+                    </g>
+
+                    <!-- Bottom explanation -->
+                    <text x="250" y="200" text-anchor="middle" font-weight="bold" font-size="12" fill="currentColor">Dvije membrane = Dvije različite stanice koje su se spojile!</text>
+                    <text x="250" y="225" text-anchor="middle" font-size="11" fill="currentColor">Außen membrana: od velike stanice</text>
+                    <text x="250" y="245" text-anchor="middle" font-size="11" fill="currentColor">Unutarnja membrana: od bakterije</text>
+                    <text x="250" y="265" text-anchor="middle" font-size="11" fill="currentColor">Mitohondrij ima: SVOJU DNA!</text>
+                </svg>
+            </div>
+
+            <h3>🔬 Dokazi za Endosimbioza</h3>
+            <p>
+                Kako znamo da je to stvarno? Mogu pokazati tri <strong>smoking gun</strong> dokaza:
+            </p>
+
+            <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                📌 <strong>Dokaz 1: Vlastita DNA</strong>
+                <span class="collapsible-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <p>
+                    Mitohondriji imaju vlastitu DNA — mitohondrijsku DNA (mtDNA). To nije DNA iz jezgre. To je <strong>bakterijska DNA</strong> — kružna, stara, "primitivna". Zašto bi mitohondrij trebao svoju DNA ako je oduvijek bio dio stanice? Odgovor: nije. Dokazuje da je nekad bio samostalan.
+                </p>
+            </div>
+
+            <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                📌 <strong>Dokaz 2: Vlastiti Ribosomi</strong>
+                <span class="collapsible-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <p>
+                    Ribosomi su strojevi koji prave proteine. Mitohondriji imaju svoje ribozomi — ali nisu jednaki staničnim ribozomima. Oni su <strong>malo manji i drugačiji</strong>. Oni su — čekaj — identični bakterijskim ribozomima! Kao da je mitohondrij zadržao stare, bakterijske "strojeve" jer su znali raditi s bakterijskom DNA.
+                </p>
+            </div>
+
+            <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                📌 <strong>Dokaz 3: Dvostruka Membrana</strong>
+                <span class="collapsible-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <p>
+                    Mitohondriji i kloroplasti imaju <strong>dvostruke membrane</strong> — dva sloja zaštite. Zašto bi trebalo dva sloja ako je to bio osmisliti kao dio stanice? Odgovor: spoljašnja membrana je iz velike stanice (koja je "pojela" bakteriju), a unutarnja membrana je od samog bakterije. To je kao imati dvije zaštitne razine jer su dva različita objekta bila spojena zajedno.
+                </p>
+            </div>
+
+            <p style="margin-top: 1.5rem;">
+                To nije samo teorija. <strong>To je činjenica</strong> koju je Lynn Margulis, znanstvenica, dokazala u 1960-ima, iako su svi mislili da je sjebenica. Sad je to dio svakog biologije udžbenika na svijetu.
+            </p>
+            <button class="tts-btn" onclick="speakText('Mitohondriji imaju vlastitu DNA, vlastite ribozome i dvostruku membranu — to je dokaz da su nekad bili samostalne bakterije.')">🔊 Slušaj</button>
+        </section>
+
+        <!-- Chloroplasts -->
+        <section>
+            <h2>💚 Biljne Elektrane: Kloroplasti</h2>
+
+            <p>
+                Ali čekaj! Ako su mitohondriji "progutane bakterije", što su kloroplasti? Odgovor: <strong>drugačije progutane bakterije</strong>! Prije 1.5 milijarde godina, druge stanice su progutale fotosintezne bakterije — i umjesto da ih razlože, zarobile su ih. Sada imaju <strong>kloroplasti</strong> — bakterije koje koriste sunčevu energiju.
+            </p>
+
+            <p>
+                To znači da su biljne stanice <strong>tri stanice u jednima</strong>:
+            </p>
+            <blockquote>
+                Velika stanica (jezgra) + Progutana mitohondrijalna bakterija + Progutana fotosintezna bakterija = Biljne stanice
+            </blockquote>
+
+            <p>
+                To je kao biti kralj koji je pobjegao dva potčinjena, ubio ih, ali ostavio ih da rade za njega. Priroda je savršena bizniska konfiguracija.
+            </p>
+            <button class="tts-btn" onclick="speakText('Biljne stanice su zapravo tri stanice u jednoj — jezgra plus dva porogljena tipaa bakterija.')">🔊 Slušaj</button>
+        </section>
+
+        <!-- Closing -->
+        <section>
+            <h2>🌍 Zaključak: Grad Milijardi</h2>
+
+            <p>
+                Dakle, da rezimiramo: Sada sjedim i čitaš ovo. U svakom trenutku, 37 biliona stanica u tvom tijelu žive svoje živote. Svatke od tih stanica je grad s gradskim vijećem (jezgra), elektranama (mitohondriji), tvornicama (ER), pošte (Golgi), i reciklažnim centrom (lizosomi). Ako si biljka, imaš i solarne ploče (kloroplasti) i spremnik vode (vakuola).
+            </p>
+
+            <p>
+                I ovdje je dio koji je zaista oduševljava: Svaki mitohondrij u tvom tijelu je — tehnički — <strong>bakterija</strong>. Tvoj <strong>DIO SI TI POZITVA STANICA KOJA JE KONZUMIRALA DRUGE STANICE I NIKADA NIJE PRESTALA</strong> s tim. To je poput biti superorganism. To je kanibaliziranje koje je postalo partnerstvo.
+            </p>
+
+            <div class="emoji-break">🎆🎇</div>
+
+            <p>
+                Dva milijarde godina evolucije, milijarde molekula, bezbroj pokušaja i grešaka — sve je to rezultiralo time što sjednim i razmišljaš, što tvoj adrenalin podganja tvoje mišiće da pobjegneš od opasnosti, što tvoj mozak stvara mišljenja, što dišeš, što jedeš, što postojiš.
+            </p>
+
+            <p>
+                <strong>Nisi samo osoba. Nisi samo tijelo. Nisi samo kolekcija kemikalija.</strong> Ti si a <strong>grad</strong>. Grad od 37 biliona državljana koji se nikada nije prekinuo s površim što rade: jesti, darivati energiju, raditi, i čini sve to u harmoniji koja je toliko kompleksna da je praktički nemoguće smatrati je. Nema konkurencije, jer je to kao pokušavati razumjeti kako cijeli grad funkcionira dok se kroz njega voziš tramvajem.
+            </p>
+
+            <p>
+                To je priča o tebi. To je priča o tome što ješ kada je oto živa.
+            </p>
+
+            <button class="tts-btn" onclick="speakText('Ti nisi samo osoba. Nisi samo tijelo. Nisi samo kolekcija kemikalija. Ti si grad od 37 biliona državljana u harmoniji.')">🔊 Slušaj</button>
+
+            <blockquote style="margin-top: 2rem;">
+                "Dijelimo svoje tijelo s nevjerojatnom zajednicom organizama. Trebali bismo biti misniji prema njima." — Lynn Margulis
+            </blockquote>
+        </section>
+    </main>
+
+    <footer>
+        <p>🌟 Priča Napisana za Nataliju | Nastao 2025</p>
+        <p style="font-size: 0.8rem; margin-top: 0.5rem;">Inspiracija: TED talks, Bill Bryson, Lynn Margulis | Tekst je napisano kao priča, ne kao tekst.</p>
+    </footer>
+
+    <script>
+        // Font size control
+        const fontSizeInput = document.getElementById('font-size');
+        const fontSizeDisplay = document.getElementById('font-size-display');
+
+        fontSizeInput.addEventListener('input', (e) => {
+            const size = e.target.value;
+            document.body.style.fontSize = size + 'px';
+            fontSizeDisplay.textContent = size + 'px';
+            localStorage.setItem('fontSize', size);
+        });
+
+        // Load saved font size
+        const savedFontSize = localStorage.getItem('fontSize');
+        if (savedFontSize) {
+            fontSizeInput.value = savedFontSize;
+            document.body.style.fontSize = savedFontSize + 'px';
+            fontSizeDisplay.textContent = savedFontSize + 'px';
+        }
+
+        // Dark mode toggle
+        const darkModeBtn = document.getElementById('dark-mode-btn');
+        darkModeBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDark);
+            darkModeBtn.textContent = isDark ? '☀️ Svjetao način' : '🌙 Tamni način';
+        });
+
+        // Load saved dark mode preference
+        const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+        if (savedDarkMode) {
+            document.body.classList.add('dark-mode');
+            darkModeBtn.textContent = '☀️ Svjetao način';
+        }
+
+        // Ruler toggle
+        const rulerToggle = document.getElementById('ruler-toggle');
+        const ruler = document.querySelector('.ruler');
+
+        rulerToggle.addEventListener('click', () => {
+            ruler.classList.toggle('active');
+            const isActive = ruler.classList.contains('active');
+            localStorage.setItem('rulerActive', isActive);
+            rulerToggle.textContent = isActive ? '📏 Ravnalo (uključeno)' : '📏 Ravnalo';
+        });
+
+        // Load saved ruler state
+        const savedRulerState = localStorage.getItem('rulerActive') === 'true';
+        if (savedRulerState) {
+            ruler.classList.add('active');
+            rulerToggle.textContent = '📏 Ravnalo (uključeno)';
+        }
+
+        // Collapsible sections
+        function toggleCollapsible(header) {
+            const content = header.nextElementSibling;
+            content.classList.toggle('collapsed');
+            const icon = header.querySelector('.collapsible-icon');
+            icon.style.transform = content.classList.contains('collapsed') ? 'rotate(0deg)' : 'rotate(180deg)';
+        }
+
+        // Initialize collapsibles as collapsed
+        document.querySelectorAll('.collapsible-content').forEach(content => {
+            content.classList.add('collapsed');
+        });
+
+        // Text-to-speech function
+        function speakText(text) {
+            // Cancel any ongoing speech
+            if (window.speechSynthesis.speaking) {
+                window.speechSynthesis.cancel();
+                return;
+            }
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'hr-HR';
+            utterance.rate = 0.95;
+            utterance.pitch = 1.0;
+
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

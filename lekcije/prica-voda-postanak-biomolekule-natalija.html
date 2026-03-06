@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>Priča: Kako je kiša stvorila život — Natalijina Učionica</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-main: #FFF8F0;
+  --bg-card: #FFFFFF;
+  --text-main: #3A3A3A;
+  --text-light: #6B6B6B;
+  --blue: #4A90D9;
+  --blue-light: #E8F4FD;
+  --green: #5CB85C;
+  --green-light: #E8F8E8;
+  --orange: #FF9800;
+  --orange-light: #FFF3E0;
+  --purple: #9B59B6;
+  --purple-light: #F3E8FD;
+  --teal: #26A69A;
+  --teal-light: #E0F2F1;
+  --radius: 12px;
+  --shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Lexend', 'Verdana', sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+  line-height: 1.9;
+  letter-spacing: 0.03em;
+  padding: 16px;
+  font-size: 17px;
+  overflow-x: hidden;
+}
+.container { max-width: 680px; margin: 0 auto; }
+h1 { font-size: 28px; font-weight: 700; color: var(--teal); margin-bottom: 4px; text-align: center; }
+.subtitle { text-align: center; color: var(--text-light); font-size: 14px; margin-bottom: 28px; }
+h2 { font-size: 22px; font-weight: 600; color: var(--blue); margin: 32px 0 12px; }
+p { margin-bottom: 16px; }
+.chapter {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow);
+}
+.chapter-num {
+  display: inline-block;
+  background: var(--teal);
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  margin-bottom: 8px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.highlight-box {
+  background: var(--blue-light);
+  border-left: 4px solid var(--blue);
+  padding: 16px 18px;
+  border-radius: 0 12px 12px 0;
+  margin: 16px 0;
+  font-size: 16px;
+}
+.fun-fact {
+  background: var(--orange-light);
+  border-left: 4px solid var(--orange);
+  padding: 16px 18px;
+  border-radius: 0 12px 12px 0;
+  margin: 16px 0;
+}
+.analogy-box {
+  background: var(--purple-light);
+  border-left: 4px solid var(--purple);
+  padding: 16px 18px;
+  border-radius: 0 12px 12px 0;
+  margin: 16px 0;
+}
+.scientist-card {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  background: var(--teal-light);
+  border-radius: 14px;
+  padding: 18px;
+  margin: 16px 0;
+}
+.scientist-emoji { font-size: 48px; flex-shrink: 0; }
+.big-quote {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--teal);
+  text-align: center;
+  padding: 20px;
+  margin: 20px 0;
+  border-top: 2px solid var(--teal-light);
+  border-bottom: 2px solid var(--teal-light);
+  font-style: italic;
+}
+.visual-break {
+  text-align: center;
+  font-size: 36px;
+  margin: 24px 0;
+  letter-spacing: 12px;
+}
+.final-card {
+  background: linear-gradient(135deg, var(--teal-light), var(--blue-light));
+  border-radius: 16px;
+  padding: 28px;
+  text-align: center;
+  border: 2px solid var(--teal);
+  margin-top: 28px;
+}
+.btn-tts {
+  background: var(--purple-light);
+  border: none; border-radius: 8px;
+  padding: 6px 12px; cursor: pointer;
+  font-size: 16px; min-height: 40px;
+  transition: all 0.2s; margin-left: 4px;
+}
+.btn-tts:hover { background: var(--purple); color: white; }
+.settings-toggle {
+  position: fixed; top: 12px; right: 12px; z-index: 1000;
+  background: white; border: 2px solid #ddd; border-radius: 50%;
+  width: 44px; height: 44px; font-size: 20px; cursor: pointer;
+  box-shadow: var(--shadow); display: flex; align-items: center; justify-content: center;
+}
+.settings-panel {
+  position: fixed; top: 60px; right: 12px; z-index: 999;
+  background: white; border-radius: 16px; padding: 20px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.15); width: 280px; max-width: 90vw;
+}
+.settings-panel[hidden] { display: none; }
+.settings-panel label { display: block; margin: 10px 0 4px; font-size: 14px; font-weight: 500; }
+.settings-panel input[type="range"] { width: 100%; }
+.settings-panel fieldset { border: none; padding: 0; margin: 8px 0; }
+.settings-panel fieldset label { display: inline-block; margin-right: 12px; }
+.reading-ruler {
+  position: fixed; left: 0; width: 100%; height: 40px;
+  background: rgba(255, 200, 50, 0.2);
+  border-top: 2px solid rgba(255, 200, 50, 0.5);
+  border-bottom: 2px solid rgba(255, 200, 50, 0.5);
+  pointer-events: none; z-index: 9990;
+  transition: top 0.05s ease; display: none;
+}
+.reading-ruler.active { display: block; }
+.btn { font-family:'Lexend',sans-serif; font-size:16px; padding:12px 20px; border-radius:12px; border:none; cursor:pointer; font-weight:600; transition:all 0.2s; }
+.btn-secondary { background:#e0e0e0; color:var(--text-main); }
+*:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+*:focus:not(:focus-visible) { outline: none; }
+@media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation-duration:0.01ms!important; transition-duration:0.01ms!important; } }
+@media (min-width: 640px) { body { padding: 24px; font-size: 18px; } h1 { font-size: 32px; } }
+</style>
+</head>
+<body>
+
+<button class="settings-toggle" onclick="toggleSettings()" aria-label="Postavke prikaza" aria-expanded="false" aria-controls="settings-panel">⚙️</button>
+<div id="settings-panel" class="settings-panel" role="dialog" aria-label="Postavke prikaza" hidden>
+  <h3>Postavke prikaza</h3>
+  <label for="font-size">Veličina teksta</label>
+  <input type="range" id="font-size" min="15" max="28" value="17" oninput="updateFontSize(this.value)">
+  <span id="font-size-value">17px</span>
+  <fieldset><legend>Pozadina</legend>
+    <label><input type="radio" name="bg" value="cream" checked onchange="updateBg('cream')"> Krem</label>
+    <label><input type="radio" name="bg" value="blue" onchange="updateBg('blue')"> Plava</label>
+    <label><input type="radio" name="bg" value="white" onchange="updateBg('white')"> Bijela</label>
+  </fieldset>
+  <label for="lh-ctrl">Razmak između redova</label>
+  <input type="range" id="lh-ctrl" min="1.5" max="2.5" step="0.1" value="1.9" oninput="updateLineHeight(this.value)">
+  <label><input type="checkbox" id="reading-ruler" onchange="toggleReadingRuler(this.checked)"> Reading ruler</label>
+  <br><button class="btn btn-secondary" style="margin-top:10px;width:100%" onclick="resetSettings()">Vrati na početno</button>
+</div>
+
+<main id="main-content" class="container">
+
+<h1>🌧️ Kako je kiša stvorila život</h1>
+<p class="subtitle">Priča o najčudnijoj molekuli u svemiru, hrabrim znanstvenicima i munji koja je pokrenula sve</p>
+
+<!-- CHAPTER 1 -->
+<div class="chapter">
+  <div class="chapter-num">Poglavlje 1</div>
+  <h2>Najčudnija tvar u svemiru</h2>
+  <button class="btn-tts" onclick="procitaj(document.getElementById('ch1-text').innerText)" aria-label="Čitaj poglavlje naglas" style="float:right">🔊</button>
+  <div id="ch1-text">
+  <p>Zamisli ovo: od svih tvari koje postoje u svemiru — od zvijezda koje gore milijardama stupnjeva do kristala leda na udaljenim mjesecima — <strong>jedna obična molekula</strong> sastavljena od samo tri atoma mogla bi biti najčudnija stvar ikad.</p>
+
+  <p>Dva atoma vodika i jedan atoma kisika. <strong>H₂O.</strong> Voda.</p>
+
+  <p>Zvuči dosadno? Pričekaj.</p>
+
+  <p>Voda je jedina tvar na Zemlji koja prirodno postoji u sva tri agregatna stanja — kao led, tekućina i para. Ali njezin najluđi trik je ovaj: <strong>kad se smrzne, postane LAKŠA.</strong></p>
+
+  <div class="highlight-box">
+    <p>💡 Gotovo svaka tvar u prirodi kad se ohladi, postane gušća i teža. Željezo, zlato, čak i alkohol — sve se ponaša "normalno". Ali voda? Voda je buntovnica. Kad se pretvori u led, njezine molekule se rasporede u posebnu kristalnu strukturu koja zauzima VIŠE prostora nego tekuća voda.</p>
+  </div>
+
+  <p>I ta mala ludost je spasila sav život na Zemlji.</p>
+
+  <p>Da led tone — kao što bi trebao po svim pravilima fizike — jezera bi se smrzavala odozdo prema gore. Svake zime, riba bi ostala zarobljena u bloku leda. Ocean bi s vremenom postao zamrznuta pustinja. Ali zato što led pluta, on stvara <strong>izolacijski pokrov</strong> na površini, a ispod njega voda ostaje tekuća. Riba pliva. Život se nastavlja.</p>
+
+  <div class="fun-fact">
+    <p>🧊 <strong>Zanimljivost:</strong> Kad bi se led ponašao "normalno" i tonuo, procjenjuje se da bi se čak 90% Zemljinih oceana zaledilo. Život kakav poznajemo ne bi postojao.</p>
+  </div>
+  </div>
+</div>
+
+<!-- CHAPTER 2 -->
+<div class="chapter">
+  <div class="chapter-num">Poglavlje 2</div>
+  <h2>Molekula s karakterom</h2>
+  <button class="btn-tts" onclick="procitaj(document.getElementById('ch2-text').innerText)" aria-label="Čitaj poglavlje naglas" style="float:right">🔊</button>
+  <div id="ch2-text">
+  <p>Voda ima još jedan skriveni talent. Ona je <strong>polarna molekula</strong> — što znači da jedna strana nosi blago pozitivni naboj, a druga blago negativni. Zamislite to ovako: voda je kao magnet. I to joj daje supermoc.</p>
+
+  <div class="analogy-box">
+    <p>🧲 <strong>Analogija:</strong> Zamisli da su molekule vode mali magneti. Pozitivna strana jednog privlači negativnu stranu drugog. Te male privlačne sile — <strong>vodikove veze</strong> — daju vodi gotovo sve njezine čudne osobine.</p>
+  </div>
+
+  <p>Zbog tih veza, molekule vode se drže zajedno. Sila kojom se istovrsne molekule drže jedna za drugu zove se <strong>kohezija</strong>. A kad se voda "lijepi" za neku drugu površinu — recimo za staklo ili biljno tkivo — to je <strong>adhezija</strong>.</p>
+
+  <p>I evo čarolije: kad kohezija i adhezija rade zajedno, događa se nešto nevjerojatno — voda se <strong>penje uzbrdo</strong>.</p>
+
+  <p>Da, čula si dobro. U tankim cjevčicama, voda se penje <strong>nasuprot gravitaciji</strong>. To se zove <strong>kapilarnost</strong>. I upravo tako drveće pije — voda putuje od korijena do vrha krošnje, ponekad 100 metara visoko, bez ijedne pumpe.</p>
+
+  <div class="fun-fact">
+    <p>🌳 <strong>Zanimljivost:</strong> Sekvoja — najviše drvo na svijetu — koristi kapilarnost da pošalje vodu 115 metara uvis. To je kao da nosiš čašu vode do 38. kata nebodera — bez dizala!</p>
+  </div>
+
+  <p>A tu je i <strong>površinska napetost</strong>. Na površini vode, molekule nemaju susjede iznad sebe, pa ih ostale vuku prema dolje i u stranu. To stvara neku vrstu "kože" na površini. Dovoljno jaku da pauk-vodomar može hodati po njoj.</p>
+  </div>
+</div>
+
+<!-- CHAPTER 3 -->
+<div class="chapter">
+  <div class="chapter-num">Poglavlje 3</div>
+  <h2>Univerzalno otapalo i tajna pH-a</h2>
+  <button class="btn-tts" onclick="procitaj(document.getElementById('ch3-text').innerText)" aria-label="Čitaj poglavlje naglas" style="float:right">🔊</button>
+  <div id="ch3-text">
+  <p>Kemičari vodu zovu <strong>"univerzalno otapalo"</strong>. To ne znači da otapa baš sve — ne otapa, recimo, plastiku ili ulje. Ali otapa više različitih tvari nego bilo koje drugo prirodno otapalo.</p>
+
+  <p>Zato su krv, suze, znoj i urin uglavnom voda — jer voda nosi otopljene tvari tamo gdje trebaju biti.</p>
+
+  <div class="analogy-box">
+    <p>📮 <strong>Analogija:</strong> Voda je kao poštanski sustav tvojeg tijela. Sol, šećer, minerali, kisik — sve to "putuje" otopljeno u vodi do stanica koje to trebaju.</p>
+  </div>
+
+  <p>Ali evo zagonetke: zašto se ulje NE miješa s vodom?</p>
+
+  <p>Odgovor je u riječima <strong>hidrofilno</strong> (voli vodu) i <strong>hidrofobno</strong> (boji se vode). Molekule koje su polarne — poput soli i šećera — se lako otapaju jer se slažu s polarnom vodom. Ulje je nepolarna molekula — nema "magnetskih" strana — i zato se boji vode kao mačka kupanja.</p>
+
+  <p>I na kraju, pH. Zvuči komplicirano, ali zapravo je jednostavno:</p>
+
+  <div class="highlight-box">
+    <p><strong>pH je brojka od 0 do 14</strong> koja ti govori koliko je nešto kiselo ili lužnato.</p>
+    <p>🍋 Limun = pH 2 (kiselo) &nbsp;&nbsp; 💧 Voda = pH 7 (neutralno) &nbsp;&nbsp; 🧼 Sapun = pH 10 (lužnato)</p>
+    <p>Što više H⁺ iona — to je kiselije (niži pH). Čista voda ima savršenu ravnotežu: pH = 7.</p>
+  </div>
+  </div>
+</div>
+
+<div class="visual-break" role="img" aria-label="Vizualni prijelaz">🌍⚡🌧️🧬</div>
+
+<!-- CHAPTER 4 -->
+<div class="chapter">
+  <div class="chapter-num">Poglavlje 4</div>
+  <h2>Meso, muhe i borba za istinu</h2>
+  <button class="btn-tts" onclick="procitaj(document.getElementById('ch4-text').innerText)" aria-label="Čitaj poglavlje naglas" style="float:right">🔊</button>
+  <div id="ch4-text">
+  <p>Tisućama godina ljudi su vjerovali u nešto što se zove <strong>spontana generacija</strong>: ideju da živi organizmi mogu nastati iz ničega. Ostavi meso na suncu — i crvi se pojave. Ostavi staro žito u kutu — i miševi se stvore.</p>
+
+  <p>Zvuči smiješno danas, ali tadašnjim ljudima imalo je savršenog smisla. Nisu imali mikroskope. Nisu znali za jaja muha ili bakterije. Vidjeli su samo: mrtva stvar → živa stvar. Magija!</p>
+
+  <div class="scientist-card">
+    <span class="scientist-emoji">🔬</span>
+    <div>
+      <strong>Francesco Redi, 1668.</strong>
+      <p>Talijanski liječnik koji je odlučio testirati ovu ideju. Uzeo je borcane s mesom. Neke je ostavio otvorene, neke pokrio gazom, neke potpuno zatvorio. Rezultat? Crvi su se pojavili SAMO tamo gdje su muhe mogle doći do mesa. Zaključak: <strong>život nastaje iz života, ne iz ničega.</strong> To je teorija <strong>biogeneze</strong>.</p>
+    </div>
+  </div>
+
+  <p>Ali priča nije gotova. Prošlo je skoro <strong>200 godina</strong> prije nego je netko konačno stavio točku na ovu raspravu.</p>
+
+  <div class="scientist-card">
+    <span class="scientist-emoji">🧪</span>
+    <div>
+      <strong>Louis Pasteur, 1861.</strong>
+      <p>Francuski kemičar napravio je genijalan eksperiment s <strong>tikvicama labuđeg vrata</strong>. Savijeni vrat tikvice dopuštao je prolaz zraka, ali ne i čestica prašine (na kojima su bile bakterije). Juha unutra je ostala sterilna danima, tjednima, mjesecima. Čim bi slomio vrat tikvice — bakterije bi ušle i juha bi se pokvarila.</p>
+      <p style="margin-top:8px"><strong>Presuda:</strong> spontana generacija je mit. Život dolazi samo iz života.</p>
+    </div>
+  </div>
+
+  <p>Ali — i ovo je najzanimljiviji dio — ako život može nastati SAMO iz života... <strong>odakle je onda došao PRVI život?</strong></p>
+  </div>
+</div>
+
+<!-- CHAPTER 5 -->
+<div class="chapter">
+  <div class="chapter-num">Poglavlje 5</div>
+  <h2>Munja u boci</h2>
+  <button class="btn-tts" onclick="procitaj(document.getElementById('ch5-text').innerText)" aria-label="Čitaj poglavlje naglas" style="float:right">🔊</button>
+  <div id="ch5-text">
+  <p>1924. godine, ruski biokemičar <strong>Aleksandar Oparin</strong> i britanski genetičar <strong>J.B.S. Haldane</strong> neovisno su predložili istu radikalnu ideju: da je prvi život nastao <strong>kemijskim putem</strong>, vrlo, vrlo davno.</p>
+
+  <p>Njihova hipoteza je glasila ovako:</p>
+
+  <div class="highlight-box">
+    <p>Rana Zemlja je bila potpuno drugačije mjesto. Atmosfera je bila puna metana (CH₄), amonijaka (NH₃), vodika (H₂) i vodene pare — ali gotovo <strong>bez kisika</strong>. Sunce je pržilo ultraljubičastim zrakama. Vulkani su izbacivali lavu. Munje su parale nebo.</p>
+    <p style="margin-top:8px">U tom kaosu, energija munja i UV zraka mogla je <strong>spojiti</strong> jednostavne molekule u složenije — organske molekule. Kiša bi ih isprala u oceane, stvarajući <strong>"praocean"</strong> — toplu juhu kemikalija.</p>
+  </div>
+
+  <p>Zvuči kao znanstvena fantastika? Možda. Ali 1953. godine, dvojica mladih znanstvenika odlučili su to <strong>testirati</strong>.</p>
+
+  <div class="scientist-card">
+    <span class="scientist-emoji">⚡</span>
+    <div>
+      <strong>Stanley Miller i Harold Urey, 1953.</strong>
+      <p>Miller je bio 23-godišnji doktorand. Urey je bio Nobelovac. Zajedno su napravili nešto što nitko prije nije pokušao: <strong>rekonstruirali uvjete rane Zemlje u staklenki.</strong></p>
+      <p style="margin-top:8px">Napunili su staklenu aparaturu vodenom parom, metanom, amonijakom i vodikom. Kroz smjesu su pustili <strong>električne iskre</strong> — simulaciju munja. I čekali.</p>
+    </div>
+  </div>
+
+  <p>Nakon prvog dana, voda u aparaturi se obojila u <strong>ružičasto</strong>. Do kraja tjedna bila je <strong>tamnocrvena i mutna</strong>.</p>
+
+  <p>Kad su analizirali tu crvenu tekućinu, pronašli su nešto nevjerojatno: <strong>aminokiseline</strong>. Građevne blokove proteina. Građevne blokove ŽIVOTA.</p>
+
+  <div class="big-quote">
+    "Od mrtvih kemikalija, uz malo energije, nastale su molekule života."
+  </div>
+
+  <div class="fun-fact">
+    <p>🔍 <strong>Zanimljivost:</strong> Kad je Miller umro 2007., znanstvenici su pregledali zapečaćene bočice iz njegovih originalnih eksperimenata. Otkrili su da je nastalo VIŠE aminokiselina nego što je Miller prijavio! Moderna analiza pokazala je da je eksperiment bio uspješniji nego što je itko mislio.</p>
+  </div>
+
+  <div class="fun-fact">
+    <p>⚡ <strong>Novost iz 2025.:</strong> Znanstvenici sa Stanforda otkrili su da čak i sitne kapljice vode — poput onih u magli ili prskalicama — mogu proizvesti takozvane "mikro-munje". Prema tim istraživanjima, za nastanak aminokiselina nije bila potrebna samo jedna velika munja. Svaka kap kiše na ranoj Zemlji mogla je biti mala kemijska tvornica!</p>
+  </div>
+
+  <p>Urey je, usput, odbio staviti svoje ime na rad. Smatrao je da bi njegov ugled kao Nobelovca zasjenio Millerovu zaslugu. Miller je objavio rad sam — i promijenio biokemiju zauvijek.</p>
+  </div>
+</div>
+
+<!-- CHAPTER 6 -->
+<div class="chapter">
+  <div class="chapter-num">Poglavlje 6</div>
+  <h2>Od juhe do stanice</h2>
+  <button class="btn-tts" onclick="procitaj(document.getElementById('ch6-text').innerText)" aria-label="Čitaj poglavlje naglas" style="float:right">🔊</button>
+  <div id="ch6-text">
+  <p>Aminokiseline su tek početak. Put od kemikalije do živog bića bio je dug i nevjerojatan. Znanstvenici ga zovu <strong>kemijska evolucija</strong>, i izgleda otprilike ovako:</p>
+
+  <div style="text-align:center;padding:20px;background:white;border-radius:14px;box-shadow:var(--shadow);margin:16px 0">
+    <p style="font-size:16px;margin-bottom:4px"><strong>Monomeri</strong> (aminokiseline, šećeri)</p>
+    <p style="font-size:28px;color:var(--teal)">⬇️</p>
+    <p style="font-size:16px;margin-bottom:4px"><strong>Polimeri</strong> (proteini, nukleinske kiseline)</p>
+    <p style="font-size:28px;color:var(--teal)">⬇️</p>
+    <p style="font-size:16px;margin-bottom:4px"><strong>Protstanice</strong> (kapljice s membranom)</p>
+    <p style="font-size:28px;color:var(--teal)">⬇️</p>
+    <p style="font-size:16px"><strong>Stanice</strong> (prvi živi organizmi!)</p>
+  </div>
+
+  <div class="analogy-box">
+    <p>🏗️ <strong>Analogija:</strong> Zamisli da gradiš kuću. Monomeri su cigle. Polimeri su zidovi (cigle spojene zajedno). Protstanica je nedovršena kuća s krovom ali bez struje, vode i plana. A stanica? Stanica je gotova kuća s instalacijama, namještajem i uputama za održavanje!</p>
+  </div>
+
+  <p><strong>Protstanice</strong> su bile kapljice organskih tvari okružene jednostavnom membranom. Još nisu bile "žive" u pravom smislu. Da bi postale žive, trebale su razviti četiri stvari:</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0">
+    <div style="background:var(--teal-light);padding:14px;border-radius:12px;text-align:center">
+      <div style="font-size:28px">🔄</div>
+      <strong style="font-size:14px">Metabolizam</strong>
+      <p style="font-size:13px;margin:0">kemijske reakcije</p>
+    </div>
+    <div style="background:var(--blue-light);padding:14px;border-radius:12px;text-align:center">
+      <div style="font-size:28px">🛡️</div>
+      <strong style="font-size:14px">Membrana</strong>
+      <p style="font-size:13px;margin:0">zaštitni omotač</p>
+    </div>
+    <div style="background:var(--orange-light);padding:14px;border-radius:12px;text-align:center">
+      <div style="font-size:28px">📋</div>
+      <strong style="font-size:14px">DNA/RNA</strong>
+      <p style="font-size:13px;margin:0">nasljedne upute</p>
+    </div>
+    <div style="background:var(--purple-light);padding:14px;border-radius:12px;text-align:center">
+      <div style="font-size:28px">⚡</div>
+      <strong style="font-size:14px">Enzimi</strong>
+      <p style="font-size:13px;margin:0">ubrzavači reakcija</p>
+    </div>
+  </div>
+
+  <p>Kad je protstanica napokon imala sve četiri — svijet je dobio svog prvog stanovnika. Biološka evolucija je započela.</p>
+  </div>
+</div>
+
+<!-- CHAPTER 7 -->
+<div class="chapter">
+  <div class="chapter-num">Poglavlje 7</div>
+  <h2>Od čega smo napravljeni</h2>
+  <button class="btn-tts" onclick="procitaj(document.getElementById('ch7-text').innerText)" aria-label="Čitaj poglavlje naglas" style="float:right">🔊</button>
+  <div id="ch7-text">
+  <p>Svako živo biće na Zemlji — od bakterije do kit — građeno je od istih <strong>četiriju vrsta biomolekula</strong>. Iste. Četiri. Vrste. Za SVE.</p>
+
+  <div style="background:white;border-radius:16px;padding:20px;margin:16px 0;box-shadow:var(--shadow)">
+    <p style="text-align:center;margin-bottom:12px"><strong>Čudesna četvorka biomolekula:</strong></p>
+
+    <div style="display:flex;align-items:center;gap:12px;padding:10px;margin:8px 0;background:#FFF8E1;border-radius:10px">
+      <span style="font-size:32px">🫒</span>
+      <div><strong>LIPIDI</strong> — masti i ulja. Trigliceridi ti daju energiju. Fosfolipidi grade membrane svake stanice. Steroidi su hormoni koji upravljaju tvojim tijelom.</div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:12px;padding:10px;margin:8px 0;background:#E8F5E9;border-radius:10px">
+      <span style="font-size:32px">🍞</span>
+      <div><strong>UGLJIKOHIDRATI</strong> — šećeri i škrob. Monosaharidi (glukoza) su brza energija. Disaharidi su dva šećera zajedno. Polisaharidi (škrob) su zalihe energije.</div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:12px;padding:10px;margin:8px 0;background:#E3F2FD;border-radius:10px">
+      <span style="font-size:32px">💪</span>
+      <div><strong>PROTEINI</strong> — građeni od aminokiselina (onih koje je Miller stvorio!). Čine mišiće, enzime, protutijela, hormone, kosu...</div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:12px;padding:10px;margin:8px 0;background:#FCE4EC;border-radius:10px">
+      <span style="font-size:32px">🧬</span>
+      <div><strong>NUKLEINSKE KISELINE</strong> — DNA nosi nasljedne upute, a RNA ih prenosi. Bez njih, stanica ne bi znala što treba raditi.</div>
+    </div>
+  </div>
+
+  <div class="analogy-box">
+    <p>📱 <strong>Analogija za zapamtiti:</strong> Zamisli da je stanica tvoj smartphone. Lipidi su kućište (membrana). Ugljikohidrati su baterija (energija). Proteini su aplikacije (rade posao). Nukleinske kiseline su operativni sustav (upute za sve ostalo).</p>
+  </div>
+
+  <p>Kad je Bill Bryson pisao o kemiji života, primijetio je nešto zapanjujuće: atomi od kojih si građena — ugljik, vodik, kisik, dušik, malo kalcija, trunka sumpora — su nevjerojatno obični. Nema tu ništa egzotično. Jedina posebna stvar u vezi tih atoma jest <strong>da čine tebe</strong>.</p>
+
+  <p>I ti atomi? Nastali su u srcima zvijezda, raspršeni eksplozijama supernova, i nakon milijardi godina — našli su put do vode, do aminokiselina, do protstanica, do stanica, do tebe.</p>
+  </div>
+</div>
+
+<!-- FINALE -->
+<div class="final-card">
+  <h2 style="color:var(--teal);margin:0 0 12px">🌟 I to je priča.</h2>
+  <p>Od kapljice vode do tebe. Od munje u praatmosferi do aminokiselina u staklenci. Od protstanice u toplom oceanu do 37 bilijuna stanica tvojeg tijela.</p>
+  <p style="margin:16px 0"><strong>Svaki put kad popiješ čašu vode, piješ istu tvar koja je pokrenula sve.</strong></p>
+  <p style="font-size:14px;color:var(--text-light)">I da, 22. ožujka je Svjetski dan vode. Sad znaš zašto to zaslužuje. 💧</p>
+</div>
+
+</main>
+
+<script>
+function procitaj(tekst) {
+  if(speechSynthesis.speaking) speechSynthesis.cancel();
+  const g = new SpeechSynthesisUtterance(tekst);
+  g.lang='hr-HR'; g.rate=0.85;
+  speechSynthesis.speak(g);
+}
+function toggleSettings() {
+  const p=document.getElementById('settings-panel');
+  const b=document.querySelector('.settings-toggle');
+  p.hidden=!p.hidden;
+  b.setAttribute('aria-expanded',!p.hidden);
+}
+function updateFontSize(v){document.body.style.fontSize=v+'px';document.getElementById('font-size-value').textContent=v+'px';try{localStorage.setItem('nu-fs',v)}catch(e){}}
+function updateBg(t){const c={cream:'#FFF8F0',blue:'#F0F4FF',white:'#FAFAFA'};document.body.style.background=c[t];try{localStorage.setItem('nu-bg',t)}catch(e){}}
+function updateLineHeight(v){document.body.style.lineHeight=v;try{localStorage.setItem('nu-lh',v)}catch(e){}}
+function resetSettings(){updateFontSize(17);updateBg('cream');updateLineHeight(1.9);toggleReadingRuler(false);document.getElementById('reading-ruler').checked=false;}
+function toggleReadingRuler(on){let r=document.getElementById('readingRuler');if(!r){r=document.createElement('div');r.id='readingRuler';r.className='reading-ruler';r.setAttribute('aria-hidden','true');document.body.appendChild(r);}r.classList.toggle('active',on);if(on){document.addEventListener('mousemove',moveR);document.addEventListener('touchmove',moveRT);}else{document.removeEventListener('mousemove',moveR);document.removeEventListener('touchmove',moveRT);}}
+function moveR(e){const r=document.getElementById('readingRuler');if(r)r.style.top=(e.clientY-20)+'px';}
+function moveRT(e){const r=document.getElementById('readingRuler');if(r&&e.touches[0])r.style.top=(e.touches[0].clientY-20)+'px';}
+try{const fs=localStorage.getItem('nu-fs');const bg=localStorage.getItem('nu-bg');const lh=localStorage.getItem('nu-lh');if(fs)updateFontSize(fs);if(bg)updateBg(bg);if(lh)updateLineHeight(lh);}catch(e){}
+</script>
+</body>
+</html>
