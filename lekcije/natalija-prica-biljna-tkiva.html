@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Priča: Od otrovnog plina do tvog tijela — Biljna tkiva (Natalija)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-warm: #FFF8F0;
+            --bg-alt: #F5E6D3;
+            --text-dark: #2C2C2C;
+            --text-muted: #666;
+            --accent: #D4844C;
+            --accent-light: #E8B4A0;
+            --border: #E0D0C0;
+            --highlight: #FFF4E6;
+        }
+
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: var(--bg-warm);
+            color: var(--text-dark);
+            line-height: 1.8;
+            font-size: 18px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        body.dark-mode {
+            --bg-warm: #2C2C2C;
+            --bg-alt: #3A3A3A;
+            --text-dark: #E8E8E8;
+            --text-muted: #B0B0B0;
+            --border: #4A4A4A;
+            --highlight: #3F3F3F;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            color: white;
+            padding: 3rem 1.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        /* Navigation & Settings */
+        .header-controls {
+            background: var(--bg-alt);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid var(--border);
+        }
+
+        .control-group {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .control-group label {
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Lexend', sans-serif;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #C07040;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--bg-warm);
+            color: var(--text-dark);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--highlight);
+        }
+
+        .input-range {
+            width: 150px;
+        }
+
+        /* Main content */
+        main {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 0 1.5rem 3rem 1.5rem;
+        }
+
+        section {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode section {
+            background: var(--bg-alt);
+            color: var(--text-dark);
+        }
+
+        section h2 {
+            font-size: 1.8rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        section h3 {
+            font-size: 1.3rem;
+            color: var(--accent);
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .emoji-break {
+            font-size: 3rem;
+            text-align: center;
+            margin: 1.5rem 0;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* TTS Button */
+        .tts-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 0.8rem;
+            background: var(--accent-light);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            margin-top: 0.8rem;
+            transition: all 0.3s ease;
+            font-family: 'Lexend', sans-serif;
+        }
+
+        .tts-btn:hover {
+            background: var(--accent);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .tts-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Collapsible sections */
+        .collapsible-header {
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--highlight);
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            border-left: 4px solid var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode .collapsible-header {
+            background: var(--bg-alt);
+        }
+
+        .collapsible-header:hover {
+            background: var(--bg-alt);
+        }
+
+        .collapsible-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .collapsible-content {
+            max-height: 1000px;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: var(--highlight);
+            padding: 1rem;
+            border-radius: 6px;
+        }
+
+        body.dark-mode .collapsible-content {
+            background: #3F3F3F;
+        }
+
+        .collapsible-content.collapsed {
+            max-height: 0;
+            padding: 0;
+        }
+
+        /* SVG illustrations */
+        .illustration {
+            width: 100%;
+            max-width: 500px;
+            margin: 1.5rem auto;
+            background: var(--highlight);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        body.dark-mode .illustration {
+            background: #3F3F3F;
+        }
+
+        /* Reading ruler */
+        .ruler {
+            display: none;
+            position: fixed;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--accent);
+            top: 50%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .ruler.active {
+            display: block;
+        }
+
+        /* Blockquote */
+        blockquote {
+            border-left: 4px solid var(--accent);
+            padding-left: 1.5rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: var(--accent);
+            font-size: 1.1rem;
+        }
+
+        /* Did you know box */
+        .did-you-know {
+            background: var(--highlight);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            border-radius: 6px;
+            margin: 1.5rem 0;
+            font-weight: 500;
+        }
+
+        body.dark-mode .did-you-know {
+            background: #3F3F3F;
+        }
+
+        /* Links */
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            body {
+                font-size: 16px;
+            }
+
+            section {
+                padding: 1.5rem;
+                margin-bottom: 2rem;
+            }
+
+            .header-controls {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+
+            .input-range {
+                width: 100%;
+            }
+        }
+
+        /* Highlight animation */
+        .highlight {
+            background: var(--highlight);
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+        }
+
+        /* SVG styling */
+        svg text {
+            font-family: 'Lexend', sans-serif;
+            font-size: 12px;
+        }
+
+        svg circle, svg rect, svg path {
+            fill: none;
+            stroke: var(--accent);
+            stroke-width: 2;
+        }
+
+        svg .fill {
+            fill: var(--accent-light);
+            stroke: var(--accent);
+        }
+
+        body.dark-mode svg circle,
+        body.dark-mode svg rect,
+        body.dark-mode svg path {
+            stroke: #E8B4A0;
+        }
+
+        body.dark-mode svg .fill {
+            fill: #C07040;
+            stroke: #E8B4A0;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="ruler"></div>
+
+    <header>
+        <h1>🌱 Od Otrovnog Plina do Tvog Tijela</h1>
+        <p>Kako su stanice izgradile život — i kako biljke shvatile da rade to bolje nego što su misljene</p>
+    </header>
+
+    <div class="header-controls">
+        <div class="control-group">
+            <label for="font-size">Veličina fonta:</label>
+            <input type="range" id="font-size" class="input-range" min="14" max="24" value="18">
+            <span id="font-size-display">18px</span>
+        </div>
+        <div class="control-group">
+            <button class="btn btn-secondary" id="dark-mode-btn">🌙 Tamni način</button>
+            <button class="btn btn-secondary" id="ruler-toggle">📏 Ravnalo</button>
+        </div>
+    </div>
+
+    <main>
+        <!-- Opening Section -->
+        <section>
+            <h2>📖 Kada je sve počelo — s katastrofom</h2>
+            <p>
+                Ima 2.4 milijarde godina. Predstavi si Zemlju kao što je bila — gotovo potpuno mrtva, razderana, prepuna gasa koje bismo smatrali otrovom. Voda. Kamenje. Bakterije. To je bilo to.
+            </p>
+            <p>
+                Ali onda se nešto nevjerojatnog dogodilo. Neka bakterija — koju nazivamo <strong>cianobalterija</strong> — je shvatila kako koristiti sunčevu energiju. Počela je <strong>pumpa kisik u atmosferu</strong>.
+            </p>
+            <p>
+                Zvuči dobro, zar ne? Kisik — čini se — je bio uvijek dobar stvar. Ali u to vrijeme? <strong>Kisik je bio gori otrov nego što je sada arsenik.</strong> Za većinu bakterija, kisik je bio <span class="highlight">KATASTROFA</span>.
+            </p>
+            <button class="tts-btn" onclick="speakText('Kisik koji su proizvodile cijanobalterije bio je otrov za većinu životnog oblika tada. To se zove Veliki Oksidacijski Događaj.')">🔊 Slušaj</button>
+
+            <div class="emoji-break">☠️ → 💚 → ⚡</div>
+
+            <p>
+                Većina stanica na Zemlji je umrla. Била je to golema izumiranja — no, nakon što prašine sjedne — nešto zaista pametno se dogodilo: <strong>Neke stanice su počele koristiti taj otrov kao energiju.</strong>
+            </p>
+            <p>
+                Zamislite surfera koji vidi cunami i umjesto da bijega — skače na ploču. To je bio dio življenja koji se sada čini potpuno normalnim: ulaganje otrovnog plina i pretvaranje ga u energiju. Te stanice su postale bogaćim, bržim, jačim od svega što je postojalo.
+            </p>
+            <button class="tts-btn" onclick="speakText('Umjesto bijega od kisika, neke stanice su ga počele koristiti kao energiju. Postale su mnogo bogatije i snažnije.')">🔊 Slušaj</button>
+        </section>
+
+        <!-- Chapter 1: Oxygen Crisis -->
+        <section>
+            <h2>⚠️ Poglavlje 1: Kad je Kisik Bio Otrov</h2>
+
+            <p>
+                Prije nego što nastavi, trebala bi razumjeti <strong>Veliki Oksidacijski Događaj</strong> (Great Oxidation Event). To je bilo prije 2.4 milijarde godina, i to je bila biggest ecological crisis u историја Zemlje.
+            </p>
+
+            <h3>🔬 Što se Dogodilo?</h3>
+            <p>
+                Cijanobalterije nisu bilo samo obične bakterije. One su imale supermoć: <strong>fotosinteza</strong>. Mogu koristiti sunčevu energiju direktno — kao solarne ploče. Dok su radile, proizvodile su kisik kao nusprodukt (kao što mi smo proizvodimo CO2 kada dišemo).
+            </p>
+            <p>
+                Prije 2.4 milijarde godina, atmosfera je bila <strong>gotovo bez kisika</strong>. Bila je rijetka, gotovo abiogenica. Ali kada su cijanobalterije počele raditi — zaista raditi — počele su pumpa kisik u atmosferu.
+            </p>
+
+            <div class="did-you-know">
+                <strong>Jesi li znala?</strong> Kisik je bio jedan od najtoksičnih molekula koje su postojale za anaerobne bakterije (bakterije koje ne trebaju kisik za preživljavanje). Kisik je promijenio oksidativni stres u stanicama — poput introducirajući brzogovorke procesora u računalo iz 1980ih. Samo ne — trebao je bilo koji stari procesor. Trebalo je nešto sasvim novo.
+            </div>
+
+            <p>
+                <strong>Većina živog svijeta je umrla.</strong> Bila je to prvo masovnog izumiranja, ali sa zdravom dozom svemir-nivelnog dramata: životni oblik je pojavio se na Zemlji, to mu je reklo okruženju i gotovo su svi umrli.
+            </p>
+
+            <h3>🏄 Kako su Neke Stanice Preživjele?</h3>
+            <p>
+                Ali priroda je pametna. Neke stanice su je shvatile: umjesto bojanja — koristi oružje neprijatelja. Razvile su sposobnost da <strong>iskoriste kisik kao energiju</strong> — pravi energetski jackpot. Kisik je bio idealan za <strong>oksidativnu respiraciju</strong>, proces koji stvara MUČNO više energije nego bilo što što je postojalo prije.
+            </p>
+
+            <p>
+                To je bilo kao biti britanska kolonija u 18. stoljeću i odlučiti — umjesto borbe s Imperijima — prodaj im čaj. Komercijalni genij je bio u kretanju — ili, u ovom slučaju, biokemijski genij.
+            </p>
+
+            <button class="tts-btn" onclick="speakText('Stanice koje su naučile koristiti kisik za energiju postale su milijunima puta bogatije od svojih konkurenata.')">🔊 Slušaj</button>
+
+            <div class="emoji-break">🌍💨⚡️</div>
+        </section>
+
+        <!-- Chapter 2: Endosymbiosis -->
+        <section>
+            <h2>🤝 Poglavlje 2: Najvažnija Večera u Povijesti Zemlje</h2>
+
+            <p>
+                Sada dolazimo do jedne od najnevjerojatnih teorija u biologiji — ne zato što je weird, nego što je <strong>potpuno istinita</strong>. Teorija je zvana <strong>endosimbioza</strong>, i ona je promjena kako gledamo na život.
+            </p>
+
+            <h3>📖 Priča o Lynn Margulis</h3>
+            <p>
+                Prije nego što pričam što se dogodilo, trebao bi znati za ženu koja je ovo sve shvatila. Zvala se <strong>Lynn Margulis</strong>, американска biolog. U 1960ima, ona je pisala papire koji su govorili: <span class="highlight">"Mitohondriji su били samostalne bakterije koje su glava u velike stanice i nikada nisu izašle."</span>
+            </p>
+
+            <p>
+                Akademska zajednica je bila... skeptična. Njena papira je odbijena <strong>15 puta</strong>. Tijekom godina. Do točke gdje je htjela dati odustan.
+            </p>
+
+            <p>
+                Ali bila je prava. Svi su bili krivi. I sada je njena teorija <strong>temelj svih biologije na svijetu</strong>.
+            </p>
+
+            <button class="tts-btn" onclick="speakText('Lynn Margulis je bila odbijena 15 puta prije nego što je bila u pravu. Sada je njena teorija dio svakog biologije udžbenika.')">🔊 Slušaj</button>
+
+            <h3>🦠 Što se Točno Dogodilo?</h3>
+            <p>
+                Zamislimo: Veliki eukariote stanica. Ona je već znala koristiti kisik — već je bila pametna, već je bila relativno „napredna" (ako možemo koristiti taj termin za organizam od milijarde godina).
+            </p>
+
+            <p>
+                Ali ta stanica je bila gladna. Jednog dana — prije 2 milijarde godina — pojela je manju bakteriju. Obično bi je razložila, koristila njene atome za gradnju vlastitog tijela.
+            </p>
+
+            <p>
+                Ali ta bakterija? <strong>Nije bila razložena. Ostala je živa.</strong>
+            </p>
+
+            <p>
+                Umjesto rat — postala je partnerstvo. Veća stanica je rekla: "Ostani, ja ću te hrani i štititi." Manja bakterija je rekla: "U povratku, ja ću raditi kao tvoja elektrana — rabit ću kisik i stvarati energiju za nas oboje."
+            </p>
+
+            <p>
+                To je bila ponuda koju nisu mogli odbiti. Tijekom milijardi godina, ta zarobljena bakterija je izgubila većinu svojih svojih gena — nisu joj više trebali jer je velika stanica preuzela dijeljenje briga. Ali — i evo je <span class="highlight">SMOKING GUN</span> — <strong>zadržala je vlastitu DNA</strong>.
+            </p>
+
+            <p>
+                Ta DNA? Sada se zove <strong>mitohondrijska DNA (mtDNA)</strong>. I nalazi se u svakim mitohondriju u tvom tijelu, čak i sad, dok čitaš ovo.
+            </p>
+
+            <div class="did-you-know">
+                <strong>Jesi li znala?</strong> Pojedinačna eukariota stanica sadrži oko <strong>400 MILIJUNA bita genetske informacije</strong> — dovoljno da napuni 80 knjiga od 500 stranica svaka. To je kao imati kompletnu biblioteku Vaticana zapakanu u mjehur veličine zrnca prašine.
+            </div>
+
+            <button class="tts-btn" onclick="speakText('Mitohondriji su nekada bili samostalne bakterije. Sad su dio tvog tijela, s vlastitom DNA, žive u svakoj stanici.')">🔊 Slušaj</button>
+
+            <div class="illustration">
+                <svg viewBox="0 0 500 350" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Step 1: Free bacteria -->
+                    <text x="80" y="30" font-weight="bold" font-size="14" fill="currentColor">Prije:</text>
+                    <circle cx="80" cy="70" r="25" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <text x="80" y="75" text-anchor="middle" font-size="11" fill="currentColor">Bakterija</text>
+
+                    <!-- Step 2: Being engulfed -->
+                    <text x="250" y="30" font-weight="bold" font-size="14" fill="currentColor">Tijekom:</text>
+                    <circle cx="250" cy="70" r="50" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <circle cx="250" cy="70" r="20" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <path d="M 230 50 Q 240 40 250 50" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="5,5"/>
+                    <text x="250" y="130" text-anchor="middle" font-size="10" fill="currentColor">Progutanje</text>
+
+                    <!-- Step 3: Mitochondrion -->
+                    <text x="420" y="30" font-weight="bold" font-size="14" fill="currentColor">Sada:</text>
+                    <g transform="translate(420, 70)">
+                        <ellipse cx="0" cy="0" rx="45" ry="55" fill="none" stroke="currentColor" stroke-width="2"/>
+                        <ellipse cx="0" cy="0" rx="30" ry="40" fill="none" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="-10" cy="-10" r="4" fill="currentColor"/>
+                        <circle cx="8" cy="8" r="4" fill="currentColor"/>
+                        <text x="0" y="70" text-anchor="middle" font-size="11" fill="currentColor">Mitohondrij</text>
+                    </g>
+
+                    <!-- Bottom explanation -->
+                    <text x="250" y="200" text-anchor="middle" font-weight="bold" font-size="12" fill="currentColor">Dvostruke membrane = Dvije različite stanice spojene!</text>
+                    <text x="250" y="225" text-anchor="middle" font-size="11" fill="currentColor">Vanjska membrana: od velike stanice</text>
+                    <text x="250" y="245" text-anchor="middle" font-size="11" fill="currentColor">Unutarnja membrana: od bakterije</text>
+                    <text x="250" y="265" text-anchor="middle" font-size="11" fill="currentColor">Mitohondrij ima: VLASTITU DNA!</text>
+                </svg>
+            </div>
+
+            <h3>🔬 Tri Smoking Gun Dokaza</h3>
+            <p>
+                Ali kako znamo da je to stvarno? To nije samo teorija. Nije samo "lijepa priča". Imamo dokaze.
+            </p>
+
+            <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                📌 <strong>Dokaz 1: Vlastita DNA</strong>
+                <span class="collapsible-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <p>
+                    Mitohondriji imaju vlastitu DNA — mitohondrijsku DNA (mtDNA). To nije DNA iz jezgre. To je <strong>bakterijska DNA</strong> — kružna, kao što su bakterije imale prije 2 milijarde godina. Zašto bi organela trebala vlastitu DNA ako je oduvijek bila dio stanice? Odgovor: nije. To je dokaz da je nekad bila samostalna.
+                </p>
+            </div>
+
+            <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                📌 <strong>Dokaz 2: Vlastiti Ribosomi</strong>
+                <span class="collapsible-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <p>
+                    Mitohondriji imaju svoje ribozome — strojeve koji prave proteine. Ali nisu isti kao ribozomi u ostatku stanice. Oni su <strong>manji i drugačiji</strong>. Zapravo, identični su... bakterijskim ribozomima! To je kao da mitohondrij kaže: "Zadržao sam stare bakterijske strojeve jer znaju kako raditi s mojom bakterijskom DNA."
+                </p>
+            </div>
+
+            <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                📌 <strong>Dokaz 3: Dvostruka Membrana</strong>
+                <span class="collapsible-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <p>
+                    Mitohondriji i kloroplasti imaju <strong>dvije membrane</strong> — dva sloja zaštite. Zašto bi trebalo dva sloja ako je organela bila osmišljena kao dio stanice? Odgovor: Spoljašnja membrana je od velike stanice (koja je pojela bakteriju), a unutarnja membrana je od samog bakterije. To je kao imati dva različita propusnica jer su dvije različite entitete bili spojene zajedno.
+                </p>
+            </div>
+        </section>
+
+        <!-- Chapter 3: The P/V Ratio Problem -->
+        <section>
+            <h2>📦 Poglavlje 3: Zašto Ne Možeš Biti Džin od Jedne Stanice</h2>
+
+            <p>
+                Sada je prirodna pitanja: ako su stanice tako moćne i inteligentne — zašto nisu postale manje i manje? Zašto nisu evoluirale u gigantske stvari? Zašto je svemir pun malih stanica umjesto nekoliko ogromnih?
+            </p>
+
+            <p>
+                Odgovor je jednostavan, matematički, i potpuno nemilosrdan: <strong>Omjer površine i volumena.</strong>
+            </p>
+
+            <h3>📏 Zamislimo Pizzu</h3>
+            <p>
+                Zamislimo da si pizzera s pravom pizzom — recimo, kutiju dimenzija 30cm x 30cm x 2cm. Tu je puno pizza — volumen je veliki. Ali koliko je površine koja je izložena zraku? Samo vrh i dno i stranice.
+            </p>
+
+            <p>
+                Sada zamislimo da trebam pojesti sve te pizze. Jedino mogu pojesti ako je mogu doći kroz stranice kutije — kroz površinu. Veća kutija = manja površina po volumenu = manjeg dijela mogu pojesti proporcionalno.
+            </p>
+
+            <p>
+                Isto je s stanicama. <strong>Stanica može "dišati" i "jesti" samo kroz svoju površinu</strong> — njezinu membranu. Ako stanica postane prevelika, površina ne raste dovoljno brzo da dovuče dovoljno nutrienata za sve što je unutar nje.
+            </p>
+
+            <div class="did-you-know">
+                <strong>Jesi li znala?</strong> Stanice su ostale mikroskopske čak <strong>više od milijarde godina</strong>. Znaju! Nisu mogle postati veće bez da se razlikuju. Bill Bryson jednom reče: "Trebalo je milijarde godina evolupcije da bi eukarioti naučili kako biti multicelularni — dužnije od cijele povijesti kompleksnog života koje vidimo danas."
+            </div>
+
+            <button class="tts-btn" onclick="speakText('Stanice ne mogu biti gigantske jer površina memebrane ne raste dovoljno brzo kao interno volume. To je fizika, ne biologija.')">🔊 Slušaj</button>
+
+            <h3>🏗️ Rješenje: Budi Grad Umjesto Dvorane</h3>
+            <p>
+                Ali evolution je pametna. Umjesto jedne gigantske stanice, priroda je rekla: "Što ako uzmem tisuće malih stanica — i napravim ih da rade zajedno?"
+            </p>
+
+            <p>
+                To je početak multicelularnog životnog oblika — i to će biti sljedeće poglavlje.
+            </p>
+        </section>
+
+        <!-- Chapter 4: Cell Cooperation -->
+        <section>
+            <h2>👥 Poglavlje 4: Kada Su Se Stanice Počele Družiti</h2>
+
+            <p>
+                Prije 541 milijuna godina — što se čini kao "prije 10 sekundi" u kontekstu povijesti Zemlje — nešto je ozračivost napravilo. <strong>Stanice su počele surađivati.</strong>
+            </p>
+
+            <p>
+                Zamislimo što se dogodilo. Milijarde godina, stanice su živjele kao individue — kao jedinci koji jedere, razmjenjuju, i natječu se. Odjednom, neka stanica je pomislila: "Što ako mi se mi povezanu? Što ako podjelim resurse s drugim stanicama?"
+            </p>
+
+            <h3>🦠 Volvox — Društvena Mreža Algi</h3>
+            <p>
+                Postoji organizam zvana <strong>Volvox</strong> — masa od oko 500 do 50,000 identičnih stanica koje se održavaju zajedno u sferi. Svaka stanica je slična — sve imaju bičeve i istu strukturu. Ali zajedno, mogu se kretati, jesti, i reproducirati kao jedno. To je kao — prva verzija Facebooka, ali s stanicama.
+            </p>
+
+            <p>
+                Pojedinačna stanica je mogla samo malo stvari. Ali 500 stanica zajedno? Mogu biti kompleksniji, moćniji, brži.
+            </p>
+
+            <p>
+                Taj kompromis — tjeskoba: trebao je žrtvovati svojstva — postaje dio stanice koja služi većoj cjeline. Ali u povratnu, dobivaju zdravak zaštite, specijalizaciju, i moć koju samotna stanica nije mogla imati.
+            </p>
+
+            <button class="tts-btn" onclick="speakText('Volvox je kolonija stanica koja je shvatila da se mogu kretati zajedno kao jedan organizam. To je prvi korak prema svim životinjama i biljkama.')">🔊 Slušaj</button>
+
+            <h3>🎆 Kambrijska Eksplozija</h3>
+            <p>
+                A onda se nešto nevjerojatnog dogodilo. Prije 541 milijun godina — u samo <strong>20 milijuna godina</strong> — život je otišao od "malo dosadnih stvari" do "SVEGA". Odjednom su postojale životinje s očima, s nohama, s hvataljkama, s tvrdom obranom.
+            </p>
+
+            <p>
+                To je zvano <strong>Kambrijska Eksplozija</strong> (Cambrian Explosion). I bilo je kao — priroda je odjednom otkrila kako biti kreativna. Trebalo je <strong>3.5 milijarde godina</strong> da dođe do stanica. Trebalo je samo 20 milijuna godina nakon toga da dođe do gotovo svakog the major body plan koje viđamo i dan.
+            </p>
+
+            <p>
+                To je kao biti valjda koji je trebao 3.5 milijarde godina da naučiš čitati — i zatim, nakon što naučiš, napišeš najbolje knjige na svijetu u samo 20 milijuna godina.
+            </p>
+
+            <div class="emoji-break">🦑 🦀 🐟 🦗</div>
+
+            <button class="tts-btn" onclick="speakText('Kambrijska Eksplozija je bila doba kada je život otišao od jednostavnog do svega komplikovanog u samo 20 milijuna godina.')">🔊 Slušaj</button>
+        </section>
+
+        <!-- Chapter 5: Plant City -->
+        <section>
+            <h2>🌳 Poglavlje 5: Grad Unutar Stabljike — Kako Biljke Rade</h2>
+
+            <p>
+                Sada dolazimo do biljke. I trebam ti reći nešto: biljke su bolji inženjeri od ljudi. Ozbiljno.
+            </p>
+
+            <p>
+                Ako pogledaš stablo, vidiš samo "stablo". Ali ako pogledaš unutar tog stabla, vidiš grad — grad s različitim okrugama, različitim uloma, različitim sustavima.
+            </p>
+
+            <h3>🏗️ Biljka kao Dizajnirana Arhitektura</h3>
+            <p>
+                Biljka je — zapravo — kao skyscraper. Ima temelj (korijen), ima gradnju (stabljika), ima krov (lišće). Ima sustave koji prenose vodu (ksilem), sustave koji prenose hranu (floem). Ima elektranu (kloroplasti). Ima gradsko vijeće (jezgra u svakoj stanici). Ima reciklažnu centar (vakuola).
+            </p>
+
+            <p>
+                Ali, za razliku od neboderca koju je čovjek napravio, biljka je <strong>živa, rastući, samopopravljajući se grad</strong>.
+            </p>
+
+            <h3>🌱 Meristemi — Gradilišta koja Nikad Ne Staju</h3>
+            <p>
+                Na vrhu svakog grana, na vrhu svakog korijena, postoji malo specijalizirani dio — a <strong>meristem</strong>. To je kao gradilište koje nikada ne stane. Stanice se tu neprestano dijelje, stvarajući nove biljne dijelove.
+            </p>
+
+            <p>
+                U proljeće, meristem u vrhu grane počinje "graditi" — čini nove listove, nove celije, novi rast. To je zašto se biljke mijenjaju svake godine — jer neprekidno grade.
+            </p>
+
+            <button class="tts-btn" onclick="speakText('Meristemi su gradilišta biljka — gdje se stanice neprekidno dijelje i stvaraju novi rast.')">🔊 Slušaj</button>
+
+            <h3>🌲 Kambij — Zašto Stabla Imaju Prstene</h3>
+            <p>
+                Pita li se ikada zašto stabla imaju prstene? To je sve zahvaljujući <strong>kambijem</strong>.
+            </p>
+
+            <p>
+                Kambij je kao "meristem za počinitelje" — to je sloj stanica koji se nalazi između drva i kore. Svake godine, kambij stvara novi sloj drva — novi ring. To je kao dodavanje novog kata na zgradu svake godine.
+            </p>
+
+            <p>
+                Zašto? Pa, starica je trebala veću, jaču stabljiku. Ali ne može samo "proziriti" staru strukturu — trebala bi biti slabeća. Umjesto toga — dodaj novi sloj, jaču nego stari. Iz prirodnog materijala — drva.
+            </p>
+
+            <div class="did-you-know">
+                <strong>Jesi li znala?</strong> Broji li prstene u priječnoj presjeci stabla, možeš točno znati koliko godina je stablo imalo! Svaki prsten = jedna godinu rasta.
+            </div>
+
+            <button class="tts-btn" onclick="speakText('Kambij je meristem koji stvara novi sloj drva svake godine — to je zašto stabla imaju prstene.')">🔊 Slušaj</button>
+
+            <h3>🎨 Epidermis i Kutikula — Biljkina Vodootporna Jakna</h3>
+            <p>
+                Na vrhu biljke — bilo da je list ili stabljika — postoji jedan sloj stanica zvana <strong>epidermis</strong>. To je kao koža biljke.
+            </p>
+
+            <p>
+                Ali same stanica nisu dovoljne — trebala joj je zaštita od vode. Pa je priroda rekla: "Što ako napravim sluozni sloj na vrhu epidermisa? Nešto kao vosku?"
+            </p>
+
+            <p>
+                To je <strong>kutikula</strong> — vosku, tanki sloj. To je kao Gore-Tex jakna za biljku — dovoljan da drži vodu, dovoljan da nije propusna za isuše, ali sve opet može funkcije.
+            </p>
+
+            <button class="tts-btn" onclick="speakText('Kutikula je vosku sloj na biljama koji štiti od isušivanja — kao Gore-Tex jakna.')">🔊 Slušaj</button>
+
+            <h3>💨 Puči — Inteligentne Ventilacije</h3>
+            <p>
+                Ali biljka se ne može bez zraka. Trebala joj je way da će udjela zrak — posebno CO2, koji koristi za fotosinteza.
+            </p>
+
+            <p>
+                Otvorila se — <strong>puči</strong> (stomata/puče). To su male pore na listu, gdje se dva specijalizirana stanice drže zajedno kao manji i veći prst. Kada je biljka trebala zrak — oni se otvaraju. Kada je bilo previše suhosti — oni se zatvaraju.
+            </p>
+
+            <p>
+                To je kao imati inteligentnu ventilaciju sustava koji zna kada će otvoriti i zatvoriti. Što je to? To su stanice koje su specijalizirane za upravljanja — stupanj stanica sa specifičnom funkcija. To je <strong>staklo tkanina</strong>.
+            </p>
+
+            <button class="tts-btn" onclick="speakText('Puči su male pore na listovima kroz koje biljka dihće. One se otvaraju i zatvaraju ovisno o potrebama biljke.')">🔊 Slušaj</button>
+
+            <div class="emoji-break">🌿💨☀️</div>
+        </section>
+
+        <!-- Chapter 6: Plant Tissue Systems -->
+        <section>
+            <h2>🔌 Poglavlje 6: Dva Cjevovoda — Biljkino Čudo Inženjerstva</h2>
+
+            <p>
+                Sada dolazimo do jednog od najfascinantnijih dijelova biljke. Biljka je — u mnogim razinama — kao grad sa sustavom za vodu i sistemom za hranu.
+            </p>
+
+            <h3>💧 Ksilem — Voda Pipeline (Mrtvi Cjevovi)</h3>
+            <p>
+                Zamislimo: stablo je 50 metara visoko. Na vrhu krošnje su lišće koja trebaju vodu. Ali voda nije dio biljke — trebala joj je biti transportir od korijena do vrh. Kako?
+            </p>
+
+            <p>
+                Biljka je to riješila s nešto zvane <strong>ksilem</strong>. Ksilem je — tehnički — mreza od <strong>mrtvih stanica</strong>. Znate li zašto mrtvih? Jer voda ne treba da se gibaju — trebala joj je biti kanali. Ako bi bile žive, imale bi membranu koja bi se smetala vodi.
+            </p>
+
+            <p>
+                Umjesto toga, biljka se je rekla: "Što ako napravim stanice, punija ih sa celulozom, i onda ih ubijam i praznim? Tada voda može samo tekli kroz njih kao kroz PVC cijevi."
+            </p>
+
+            <p>
+                To je upravo što se dogodilo. Ksilem je mreza od praznih, mrtvih stanica — kao PVC cijevi u kući. Voda teće do vrha stabla jer kapilarne sile i transpiracija (isparavanje) voditi vodu gore.
+            </p>
+
+            <button class="tts-btn" onclick="speakText('Ksilem je mreza od mrtvih stanica — kao PVC cijevi — kroz koju voda teče od korijena do vrha stabla.')">🔊 Slušaj</button>
+
+            <h3>🍯 Floem — Food Delivery Service (Živi Cjevovi)</h3>
+            <p>
+                Ali nakon što je biljka napravila šećer u listovima (kroz fotosinteza), trebala joj je biti sustav da ga transportira gdje god je trebao — korijenji, cvjetovi, nove grane.
+            </p>
+
+            <p>
+                To je uloga <strong>floema</strong>. Za razliku od ksilema, floem je mreza od <strong>živih stanica</strong>. To je kao Uber Eats za biljku — živih vozača koji transportiraju hranu gdje god joj trebalo.
+            </p>
+
+            <p>
+                Ali evo je zanimljivy dio: floem može transportirati šećer <strong>GORE ILI DOLJE</strong>. Kad je proljeteće — šećer ide prema gore, prema novim listovima koji trebaju biti hranjen. Kad je jesenske — šećer ide dolje, prema korijenima, koji se trebaju pripremiti za zimu.
+            </p>
+
+            <p>
+                To nije pasivno — to je aktivno, energetski proces. Stanice u floemom su pumpa šećera — kao da voze šećer u teretnom automobilu, od mjesta do mjesta.
+            </p>
+
+            <div class="did-you-know">
+                <strong>Jesi li znala?</strong> Floem može transportirati šećer puno brže nego što bi se mogao difuzirati. To je kao razlika između pješačenja i vožnje automobilom.
+            </div>
+
+            <button class="tts-btn" onclick="speakText('Floem je mreza od živih stanica koja transportira šećer gdje god biljka trebaja. Može ići gore ili dolje.')">🔊 Slušaj</button>
+
+            <h3>💪 Potporno Tkivo — Fleksibilan vs Krut</h3>
+            <p>
+                Biljka trebala je biti čvrsta — trebala joj je biti struktura koja će je podržati. Ali trebala joj je biti fleksibilna. Vjetar puše, kiša pada, trebala joj je biti moći obrinuti bez da se slomi.
+            </p>
+
+            <p>
+                Priroda je stvorila dva tipa potporno tkiva:
+            </p>
+
+            <p>
+                <strong>Kolenhim</strong> — fleksibilan, kao guma. To je tkivo koje je još je "mlado", stanice još nisu potpuno ojačane. To je fleksibilne stanice s pojačane kutike u kutnjima. To je kao gumeni most — može se saviti bez pucanja.
+            </p>
+
+            <p>
+                <strong>Sklerenhim</strong> — krut, kao čelik. To je tkivo gdje su stanice potpuno ojačane s celulozom i ligninomu (lignin je ono što čini drvo čvrstim). To je kao željezni most — nije će se saviti, ali može podržati težinu.
+            </p>
+
+            <p>
+                Kombinacija — fleksibilnih kolenhima za nove dijelove biljka i krutog sklerenhima za stare dijelove — daje biljki strukturnu fleksibilnost koja joj je trebala.
+            </p>
+
+            <button class="tts-btn" onclick="speakText('Kolenhim je fleksibilan kao guma, sklerenhim je krut kao čelik. Biljka koristi oba za strukturu.')">🔊 Slušaj</button>
+
+            <h3>🦟 Sekretornu Tkivo — Biljke Koje Jedu Meso</h3>
+            <p>
+                I sada — za nešto stvarno zanimljivo. Neka biljka je otkrila da mogu biti <strong>grabežljive</strong>.
+            </p>
+
+            <p>
+                Venus flytrap, sundew, sarracenia — sve su biljke koje mogu jesti insekte. Kako? Imaće specijalizirane stanice — <strong>žljezdano tkivo</strong> — koje izlučuju enzime kako bili "želudac" biljka.
+            </p>
+
+            <p>
+                To je kao — biljka koja je rekla: "Fotosinteza je dobra, ali zašto ne mogu biti prihranjeni i sa mesom? Zašto se trebam odlučiti?"
+            </p>
+
+            <button class="tts-btn" onclick="speakText('Neka biljka kao Venus flytrap imaju žljezdano tkivo koje može probaviti insekte — biljke koje jedu meso!')">🔊 Slušaj</button>
+
+            <div class="emoji-break">🌺 🦗 🕸️</div>
+        </section>
+
+        <!-- Closing -->
+        <section>
+            <h2>🌍 Zaključak: Od Otrovnog Plina do Živih Gradova</h2>
+
+            <p>
+                Dakle, hajde da rezimiramo gdje smo počeli. Prije 2.4 milijarde godina, kisik je bio otrov. Većina živog svijeta je umrla. Ali neke stanice su shvatile da koriste taj otrov — i to je bila revolucija.
+            </p>
+
+            <p>
+                Prije 2 milijarde godina, one stanice su pojele druge stanice — i umjesto da ih razlože, zadržale su ih kao elektrane. Ti "tuki" su sada mitohondriji — s vlastitom DNA, u svakoj stanici tvoga tijela.
+            </p>
+
+            <p>
+                Stanice su ostale male, jer matematika je nemilosrdna — pero, nakon što je milijardu godina, shvatile su kako biti veće zajedničkim projektima. Milijarde stanica zajedno — to je tebe. To je mene. To je sve što vidimo.
+            </p>
+
+            <p>
+                A onda su biljke otkrile nešto posebno. Umjesto da jedu druge stvari — počele su graditi vlastitu energiju iz sunca. Otkrile su fotosinteza. Ali nisu se zadovoljile samo — otkrile su kako biti grad s:
+            </p>
+
+            <ul style="margin: 1rem 0 1rem 2rem; list-style: none;">
+                <li>🏗️ <strong>Meristemi</strong> — gradilišta koja nikada ne stanu</li>
+                <li>🔄 <strong>Kambij</strong> — sustav rasta koji dodaje sloj svake godine</li>
+                <li>💧 <strong>Ksilem</strong> — voda pipeline od mrtvih stanica</li>
+                <li>🍯 <strong>Floem</strong> — delivery service od živih stanica</li>
+                <li>💪 <strong>Potorno tkivo</strong> — fleksibilnost i čvrstoća</li>
+                <li>☀️ <strong>Kloroplasti</strong> — solarne ploče u svakoj stanici</li>
+            </ul>
+
+            <p>
+                To je sve — sve je to dio jedne starice, ili milijardi stanica. Sve je to dio jednog nevjerojatnog inženjerskog projekta koji je priroda radila tijekom 3.8 milijardi godina.
+            </p>
+
+            <div class="did-you-know">
+                <strong>Jesi li znala?</strong> Pojedinačno stablo je više komplicirano nego što je bilo koji human-built factory. Ima sustave za nadzor (koren), sustave za distribuciju (ksilem i floem), elektrane (kloroplasti), reciklažu (vakuola), inteligentne ventilacije (puči), i i dalje rastući procese (meristemi). Nema tvornice na svijetu koja može kompeticirati.
+            </div>
+
+            <blockquote style="margin-top: 2rem;">
+                "Priroda ima milijardu godina pokušaja i grešaka — čovjek ima samo nekoliko tisućljeća. Nije iznenađu da priroda bolje je inženjer." — Neka pametna osoba, definitivno
+            </blockquote>
+
+            <button class="tts-btn" onclick="speakText('Od otrovnog plina do živih gradova — to je priča kako je vida osvojila Zemlju. A to je samo početak.')">🔊 Slušaj</button>
+
+            <div class="emoji-break">🌍 ✨ 🌱</div>
+
+            <p style="margin-top: 2rem; font-size: 1.1rem; font-style: italic;">
+                To je priča o tebi. To je priča o svemu što vidišu u prirodi. To je priča o kako je otrov postao energija, kako su jedinice postale gradove, i kako su gradovi postali živima.
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <p>🌟 Priča Napisana za Nataliju | Nastao 2025</p>
+        <p style="font-size: 0.8rem; margin-top: 0.5rem;">Inspiracija: TED talks, Bill Bryson, Lynn Margulis, Kurzgesagt | Tekst je napisan kao priča, ne kao učebnik.</p>
+    </footer>
+
+    <script>
+        // Font size control
+        const fontSizeInput = document.getElementById('font-size');
+        const fontSizeDisplay = document.getElementById('font-size-display');
+
+        fontSizeInput.addEventListener('input', (e) => {
+            const size = e.target.value;
+            document.body.style.fontSize = size + 'px';
+            fontSizeDisplay.textContent = size + 'px';
+            localStorage.setItem('fontSize', size);
+        });
+
+        // Load saved font size
+        const savedFontSize = localStorage.getItem('fontSize');
+        if (savedFontSize) {
+            fontSizeInput.value = savedFontSize;
+            document.body.style.fontSize = savedFontSize + 'px';
+            fontSizeDisplay.textContent = savedFontSize + 'px';
+        }
+
+        // Dark mode toggle
+        const darkModeBtn = document.getElementById('dark-mode-btn');
+        darkModeBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDark);
+            darkModeBtn.textContent = isDark ? '☀️ Svjetao način' : '🌙 Tamni način';
+        });
+
+        // Load saved dark mode preference
+        const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+        if (savedDarkMode) {
+            document.body.classList.add('dark-mode');
+            darkModeBtn.textContent = '☀️ Svjetao način';
+        }
+
+        // Ruler toggle
+        const rulerToggle = document.getElementById('ruler-toggle');
+        const ruler = document.querySelector('.ruler');
+
+        rulerToggle.addEventListener('click', () => {
+            ruler.classList.toggle('active');
+            const isActive = ruler.classList.contains('active');
+            localStorage.setItem('rulerActive', isActive);
+            rulerToggle.textContent = isActive ? '📏 Ravnalo (uključeno)' : '📏 Ravnalo';
+        });
+
+        // Load saved ruler state
+        const savedRulerState = localStorage.getItem('rulerActive') === 'true';
+        if (savedRulerState) {
+            ruler.classList.add('active');
+            rulerToggle.textContent = '📏 Ravnalo (uključeno)';
+        }
+
+        // Collapsible sections
+        function toggleCollapsible(header) {
+            const content = header.nextElementSibling;
+            content.classList.toggle('collapsed');
+            const icon = header.querySelector('.collapsible-icon');
+            icon.style.transform = content.classList.contains('collapsed') ? 'rotate(0deg)' : 'rotate(180deg)';
+        }
+
+        // Initialize collapsibles as collapsed
+        document.querySelectorAll('.collapsible-content').forEach(content => {
+            content.classList.add('collapsed');
+        });
+
+        // Text-to-speech function
+        function speakText(text) {
+            // Cancel any ongoing speech
+            if (window.speechSynthesis.speaking) {
+                window.speechSynthesis.cancel();
+                return;
+            }
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'hr-HR';
+            utterance.rate = 0.95;
+            utterance.pitch = 1.0;
+
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

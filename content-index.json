@@ -89,6 +89,18 @@
       "file": "lekcije/natalija-prica-eukariotska-stanica.html",
       "date": "2026-03-06",
       "subject": "Biologija"
+    },
+    {
+      "title": "Od eukariota do biljnih tkiva (Natalija)",
+      "file": "lekcije/natalija-lekcija-biljna-tkiva.html",
+      "date": "2026-03-06",
+      "subject": "Biologija"
+    },
+    {
+      "title": "Priča: Od otrovnog plina do tvog tijela (Natalija)",
+      "file": "lekcije/natalija-prica-biljna-tkiva.html",
+      "date": "2026-03-06",
+      "subject": "Biologija"
     }
   ],
   "ispiti": [
@@ -143,6 +155,12 @@
     {
       "title": "Ispit: Eukariotska stanica (Natalija)",
       "file": "ispiti/natalija-ispit-eukariotska-stanica.html",
+      "date": "2026-03-06",
+      "subject": "Biologija"
+    },
+    {
+      "title": "Ispit: Od eukariota do biljnih tkiva (Natalija)",
+      "file": "ispiti/natalija-ispit-biljna-tkiva.html",
       "date": "2026-03-06",
       "subject": "Biologija"
     }

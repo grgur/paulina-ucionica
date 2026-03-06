@@ -1,0 +1,1615 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ispit: Biljne stanice, tkiva i organi (Natalija)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: #FFF8F0;
+            padding: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        body.dark-bg {
+            background-color: #E8DED0;
+        }
+
+        body.high-contrast {
+            background-color: #FFFAF5;
+            filter: contrast(1.2);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            position: relative;
+        }
+
+        header {
+            background: linear-gradient(135deg, #A8D8BA 0%, #7BC97F 100%);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1rem;
+            opacity: 0.95;
+            line-height: 1.5;
+        }
+
+        .progress-container {
+            background: #f5f5f5;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #A8D8BA, #7BC97F);
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .welcome-screen {
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .welcome-screen h2 {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .welcome-message {
+            background: #f0fdf4;
+            border-left: 4px solid #7BC97F;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .welcome-button {
+            background: linear-gradient(135deg, #A8D8BA, #7BC97F);
+            color: white;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .welcome-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(122, 201, 127, 0.3);
+        }
+
+        .question-screen {
+            padding: 2rem 1.5rem;
+            display: none;
+        }
+
+        .question-screen.active {
+            display: block;
+        }
+
+        .warm-up-badge {
+            display: inline-block;
+            background: #FFF3CD;
+            color: #856404;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .encouraging-message {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: 500;
+            opacity: 0;
+            max-height: 0;
+            transition: opacity 0.3s ease, max-height 0.3s ease;
+        }
+
+        .encouraging-message.active {
+            opacity: 1;
+            max-height: 100px;
+        }
+
+        .question-number {
+            color: #7BC97F;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            line-height: 1.6;
+        }
+
+        .question-subtitle {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .option {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: white;
+        }
+
+        .option:hover {
+            border-color: #7BC97F;
+            background: #f9fff7;
+        }
+
+        .option.selected {
+            border-color: #7BC97F;
+            background: #f0fdf4;
+        }
+
+        .option.disabled {
+            cursor: not-allowed;
+        }
+
+        .option.correct {
+            border-color: #4caf50;
+            background: #e8f5e9;
+        }
+
+        .option.incorrect {
+            border-color: #f44336;
+            background: #ffebee;
+        }
+
+        .option-radio {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ddd;
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-top: 2px;
+            transition: all 0.2s ease;
+        }
+
+        .option.selected .option-radio {
+            background: #7BC97F;
+            border-color: #7BC97F;
+            box-shadow: 0 0 0 3px rgba(122, 201, 127, 0.2);
+        }
+
+        .option.correct .option-radio {
+            background: #4caf50;
+            border-color: #4caf50;
+        }
+
+        .option.incorrect .option-radio {
+            background: #f44336;
+            border-color: #f44336;
+        }
+
+        .option-text {
+            flex: 1;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        .true-false-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .tf-button {
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: white;
+            flex: 1;
+            max-width: 150px;
+        }
+
+        .tf-button:hover {
+            border-color: #7BC97F;
+        }
+
+        .tf-button.true.selected {
+            background: #4caf50;
+            color: white;
+            border-color: #4caf50;
+        }
+
+        .tf-button.false.selected {
+            background: #f44336;
+            color: white;
+            border-color: #f44336;
+        }
+
+        .matching-pair {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            align-items: center;
+        }
+
+        .matching-item {
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+        }
+
+        .matching-label {
+            color: #333;
+            font-weight: 500;
+        }
+
+        .matching-select {
+            width: 100%;
+            padding: 0.7rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-family: 'Lexend', sans-serif;
+            cursor: pointer;
+            background: white;
+            color: #333;
+        }
+
+        .matching-select:focus {
+            outline: none;
+            border-color: #7BC97F;
+        }
+
+        .fill-blank {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Lexend', sans-serif;
+        }
+
+        .fill-blank:focus {
+            outline: none;
+            border-color: #7BC97F;
+        }
+
+        .ordering-list {
+            background: #f9f9f9;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .ordering-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+            align-items: center;
+        }
+
+        .ordering-item:last-child {
+            border-bottom: none;
+        }
+
+        .ordering-number {
+            background: #7BC97F;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .feedback-message {
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: opacity 0.3s ease, max-height 0.3s ease;
+        }
+
+        .feedback-message.active {
+            opacity: 1;
+            max-height: 500px;
+        }
+
+        .feedback-correct {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+        }
+
+        .feedback-incorrect {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+        }
+
+        .feedback-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+
+        .feedback-explanation {
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .feedback-correct .feedback-title {
+            color: #2e7d32;
+        }
+
+        .feedback-correct .feedback-explanation {
+            color: #1b5e20;
+        }
+
+        .feedback-incorrect .feedback-title {
+            color: #c62828;
+        }
+
+        .feedback-incorrect .feedback-explanation {
+            color: #b71c1c;
+        }
+
+        .controls {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 0.6rem 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Lexend', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+
+        .btn-tts {
+            background: #FFD4A3;
+            color: #333;
+        }
+
+        .btn-tts:hover {
+            background: #FFC185;
+            transform: translateY(-2px);
+        }
+
+        .btn-breathing {
+            background: #B8E6F0;
+            color: #333;
+        }
+
+        .btn-breathing:hover {
+            background: #9FDDE6;
+            transform: translateY(-2px);
+        }
+
+        .btn-settings {
+            background: #E8D4F8;
+            color: #333;
+        }
+
+        .btn-settings:hover {
+            background: #DCC0F0;
+            transform: translateY(-2px);
+        }
+
+        .btn-submit {
+            background: #7BC97F;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+        }
+
+        .btn-submit:hover:not(:disabled) {
+            background: #6ab86c;
+            transform: translateY(-2px);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-next {
+            background: #A8D8BA;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+        }
+
+        .btn-next:hover {
+            background: #94cfa6;
+            transform: translateY(-2px);
+        }
+
+        .settings-panel {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .settings-panel.active {
+            display: flex;
+        }
+
+        .settings-content {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .settings-content h2 {
+            margin-bottom: 1.5rem;
+            color: #333;
+            font-size: 1.4rem;
+        }
+
+        .setting-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .setting-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        .setting-group input[type="range"] {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: #ddd;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .setting-group select {
+            width: 100%;
+            padding: 0.6rem;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-family: 'Lexend', sans-serif;
+        }
+
+        .settings-close {
+            background: #7BC97F;
+            color: white;
+            width: 100%;
+            margin-top: 1rem;
+            padding: 0.8rem;
+        }
+
+        .settings-close:hover {
+            background: #6ab86c;
+        }
+
+        .breathing-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .breathing-modal.active {
+            display: flex;
+        }
+
+        .breathing-content {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .breathing-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #B8E6F0, #9FDDE6);
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: breathe 12s infinite;
+        }
+
+        @keyframes breathe {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.3);
+            }
+        }
+
+        .breathing-phase {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .results-screen {
+            padding: 3rem 2rem;
+            text-align: center;
+            display: none;
+        }
+
+        .results-screen.active {
+            display: block;
+        }
+
+        .score-display {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #7BC97F;
+            margin-bottom: 0.5rem;
+        }
+
+        .score-stars {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .score-message {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .review-section {
+            background: #f9f9f9;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: left;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .review-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.8rem;
+            border-left: 4px solid #7BC97F;
+        }
+
+        .review-question {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.3rem;
+        }
+
+        .review-answer {
+            color: #666;
+            font-size: 0.95rem;
+            margin-top: 0.3rem;
+        }
+
+        .retry-button {
+            background: linear-gradient(135deg, #A8D8BA, #7BC97F);
+            color: white;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .retry-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(122, 201, 127, 0.3);
+        }
+
+        .reading-ruler {
+            display: none;
+            position: fixed;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: rgba(122, 201, 127, 0.3);
+            pointer-events: none;
+            z-index: 999;
+            cursor: row-resize;
+        }
+
+        .reading-ruler.active {
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+            .matching-pair {
+                grid-template-columns: 1fr;
+            }
+
+            header h1 {
+                font-size: 1.4rem;
+            }
+
+            .score-display {
+                font-size: 3rem;
+            }
+
+            .true-false-buttons {
+                flex-direction: column;
+            }
+
+            .tf-button {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="reading-ruler" id="readingRuler"></div>
+
+    <div class="container">
+        <header>
+            <h1>🌿 Biljne stanice, tkiva i organi</h1>
+            <p>Detaljni test za Nataliju<br>
+            <small>Sve što trebao/trebala znati o cijanobakterijama do živih biljaka</small></p>
+        </header>
+
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text" id="progressText">Priprema...</div>
+        </div>
+
+        <div style="display: flex; gap: 1rem; justify-content: center; margin-bottom: 1.5rem; flex-wrap: wrap;">
+            <div>
+                <button class="btn-tts" id="ttsBtn" aria-label="Pročitaj pitanje naglas" title="Pročitaj pitanje naglas">🔊 Pročitaj</button>
+            </div>
+            <div>
+                <button class="btn-breathing" id="breathingBtn" aria-label="Vježba disanja 4-4-4" title="Trebam minutu">🫁 Trebam minutu</button>
+            </div>
+            <div>
+                <button class="btn-settings" id="settingsBtn" aria-label="Otvorite postavke" title="Postavke">⚙️ Postavke</button>
+            </div>
+        </div>
+
+        <div class="welcome-screen" id="welcomeScreen">
+            <h2>Gotov/a za izazov? 🧬</h2>
+            <div class="welcome-message">
+                <strong>Natalija, evo što te čeka:</strong><br><br>
+                Odličan izbor! Ovaj ispit obuhvaća sve od cijanobakterija (koje su promijenile našu atmosferu) do kompleksnih biljnih tkiva i organa.<br><br>
+                Nema vremenske limite - fokusiraj se. Neki odgovori će biti laki, neki puno teži. To je NORMALNO. Svaki pokušaj te čini jačom u biologiji.<br><br>
+                <strong>💡 Savjet:</strong> Ako nisi sigurna, pogledaj razlog! Greške su najbolji učitelji. Idemo! 💪
+            </div>
+            <button class="welcome-button" id="startBtn" aria-label="Počni ispit">Počni ispit</button>
+        </div>
+
+        <div class="question-screen" id="questionScreen">
+            <div class="warm-up-badge" id="warmUpBadge" style="display: none;">ZAGRIJAVANJE (ne broji se)</div>
+            <div class="encouraging-message" id="encouragingMessage"></div>
+
+            <div>
+                <div class="question-number" id="questionNumber"></div>
+                <div class="question-text" id="questionText"></div>
+                <div class="question-subtitle" id="questionSubtitle"></div>
+            </div>
+
+            <div id="questionContent"></div>
+
+            <div class="feedback-message" id="feedbackMessage">
+                <div class="feedback-title" id="feedbackTitle"></div>
+                <div class="feedback-explanation" id="feedbackExplanation"></div>
+            </div>
+
+            <div class="controls">
+                <button class="btn-submit" id="submitBtn" aria-label="Potvrdi odgovor">Potvrdi odgovor</button>
+                <button class="btn-next" id="nextBtn" aria-label="Sljedeće pitanje" style="display: none;">Sljedeće →</button>
+            </div>
+        </div>
+
+        <div class="results-screen" id="resultsScreen">
+            <h2>Završio/a si! 🎉</h2>
+            <div class="score-display" id="scoreDisplay"></div>
+            <div class="score-stars" id="scoreStars"></div>
+            <div class="score-message" id="scoreMessage"></div>
+
+            <div class="review-section">
+                <h3 style="margin-bottom: 1rem; color: #333;">Pregled odgovora:</h3>
+                <div id="reviewContent"></div>
+            </div>
+
+            <div class="recommendations" id="recommendations"></div>
+
+            <button class="retry-button" id="retryBtn" aria-label="Ponovi ispit">Ponovi ispit</button>
+        </div>
+    </div>
+
+    <div class="settings-panel" id="settingsPanel">
+        <div class="settings-content">
+            <h2>Postavke</h2>
+
+            <div class="setting-group">
+                <label for="fontSizeSlider">Veličina fonta: <span id="fontSizeValue">100%</span></label>
+                <input type="range" id="fontSizeSlider" min="80" max="150" value="100" step="5">
+            </div>
+
+            <div class="setting-group">
+                <label for="bgColorSelect">Boja pozadine:</label>
+                <select id="bgColorSelect">
+                    <option value="default">Normalna (topla)</option>
+                    <option value="dark">Tamna (mirna)</option>
+                    <option value="high-contrast">Visoki kontrast</option>
+                </select>
+            </div>
+
+            <div class="setting-group">
+                <label>
+                    <input type="checkbox" id="readingRulerCheckbox">
+                    Linija za čitanje (pomoć pri čitanju)
+                </label>
+            </div>
+
+            <button class="settings-close" id="settingsCloseBtn" aria-label="Zatvori postavke">Zatvori</button>
+        </div>
+    </div>
+
+    <div class="breathing-modal" id="breathingModal">
+        <div class="breathing-content">
+            <h2>Vježba disanja 4-4-4</h2>
+            <div class="breathing-circle"></div>
+            <div class="breathing-phase" id="breathingPhase">Udahni (4 sekunde)...</div>
+            <button class="settings-close" id="breathingCloseBtn" aria-label="Zatvori vježbu disanja">Gotovo</button>
+        </div>
+    </div>
+
+    <script>
+        // ==================== DATA ====================
+        const examData = {
+            title: "Biljne stanice, tkiva i organi",
+            questions: [
+                // WARM-UP QUESTIONS (ne broje se)
+                {
+                    warmUp: true,
+                    type: "multiple",
+                    text: "Koji od sljedećih mikroorganizama je odgovoran za pojavu kisika u Zemljinoj atmosferi prije oko 2 milijarde godina?",
+                    options: [
+                        { text: "Cijanobakterije", correct: true },
+                        { text: "Vibrio cholerae", correct: false },
+                        { text: "E. coli", correct: false },
+                        { text: "Streptococcus", correct: false }
+                    ],
+                    explanation: "Cijanobakterije su bile першве bakterije koje su izvođale oksigensku fotosintеzu. Njihov kisik je promijenio atmosferu i omogućio razvoj eukariota."
+                },
+                {
+                    warmUp: true,
+                    type: "truefalse",
+                    text: "Fotosinteza je proces tijekom kojeg se svjetlosna energija pretvara u kemijsku energiju.",
+                    correct: true,
+                    explanation: "Točno! Fotosinteza: svjetlo + CO₂ + H₂O → glukoza + O₂. Cijanobakterije su bile prve koje su to radile s evolucijskim uspjehom."
+                },
+
+                // EASY QUESTIONS (30% of main 15)
+                {
+                    type: "multiple",
+                    text: "Što je endosimbiotska teorija?",
+                    options: [
+                        { text: "Teorija da su mitohondrije i kloropla nastali od fagocitiranih prokariota", correct: true },
+                        { text: "Teorija da su sve stanice identične", correct: false },
+                        { text: "Teorija da je DNA nastala iz proteina", correct: false },
+                        { text: "Teorija da su cijanobakterije izumrle prije 100 milijuna godina", correct: false }
+                    ],
+                    explanation: "Endosimbiotska teorija objašnjava kako su kompleksne eukariotske stanice nastale kada su se prokarioti integrirali u veće stanice. Mitohondrije i kloropla imaju vlastitu DNA kao dokaz!"
+                },
+                {
+                    type: "multiple",
+                    text: "Koji su od sljedećih organeli nastali endosimbiozom?",
+                    options: [
+                        { text: "Samo mitohondrije", correct: false },
+                        { text: "Samo kloropla", correct: false },
+                        { text: "Mitohondrije i kloropla", correct: true },
+                        { text: "Митохонdrije, kloropla i lizosom", correct: false }
+                    ],
+                    explanation: "Oba organela su nekad bila samostalna prokariota. Kloropla samo u biljkama. Oboje imaju vlastitu DNA i ribosoma 70S, što dokazuje njihovo prokariisko podrijetlo."
+                },
+                {
+                    type: "truefalse",
+                    text: "Mitohondrije i kloropla imaju vlastitu DNA i ribosoma sličnu prokariama.",
+                    correct: true,
+                    explanation: "Točno! To je ključni dokaz da su nekad bili samostalni organizmi. Ribosomi u njima su 70S (kao u bakterijama), ne 80S (kao u ostalim eukariotima)."
+                },
+
+                // MEDIUM QUESTIONS (40% of main 15)
+                {
+                    type: "matching",
+                    text: "Povežite jednostanični eukariот sa njegovim načinom kretanja:",
+                    pairs: [
+                        { left: "Trepetljikaši", right: "Kretanje pomoću trepetljika (bičeva)" },
+                        { left: "Kremenjašice", right: "Staničan zid od silicija, većinom nepokretne" },
+                        { left: "Pseudopodiji", right: "Lažne noge - privremena proširenja citoplazme" },
+                        { left: "Krednjaci", right: "Krečnjačni zid, većinom plankton" }
+                    ],
+                    explanation: "Različiti jednostanični eukarioti prilagođeni su različitim okruženjima. Trepetljikaši se kreću aktivno, kremenjašice i krednjaci su veliki dio ploankтона."
+                },
+                {
+                    type: "multiple",
+                    text: "Zašto su stanice tako male? Koji je ključan razlog?",
+                    options: [
+                        { text: "Jer tako žele organizmi", correct: false },
+                        { text: "Omjer površine i volumena (P/V) - veća stanica teže transportira supstance", correct: true },
+                        { text: "Jer je to zakon građe", correct: false },
+                        { text: "Jer je malo prostora na Zemlji", correct: false }
+                    ],
+                    explanation: "Manji objekt ima veći P/V omjer. Kada se stanica povećava, volumen raste brže nego površina. Nutrienti moraju proći kroz membranu - mali P/V omjer znači probleme s transportom!"
+                },
+                {
+                    type: "fillblank",
+                    text: "Poredajте razine organizacije od najjednostavnije: stanica → ____________ → organ → organski sustav → organizam.",
+                    correctAnswer: "tkivo",
+                    explanation: "Razine organizacije su: stanica → TKIVO → organ → sustav → organizam. Tkivo je grupa specijaliziranih stanica s istom funkcijom."
+                },
+                {
+                    type: "multiple",
+                    text: "Što je homeostaza?",
+                    options: [
+                        { text: "Sposobnost organizma da održava stabilno unutarnje okruženje unatoč vanjskim promjenama", correct: true },
+                        { text: "Proces rasta i razvoja", correct: false },
+                        { text: "Podjela stanica", correct: false },
+                        { text: "Smrt stanica", correct: false }
+                    ],
+                    explanation: "Homeostaza: održavanje stabilnosti pH, temperature, vlažnosti, osmolalnosti. Biljke reguliraju vodeni sustav kroz stomache i puče. To je ključno za preživljavanje!"
+                },
+                {
+                    type: "matching",
+                    text: "Povežite biljno tkivo s njegovom funkcijom:",
+                    pairs: [
+                        { left: "Meristemi (vršni)", right: "Rast u duljinu, diferencijacija novih stanica" },
+                        { left: "Parenhim", right: "Fotosinteza, skladištenje, ispuna" },
+                        { left: "Epiderm", right: "Zaštita, kontrola transpiracije" },
+                        { left: "Ksilem", right: "Prijevoz vode i minerala od korijena" },
+                        { left: "Floem", right: "Prijevoz organskih tvari (šećera) od listova" },
+                        { left: "Sklerenhim", right: "Čvrstoća i potporna funkcija" }
+                    ],
+                    explanation: "Svako tkivo ima specijaliziranu ulogu. Meristemi - rast. Parenhim -生活. Epiderm - zaštita. Ksilem/floem - transport. Sklerenhim - struktura."
+                },
+                {
+                    type: "multiple",
+                    text: "Koji je kambij i koja je njegova uloga?",
+                    options: [
+                        { text: "Sjeme biljke koje se koristi za razmnožavanje", correct: false },
+                        { text: "Lateralni (bočni) meristem koji proizvodi novo drvo i lublje - uzrokuje bujanje u debljinu", correct: true },
+                        { text: "Mrežа korijena ispod zemlje", correct: false },
+                        { text: "Sloj na listu koji je otvara i zatvara stomache", correct: false }
+                    ],
+                    explanation: "Kambij je slojeviti meristem između ksilema i floema. Proizvodi nove ćelije - xilem prema centru (drvo), floem prema površini (lublje). To je razlog zašto se stabljika/deblo širi!"
+                },
+                {
+                    type: "truefalse",
+                    text: "Ksilem je izgrađen od živih stanica koje aktivno transportiraju vodu.",
+                    correct: false,
+                    explanation: "NETOČNO! Ksilem je izgrađen od MRTVIH stanica (žile, traheide). Voda putuje kroz prazne ćelije zahvaljujući kapilarnim silama i korenoj pritisku. To je puno učinkovitije!"
+                },
+                {
+                    type: "truefalse",
+                    text: "Floem provodi vodu od korijena prema listovima.",
+                    correct: false,
+                    explanation: "NETOČNO! Floem provodi ORGANSKE TVARI (šećere, amino kiseline) od LISTOVA prema svim dijelovima biljke. Vodu provodi KSILEM! Ovo je česta zabuna."
+                },
+
+                // HARD QUESTIONS (30% of main 15)
+                {
+                    type: "multiple",
+                    text: "Što je kutikula na listu i zašto je biljka razvila slojni sustav za transpiraciju umjesto da ima kutikulu na cijeloj površini?",
+                    options: [
+                        { text: "Kutikula je voskom, ali bi bila prejakom za malo će gasnu razmjenu - puči omogućavaju reguliranu transpiraciju", correct: true },
+                        { text: "Kutikula je samo ljepota biljke", correct: false },
+                        { text: "Puči su samo slučajna evolucija, bez funkcije", correct: false },
+                        { text: "Kutikula je zastarjela i nije više potrebna", correct: false }
+                    ],
+                    explanation: "Kutikula je vaskualni sloj koji smanjuje isparavanje vode. Ali biljke trebaju CO₂ za fotosintеzu i trebaju ispariti vodu za hladnjenje i transport. Puči omogućavaju kontroliranu razmjenu - genialno!"
+                },
+                {
+                    type: "multiple",
+                    text: "Kolenhim i sklerenhim su oba potporna tkiva. Što je GLAVNA razlika između njih?",
+                    options: [
+                        { text: "Kolenhim je od živih stanica s fleksibilnom podrškom; sklerenhim je od mrtvih stanica s čvrstom podrškom", correct: true },
+                        { text: "Kolenhim je u korijenima, sklerenhim u listovima", correct: false },
+                        { text: "Nema razlike, samo drugo imena", correct: false },
+                        { text: "Sklerenhim je zamijenio kolenhim tijekom evolucije", correct: false }
+                    ],
+                    explanation: "Kolenhim u mladim dijelovima biljke daje fleksibilnost (može se savijati). Sklerenhim u zrelim dijelovima daje čvrstoću (drvo, sjemenka). Oboje imaju ulogu, samo razumjeti kada!"
+                },
+                {
+                    type: "ordering",
+                    text: "Poredajте razvoj biljnog organa od početka do završetka:",
+                    items: [
+                        { text: "Meristemi proizvode nove stanice putem mitoze", order: 1 },
+                        { text: "Stanice se diferencijiraju u specijalizirane tipove (fotosintetske, mehaničke, etc.)", order: 2 },
+                        { text: "Tkiva se organisira u organ (list, korijen, itd.)", order: 3 },
+                        { text: "Organ sazrijeva i preuzima svoju funkciju", order: 4 }
+                    ],
+                    explanation: "To je redoslijed - od mitoze do specijalizacije do organizacije do funkcije. Svaki korak je bitan za zdravu biljku!"
+                },
+                {
+                    type: "multiple",
+                    text: "Godovi su slojevi drva koji se stvaraju od kambiја svake godine. Što nam godovi mogu pokazati?",
+                    options: [
+                        { text: "Samo starost biljke", correct: false },
+                        { text: "Starost, ozbljava godine (tanja godova u sušnom razdoblju), zdravlje biljke tijekom njezinog života", correct: true },
+                        { text: "Samo температуру okruženja", correct: false },
+                        { text: "Samo količinu svetla", correct: false }
+                    ],
+                    explanation: "Godovi su kronologija biljkinog života! Debeli godovi = obilan rast (vlažna godina). Tanki godovi = suša. Anomalije = bolest, požar, ili štete. Pročitati godove je kao pročitati biljkinog dnevnik!"
+                },
+                {
+                    type: "multiple",
+                    text: "Koja je razlika između vegetativnih i generativnih biljnih organa?",
+                    options: [
+                        { text: "Vegetativni se koriste za fotosintеzu, generativni za reprodukciju", correct: true },
+                        { text: "Generativni organi su stariji", correct: false },
+                        { text: "Vegetativni se jede, generativni se ne jede", correct: false },
+                        { text: "Nema prave razlike", correct: false }
+                    ],
+                    explanation: "VEGETATIVNI: korijen, stabljika, list - rast i održavanje. GENERATIVNI: cvijet, plod, sjeme - reprodukcija. Razumnijevanje ove razlike je ključ za biologiju biljaka!"
+                },
+                {
+                    type: "multiple",
+                    text: "Zašto moraju puči biti na DONJOJ strani lista (pri većini biljaka) a ne na gornjoj?",
+                    options: [
+                        { text: "Gornja strana je više izložena suncu - više transpiracije gubitak vode bi bio prevelik", correct: true },
+                        { text: "To je samo slučaj, nema razloga", correct: false },
+                        { text: "Jer je donja strana čvršća", correct: false },
+                        { text: "Jer je donja strana zelena", correct: false }
+                    ],
+                    explanation: "Strategija! Gornja strana je suočena sa suncem - viša temperatura, više UV, brža transpiracija. Puči su na donjoj strani - zaštićenije, hlađe, mogu regulirati otvaranje bez rizika od prekomjerne dehidracije!"
+                },
+                {
+                    type: "multiple",
+                    text: "Koji je dokaz koji NAJVIŠE potvrđuje endosimbiotsku teoriju za mitohondrije i kloropla?",
+                    options: [
+                        { text: "Samo to što su mali", correct: false },
+                        { text: "Vlastita DNA i ribosomi 70S kao prokarioti, te dvostruka membrana (vanjska od domaće stanice, unutarnja od prokariota)", correct: true },
+                        { text: "Samo boja", correct: false },
+                        { text: "Samo lokacija u stanici", correct: false }
+                    ],
+                    explanation: "NAJBOLJI DOKAZI: 1) Vlastita DNA 2) Ribosomi 70S (kao prokarioti, ne 80S kao ostatak eukariotske stanice!) 3) Dvostraka membrana - vanjska je endoцitоzа, unutarnja je orginal prokariota 4) Binarna fission (kao bakterije). Ovo je kao - šuma od dokaza!"
+                },
+                {
+                    type: "fillblank",
+                    text: "Rizoderm je ____________ tkivo korijena koje direktno apsorbira vodu i minerale iz tla.",
+                    correctAnswer: "pokrovno",
+                    explanation: "Rizoderm je pokrovno tkivo korijena (ne epiderm - to je za stabljike). Ima dlačice za apsorpciju (veliki P/V omjer), bez kutikule (za lakšu apsorpciju). Prilagođeno za rad s tlom!"
+                }
+            ]
+        };
+
+        // ==================== STATE ====================
+        let currentQuestionIndex = -1;
+        let answers = {};
+        let submitted = {};
+        let correctCount = 0;
+        let warmUpCount = 0;
+
+        // ==================== INITIALIZATION ====================
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeEventListeners();
+            updateProgress();
+        });
+
+        function initializeEventListeners() {
+            document.getElementById('startBtn').addEventListener('click', startExam);
+            document.getElementById('submitBtn').addEventListener('click', submitAnswer);
+            document.getElementById('nextBtn').addEventListener('click', nextQuestion);
+            document.getElementById('retryBtn').addEventListener('click', retryExam);
+
+            document.getElementById('ttsBtn').addEventListener('click', speakQuestion);
+            document.getElementById('breathingBtn').addEventListener('click', openBreathing);
+            document.getElementById('settingsBtn').addEventListener('click', openSettings);
+
+            document.getElementById('settingsCloseBtn').addEventListener('click', closeSettings);
+            document.getElementById('breathingCloseBtn').addEventListener('click', closeBreathing);
+
+            document.getElementById('fontSizeSlider').addEventListener('input', updateFontSize);
+            document.getElementById('bgColorSelect').addEventListener('change', updateBgColor);
+            document.getElementById('readingRulerCheckbox').addEventListener('change', toggleReadingRuler);
+
+            document.getElementById('settingsPanel').addEventListener('click', (e) => {
+                if (e.target.id === 'settingsPanel') closeSettings();
+            });
+
+            document.getElementById('breathingModal').addEventListener('click', (e) => {
+                if (e.target.id === 'breathingModal') closeBreathing();
+            });
+        }
+
+        function startExam() {
+            document.getElementById('welcomeScreen').style.display = 'none';
+            document.getElementById('questionScreen').classList.add('active');
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex >= examData.questions.length) {
+                showResults();
+                return;
+            }
+
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const q = examData.questions[currentQuestionIndex];
+            const isWarmUp = q.warmUp;
+
+            document.getElementById('warmUpBadge').style.display = isWarmUp ? 'inline-block' : 'none';
+            document.getElementById('questionNumber').textContent = isWarmUp
+                ? `Zagrijavanje - Pitanje ${currentQuestionIndex + 1}`
+                : `Pitanje ${currentQuestionIndex + 1 - warmUpCount}`;
+            document.getElementById('questionText').textContent = q.text;
+            document.getElementById('questionSubtitle').textContent = q.subtitle || '';
+
+            document.getElementById('encouragingMessage').classList.remove('active');
+
+            if (!isWarmUp && (currentQuestionIndex - warmUpCount) % 5 === 4) {
+                showEncouragingMessage();
+            }
+
+            document.getElementById('feedbackMessage').classList.remove('active');
+            document.getElementById('submitBtn').style.display = 'inline-block';
+            document.getElementById('nextBtn').style.display = 'none';
+            document.getElementById('submitBtn').disabled = false;
+
+            const contentDiv = document.getElementById('questionContent');
+            contentDiv.innerHTML = '';
+
+            if (q.type === 'multiple') {
+                renderMultipleChoice(q, contentDiv);
+            } else if (q.type === 'truefalse') {
+                renderTrueFalse(q, contentDiv);
+            } else if (q.type === 'matching') {
+                renderMatching(q, contentDiv);
+            } else if (q.type === 'fillblank') {
+                renderFillBlank(q, contentDiv);
+            } else if (q.type === 'ordering') {
+                renderOrdering(q, contentDiv);
+            }
+
+            updateProgress();
+        }
+
+        function renderMultipleChoice(q, container) {
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'options-container';
+
+            q.options.forEach((opt, idx) => {
+                const label = document.createElement('label');
+                label.className = 'option';
+                label.style.cursor = 'pointer';
+
+                const radio = document.createElement('div');
+                radio.className = 'option-radio';
+
+                const text = document.createElement('span');
+                text.className = 'option-text';
+                text.textContent = opt.text;
+
+                label.appendChild(radio);
+                label.appendChild(text);
+
+                label.addEventListener('click', () => {
+                    answers[currentQuestionIndex] = idx;
+                    document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+                    label.classList.add('selected');
+                });
+
+                if (answers[currentQuestionIndex] === idx) {
+                    label.classList.add('selected');
+                }
+
+                optionsDiv.appendChild(label);
+            });
+
+            container.appendChild(optionsDiv);
+        }
+
+        function renderTrueFalse(q, container) {
+            const buttonsDiv = document.createElement('div');
+            buttonsDiv.className = 'true-false-buttons';
+
+            const trueBtn = document.createElement('button');
+            trueBtn.className = 'tf-button true';
+            trueBtn.textContent = 'Točno ✓';
+            trueBtn.addEventListener('click', () => {
+                answers[currentQuestionIndex] = true;
+                document.querySelectorAll('.tf-button').forEach(b => b.classList.remove('selected'));
+                trueBtn.classList.add('selected');
+            });
+
+            const falseBtn = document.createElement('button');
+            falseBtn.className = 'tf-button false';
+            falseBtn.textContent = 'Netočno ✗';
+            falseBtn.addEventListener('click', () => {
+                answers[currentQuestionIndex] = false;
+                document.querySelectorAll('.tf-button').forEach(b => b.classList.remove('selected'));
+                falseBtn.classList.add('selected');
+            });
+
+            if (answers[currentQuestionIndex] === true) trueBtn.classList.add('selected');
+            if (answers[currentQuestionIndex] === false) falseBtn.classList.add('selected');
+
+            buttonsDiv.appendChild(trueBtn);
+            buttonsDiv.appendChild(falseBtn);
+            container.appendChild(buttonsDiv);
+        }
+
+        function renderMatching(q, container) {
+            const matchingDiv = document.createElement('div');
+
+            q.pairs.forEach((pair, idx) => {
+                const pairDiv = document.createElement('div');
+                pairDiv.className = 'matching-pair';
+
+                const leftDiv = document.createElement('div');
+                leftDiv.className = 'matching-item';
+                const leftLabel = document.createElement('div');
+                leftLabel.className = 'matching-label';
+                leftLabel.textContent = pair.left;
+                leftDiv.appendChild(leftLabel);
+
+                const rightDiv = document.createElement('div');
+                rightDiv.className = 'matching-item';
+                const rightSelect = document.createElement('select');
+                rightSelect.className = 'matching-select';
+                rightSelect.addEventListener('change', (e) => {
+                    if (!answers[currentQuestionIndex]) answers[currentQuestionIndex] = {};
+                    answers[currentQuestionIndex][pair.left] = e.target.value;
+                });
+
+                const emptyOpt = document.createElement('option');
+                emptyOpt.value = '';
+                emptyOpt.textContent = '-- Odaberite --';
+                rightSelect.appendChild(emptyOpt);
+
+                q.pairs.forEach(p => {
+                    const opt = document.createElement('option');
+                    opt.value = p.right;
+                    opt.textContent = p.right;
+                    rightSelect.appendChild(opt);
+                });
+
+                if (answers[currentQuestionIndex] && answers[currentQuestionIndex][pair.left]) {
+                    rightSelect.value = answers[currentQuestionIndex][pair.left];
+                }
+
+                rightDiv.appendChild(rightSelect);
+                pairDiv.appendChild(leftDiv);
+                pairDiv.appendChild(rightDiv);
+                matchingDiv.appendChild(pairDiv);
+            });
+
+            container.appendChild(matchingDiv);
+        }
+
+        function renderFillBlank(q, container) {
+            const inputDiv = document.createElement('div');
+            const label = document.createElement('label');
+            label.style.display = 'block';
+            label.style.marginBottom = '0.5rem';
+            label.style.fontWeight = '500';
+            label.textContent = q.text;
+
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.className = 'fill-blank';
+            input.placeholder = 'Upišite odgovor...';
+            input.value = answers[currentQuestionIndex] || '';
+            input.addEventListener('input', (e) => {
+                answers[currentQuestionIndex] = e.target.value;
+            });
+
+            inputDiv.appendChild(label);
+            inputDiv.appendChild(input);
+            container.appendChild(inputDiv);
+        }
+
+        function renderOrdering(q, container) {
+            const orderingDiv = document.createElement('div');
+            orderingDiv.className = 'ordering-list';
+
+            const sorted = [...q.items].sort((a, b) => a.order - b.order);
+
+            sorted.forEach((item, idx) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'ordering-item';
+
+                const numberDiv = document.createElement('div');
+                numberDiv.className = 'ordering-number';
+                numberDiv.textContent = idx + 1;
+
+                const textDiv = document.createElement('div');
+                textDiv.style.flex = '1';
+                textDiv.textContent = item.text;
+
+                itemDiv.appendChild(numberDiv);
+                itemDiv.appendChild(textDiv);
+                orderingDiv.appendChild(itemDiv);
+            });
+
+            container.appendChild(orderingDiv);
+
+            answers[currentQuestionIndex] = true;
+        }
+
+        function submitAnswer() {
+            const q = examData.questions[currentQuestionIndex];
+
+            if (answers[currentQuestionIndex] === undefined || answers[currentQuestionIndex] === '') {
+                alert('Molimo odaberite odgovor prije nego što nastavite.');
+                return;
+            }
+
+            submitted[currentQuestionIndex] = true;
+            let isCorrect = false;
+            let explanation = '';
+
+            if (q.type === 'multiple') {
+                const selectedIdx = answers[currentQuestionIndex];
+                isCorrect = q.options[selectedIdx].correct;
+                explanation = q.explanation;
+
+                document.querySelectorAll('.option').forEach((opt, idx) => {
+                    opt.classList.add('disabled');
+                    if (idx === selectedIdx) {
+                        opt.classList.add(isCorrect ? 'correct' : 'incorrect');
+                    }
+                    if (isCorrect === false && q.options[idx].correct) {
+                        opt.classList.add('correct');
+                    }
+                });
+            } else if (q.type === 'truefalse') {
+                isCorrect = answers[currentQuestionIndex] === q.correct;
+                explanation = q.explanation;
+
+                document.querySelectorAll('.tf-button').forEach(btn => {
+                    btn.disabled = true;
+                });
+            } else if (q.type === 'matching') {
+                isCorrect = true;
+                q.pairs.forEach(pair => {
+                    if (answers[currentQuestionIndex][pair.left] !== pair.right) {
+                        isCorrect = false;
+                    }
+                });
+                explanation = q.explanation;
+
+                document.querySelectorAll('.matching-select').forEach(sel => {
+                    sel.disabled = true;
+                });
+            } else if (q.type === 'fillblank') {
+                const userAnswer = answers[currentQuestionIndex].trim().toLowerCase();
+                const correctAnswer = q.correctAnswer.toLowerCase();
+                isCorrect = userAnswer === correctAnswer;
+                explanation = q.explanation;
+
+                document.querySelector('.fill-blank').disabled = true;
+            } else if (q.type === 'ordering') {
+                isCorrect = true;
+                explanation = q.explanation;
+            }
+
+            if (isCorrect && !q.warmUp) {
+                correctCount++;
+            }
+            if (q.warmUp) {
+                warmUpCount++;
+            }
+
+            const feedbackDiv = document.getElementById('feedbackMessage');
+            const titleDiv = document.getElementById('feedbackTitle');
+            const explDiv = document.getElementById('feedbackExplanation');
+
+            feedbackDiv.className = isCorrect ? 'feedback-message correct feedback-correct' : 'feedback-message incorrect feedback-incorrect';
+            titleDiv.textContent = isCorrect ? '✅ Točno!' : '❌ Netočno';
+            explDiv.innerHTML = explanation;
+
+            if (!isCorrect && q.type === 'multiple') {
+                const correctOpt = q.options.find(o => o.correct);
+                explDiv.innerHTML += `<br><br><strong>Točan odgovor:</strong> ${correctOpt.text}`;
+            }
+
+            feedbackDiv.classList.add('active');
+
+            document.getElementById('submitBtn').style.display = 'none';
+            document.getElementById('nextBtn').style.display = 'inline-block';
+            document.getElementById('submitBtn').disabled = true;
+        }
+
+        function showEncouragingMessage() {
+            const messages = [
+                'Odličan napredak, Natalija! 💪',
+                'Vidiš koliko znaš? Nastavi tako! 🌟',
+                'Svaki odgovor te čini jačom! ⭐',
+                'Stvarno razumiješ gradivo! 🧬',
+                'Super je što razmišljaš o ovim pitanjima! 🎉'
+            ];
+            const msg = messages[Math.floor(Math.random() * messages.length)];
+            document.getElementById('encouragingMessage').textContent = msg;
+            document.getElementById('encouragingMessage').classList.add('active');
+        }
+
+        function updateProgress() {
+            const total = examData.questions.length;
+            const current = currentQuestionIndex + 1;
+            const percent = (current / total) * 100;
+
+            document.getElementById('progressFill').style.width = percent + '%';
+            document.getElementById('progressText').textContent = `Pitanje ${current} od ${total}`;
+        }
+
+        function showResults() {
+            document.getElementById('questionScreen').classList.remove('active');
+            document.getElementById('resultsScreen').classList.add('active');
+
+            const totalQuestions = examData.questions.length - 2;
+            const percent = Math.round((correctCount / totalQuestions) * 100);
+
+            document.getElementById('scoreDisplay').textContent = percent + '%';
+
+            let stars = '';
+            let message = '';
+
+            if (percent >= 90) {
+                stars = '⭐⭐⭐';
+                message = 'IZVANREDNO! Tvoja razina znanja je impresivna! Razumiješ kompleksnost biljnih sistema. 🎉';
+            } else if (percent >= 80) {
+                stars = '⭐⭐';
+                message = 'Odličan rezultat! Solidno razumiješ strukturu i funkciju biljnih tkiva. Nastavi učiti! 🌟';
+            } else if (percent >= 70) {
+                stars = '⭐';
+                message = 'Dobar rad! Imaš čvrstu bazu. Ponovi dijelove koji su teži, i biti ćeš savršena! 💚';
+            } else if (percent >= 60) {
+                stars = '';
+                message = 'Dobar početak! Ovo je kompleksno gradivo. Svakim ponavljanjem dolazis bliže savladavanju. 💪';
+            } else {
+                stars = '';
+                message = 'Znaj da je učenje proces. Svaki pokušaj gradi nove putove u tvom mozgu. Nastavi dalje! 🧠';
+            }
+
+            document.getElementById('scoreStars').textContent = stars;
+            document.getElementById('scoreMessage').textContent = message;
+
+            let reviewHTML = '';
+            const nonWarmUpQuestions = examData.questions.filter((q, idx) => !q.warmUp);
+
+            nonWarmUpQuestions.forEach((q, idx) => {
+                const userAnswer = answers[idx + 2] !== undefined ? answers[idx + 2] : '(nije odgovoreno)';
+                const reviewItem = document.createElement('div');
+                reviewItem.className = 'review-item';
+
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'review-question';
+                questionDiv.textContent = q.text;
+
+                const answerDiv = document.createElement('div');
+                answerDiv.className = 'review-answer';
+                if (q.type === 'multiple') {
+                    answerDiv.textContent = 'Tvoj odgovor: ' + (typeof userAnswer === 'number' ? q.options[userAnswer].text : userAnswer);
+                } else if (q.type === 'truefalse') {
+                    answerDiv.textContent = 'Tvoj odgovor: ' + (userAnswer === true ? 'Točno' : userAnswer === false ? 'Netočno' : userAnswer);
+                } else {
+                    answerDiv.textContent = 'Tvoj odgovor: ' + userAnswer;
+                }
+
+                reviewItem.appendChild(questionDiv);
+                reviewItem.appendChild(answerDiv);
+                document.getElementById('reviewContent').appendChild(reviewItem);
+            });
+        }
+
+        function retryExam() {
+            currentQuestionIndex = -1;
+            answers = {};
+            submitted = {};
+            correctCount = 0;
+            warmUpCount = 0;
+
+            document.getElementById('resultsScreen').classList.remove('active');
+            document.getElementById('welcomeScreen').style.display = 'block';
+            document.getElementById('reviewContent').innerHTML = '';
+        }
+
+        function speakQuestion() {
+            const text = document.getElementById('questionText').textContent;
+            if ('speechSynthesis' in window && text) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'hr-HR';
+                utterance.rate = 0.95;
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert('Zvučna čitanja nisu dostupna u tvom pregledniku.');
+            }
+        }
+
+        function openBreathing() {
+            document.getElementById('breathingModal').classList.add('active');
+            runBreathingExercise();
+        }
+
+        function closeBreathing() {
+            document.getElementById('breathingModal').classList.remove('active');
+        }
+
+        function runBreathingExercise() {
+            const phases = [
+                { text: 'Udahni (4 sekunde)...', duration: 4000 },
+                { text: 'Zadrži dah (4 sekunde)...', duration: 4000 },
+                { text: 'Izdahni (4 sekunde)...', duration: 4000 }
+            ];
+
+            let cycleCount = 0;
+            const maxCycles = 3;
+
+            function runCycle() {
+                if (cycleCount >= maxCycles) return;
+
+                phases.forEach((phase, idx) => {
+                    setTimeout(() => {
+                        document.getElementById('breathingPhase').textContent = phase.text;
+                    }, phases.slice(0, idx).reduce((sum, p) => sum + p.duration, cycleCount * 12000));
+                });
+
+                cycleCount++;
+                if (cycleCount < maxCycles) {
+                    setTimeout(runCycle, 12000);
+                }
+            }
+
+            runCycle();
+        }
+
+        function openSettings() {
+            document.getElementById('settingsPanel').classList.add('active');
+        }
+
+        function closeSettings() {
+            document.getElementById('settingsPanel').classList.remove('active');
+        }
+
+        function updateFontSize() {
+            const size = document.getElementById('fontSizeSlider').value;
+            document.getElementById('fontSizeValue').textContent = size + '%';
+            document.querySelector('.container').style.fontSize = (size / 100) * 16 + 'px';
+        }
+
+        function updateBgColor() {
+            const color = document.getElementById('bgColorSelect').value;
+            document.body.classList.remove('dark-bg', 'high-contrast');
+            if (color === 'dark') {
+                document.body.classList.add('dark-bg');
+            } else if (color === 'high-contrast') {
+                document.body.classList.add('high-contrast');
+            }
+        }
+
+        function toggleReadingRuler() {
+            const isChecked = document.getElementById('readingRulerCheckbox').checked;
+            const ruler = document.getElementById('readingRuler');
+
+            if (isChecked) {
+                ruler.classList.add('active');
+                document.addEventListener('mousemove', moveReadingRuler);
+            } else {
+                ruler.classList.remove('active');
+                document.removeEventListener('mousemove', moveReadingRuler);
+            }
+        }
+
+        function moveReadingRuler(e) {
+            const ruler = document.getElementById('readingRuler');
+            ruler.style.top = (e.clientY - 1) + 'px';
+        }
+    </script>
+</body>
+</html>

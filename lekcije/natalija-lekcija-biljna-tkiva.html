@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light">
+  <title>Od eukariota do biljnih tkiva — Natalijina Učionica</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --bg-main: #FFF8F0;
+  --bg-card: #FFFFFF;
+  --text-main: #3A3A3A;
+  --text-light: #6B6B6B;
+  --blue: #4A90D9;
+  --blue-light: #E8F4FD;
+  --green: #5CB85C;
+  --green-light: #E8F8E8;
+  --orange: #FF9800;
+  --orange-light: #FFF3E0;
+  --red: #E74C3C;
+  --red-light: #FDE8E8;
+  --purple: #9B59B6;
+  --purple-light: #F3E8FD;
+  --teal: #26A69A;
+  --teal-light: #E0F2F1;
+  --radius: 12px;
+  --shadow: 0 2px 12px rgba(0,0,0,0.06);
+  --shadow-hover: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Lexend', 'Verdana', sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+  line-height: 1.8;
+  letter-spacing: 0.03em;
+  padding: 12px;
+  margin: 0 auto;
+  font-size: 17px;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+}
+
+.skip-link {
+  position: absolute; top: -40px; left: 0;
+  background: var(--blue); color: white;
+  padding: 8px 16px; z-index: 100;
+  border-radius: 0 0 8px 0; font-size: 16px;
+  text-decoration: none;
+}
+.skip-link:focus { top: 0; }
+
+.container { max-width: 760px; margin: 0 auto; }
+
+/* Progress bar */
+.progress-wrap { position: sticky; top: 0; z-index: 50; background: var(--bg-main); padding: 8px 0 12px; }
+.progress-bar-outer {
+  background: #E0E0E0; border-radius: 8px; height: 10px; overflow: hidden;
+}
+.progress-bar-inner {
+  background: linear-gradient(90deg, var(--green), var(--teal));
+  height: 100%; border-radius: 8px; transition: width 0.4s ease;
+}
+.progress-label { font-size: 13px; color: var(--text-light); margin-top: 4px; text-align: center; }
+
+/* Section navigation dots */
+.section-nav {
+  display: flex; gap: 6px; justify-content: center; margin: 8px 0 16px;
+  flex-wrap: wrap;
+}
+.section-dot {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 2px solid var(--blue); background: white;
+  font-size: 14px; font-weight: 600; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.section-dot.active { background: var(--blue); color: white; }
+.section-dot.done { background: var(--green); color: white; border-color: var(--green); }
+
+/* Cards */
+.kartica {
+  background: white; border-radius: 16px;
+  padding: 20px 22px; margin-bottom: 20px;
+  box-shadow: var(--shadow); border-left: 5px solid var(--blue);
+}
+.kartica.definicija { border-left-color: var(--blue); }
+.kartica.primjer { border-left-color: var(--green); }
+.kartica.vazno { border-left-color: var(--orange); }
+.kartica.upozorenje { border-left-color: var(--red); }
+.kartica.savjet { border-left-color: var(--purple); }
+.kartica.formula { border-left-color: var(--teal); }
+
+.kartica h3 { font-size: 20px; margin-bottom: 10px; }
+.kartica p { margin-bottom: 10px; }
+
+/* Section */
+.section { display: none; }
+.section.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Buttons */
+.gumb {
+  font-size: 16px; padding: 12px 24px; border-radius: var(--radius);
+  border: none; cursor: pointer; font-weight: 600;
+  transition: all 0.2s ease; min-height: 48px;
+  font-family: 'Lexend', sans-serif;
+}
+.gumb:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+.gumb-primary { background: var(--blue); color: white; }
+.gumb-primary:hover { background: #3A7BC8; }
+.gumb-green { background: var(--green); color: white; }
+.gumb-green:hover { background: #4CA74C; }
+.gumb-orange { background: var(--orange); color: white; }
+.gumb-orange:hover { background: #E88A00; }
+
+/* Nav buttons */
+.nav-btns { display: flex; gap: 12px; justify-content: space-between; margin: 24px 0; flex-wrap: wrap; }
+.nav-btns .gumb { flex: 1; min-width: 120px; text-align: center; }
+
+/* TTS button */
+.tts-btn {
+  background: none; border: none; font-size: 20px; cursor: pointer;
+  padding: 4px 8px; border-radius: 8px; vertical-align: middle;
+}
+.tts-btn:hover { background: var(--blue-light); }
+
+/* Expand/collapse */
+.expand-btn {
+  background: var(--purple-light); border: 2px solid var(--purple);
+  border-radius: var(--radius); padding: 12px 18px;
+  cursor: pointer; font-size: 16px; font-weight: 600;
+  width: 100%; text-align: left; display: flex;
+  align-items: center; gap: 8px;
+  font-family: 'Lexend', sans-serif; color: var(--text-main);
+}
+.expand-btn:hover { background: #E8D5F5; }
+.expand-btn .arrow { transition: transform 0.2s; }
+.expand-btn[aria-expanded="true"] .arrow { transform: rotate(90deg); }
+.expand-content { display: none; padding: 16px; background: var(--purple-light); border-radius: 0 0 var(--radius) var(--radius); margin-top: -4px; }
+.expand-content.open { display: block; }
+
+/* Comparison table */
+.comp-table {
+  width: 100%; border-collapse: separate; border-spacing: 0;
+  border-radius: var(--radius); overflow: hidden;
+  margin: 16px 0; font-size: 15px;
+}
+.comp-table th {
+  background: var(--blue); color: white; padding: 12px 10px;
+  text-align: center; font-weight: 600;
+}
+.comp-table td {
+  padding: 10px; border-bottom: 1px solid #E8E8E8; text-align: center;
+}
+.comp-table tr:nth-child(even) td { background: #F9F7F3; }
+.comp-table .check { color: var(--green); font-size: 20px; }
+.comp-table .cross { color: var(--red); font-size: 20px; }
+
+/* Interactive cell diagram */
+.cell-diagram {
+  position: relative; background: white;
+  border-radius: var(--radius); padding: 16px;
+  box-shadow: var(--shadow); margin: 16px 0;
+}
+.cell-svg { width: 100%; height: auto; }
+.organelle-label {
+  display: inline-block; padding: 6px 14px;
+  border-radius: 20px; margin: 4px;
+  font-size: 14px; font-weight: 500;
+  cursor: pointer; transition: all 0.2s;
+  border: 2px solid transparent;
+}
+.organelle-label:hover, .organelle-label.active {
+  transform: scale(1.05); box-shadow: var(--shadow-hover);
+}
+.organelle-info {
+  display: none; padding: 16px;
+  border-radius: var(--radius); margin: 8px 0;
+  animation: fadeIn 0.3s ease;
+}
+.organelle-info.visible { display: block; }
+
+.organelle-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 8px; margin: 16px 0;
+}
+
+/* Quiz mini */
+.quiz-mini { background: var(--teal-light); border-radius: var(--radius); padding: 20px; margin: 20px 0; }
+.quiz-mini h3 { color: var(--teal); }
+.quiz-option {
+  display: block; width: 100%; padding: 12px 16px;
+  background: white; border: 2px solid #E0E0E0;
+  border-radius: var(--radius); margin: 8px 0;
+  cursor: pointer; font-size: 16px; text-align: left;
+  font-family: 'Lexend', sans-serif; transition: all 0.2s;
+  min-height: 48px;
+}
+.quiz-option:hover { border-color: var(--blue); background: var(--blue-light); }
+.quiz-option.correct { background: var(--green-light); border-color: var(--green); }
+.quiz-option.wrong { background: var(--red-light); border-color: var(--red); }
+.quiz-option:disabled { cursor: default; opacity: 0.8; }
+.quiz-feedback { margin-top: 12px; padding: 12px; border-radius: var(--radius); font-weight: 500; }
+
+/* Flip cards */
+.flip-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin: 16px 0; }
+.flip-card {
+  perspective: 1000px; height: 140px; cursor: pointer;
+}
+.flip-inner {
+  position: relative; width: 100%; height: 100%;
+  transition: transform 0.5s; transform-style: preserve-3d;
+}
+.flip-card.flipped .flip-inner { transform: rotateY(180deg); }
+.flip-front, .flip-back {
+  position: absolute; width: 100%; height: 100%;
+  backface-visibility: hidden; border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+  padding: 12px; text-align: center; font-size: 14px;
+  font-weight: 500;
+}
+.flip-front { background: var(--blue-light); border: 2px solid var(--blue); }
+.flip-back { background: var(--green-light); border: 2px solid var(--green); transform: rotateY(180deg); font-size: 13px; }
+
+/* Settings */
+.settings-toggle {
+  position: fixed; top: 12px; right: 12px; z-index: 60;
+  background: white; border: 2px solid #E0E0E0; border-radius: 50%;
+  width: 44px; height: 44px; font-size: 22px; cursor: pointer;
+  box-shadow: var(--shadow); display: flex; align-items: center; justify-content: center;
+}
+.settings-panel {
+  position: fixed; top: 64px; right: 12px; z-index: 60;
+  background: white; border-radius: var(--radius);
+  padding: 20px; box-shadow: var(--shadow-hover);
+  width: 280px; max-width: 90vw;
+}
+.settings-panel label { display: block; margin: 10px 0 4px; font-size: 14px; font-weight: 500; }
+.settings-panel input[type="range"] { width: 100%; }
+.settings-panel fieldset { border: none; margin: 10px 0; }
+.settings-panel fieldset label { display: inline-flex; align-items: center; gap: 4px; margin-right: 12px; }
+
+/* Header */
+.lesson-header {
+  text-align: center; padding: 20px 0;
+}
+.lesson-header h1 { font-size: 26px; color: var(--blue); margin-bottom: 4px; }
+.lesson-header .subtitle { color: var(--text-light); font-size: 15px; }
+.lesson-header .emoji-big { font-size: 48px; display: block; margin-bottom: 8px; }
+
+/* Advance organizer */
+.advance-organizer {
+  background: var(--blue-light); border-radius: var(--radius);
+  padding: 16px; margin: 12px 0;
+}
+.advance-organizer h3 { color: var(--blue); font-size: 17px; margin-bottom: 8px; }
+.advance-organizer ul { padding-left: 20px; }
+.advance-organizer li { margin-bottom: 4px; }
+
+/* Reading ruler */
+.reading-ruler {
+  position: fixed; left: 0; width: 100%;
+  height: 40px; background: rgba(255, 200, 50, 0.2);
+  border-top: 2px solid rgba(255, 200, 50, 0.5);
+  border-bottom: 2px solid rgba(255, 200, 50, 0.5);
+  pointer-events: none; z-index: 9990;
+  transition: top 0.05s ease; display: none;
+}
+.reading-ruler.active { display: block; }
+
+/* Focus */
+*:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; border-radius: 4px; }
+*:focus:not(:focus-visible) { outline: none; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0;
+  margin: -1px; overflow: hidden; clip: rect(0,0,0,0);
+  white-space: nowrap; border-width: 0;
+}
+
+/* Recap */
+.recap-card {
+  background: linear-gradient(135deg, var(--green-light), var(--teal-light));
+  border-radius: var(--radius); padding: 24px; margin: 20px 0;
+  border: 2px solid var(--green);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (min-width: 768px) {
+  body { font-size: 18px; padding: 20px; }
+  .kartica { padding: 24px 28px; }
+  .lesson-header h1 { font-size: 32px; }
+}
+  </style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Preskoči na sadržaj</a>
+
+<button class="settings-toggle" onclick="toggleSettings()" aria-label="Postavke prikaza" aria-expanded="false" aria-controls="settings-panel">⚙️</button>
+<div id="settings-panel" class="settings-panel" role="dialog" aria-label="Postavke prikaza" hidden>
+  <h3>Postavke prikaza</h3>
+  <label for="font-size">Veličina teksta</label>
+  <input type="range" id="font-size" min="14" max="28" value="17" oninput="updateFontSize(this.value)">
+  <span id="font-size-value">17px</span>
+  <fieldset><legend>Pozadina</legend>
+    <label><input type="radio" name="bg" value="cream" checked onchange="updateBg('cream')"> Krem</label>
+    <label><input type="radio" name="bg" value="blue" onchange="updateBg('blue')"> Plava</label>
+    <label><input type="radio" name="bg" value="white" onchange="updateBg('white')"> Bijela</label>
+  </fieldset>
+  <label for="line-height">Razmak redova</label>
+  <input type="range" id="line-height" min="1.4" max="2.5" step="0.1" value="1.8" oninput="updateLineHeight(this.value)">
+  <label><input type="checkbox" id="reading-ruler" onchange="toggleReadingRuler(this.checked)"> Reading ruler</label>
+</div>
+
+<div class="container">
+<main id="main-content" role="main">
+
+<!-- HEADER -->
+<header class="lesson-header">
+  <span class="emoji-big">🌿</span>
+  <h1>Od eukariota do biljnih tkiva</h1>
+  <p class="subtitle">Evolucija stanica, eukarioti, jednostanični organizmi i građa biljnih tkiva</p>
+</header>
+
+<!-- PROGRESS -->
+<div class="progress-wrap" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Napredak lekcije">
+  <div class="progress-bar-outer"><div class="progress-bar-inner" id="progressBar" style="width:0%"></div></div>
+  <div class="progress-label" id="progressLabel">Cjelina 1 od 6</div>
+</div>
+<nav class="section-nav" aria-label="Navigacija cjelina">
+  <button class="section-dot active" onclick="goToSection(0)" aria-label="Cjelina 1">1</button>
+  <button class="section-dot" onclick="goToSection(1)" aria-label="Cjelina 2">2</button>
+  <button class="section-dot" onclick="goToSection(2)" aria-label="Cjelina 3">3</button>
+  <button class="section-dot" onclick="goToSection(3)" aria-label="Cjelina 4">4</button>
+  <button class="section-dot" onclick="goToSection(4)" aria-label="Cjelina 5">5</button>
+  <button class="section-dot" onclick="goToSection(5)" aria-label="Cjelina 6">6</button>
+</nav>
+
+<!-- ============ SECTION 1: Cijanobakterije i završetak prokariota ============ -->
+<section class="section active" id="section-0" aria-labelledby="s0-title">
+<h2 id="s0-title">🦠 Cjelina 1: Cijanobakterije — završetak priče o prokariotiima</h2>
+
+<div class="advance-organizer">
+  <h3>🎯 U ovoj cjelini naučit ćeš:</h3>
+  <ul>
+    <li>Koje su cijanobakterije i koju važnu ulogu su imale</li>
+    <li>Što su patogene bakterije i koliformni indeks</li>
+    <li>Što su mikoplazme i zašto su zanimljive</li>
+  </ul>
+</div>
+
+<div class="kartica definicija">
+  <h3>🧬 Cijanobakterije — "tvornice kisika" <button class="tts-btn" onclick="procitaj('Cijanobakterije su gram-negativne bakterije koje provode fotosintezu. One sadrže fotosintetske pigmente kao što su klorofili i karotenoli. Cijanobakterije su zaslužne za obogaćivanje atmosfere kisikom prije više od 2 milijarde godina.')" aria-label="Čitaj naglas">🔊</button></h3>
+  <p><strong>Cijanobakterije</strong> su grupa fotosintetskih bakterija koje su revolucionalizirale Zemlju.</p>
+  <ul>
+    <li>✅ <strong>Fotosinteza</strong> — jednake kao kod biljaka: CO₂ + H₂O + sunce → šećer + O₂</li>
+    <li>✅ <strong>Fotosintetski pigmenti</strong> — sadrže klorofil (zeleni) i karotenole (žuti/crveni)</li>
+    <li>✅ <strong>Nemaju specijalizirane organele</strong> — sve se odvija na staničnoj membrani</li>
+    <li>✅ <strong>Obogaćivanjem atmosfere kisikom</strong> — učinile su život kakav znamo mogućim!</li>
+  </ul>
+</div>
+
+<div class="kartica vazno">
+  <h3>🔑 Veliki značaj cijanobakterija</h3>
+  <p>Prije 2-3 milijarde godina, cijanobakterije su počele proizvoditi O₂ kao sporedni proizvod fotosinteze.</p>
+  <p>To je dovelo do <strong>"Velike oksidacijske katastrofe"</strong> — kisik je bio otrovan za većinu tadašnjih životinja!</p>
+  <p>Ali — omogućio je nastanak eukariota i svih živih bića kakva znamo.</p>
+</div>
+
+<div class="kartica primjer">
+  <h3>🦠 Ostale važne bakterije</h3>
+  <p><strong>Patogene bakterije:</strong> uzročnici bolesti — Staphylococcus aureus, Streptococcus, Escherichia coli</p>
+  <p><strong>Koliformni indeks:</strong> broj koliformnih bakterija (E. coli) u vodi — pokazuje je li voda sigurna za piće</p>
+  <p><strong>Mikoplazme:</strong> male bakterije BEZ stanične stijenke — fleksibilne, mogu se klizati kroz čak najmanje otvore</p>
+</div>
+
+<div class="quiz-mini">
+  <h3>🎯 Brza provjera</h3>
+  <p>Što je NAJVEĆI doprinos cijanobakterija?</p>
+  <div role="radiogroup" aria-label="Pitanje 1">
+    <button class="quiz-option" onclick="checkQuiz(this,'wrong','To je danas uobičajeno, ali cijanobakterije nisu prve bakterije.')">Prva su bila bakterija</button>
+    <button class="quiz-option" onclick="checkQuiz(this,'correct','Točno! Proizvodile su O₂ kao sporedni proizvod fotosinteze, što je omogućilo nastanak eukariota!')">Obogaćivanjem atmosfere kisikom</button>
+    <button class="quiz-option" onclick="checkQuiz(this,'wrong','Patogene bakterije dolaze iz drugih grupa.')">Uzrokovanje bolesti</button>
+  </div>
+  <div class="quiz-feedback" id="quiz-fb-1" role="alert" aria-live="polite"></div>
+</div>
+
+<div class="nav-btns">
+  <button class="gumb gumb-primary" onclick="nextSection()" style="margin-left:auto;">Dalje →</button>
+</div>
+</section>
+
+<!-- ============ SECTION 2: Pojava eukariota ============ -->
+<section class="section" id="section-1" aria-labelledby="s1-title">
+<h2 id="s1-title">🧬 Cjelina 2: Pojava eukariota — revolucija u staničnoj evoluciji</h2>
+
+<div class="advance-organizer">
+  <h3>🎯 U ovoj cjelini naučit ćeš:</h3>
+  <ul>
+    <li>Kako se evolucijski razvila eukariotska stanica</li>
+    <li>Endosimbiotsku teoriju i kako su nastali mitohondriji i kloroplasti</li>
+    <li>Zašto je pojava eukariota bila tako važna</li>
+  </ul>
+</div>
+
+<div class="kartica definicija">
+  <h3>📘 Eukariotska stanica — evolucijski mlađa <button class="tts-btn" onclick="procitaj('Eukariotska stanica se razvila prije otprilike 1,5 do 3,5 milijardi godina. Za razliku od prokariota koji su postojali prije toga, eukarioti su imali jezgru obavijenu membranom i stanične organele. Vjeruje se da su organele postupno integrirane u stanice kroz proces endosimbioze.')" aria-label="Čitaj naglas">🔊</button></h3>
+  <p><strong>Eukariotska stanica:</strong> stanica s obavienom jezgrom i membranskim organelama</p>
+  <p><strong>Vremenska linija evolucije:</strong></p>
+  <ul>
+    <li>🟡 Prije ~4 milijarde godina: Prokarioti (jednostavne bakterije)</li>
+    <li>🔴 Prije ~2 milijarde godina: Pojava cijanobakterija, O₂ u atmosferi</li>
+    <li>🟣 Prije ~1,5-3,5 milijardi godina: PRVI EUKARIOTI!</li>
+    <li>🌿 Prije ~1,2 milijarde godina: Jednostanični eukarioti i alge</li>
+    <li>🐾 Prije ~600 milijuna godina: Višestanični organizmi</li>
+  </ul>
+</div>
+
+<div class="kartica savjet">
+  <h3>🤔 Kako je nastala jezgra?</h3>
+  <p><strong>Hipoteza:</strong> Stanična membrana se većala i uvrela, tvoreći jezgrinu ovojnicu oko DNA.</p>
+  <p>To je zaštitilo DNA i omogućilo bolju kontrolu genske ekspresije.</p>
+</div>
+
+<div class="kartica formula">
+  <h3>🔬 Endosimbiotska teorija — Kako su nastali mitohondriji i kloroplasti</h3>
+  <p><strong>Endosimbioza:</strong> "unutar" + "zajednica" — kada jedna stanica unese drugu i obje profitiraju</p>
+  <p><strong>Scenarij:</strong></p>
+  <ol style="padding-left:20px;">
+    <li>Velika primitivna eukariotska stanica proguta malu <strong>aerobnu bakteriju</strong></li>
+    <li>Umjesto da je probavi, bakterija <strong>preživljava</strong> i počinje proizvoditi energiju za domaćina</li>
+    <li>S vremenom se bakterija <strong>integrira u stanicu</strong> → nastaje <strong>MITOHONDRIJ</strong></li>
+    <li>Isti proces s <strong>fotosintetskom bakterijom</strong> (cijanobakterijom) → <strong>KLOROPLAST</strong></li>
+  </ol>
+</div>
+
+<div class="kartica vazno">
+  <h3>✅ Dokazi za endosimbiozu</h3>
+  <p>Mitohondriji i kloroplasti i dalje čuvaju znakove svoje bakterijske prošlosti:</p>
+  <ul>
+    <li>✅ <strong>Vlastita DNA</strong> — kružna, kao kod bakterija (mtDNA, ctDNA)</li>
+    <li>✅ <strong>Vlastiti ribosomi 70S</strong> — isti kao kod bakterija (ne 80S kao kod eukariota!)</li>
+    <li>✅ <strong>Dvostruka membrana</strong> — vanjska membrana od domaćina, unutarnja od bakterije</li>
+    <li>✅ <strong>Binarna dioba</strong> — dijele se kao bakterije, ne kao ostatak stanice</li>
+  </ul>
+</div>
+
+<div class="quiz-mini">
+  <h3>🎯 Brza provjera</h3>
+  <p>Što je glavni dokaz da su mitohondriji nekad bili samostalne bakterije?</p>
+  <div role="radiogroup" aria-label="Pitanje">
+    <button class="quiz-option" onclick="checkQuiz(this,'correct','Točno! Vlastita DNA i ribosomi su ključni dokazi endosimbioze.')">Imaju vlastitu DNA i 70S ribosome</button>
+    <button class="quiz-option" onclick="checkQuiz(this,'wrong','To je funkcija, ne dokaz njihovog podrijetla.')">Proizvode energiju (ATP)</button>
+    <button class="quiz-option" onclick="checkQuiz(this,'wrong','To je zajedničko svim organelama u stanici.')">Okruženi su membranom</button>
+  </div>
+  <div class="quiz-feedback" role="alert" aria-live="polite"></div>
+</div>
+
+<div class="nav-btns">
+  <button class="gumb gumb-orange" onclick="prevSection()">← Nazad</button>
+  <button class="gumb gumb-primary" onclick="nextSection()">Dalje →</button>
+</div>
+</section>
+
+<!-- ============ SECTION 3: Jednostanični eukarioti ============ -->
+<section class="section" id="section-2" aria-labelledby="s2-title">
+<h2 id="s2-title">🦡 Cjelina 3: Jednostanični eukarioti — raznolikost i kretanje</h2>
+
+<div class="advance-organizer">
+  <h3>🎯 U ovoj cjelini naučit ćeš:</h3>
+  <ul>
+    <li>Koje su različite vrste jednostaničnih eukariota</li>
+    <li>Kako se kreću i funkcioniraju</li>
+    <li>Zašto su ostali maleni — P/V omjer</li>
+  </ul>
+</div>
+
+<div class="kartica primjer">
+  <h3>🔍 Vrste jednostaničnih eukariota</h3>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:12px;">
+    <div style="background:var(--orange-light);padding:16px;border-radius:var(--radius);text-align:center;border:2px solid var(--orange);">
+      <div style="font-size:28px;">🔱</div>
+      <strong>Alge kremenjašice</strong>
+      <p style="font-size:13px;">Stanična stijenka ojačana kremenom (SiO₂) — kao mali staklenski oklop!</p>
+    </div>
+    <div style="background:var(--blue-light);padding:16px;border-radius:var(--radius);text-align:center;border:2px solid var(--blue);">
+      <div style="font-size:28px;">🐚</div>
+      <strong>Krednjaci (Foraminifera)</strong>
+      <p style="font-size:13px;">Proizvode vapnenačke ljušture (CaCO₃) — neki su stari 50+ milijuna godina!</p>
+    </div>
+    <div style="background:var(--green-light);padding:16px;border-radius:var(--radius);text-align:center;border:2px solid var(--green);">
+      <div style="font-size:28px;">🌊</div>
+      <strong>Trepetljikaši</strong>
+      <p style="font-size:13px;">Imaju perikulu (tvrda okova) i bičeve za kretanje kroz vodu</p>
+    </div>
+  </div>
+</div>
+
+<div class="kartica definicija">
+  <h3>🏃 Kako se kreću jednostanični eukarioti? <button class="tts-btn" onclick="procitaj('Jednostanični organizmi imaju različite mehanizme kretanja. Flagela ili bičevi — dugački nastavci za brzo plivanje. Cilije ili trepetljike — sitni dlačasti nastavci koje se gibaju valno. Pseudopodiji — lažne nožice za ameboidno kretanje. Puzanje ili klizanje — kretanje bez bičeva ili ciklija.')" aria-label="Čitaj naglas">🔊</button></h3>
+  <p><strong>Mehanizmi kretanja:</strong></p>
+  <ul>
+    <li>🔄 <strong>BIČEVI (flagela)</strong> — dugi, spiralni nastavci; brzo plivanje za velike udaljenosti</li>
+    <li>💨 <strong>TREPETLJIKE (cilije)</strong> — sitni, gusta dlačica; brze, valne oscilacije</li>
+    <li>👣 <strong>PSEUDOPODIJI</strong> — lažne nožice; promjena oblika ("ameboidno" kretanje); sporo, kao puž</li>
+    <li>🐛 <strong>PUZANJE/KLIZANJE</strong> — rijetko; zbog citoskeletnog klizanja bez posebnih organela</li>
+  </ul>
+</div>
+
+<button class="expand-btn" aria-expanded="false" aria-controls="detail-kretanje" onclick="toggleExpand(this)">
+  <span class="arrow">▶</span> 💡 Detaljnije o svakom tipu kretanja
+</button>
+<div id="detail-kretanje" class="expand-content">
+  <p><strong>🔄 Bičevi (flagela)</strong></p>
+  <ul>
+    <li>Spiralni, kao vijak koji se rotira</li>
+    <li>Korijen bička se vrti — propeller efekt</li>
+    <li>Brži od ciklija (do 100 μm/s)</li>
+    <li>Primjer: Euglena (jednoćelinski organizacm s bičem)</li>
+  </ul>
+  <p style="margin-top:12px;"><strong>💨 Trepetljike (cilije)</strong></p>
+  <ul>
+    <li>Manje, ravnije, gušće od bičeva</li>
+    <li>Gibaju se valno — kao vrtoglav</li>
+    <li>Lakše za kretanje u gušće okruženju</li>
+    <li>Primjer: Tetrahymena, trepetljikaši</li>
+  </ul>
+  <p style="margin-top:12px;"><strong>👣 Pseudopodiji</strong></p>
+  <ul>
+    <li>Privremeni nastavci — mogu biti bilo gdje, bilo kad</li>
+    <li>Citoplazma se slijeva naprijed — stanica se rasteže</li>
+    <li>Sporo, ali moguće jesu kompleksnije kretnje</li>
+    <li>Primjer: Amoeba, jestive stanice imune sustava</li>
+  </ul>
+</div>
+
+<div class="kartica vazno">
+  <h3>📏 Zašto su jednostanični organizmi ostali MALENI? — P/V omjer</h3>
+  <p><strong>P/V omjer = Površina / Volumen</strong></p>
+  <p><strong>Problem za velike stanice:</strong></p>
+  <ul>
+    <li>Što veća stanica → volumen raste KUBIČNO (brzže!)</li>
+    <li>Što veća stanica → površina raste KVADRATIČNO (sporije)</li>
+    <li>Rezultat: <strong>manja površina PO JEDINICI volumena</strong></li>
+  </ul>
+  <p><strong>Zašto je to problem?</strong> Stanica ovisi o površini za razmjenu tvari i energije s okolišem!</p>
+  <p><strong>Primjer:</strong> Mala stanica ima dosta površine za difuziju nutrijenata. Ogromna stanica bi "gladovala" jer bi centrom bio previo daleko od membrane.</p>
+  <p>👉 <strong>Zato jednostanični organizmi čuvaju svoj mali oblik — to je njihova optimalna veličina!</strong></p>
+</div>
+
+<div class="quiz-mini">
+  <h3>🎯 Brza provjera</h3>
+  <p>Koji je mehanizam kretanja najsličniji propeleru?</p>
+  <div role="radiogroup" aria-label="Pitanje">
+    <button class="quiz-option" onclick="checkQuiz(this,'correct','Točno! Bičevi se rotiraju kao vijak — propeller efekt.')">Bičev (flagela)</button>
+    <button class="quiz-option" onclick="checkQuiz(this,'wrong','Trepetljike se gibaju valno, ne kao propeller.')">Trepetljika (cilija)</button>
+    <button class="quiz-option" onclick="checkQuiz(this,'wrong','Pseudopodiji se kreću promjenom oblika, ne rotacijom.')">Pseudopodiji</button>
+  </div>
+  <div class="quiz-feedback" role="alert" aria-live="polite"></div>
+</div>
+
+<div class="nav-btns">
+  <button class="gumb gumb-orange" onclick="prevSection()">← Nazad</button>
+  <button class="gumb gumb-primary" onclick="nextSection()">Dalje →</button>
+</div>
+</section>
+
+<!-- ============ SECTION 4: Pojava višestaničnih organizama ============ -->
+<section class="section" id="section-3" aria-labelledby="s3-title">
+<h2 id="s3-title">🌍 Cjelina 4: Pojava višestaničnih organizama — od binteza do ekološke slozhnosti</h2>
+
+<div class="advance-organizer">
+  <h3>🎯 U ovoj cjelini naučit ćeš:</h3>
+  <ul>
+    <li>Kako su nastali prvi višestanični organizmi</li>
+    <li>Ulogu Volvoksa u evoluciji</li>
+    <li>Kambrijska eksplozija i raznolikost života</li>
+  </ul>
+</div>
+
+<div class="kartica definicija">
+  <h3>🧬 Putanja do višestaničnosti — dvije teorije <button class="tts-btn" onclick="procitaj('Postoje dvije glavne hipoteze za nastanak višestaničnih organizama. Prva je udruzivanje stanica bez odvajanja, kada se stanice dijele ali ostaju spojene. Druga je simbioza pojedinačnih eukariota koji se udruze u kolekiju. Zelena alga Volvox je klasičan primjer prijelaza iz jednostaničnog u visestanicni zivot.')" aria-label="Čitaj naglas">🔊</button></h3>
+  <p><strong>Teorija 1 — Dioba bez odvajanja:</strong> Stanice se dijele, ali ostaju spojene → agregat stanica → kolonija</p>
+  <p><strong>Teorija 2 — Simbioza pojedinačnih stanica:</strong> Nekoliko samostalnih eukariota se "druži" zajedno i razvija specijalizaciju</p>
+</div>
+
+<div class="kartica primjer">
+  <h3>🟢 Volvox — Živući primjer tranzicije!</h3>
+  <p><strong>Volvox:</strong> Zelena alga koja predstavlja najbolji primjer evolucije od jednostaničnog do visestaničnog!</p>
+  <ul>
+    <li>🔴 Počinje kao <strong>Chlamydomonas</strong> — jednostanična zelena alga s dva bička</li>
+    <li>🟡 <strong>Gonium</strong> — 4-32 jednostanične Chlamydomonas stanice u koloniji, svi su specijalizirani za ista</li>
+    <li>🟢 <strong>Volvox</strong> — 500-50,000 stanica u sferi; većina je za REPRODUKCIJU (somatske stanice), nekoliko za REPRODUKCIJU (generativne stanice)</li>
+  </ul>
+  <p><strong>Ključan razvoj:</strong> <strong>Specijalizacija stanica!</strong> Razlike u funkciji unutar jedinog organizma.</p>
+</div>
+
+<div class="kartica vazno">
+  <h3>📈 Razine organizacije višestaničnih organizama</h3>
+  <p><strong>Prijelaz iz agregata u prave višestanične organizme:</strong></p>
+  <ol style="padding-left:20px;">
+    <li><strong>Specijalizirane stanice</strong> — različite stanice rade različite poslove (fotosinteza, reprodukcija, transport...)</li>
+    <li><strong>Tkiva</strong> — grupe specijaliziranih stanica koje rade zajedno (npr. epitelno tkivo, vezivno tkivo)</li>
+    <li><strong>Organi</strong> — nekoliko vrsta tkiva zajedno rade na specifičnoj funkciji (npr. list, korijen)</li>
+    <li><strong>Organski sustav</strong> — nekoliko organa surađuje na većoj funkciji (npr. probavni sustav, cirkulatorni sustav)</li>
+  </ol>
+</div>
+
+<div class="kartica savjet">
+  <h3>🌊 Kambrijska eksplozija — Iznenadna raznolikost</h3>
+  <p>Prije ~541 milijun godina, u Kambriju, **iznenada se pojavilo ogromno više životinja** nego što je postojalo prije!</p>
+  <p>U samo ~20 milijuna godina, većina znanih grupa životinja se prvi put pojavljuje u fosilima.</p>
+  <p>Vjeruje se da je to bila kombinacija:</p>
+  <ul>
+    <li>Povećanja O₂ u atmosferi</li>
+    <li>Povoljnih klimatskih uvjeta</li>
+    <li>Dostupnosti resursa</li>
+    <li>Razvoja novih organizama koji su "otkrili" nove načine života</li>
+  </ul>
+</div>
+
+<div class="quiz-mini">
+  <h3>🎯 Brza provjera</h3>
+  <p>Što je ključni razvoj koji je omogućio pravi višestanični život?</p>
+  <div role="radiogroup" aria-label="Pitanje">
+    <button class="quiz-option" onclick="checkQuiz(this,'correct','Točno! Kad se stanice specijaliziraju za različite poslove, mogu biti mnogo efikasnije kao tim.')">Specijalizacija stanica</button>
+    <button class="quiz-option" onclick="checkQuiz(this,'wrong','Samo dodatne stanice nisu dovoljne — trebaju različite funkcije.')">Samo veći broj stanica</button>
+    <button class="quiz-option" onclick="checkQuiz(this,'wrong','To je bilo prije nego što se pojavljuje višestaničnost.')">Pojava prokariota</button>
+  </div>
+  <div class="quiz-feedback" role="alert" aria-live="polite"></div>
+</div>
+
+<div class="nav-btns">
+  <button class="gumb gumb-orange" onclick="prevSection()">← Nazad</button>
+  <button class="gumb gumb-primary" onclick="nextSection()">Dalje →</button>
+</div>
+</section>
+
+<!-- ============ SECTION 5: Tvorna tkiva ============ -->
+<section class="section" id="section-4" aria-labelledby="s4-title">
+<h2 id="s4-title">🌱 Cjelina 5: Kako je građen višestanični organizam — Tvorna tkiva (meristemi)</h2>
+
+<div class="advance-organizer">
+  <h3>🎯 U ovoj cjelini naučit ćeš:</h3>
+  <ul>
+    <li>Što su biljna tkiva i kako se dijele</li>
+    <li>Što su tvorna tkiva (meristemi) i kako funkcioniraju</li>
+    <li>Razlika između vršnih i bočnih meristema</li>
+  </ul>
+</div>
+
+<div class="kartica definicija">
+  <h3>📘 Biljna tkiva — Organizacija biljke <button class="tts-btn" onclick="procitaj('Biljna tkiva se dijele na dva glavna tipa. Tvorna tkiva ili meristemi sadrze specijalne stanice koje mogu se dijeliti i rasti. Trajna tkiva su stanice koje su prestale rasti i specijalizirane su za specifične funkcije kao sto su fotosinetza, transport ili mehanička podrska.')" aria-label="Čitaj naglas">🔊</button></h3>
+  <p><strong>Homeostaza:</strong> Stanice biljke održavaju stabilne fizijske i kemijske uvjete</p>
+  <p><strong>Diferencijacija (stanično razlikovanje):</strong> Stanice se specijaliziraju za različite funkcije tijekom razvoja</p>
+  <p><strong>Dva tipa biljnih tkiva:</strong></p>
+  <ul>
+    <li>🟢 <strong>TVORNA TKIVA (meristemi)</strong> — embrionalne stanice s kapacitetom diobe</li>
+    <li>🟡 <strong>TRAJNA TKIVA</strong> — stanice koje su prestale rasti i specijalizirane za funkciju</li>
+  </ul>
+</div>
+
+<div class="kartica primjer">
+  <h3>🌱 Tvorna tkiva (meristemi) — Gdje raste biljka?</h3>
+  <p><strong>Meristem = "dio koji se dijeli"</strong> — područje gdje se neprestano stvaraju nove stanice</p>
+  <div style="margin:12px 0;">
+    <div style="background:var(--blue-light);padding:14px;border-radius:var(--radius);margin:8px 0;border-left:4px solid var(--blue);">
+      <strong>1️⃣ Vršni meristemi (apikalni)</strong> — Na vrhu stabljike i korijena. Omogućuju <strong>RAST U DULJINU</strong> (vertikalni rast).
+    </div>
+    <div style="background:var(--green-light);padding:14px;border-radius:var(--radius);margin:8px 0;border-left:4px solid var(--green);">
+      <strong>2️⃣ Bočni meristem / Kambij</strong> — Uska kapa ispod kore. Omogućuje <strong>RAST U ŠIRINU</strong> (debljinu). Kod drveća pravi <strong>godove</strong> (godišnje prstene).
+    </div>
+    <div style="background:var(--orange-light);padding:14px;border-radius:var(--radius);margin:8px 0;border-left:4px solid var(--orange);">
+      <strong>3️⃣ Godovi (growth rings)</strong> — Godišnje slojeve koji se stvaraju u debljini stabljike i korijena. Svaka godina = jedan sloj — više slojeva = starija biljka!
+    </div>
+  </div>
+</div>
+
+<div class="kartica vazno">
+  <h3>🔑 Značaj meristema</h3>
+  <ul>
+    <li>✅ <strong>Neprekidna dioba</strong> — stanice se neprestano dijele</li>
+    <li>✅ <strong>Embrionalne stanice</strong> — mali citoplazma, veliki nukleusi</li>
+    <li>✅ <strong>Bez diferencijacije</strong> — nisu specijalizirane, fleksibilne</li>
+    <li>✅ <strong>Aktivne tijekom cijelog života</strong> — biljke rastu cijeli život! (za razliku od životinja)</li>
+  </ul>
+  <p>👉 <strong>Zašto važni?</strong> Bez meristema, biljka ne bi mogla rasti!</p>
+</div>
+
+<div class="quiz-mini">
+  <h3>🎯 Brza provjera</h3>
+  <p>Koji meristem je odgovoran za rast biljke U DEBLJINI?</p>
+  <div role="radiogroup" aria-label="Pitanje">
+    <button class="quiz-option" onclick="checkQuiz(this,'wrong','Vršni meristem uzrokuje rast u duljinu (vertikalni rast).')">Vršni meristem</button>
+    <button class="quiz-option" onclick="checkQuiz(this,'correct','Točno! Kambij je bočni meristem koji tvori nove slojeve — rast u debljinu.')">Bočni meristem (kambij)</button>
+    <button class="quiz-option" onclick="checkQuiz(this,'wrong','Godovi su rezultat bočnog meristema, ali nisu sami meristem.')">Godovi</button>
+  </div>
+  <div class="quiz-feedback" role="alert" aria-live="polite"></div>
+</div>
+
+<div class="nav-btns">
+  <button class="gumb gumb-orange" onclick="prevSection()">← Nazad</button>
+  <button class="gumb gumb-primary" onclick="nextSection()">Dalje →</button>
+</div>
+</section>
+
+<!-- ============ SECTION 6: Trajna tkiva ============ -->
+<section class="section" id="section-5" aria-labelledby="s5-title">
+<h2 id="s5-title">🌿 Cjelina 6: Trajna biljna tkiva — specijalizacija za funkciju</h2>
+
+<div class="advance-organizer">
+  <h3>🎯 U ovoj cjelini naučit ćeš:</h3>
+  <ul>
+    <li>Sve vrste trajnih biljnih tkiva i njihove funkcije</li>
+    <li>Ksislem, floem i kako provode tvari</li>
+    <li>Mehaničku ulogu kolenhima i sklerenhima</li>
+  </ul>
+</div>
+
+<div class="kartica definicija">
+  <h3>📘 Pet vrsta trajnih biljnih tkiva <button class="tts-btn" onclick="procitaj('Trajna tkiva su: osnovno ili parenhim za pohranu i fotosintezu, pokrovno tkivo za zaštitu, provodno tkivo ksislem i floem za transport, potporno tkivo za mehanicku podrsku, i zljezdano tkivo za izlucivanje.')" aria-label="Čitaj naglas">🔊</button></h3>
+  <p><strong>Trajna tkiva = "diferencirana" tkiva</strong> — prestala su se dijeliti, specijalizirana su za funkciju</p>
+  <p><strong>Pet vrsta:</strong> 1. Osnovno 2. Pokrovno 3. Provodno 4. Potporno 5. Žljezdano</p>
+</div>
+
+<div class="kartica primjer">
+  <h3>🌿 1. OSNOVNO TKIVO / Parenhim — Švicarski nož biljke!</h3>
+  <p><strong>Funkcije:</strong> pohranjivanje hranjivih tvari, fotosinteza, razmjena plinova, apsorpcija vode</p>
+  <ul>
+    <li>Nalazi se u svim vegetativnim organima (listovi, stabljika, korijen)</li>
+    <li>Fleksibilno — može biti u dijelovima gdje se fotosinteza, gdje je pohrana, gdje je mehanička podrska</li>
+    <li>Stanice su žive s tankim stjenkama</li>
+  </ul>
+</div>
+
+<div class="kartica savjet">
+  <h3>🛡️ 2. POKROVNO TKIVO — Zaštita od svijeta</h3>
+  <p><strong>Epiderm (na listovima i stabljici):</strong> Jedan sloj stanica koja štiti unutrašnjost</p>
+  <ul>
+    <li>🧴 <strong>Kutikula</strong> — voskasta površina koja SPRJEČAVA isparavanje vode</li>
+    <li>👀 <strong>Puči (stome)</strong> — mikroskopski otvori u epidermisu. Kroz njih se izmjenjuju plinovi (CO₂ ulazi za fotosintezu, O₂ izlazi) i isparava voda (TRANSPIRACIJA)</li>
+  </ul>
+  <p><strong>Rizoderm (na korijenima):</strong> Pokrovno tkivo korijena s dlačicama za apsorpciju vode</p>
+</div>
+
+<div class="kartica formula">
+  <h3>🚚 3. PROVODNO TKIVO — Autostrada u biljci!</h3>
+  <p>Dva sistema za transport:</p>
+  <div style="margin:12px 0;">
+    <div style="background:var(--orange-light);padding:12px;border-radius:var(--radius);margin-bottom:12px;border-left:4px solid var(--orange);">
+      <strong>🚰 KSILEM</strong> — Voda od korijena do svih dijelova
+      <ul style="margin-top:6px;font-size:14px;">
+        <li>Izgrađen od <strong>MRTVIH stanica</strong> bez citoplazme</li>
+        <li>Sadrži <strong>traheide</strong> (primitivne) i <strong>traheje</strong> (razvijenije) — čvrste provodne cijevi</li>
+        <li>Voda se podiže gravitaciji — evo kako: korijenski tlak + kapilarnost + transpiracija = "pump"</li>
+      </ul>
+    </div>
+    <div style="background:var(--green-light);padding:12px;border-radius:var(--radius);border-left:4px solid var(--green);">
+      <strong>🍯 FLOEM</strong> — Organske tvari od listova prema korijenu
+      <ul style="margin-top:6px;font-size:14px;">
+        <li>Izgrađen od <strong>ŽIVIH stanica</strong> s citoplazdom (ne moraju preživjeti dugo)</li>
+        <li>Sadrži <strong>sitaste cijevi</strong> — stanice kroz koje teče šećer i nutrienti</li>
+        <li>Transport je <strong>aktivna transport</strong> — trebala energija (ATP)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="kartica vazno">
+  <h3>💪 4. POTPORNO TKIVO — Mehanička podrška</h3>
+  <p><strong>KOLENHIM:</strong> Izgrađen od živih stanica s dodatnim celuloze u kutovima</p>
+  <ul>
+    <li>Nalazi se u <strong>mladim, rastućim dijelovima</strong> (tipičan je u peteljkama listova, mladim stabljikama)</li>
+    <li>Fleksibilan — dopušta rast dok pruža podrsku</li>
+  </ul>
+  <p><strong>SKLERENHIM:</strong> Izgrađen od mrtvih stanica s debelog lignina-ojačanih stjenkama</p>
+  <ul>
+    <li>Nalazi se u <strong>odraslim dijelovima</strong> (stabljika, plodovi, listovi)</li>
+    <li>Čvrst i krut — daje biljci strukturnu integritet</li>
+  </ul>
+</div>
+
+<div class="kartica primjer">
+  <h3>✨ 5. ŽLJEZDANO TKIVO — Kemijska tvornica</h3>
+  <p>Stanice koje <strong>stvaraju i izlučuju</strong> razne produkte:</p>
+  <ul>
+    <li>🐝 <strong>Nektarnice</strong> — izlučuju nektar za pčele i druge oprašivače</li>
+    <li>🌸 <strong>Uljna žlijezda</strong> — izlučuju eterična ulja (mirisni signali)</li>
+    <li>🐛 <strong>Probavne žlijezde mesožderki</strong> — izlučuju probavne enzime za razgradnju zagušenih insekta</li>
+  </ul>
+</div>
+
+<button class="expand-btn" aria-expanded="false" aria-controls="detail-organi" onclick="toggleExpand(this)">
+  <span class="arrow">▶</span> 💡 Biljni organi — Vegetativni i generativni
+</button>
+<div id="detail-organi" class="expand-content">
+  <p><strong>🌱 VEGETATIVNI ORGANI — Rast i opstanak biljke</strong></p>
+  <ul>
+    <li><strong>KORIJEN</strong> — Ulaganje u tlo, učvršćivanje biljke, apsorpcija vode i minerala, pohranjivanje</li>
+    <li><strong>STABLJIKA</strong> — Stabilnost, transport vode i minerala, fotosinteza u mlađim dijelovima, pohrana, reproducira</li>
+    <li><strong>LIST</strong> — Fotosinteza, transpiracija, razmjena plinova. Glavni "aparat" za proizvodnju hrane!</li>
+  </ul>
+  <p style="margin-top:12px;"><strong>🌸 GENERATIVNI ORGANI — Reprodukcija</strong></p>
+  <ul>
+    <li><strong>CVIJET</strong> — Reproduktivna struktura; privlači oprašivače</li>
+    <li><strong>PLOD</strong> — Zaštita sjemena; pomaže u rasprostranjenju</li>
+    <li><strong>SJEME</strong> — Embrio novalne biljke s rezervama hrane</li>
+  </ul>
+</div>
+
+<!-- RECAP -->
+<div class="recap-card">
+  <h3>📝 Sažetak cijele lekcije</h3>
+  <ul style="padding-left:20px;">
+    <li><strong>Cijanobakterije</strong> — obogaćile atmosferu kisikom, omogućile eukariote</li>
+    <li><strong>Eukariotska stanica</strong> — revolucija: jezgra, organele, endosimbioza</li>
+    <li><strong>Jednostanični eukarioti</strong> — raznolikost oblika, kretanja; P/V omjer</li>
+    <li><strong>Višestanični organizmi</strong> — specijalizacija stanica, Volvox, Kambrijska eksplozija</li>
+    <li><strong>Tvorna tkiva (meristemi)</strong> — gdje biljka raste, vršni i bočni meristemi</li>
+    <li><strong>Trajna tkiva</strong> — 5 vrsta za različite funkcije: osnovno, pokrovno, provodno, potporno, žljezdano</li>
+  </ul>
+</div>
+
+<div class="quiz-mini">
+  <h3>🎯 Završna provjera — Što si naučila?</h3>
+  <p>Koji tkiva su izgrađena od MRTVIH stanica?</p>
+  <div role="radiogroup" aria-label="Pitanje">
+    <button class="quiz-option" onclick="checkQuiz(this,'correct','Točno! Ksilem i sklerenhim su izgrađeni od mrtvih stanica — zato su čvrsti i otporni.')">Ksilem i sklerenhim</button>
+    <button class="quiz-option" onclick="checkQuiz(this,'wrong','Floem je izgrađen od živih stanica jer trebate aktivnu transport.')">Floem</button>
+    <button class="quiz-option" onclick="checkQuiz(this,'wrong','Osnovno tkivo je izgrađeno od živih stanica za fotosintezu i pohranu.')">Osnovno tkivo</button>
+    <button class="quiz-option" onclick="checkQuiz(this,'wrong','Kolenhim je izgrađen od živih stanica koja dopuštaju rast.')">Kolenhim</button>
+  </div>
+  <div class="quiz-feedback" role="alert" aria-live="polite"></div>
+</div>
+
+<div style="text-align:center;margin:30px 0;">
+  <p style="font-size:20px;">🎉 <strong>Bravo, Natalija!</strong> Završila si lekciju!</p>
+  <p>Sada razumiješ cijelu priču — od bakterija do biljnih tkiva! 💚🌿</p>
+</div>
+
+<div class="nav-btns">
+  <button class="gumb gumb-orange" onclick="prevSection()">← Nazad</button>
+  <button class="gumb gumb-green" onclick="goToSection(0)">🔄 Od početka</button>
+</div>
+</section>
+
+</main>
+</div>
+
+<!-- READING RULER -->
+<div id="readingRuler" class="reading-ruler" aria-hidden="true"></div>
+
+<div aria-live="polite" id="step-announcement" class="sr-only"></div>
+
+<script>
+let currentSection = 0;
+const totalSections = 6;
+
+function goToSection(idx) {
+  document.querySelectorAll('.section').forEach((s,i) => {
+    s.classList.toggle('active', i === idx);
+  });
+  currentSection = idx;
+  updateProgress();
+  updateDots();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+  document.getElementById('step-announcement').textContent = 'Cjelina ' + (idx+1) + ' od ' + totalSections;
+}
+function nextSection() { if (currentSection < totalSections - 1) goToSection(currentSection + 1); }
+function prevSection() { if (currentSection > 0) goToSection(currentSection - 1); }
+function updateProgress() {
+  const pct = Math.round(((currentSection + 1) / totalSections) * 100);
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = 'Cjelina ' + (currentSection+1) + ' od ' + totalSections;
+  const pb = document.querySelector('.progress-wrap');
+  pb.setAttribute('aria-valuenow', pct);
+}
+function updateDots() {
+  document.querySelectorAll('.section-dot').forEach((d,i) => {
+    d.classList.remove('active','done');
+    if (i === currentSection) d.classList.add('active');
+    else if (i < currentSection) d.classList.add('done');
+  });
+}
+
+function checkQuiz(btn, result, feedback) {
+  const parent = btn.parentElement;
+  parent.querySelectorAll('.quiz-option').forEach(b => { b.disabled = true; b.classList.remove('correct','wrong'); });
+  btn.classList.add(result);
+  if (result === 'correct') {
+    const fb = parent.nextElementSibling;
+    fb.innerHTML = '✅ ' + feedback;
+    fb.style.background = 'var(--green-light)';
+  } else {
+    const fb = parent.nextElementSibling;
+    fb.innerHTML = '❌ ' + feedback;
+    fb.style.background = 'var(--red-light)';
+  }
+}
+
+function showOrganelle(id, html) {
+  const detail = document.getElementById('organelle-detail');
+  detail.innerHTML = html;
+  detail.classList.add('visible');
+  detail.style.background = 'var(--blue-light)';
+  detail.style.borderRadius = 'var(--radius)';
+  detail.style.padding = '16px';
+  detail.style.border = '2px solid var(--blue)';
+  detail.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+function toggleExpand(btn) {
+  const expanded = btn.getAttribute('aria-expanded') === 'true';
+  btn.setAttribute('aria-expanded', !expanded);
+  const content = document.getElementById(btn.getAttribute('aria-controls'));
+  content.classList.toggle('open');
+}
+
+function procitaj(tekst) {
+  if (speechSynthesis.speaking) speechSynthesis.cancel();
+  const govor = new SpeechSynthesisUtterance(tekst.replace(/<[^>]*>/g,''));
+  govor.lang = 'hr-HR';
+  govor.rate = 0.85;
+  speechSynthesis.speak(govor);
+}
+
+// Settings
+function toggleSettings() {
+  const panel = document.getElementById('settings-panel');
+  const btn = document.querySelector('.settings-toggle');
+  const open = panel.hidden;
+  panel.hidden = !open;
+  btn.setAttribute('aria-expanded', open);
+}
+function updateFontSize(val) {
+  document.body.style.fontSize = val + 'px';
+  document.getElementById('font-size-value').textContent = val + 'px';
+  try { localStorage.setItem('pu-font-size', val); } catch(e) {}
+}
+function updateBg(theme) {
+  const colors = { cream: '#FFF8F0', blue: '#F0F4FF', white: '#FAFAFA' };
+  document.body.style.background = colors[theme];
+  try { localStorage.setItem('pu-bg', theme); } catch(e) {}
+}
+function updateLineHeight(val) {
+  document.body.style.lineHeight = val;
+  try { localStorage.setItem('pu-line-height', val); } catch(e) {}
+}
+function toggleReadingRuler(on) {
+  const ruler = document.getElementById('readingRuler');
+  ruler.classList.toggle('active', on);
+  if (on) {
+    document.addEventListener('mousemove', moveRuler);
+    document.addEventListener('touchmove', moveRulerTouch);
+  } else {
+    document.removeEventListener('mousemove', moveRuler);
+    document.removeEventListener('touchmove', moveRulerTouch);
+  }
+}
+function moveRuler(e) { document.getElementById('readingRuler').style.top = (e.clientY - 20) + 'px'; }
+function moveRulerTouch(e) { if (e.touches[0]) document.getElementById('readingRuler').style.top = (e.touches[0].clientY - 20) + 'px'; }
+
+// Keyboard nav
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowRight' && !e.target.matches('input,textarea')) nextSection();
+  if (e.key === 'ArrowLeft' && !e.target.matches('input,textarea')) prevSection();
+  if ((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('flip-card')) {
+    e.preventDefault(); e.target.classList.toggle('flipped');
+  }
+});
+
+updateProgress();
+</script>
+</body>
+</html>
