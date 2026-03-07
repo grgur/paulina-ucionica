@@ -113,6 +113,12 @@
       "file": "lekcije/natalija-prica-sjemenjace.html",
       "date": "2026-03-06",
       "subject": "Biologija"
+    },
+    {
+      "title": "Linearne jednadžbe",
+      "file": "lekcije/lekcija-linearne-jednadzbe.html",
+      "date": "2026-03-07",
+      "subject": "Matematika"
     }
   ],
   "ispiti": [
@@ -181,6 +187,12 @@
       "file": "ispiti/natalija-ispit-sjemenjace.html",
       "date": "2026-03-06",
       "subject": "Biologija"
+    },
+    {
+      "title": "Ispit: Linearne jednadžbe",
+      "file": "ispiti/ispit-linearne-jednadzbe.html",
+      "date": "2026-03-07",
+      "subject": "Matematika"
     }
   ],
   "zadaci": []

@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ispit: Linearne jednadžbe — Paulinina Učionica</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #FFF8F0; --card: #FFFFFF; --text: #3A3A3A; --light: #6B6B6B;
+      --blue: #4A90D9; --blue-bg: #E8F4FD;
+      --green: #5CB85C; --green-bg: #E8F8E8;
+      --orange: #FF9800; --orange-bg: #FFF3E0;
+      --red: #E74C3C; --red-bg: #FDE8E8;
+      --purple: #9B59B6; --purple-bg: #F3E8FD;
+      --teal: #26A69A; --teal-bg: #E0F2F1;
+      --radius: 16px; --shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Lexend', 'Verdana', sans-serif; background: var(--bg);
+      color: var(--text); line-height: 1.8; letter-spacing: 0.03em;
+      padding: 20px; max-width: 820px; margin: 0 auto; font-size: 19px;
+    }
+    h1 { font-size: 30px; font-weight: 700; color: #2C3E50; }
+    h2 { font-size: 24px; font-weight: 600; color: #34495E; margin-bottom: 16px; }
+    h3 { font-size: 20px; font-weight: 600; margin-bottom: 10px; }
+    p { margin-bottom: 14px; }
+
+    /* Progress */
+    .progress-wrap { position: sticky; top: 0; z-index: 100; background: var(--bg); padding: 10px 0 6px; }
+    .progress-info { display: flex; justify-content: space-between; font-size: 15px; color: var(--light); margin-bottom: 6px; }
+    .progress-bar { height: 12px; background: #E8E4DF; border-radius: 6px; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--blue), var(--teal)); border-radius: 6px; transition: width 0.4s; }
+
+    /* Screens */
+    .screen { display: none; animation: fadeIn 0.4s ease; }
+    .screen.active { display: block; }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+
+    /* Cover */
+    .cover { text-align: center; padding: 40px 24px; background: linear-gradient(135deg, var(--blue-bg), var(--teal-bg)); border-radius: var(--radius); }
+    .cover-emoji { font-size: 56px; margin-bottom: 12px; }
+    .cover-stats { display: flex; justify-content: center; gap: 24px; margin: 20px 0; flex-wrap: wrap; }
+    .cover-stat { background: white; border-radius: 12px; padding: 14px 20px; box-shadow: var(--shadow); text-align: center; }
+    .cover-stat .num { font-size: 28px; font-weight: 700; color: var(--blue); display: block; }
+    .cover-stat .label { font-size: 14px; color: var(--light); }
+
+    /* Question card */
+    .q-card {
+      background: var(--card); border-radius: var(--radius); padding: 28px;
+      box-shadow: var(--shadow); margin-bottom: 12px;
+    }
+    .q-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+    .q-badge {
+      font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+      padding: 4px 12px; border-radius: 20px;
+    }
+    .q-badge.basic { background: var(--green-bg); color: var(--green); }
+    .q-badge.medium { background: var(--orange-bg); color: var(--orange); }
+    .q-badge.hard { background: var(--red-bg); color: var(--red); }
+    .btn-sound {
+      background: none; border: 2px solid #DDD; border-radius: 50%;
+      width: 40px; height: 40px; font-size: 20px; cursor: pointer; transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .btn-sound:hover { border-color: var(--blue); background: var(--blue-bg); }
+    .q-text { font-size: 20px; font-weight: 500; margin-bottom: 20px; }
+
+    /* Math */
+    .math { font-family: 'JetBrains Mono','Courier New',monospace; font-size: 22px; }
+    .math-block {
+      font-family: 'JetBrains Mono','Courier New',monospace; font-size: 24px;
+      text-align: center; padding: 16px; background: var(--bg); border-radius: 12px;
+      margin: 12px 0; box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .vis-frac { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; margin: 0 4px; font-family: 'JetBrains Mono',monospace; }
+    .vis-frac .n { padding: 2px 6px; }
+    .vis-frac .l { width: 100%; height: 2px; background: var(--text); }
+    .vis-frac .d { padding: 2px 6px; }
+
+    /* Multiple choice */
+    .choices { display: flex; flex-direction: column; gap: 10px; }
+    .choice {
+      display: flex; align-items: center; gap: 14px; padding: 16px 20px;
+      background: #FAFAFA; border: 2px solid #E8E4DF; border-radius: 12px;
+      cursor: pointer; font-size: 18px; transition: all 0.2s; font-family: inherit;
+      text-align: left; width: 100%;
+    }
+    .choice:hover:not(.locked) { border-color: var(--blue); background: var(--blue-bg); }
+    .choice.selected { border-color: var(--blue); background: var(--blue-bg); }
+    .choice.correct { border-color: var(--green); background: var(--green-bg); }
+    .choice.wrong { border-color: var(--red); background: var(--red-bg); }
+    .choice.locked { pointer-events: none; }
+    .choice.show-correct { border-color: var(--green); background: var(--green-bg); opacity: 0.7; }
+    .choice-letter {
+      width: 36px; height: 36px; border-radius: 50%; background: var(--blue);
+      color: white; display: flex; align-items: center; justify-content: center;
+      font-weight: 700; flex-shrink: 0; font-size: 15px;
+    }
+
+    /* True/false */
+    .tf-row { display: flex; gap: 12px; margin-bottom: 10px; }
+    .tf-btn {
+      flex: 1; padding: 16px; border-radius: 12px; border: 2px solid #E8E4DF;
+      background: #FAFAFA; font-size: 20px; font-weight: 600; cursor: pointer;
+      transition: all 0.2s; font-family: inherit;
+    }
+    .tf-btn:hover:not(.locked) { border-color: var(--blue); }
+    .tf-btn.selected { border-color: var(--blue); background: var(--blue-bg); }
+    .tf-btn.correct { border-color: var(--green); background: var(--green-bg); }
+    .tf-btn.wrong { border-color: var(--red); background: var(--red-bg); }
+    .tf-btn.locked { pointer-events: none; }
+
+    /* Sort / ordering */
+    .sort-list { list-style: none; margin: 12px 0; }
+    .sort-item {
+      display: flex; align-items: center; gap: 12px; padding: 14px 18px;
+      background: white; border: 2px solid #E8E4DF; border-radius: 12px;
+      margin-bottom: 8px; cursor: grab; font-size: 17px; transition: all 0.2s;
+      user-select: none;
+    }
+    .sort-item:active { cursor: grabbing; box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+    .sort-item.dragging { opacity: 0.5; }
+    .sort-handle { font-size: 20px; color: var(--light); }
+    .sort-num { width: 28px; height: 28px; border-radius: 50%; background: var(--purple); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+    .sort-item.correct-pos { border-color: var(--green); background: var(--green-bg); }
+    .sort-item.wrong-pos { border-color: var(--red); background: var(--red-bg); }
+
+    /* Step-by-step answer */
+    .step-input-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+    .step-label { font-weight: 600; min-width: 90px; font-size: 16px; }
+    .step-select {
+      flex: 1; padding: 12px 16px; border: 2px solid #E8E4DF; border-radius: 10px;
+      font-size: 17px; font-family: inherit; background: white; appearance: auto; cursor: pointer;
+    }
+    .step-select.correct { border-color: var(--green); background: var(--green-bg); }
+    .step-select.wrong { border-color: var(--red); background: var(--red-bg); }
+
+    /* Hint */
+    .hint-btn {
+      display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px;
+      background: var(--purple-bg); border: 2px dashed var(--purple); border-radius: 10px;
+      cursor: pointer; font-size: 15px; color: var(--purple); font-weight: 500;
+      font-family: inherit; margin-top: 12px; transition: all 0.2s;
+    }
+    .hint-btn:hover { background: var(--purple); color: white; }
+    .hint-text { display: none; padding: 14px 18px; background: var(--purple-bg); border-left: 4px solid var(--purple); border-radius: 0 10px 10px 0; margin-top: 8px; font-size: 16px; color: var(--purple); }
+    .hint-text.open { display: block; }
+
+    /* Feedback */
+    .feedback { display: none; margin-top: 16px; padding: 16px 20px; border-radius: 12px; font-size: 17px; line-height: 1.7; }
+    .feedback.show { display: block; animation: fadeIn 0.3s; }
+    .feedback.ok { background: var(--green-bg); border-left: 4px solid var(--green); }
+    .feedback.nope { background: var(--orange-bg); border-left: 4px solid var(--orange); }
+
+    /* Buttons */
+    .btn {
+      font-family: inherit; font-size: 18px; padding: 14px 32px; border-radius: 12px;
+      border: none; cursor: pointer; font-weight: 600; transition: all 0.2s; min-height: 52px;
+    }
+    .btn-primary { background: var(--blue); color: white; }
+    .btn-primary:hover { background: #3A7BC8; }
+    .btn-green { background: var(--green); color: white; }
+    .btn-green:hover { background: #4CAF50; }
+    .btn-secondary { background: white; color: var(--text); border: 2px solid #DDD; }
+    .btn-secondary:hover { border-color: var(--blue); }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .nav-row { display: flex; justify-content: space-between; margin-top: 28px; gap: 12px; }
+
+    /* Results */
+    .result-circle {
+      width: 180px; height: 180px; border-radius: 50%; margin: 20px auto;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-size: 48px; font-weight: 700; box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    .result-circle .pct-label { font-size: 16px; font-weight: 400; }
+    .result-summary { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 20px 0; }
+    .result-box { text-align: center; padding: 16px; border-radius: 12px; background: white; box-shadow: var(--shadow); }
+    .result-box .rb-num { font-size: 28px; font-weight: 700; display: block; }
+    .result-box .rb-label { font-size: 14px; color: var(--light); }
+    .review-item { background: white; border-radius: 12px; padding: 20px; margin-bottom: 12px; box-shadow: var(--shadow); border-left: 5px solid; }
+    .review-item.ri-ok { border-left-color: var(--green); }
+    .review-item.ri-no { border-left-color: var(--red); }
+    .review-q { font-weight: 600; margin-bottom: 8px; }
+    .review-answer { font-size: 16px; margin-bottom: 4px; }
+    .review-explain { font-size: 15px; color: var(--light); padding: 10px 14px; background: var(--bg); border-radius: 8px; margin-top: 8px; }
+
+    /* Confetti */
+    @keyframes padaj { to { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      body { padding: 12px; font-size: 17px; }
+      .q-card { padding: 20px; }
+      .math-block { font-size: 20px; }
+      .btn { width: 48%; padding: 14px 12px; font-size: 16px; }
+      .result-summary { grid-template-columns: 1fr; }
+      .cover-stats { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ============== COVER ============== -->
+<div class="screen active" id="screen-cover">
+  <div class="cover">
+    <div class="cover-emoji">📝</div>
+    <h1>Ispit: Linearne jednadžbe</h1>
+    <p style="color: var(--light); margin-top: 8px;">Provjeri svoje znanje iz cijele lekcije!</p>
+    <div class="cover-stats">
+      <div class="cover-stat"><span class="num">12</span><span class="label">pitanja</span></div>
+      <div class="cover-stat"><span class="num">~15</span><span class="label">minuta</span></div>
+      <div class="cover-stat"><span class="num">💡</span><span class="label">hintovi dostupni</span></div>
+    </div>
+    <p style="font-size: 16px; color: var(--light); margin-top: 16px;">Bez vremenskog ograničenja — radi svojim tempom.</p>
+    <p style="font-size: 16px; color: var(--light);">Hintovi ti mogu pomoći, ali smanjuju bodove za to pitanje.</p>
+    <button class="btn btn-primary" style="margin-top: 20px; font-size: 20px; padding: 16px 48px;" onclick="startExam()">Počni ispit! 🚀</button>
+  </div>
+</div>
+
+<!-- ============== QUESTIONS ============== -->
+<div class="screen" id="screen-exam">
+  <div class="progress-wrap">
+    <div class="progress-info">
+      <span>Pitanje <strong id="q-cur">1</strong> od <strong>12</strong></span>
+      <span id="q-pct">8%</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="q-fill" style="width:8%"></div></div>
+  </div>
+
+  <!-- ===== Q1: Definicija (basic) ===== -->
+  <div class="q-page" id="qp-0">
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-badge basic">Osnovno</span>
+        <button class="btn-sound" onclick="tts('Koja od ovih jednadžbi je linearna jednadžba s jednom nepoznanicom?')">🔊</button>
+      </div>
+      <p class="q-text">Koja od ovih jednadžbi je <strong>linearna jednadžba</strong> s jednom nepoznanicom?</p>
+      <div class="choices" id="ch-0">
+        <button class="choice" onclick="pickChoice(0,this,0)"><span class="choice-letter">A</span><span class="math">x² + 2x = 5</span></button>
+        <button class="choice" onclick="pickChoice(0,this,1)"><span class="choice-letter">B</span><span class="math">3x − 7 = 2x + 1</span></button>
+        <button class="choice" onclick="pickChoice(0,this,2)"><span class="choice-letter">C</span><span class="math">xy + 3 = 10</span></button>
+        <button class="choice" onclick="pickChoice(0,this,3)"><span class="choice-letter">D</span><span class="math">4 + 8 = 12</span></button>
+      </div>
+      <button class="hint-btn" onclick="showHint(0)">💡 Trebaš pomoć?</button>
+      <div class="hint-text" id="hint-0">Linearna jednadžba ima x na PRVU potenciju (ne x²), samo JEDNU nepoznanicu (ne xy), i mora imati nepoznanicu (ne samo brojeve).</div>
+      <div class="feedback" id="fb-0"></div>
+    </div>
+    <div class="nav-row">
+      <button class="btn btn-secondary" disabled>← Nazad</button>
+      <button class="btn btn-primary" id="next-0" onclick="nextQ(1)" disabled>Dalje →</button>
+    </div>
+  </div>
+
+  <!-- ===== Q2: Prebacivanje (basic) ===== -->
+  <div class="q-page" id="qp-1" style="display:none">
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-badge basic">Osnovno</span>
+        <button class="btn-sound" onclick="tts('U jednadžbi 5x plus 3 jednako 18, koji je prvi korak?')">🔊</button>
+      </div>
+      <p class="q-text">U jednadžbi <span class="math">5x + 3 = 18</span>, koji je <strong>prvi korak</strong> za rješavanje?</p>
+      <div class="choices" id="ch-1">
+        <button class="choice" onclick="pickChoice(1,this,0)"><span class="choice-letter">A</span><span>Podijelim obje strane s 5</span></button>
+        <button class="choice" onclick="pickChoice(1,this,1)"><span class="choice-letter">B</span><span>Prebacim +3 na desnu stranu kao −3</span></button>
+        <button class="choice" onclick="pickChoice(1,this,2)"><span class="choice-letter">C</span><span>Prebacim 5x na desnu stranu</span></button>
+        <button class="choice" onclick="pickChoice(1,this,3)"><span class="choice-letter">D</span><span>Pomnožim obje strane s 3</span></button>
+      </div>
+      <button class="hint-btn" onclick="showHint(1)">💡 Trebaš pomoć?</button>
+      <div class="hint-text" id="hint-1">Cilj je izolirati x. Prvo makni slobodne članove (brojeve bez x) na drugu stranu. Koeficijent uz x se dijeli na kraju.</div>
+      <div class="feedback" id="fb-1"></div>
+    </div>
+    <div class="nav-row">
+      <button class="btn btn-secondary" onclick="prevQ(0)">← Nazad</button>
+      <button class="btn btn-primary" id="next-1" onclick="nextQ(2)" disabled>Dalje →</button>
+    </div>
+  </div>
+
+  <!-- ===== Q3: Rješavanje (medium) ===== -->
+  <div class="q-page" id="qp-2" style="display:none">
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-badge medium">Srednje</span>
+        <button class="btn-sound" onclick="tts('Riješi jednadžbu: 4x minus 10 jednako 2x plus 6. Koliko je x?')">🔊</button>
+      </div>
+      <p class="q-text">Riješi: <span class="math">4x − 10 = 2x + 6</span></p>
+      <div class="choices" id="ch-2">
+        <button class="choice" onclick="pickChoice(2,this,0)"><span class="choice-letter">A</span><span class="math">x = 2</span></button>
+        <button class="choice" onclick="pickChoice(2,this,1)"><span class="choice-letter">B</span><span class="math">x = 8</span></button>
+        <button class="choice" onclick="pickChoice(2,this,2)"><span class="choice-letter">C</span><span class="math">x = −2</span></button>
+        <button class="choice" onclick="pickChoice(2,this,3)"><span class="choice-letter">D</span><span class="math">x = 4</span></button>
+      </div>
+      <button class="hint-btn" onclick="showHint(2)">💡 Trebaš pomoć?</button>
+      <div class="hint-text" id="hint-2">Prebaci x-ove na lijevo: 4x − 2x. Prebaci brojeve na desno: 6 + 10. Pa dijeli.</div>
+      <div class="feedback" id="fb-2"></div>
+    </div>
+    <div class="nav-row">
+      <button class="btn btn-secondary" onclick="prevQ(1)">← Nazad</button>
+      <button class="btn btn-primary" id="next-2" onclick="nextQ(3)" disabled>Dalje →</button>
+    </div>
+  </div>
+
+  <!-- ===== Q4: Zagrade TRUE/FALSE (medium) ===== -->
+  <div class="q-page" id="qp-3" style="display:none">
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-badge medium">Srednje</span>
+        <button class="btn-sound" onclick="tts('Točno ili netočno? Minus otvorena zagrada 4x minus 2 zatvorena zagrada je jednako minus 4x minus 2.')">🔊</button>
+      </div>
+      <p class="q-text">Točno ili netočno?</p>
+      <div class="math-block">−(4x − 2) = −4x − 2</div>
+      <div class="tf-row" id="tf-3">
+        <button class="tf-btn" onclick="pickTF(3,this,false)">❌ Netočno</button>
+        <button class="tf-btn" onclick="pickTF(3,this,true)">✅ Točno</button>
+      </div>
+      <button class="hint-btn" onclick="showHint(3)">💡 Trebaš pomoć?</button>
+      <div class="hint-text" id="hint-3">Minus ispred zagrade mijenja predznak SVIM članovima. Što se dogodi s −2 kad ga pomnožiš s −1?</div>
+      <div class="feedback" id="fb-3"></div>
+    </div>
+    <div class="nav-row">
+      <button class="btn btn-secondary" onclick="prevQ(2)">← Nazad</button>
+      <button class="btn btn-primary" id="next-3" onclick="nextQ(4)" disabled>Dalje →</button>
+    </div>
+  </div>
+
+  <!-- ===== Q5: Zagrade rješavanje (medium) ===== -->
+  <div class="q-page" id="qp-4" style="display:none">
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-badge medium">Srednje</span>
+        <button class="btn-sound" onclick="tts('Koliko je 3 puta zagrada 2x minus 4 zatvorena zagrada?')">🔊</button>
+      </div>
+      <p class="q-text">Koliko je <span class="math">3 · (2x − 4)</span> kad otkloniš zagradu?</p>
+      <div class="choices" id="ch-4">
+        <button class="choice" onclick="pickChoice(4,this,0)"><span class="choice-letter">A</span><span class="math">6x − 4</span></button>
+        <button class="choice" onclick="pickChoice(4,this,1)"><span class="choice-letter">B</span><span class="math">6x − 12</span></button>
+        <button class="choice" onclick="pickChoice(4,this,2)"><span class="choice-letter">C</span><span class="math">5x − 7</span></button>
+        <button class="choice" onclick="pickChoice(4,this,3)"><span class="choice-letter">D</span><span class="math">6x + 12</span></button>
+      </div>
+      <button class="hint-btn" onclick="showHint(4)">💡 Trebaš pomoć?</button>
+      <div class="hint-text" id="hint-4">Pomnoži 3 sa SVAKIM članom unutar zagrade: 3·2x i 3·(−4). Pazi na predznak!</div>
+      <div class="feedback" id="fb-4"></div>
+    </div>
+    <div class="nav-row">
+      <button class="btn btn-secondary" onclick="prevQ(3)">← Nazad</button>
+      <button class="btn btn-primary" id="next-4" onclick="nextQ(5)" disabled>Dalje →</button>
+    </div>
+  </div>
+
+  <!-- ===== Q6: NZV (basic) ===== -->
+  <div class="q-page" id="qp-5" style="display:none">
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-badge basic">Osnovno</span>
+        <button class="btn-sound" onclick="tts('Koji je najmanji zajednički višekratnik od 3, 4 i 6?')">🔊</button>
+      </div>
+      <p class="q-text">Koji je <strong>NZV</strong> (najmanji zajednički višekratnik) za nazivnike <span class="math">3, 4, 6</span>?</p>
+      <div class="choices" id="ch-5">
+        <button class="choice" onclick="pickChoice(5,this,0)"><span class="choice-letter">A</span><span class="math">24</span></button>
+        <button class="choice" onclick="pickChoice(5,this,1)"><span class="choice-letter">B</span><span class="math">6</span></button>
+        <button class="choice" onclick="pickChoice(5,this,2)"><span class="choice-letter">C</span><span class="math">12</span></button>
+        <button class="choice" onclick="pickChoice(5,this,3)"><span class="choice-letter">D</span><span class="math">72</span></button>
+      </div>
+      <button class="hint-btn" onclick="showHint(5)">💡 Trebaš pomoć?</button>
+      <div class="hint-text" id="hint-5">Tražimo najmanji broj koji se dijeli s 3, s 4, i s 6. Provjeri redom: 6÷4? 12÷3? 12÷4? 12÷6?</div>
+      <div class="feedback" id="fb-5"></div>
+    </div>
+    <div class="nav-row">
+      <button class="btn btn-secondary" onclick="prevQ(4)">← Nazad</button>
+      <button class="btn btn-primary" id="next-5" onclick="nextQ(6)" disabled>Dalje →</button>
+    </div>
+  </div>
+
+  <!-- ===== Q7: Razlomci rješavanje (medium) ===== -->
+  <div class="q-page" id="qp-6" style="display:none">
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-badge medium">Srednje</span>
+        <button class="btn-sound" onclick="tts('Riješi jednadžbu: x podijeljeno s 3 plus x podijeljeno s 6 jednako 1. Koliko je x?')">🔊</button>
+      </div>
+      <p class="q-text">Riješi:
+        <span class="vis-frac"><span class="n">x</span><span class="l"></span><span class="d">3</span></span>
+        +
+        <span class="vis-frac"><span class="n">x</span><span class="l"></span><span class="d">6</span></span>
+        = 1
+      </p>
+      <div class="choices" id="ch-6">
+        <button class="choice" onclick="pickChoice(6,this,0)"><span class="choice-letter">A</span><span class="math">x = 3</span></button>
+        <button class="choice" onclick="pickChoice(6,this,1)"><span class="choice-letter">B</span><span class="math">x = 6</span></button>
+        <button class="choice" onclick="pickChoice(6,this,2)"><span class="choice-letter">C</span><span class="math">x = 2</span></button>
+        <button class="choice" onclick="pickChoice(6,this,3)"><span class="choice-letter">D</span><span class="math">x = 9</span></button>
+      </div>
+      <button class="hint-btn" onclick="showHint(6)">💡 Trebaš pomoć?</button>
+      <div class="hint-text" id="hint-6">NZV(3,6) = 6. Pomnoži sve s 6: 6·(x/3) + 6·(x/6) = 6·1 → 2x + x = 6.</div>
+      <div class="feedback" id="fb-6"></div>
+    </div>
+    <div class="nav-row">
+      <button class="btn btn-secondary" onclick="prevQ(5)">← Nazad</button>
+      <button class="btn btn-primary" id="next-6" onclick="nextQ(7)" disabled>Dalje →</button>
+    </div>
+  </div>
+
+  <!-- ===== Q8: UVJETI - jednostavan (medium) ===== -->
+  <div class="q-page" id="qp-7" style="display:none">
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-badge medium">Srednje ⚡</span>
+        <button class="btn-sound" onclick="tts('Koji je uvjet za jednadžbu: 5 podijeljeno s x minus 2 jednako 3?')">🔊</button>
+      </div>
+      <p class="q-text">Koji je <strong>uvjet</strong> za jednadžbu:
+        <span class="vis-frac"><span class="n">5</span><span class="l"></span><span class="d" style="color:var(--red);font-weight:700;">x − 2</span></span> = 3 ?
+      </p>
+      <div class="choices" id="ch-7">
+        <button class="choice" onclick="pickChoice(7,this,0)"><span class="choice-letter">A</span><span class="math">x ≠ 0</span></button>
+        <button class="choice" onclick="pickChoice(7,this,1)"><span class="choice-letter">B</span><span class="math">x ≠ 2</span></button>
+        <button class="choice" onclick="pickChoice(7,this,2)"><span class="choice-letter">C</span><span class="math">x ≠ −2</span></button>
+        <button class="choice" onclick="pickChoice(7,this,3)"><span class="choice-letter">D</span><span class="math">x ≠ 5</span></button>
+      </div>
+      <button class="hint-btn" onclick="showHint(7)">💡 Trebaš pomoć?</button>
+      <div class="hint-text" id="hint-7">Nazivnik je (x − 2). Stavi ga ≠ 0: x − 2 ≠ 0 → x ≠ ? Prebaci −2 na drugu stranu!</div>
+      <div class="feedback" id="fb-7"></div>
+    </div>
+    <div class="nav-row">
+      <button class="btn btn-secondary" onclick="prevQ(6)">← Nazad</button>
+      <button class="btn btn-primary" id="next-7" onclick="nextQ(8)" disabled>Dalje →</button>
+    </div>
+  </div>
+
+  <!-- ===== Q9: UVJETI - složeniji izraz (hard) ===== -->
+  <div class="q-page" id="qp-8" style="display:none">
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-badge hard">Napredno ⚡</span>
+        <button class="btn-sound" onclick="tts('Koji su uvjeti za jednadžbu: 1 podijeljeno s x, plus 3 podijeljeno s 2x plus 6, jednako 2?')">🔊</button>
+      </div>
+      <p class="q-text">Koji su <strong>uvjeti</strong> za jednadžbu:</p>
+      <div class="math-block">
+        <span class="vis-frac"><span class="n">1</span><span class="l"></span><span class="d" style="color:var(--red);font-weight:700;">x</span></span>
+        +
+        <span class="vis-frac"><span class="n">3</span><span class="l"></span><span class="d" style="color:var(--red);font-weight:700;">2x + 6</span></span>
+        = 2
+      </div>
+      <div class="choices" id="ch-8">
+        <button class="choice" onclick="pickChoice(8,this,0)"><span class="choice-letter">A</span><span class="math">x ≠ 0 i x ≠ −3</span></button>
+        <button class="choice" onclick="pickChoice(8,this,1)"><span class="choice-letter">B</span><span class="math">x ≠ 0 i x ≠ 3</span></button>
+        <button class="choice" onclick="pickChoice(8,this,2)"><span class="choice-letter">C</span><span class="math">x ≠ 0 i x ≠ 6</span></button>
+        <button class="choice" onclick="pickChoice(8,this,3)"><span class="choice-letter">D</span><span class="math">x ≠ −3</span></button>
+      </div>
+      <button class="hint-btn" onclick="showHint(8)">💡 Trebaš pomoć?</button>
+      <div class="hint-text" id="hint-8">Dva nazivnika sadrže x: (x) i (2x+6). Za svaki: stavi ≠ 0 i riješi. x ≠ 0. Zatim: 2x + 6 ≠ 0 → 2x ≠ −6 → x ≠ ?</div>
+      <div class="feedback" id="fb-8"></div>
+    </div>
+    <div class="nav-row">
+      <button class="btn btn-secondary" onclick="prevQ(7)">← Nazad</button>
+      <button class="btn btn-primary" id="next-8" onclick="nextQ(9)" disabled>Dalje →</button>
+    </div>
+  </div>
+
+  <!-- ===== Q10: UVJETI TRUE/FALSE (hard) ===== -->
+  <div class="q-page" id="qp-9" style="display:none">
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-badge hard">Napredno ⚡</span>
+        <button class="btn-sound" onclick="tts('Točno ili netočno? Za jednadžbu 7 podijeljeno s 5x minus 15 jednako 1, uvjet je x nije jednako 3.')">🔊</button>
+      </div>
+      <p class="q-text">Točno ili netočno?</p>
+      <p>Za jednadžbu
+        <span class="vis-frac"><span class="n">7</span><span class="l"></span><span class="d" style="color:var(--red);">5x − 15</span></span> = 1
+        uvjet je <strong>x ≠ 3</strong>.
+      </p>
+      <div class="tf-row" id="tf-9">
+        <button class="tf-btn" onclick="pickTF(9,this,false)">❌ Netočno</button>
+        <button class="tf-btn" onclick="pickTF(9,this,true)">✅ Točno</button>
+      </div>
+      <button class="hint-btn" onclick="showHint(9)">💡 Trebaš pomoć?</button>
+      <div class="hint-text" id="hint-9">Provjeri: stavi x = 3 u nazivnik. 5·3 − 15 = 15 − 15 = ? Ako je 0, uvjet je točan!</div>
+      <div class="feedback" id="fb-9"></div>
+    </div>
+    <div class="nav-row">
+      <button class="btn btn-secondary" onclick="prevQ(8)">← Nazad</button>
+      <button class="btn btn-primary" id="next-9" onclick="nextQ(10)" disabled>Dalje →</button>
+    </div>
+  </div>
+
+  <!-- ===== Q11: Sortiraj korake (medium) ===== -->
+  <div class="q-page" id="qp-10" style="display:none">
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-badge medium">Srednje</span>
+        <button class="btn-sound" onclick="tts('Poredaj korake rješavanja jednadžbe s razlomcima od prvog do zadnjeg. Povuci korake u točan redoslijed.')">🔊</button>
+      </div>
+      <p class="q-text">Poredaj korake rješavanja jednadžbe s razlomcima. Povuci u <strong>točan redoslijed</strong>!</p>
+      <ul class="sort-list" id="sort-10"></ul>
+      <button class="btn btn-green" id="check-sort-10" onclick="checkSort(10)" style="margin-top:12px;">Provjeri redoslijed ✓</button>
+      <button class="hint-btn" onclick="showHint(10)">💡 Trebaš pomoć?</button>
+      <div class="hint-text" id="hint-10">Prvo uvjeti, pa NZV, pa množenje, pa rješavanje, pa provjera. Logičan redoslijed!</div>
+      <div class="feedback" id="fb-10"></div>
+    </div>
+    <div class="nav-row">
+      <button class="btn btn-secondary" onclick="prevQ(9)">← Nazad</button>
+      <button class="btn btn-primary" id="next-10" onclick="nextQ(11)" disabled>Dalje →</button>
+    </div>
+  </div>
+
+  <!-- ===== Q12: Kompletno rješavanje (hard) ===== -->
+  <div class="q-page" id="qp-11" style="display:none">
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-badge hard">Napredno</span>
+        <button class="btn-sound" onclick="tts('Kompletni zadatak: Riješi jednadžbu 2 puta zagrada x plus 3 zatvorena zagrada minus 4 jednako 3x minus 1. Odaberi točan odgovor za svaki korak.')">🔊</button>
+      </div>
+      <p class="q-text">Kompletni zadatak — odaberi točan odgovor za svaki korak:</p>
+      <div class="math-block">2(x + 3) − 4 = 3x − 1</div>
+
+      <div class="step-input-row">
+        <span class="step-label">Korak 1:</span>
+        <select class="step-select" id="s11-1">
+          <option value="">Otkloni zagradu...</option>
+          <option value="a">2x + 3 − 4 = 3x − 1</option>
+          <option value="b">2x + 6 − 4 = 3x − 1</option>
+          <option value="c">2x − 6 − 4 = 3x − 1</option>
+        </select>
+      </div>
+      <div class="step-input-row">
+        <span class="step-label">Korak 2:</span>
+        <select class="step-select" id="s11-2">
+          <option value="">Srediti lijevu stranu...</option>
+          <option value="a">2x + 2 = 3x − 1</option>
+          <option value="b">2x − 2 = 3x − 1</option>
+          <option value="c">2x + 10 = 3x − 1</option>
+        </select>
+      </div>
+      <div class="step-input-row">
+        <span class="step-label">Korak 3:</span>
+        <select class="step-select" id="s11-3">
+          <option value="">Prebaci x-ove i brojeve...</option>
+          <option value="a">2x − 3x = −1 − 2</option>
+          <option value="b">2x − 3x = −1 + 2</option>
+          <option value="c">2x + 3x = −1 + 2</option>
+        </select>
+      </div>
+      <div class="step-input-row">
+        <span class="step-label">Rješenje:</span>
+        <select class="step-select" id="s11-4">
+          <option value="">Izračunaj x...</option>
+          <option value="a">x = 3</option>
+          <option value="b">x = −3</option>
+          <option value="c">x = 1</option>
+        </select>
+      </div>
+      <button class="btn btn-green" id="check-steps-11" onclick="checkSteps()" style="margin-top:12px;">Provjeri sve korake ✓</button>
+      <button class="hint-btn" onclick="showHint(11)">💡 Trebaš pomoć?</button>
+      <div class="hint-text" id="hint-11">Korak 1: Pomnoži 2 sa svim članovima u zagradi: 2·x = 2x, 2·3 = 6. Korak 2: −2 + 6 − 4 = ? Korak 3: x-ove na lijevo, brojeve na desno!</div>
+      <div class="feedback" id="fb-11"></div>
+    </div>
+    <div class="nav-row">
+      <button class="btn btn-secondary" onclick="prevQ(10)">← Nazad</button>
+      <button class="btn btn-green" id="next-11" onclick="showResults()" disabled style="font-size: 20px;">Pogledaj rezultat! 🎯</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============== RESULTS ============== -->
+<div class="screen" id="screen-results">
+  <div style="text-align:center; padding: 20px;">
+    <h1 id="res-title"></h1>
+    <div class="result-circle" id="res-circle">
+      <span id="res-pct"></span>
+      <span class="pct-label">bodova</span>
+    </div>
+    <div id="res-stars" style="font-size: 40px; margin: 12px 0;"></div>
+    <p id="res-msg" style="font-size: 20px; max-width: 500px; margin: 0 auto;"></p>
+    <div class="result-summary" id="res-summary"></div>
+  </div>
+
+  <h2 style="margin-top: 32px;">Pregled odgovora 📋</h2>
+  <div id="res-review"></div>
+
+  <div style="text-align:center; margin-top: 32px;">
+    <button class="btn btn-primary" onclick="location.reload()" style="font-size: 20px; padding: 16px 40px;">Pokušaj ponovo 🔄</button>
+  </div>
+</div>
+
+<script>
+  // ====== DATA ======
+  const TOTAL = 12;
+  const answers = new Array(TOTAL).fill(null);
+  const correctAnswers = [1, 1, 1, 0, 1, 2, 2, 1, 0, 1, null, null]; // null for sort & steps
+  const hintUsed = new Array(TOTAL).fill(false);
+  const maxPoints = [2, 2, 3, 2, 2, 2, 3, 3, 4, 3, 4, 5]; // total: 35
+  const scored = new Array(TOTAL).fill(0);
+
+  const explanations = [
+    'B je linearna jednadžba. A ima x², C ima dvije nepoznanice (x i y), D nema nepoznanicu.',
+    'Prvo prebacujemo +3 na desnu stranu (postaje −3), pa 5x = 15, i tek tada dijelimo s 5.',
+    '4x − 2x = 6 + 10 → 2x = 16 → x = 8. Pazi: −10 se prebacuje kao +10!',
+    'NETOČNO! −(4x − 2) = −4x + 2. Minus ispred zagrade mijenja predznak SVIM članovima: −2 postaje +2.',
+    '3·2x = 6x i 3·(−4) = −12. Dakle: 6x − 12. Moraš pomnožiti 3 sa SVAKIM članom!',
+    'NZV(3,4,6) = 12. Provjera: 12÷3=4 ✅, 12÷4=3 ✅, 12÷6=2 ✅. Broj 6 se NE dijeli s 4.',
+    'NZV(3,6)=6. Množimo: 2x + x = 6 → 3x = 6 → x = 2. Provjera: 2/3 + 2/6 = 2/3 + 1/3 = 1 ✅',
+    'Nazivnik je (x − 2). Stavljamo: x − 2 ≠ 0 → x ≠ 2. Kad bi x bio 2, nazivnik bi bio 0!',
+    'Nazivnici su x i (2x+6). Uvjet 1: x ≠ 0. Uvjet 2: 2x+6 ≠ 0 → 2x ≠ −6 → x ≠ −3. Oba uvjeta moraju biti ispunjena.',
+    'TOČNO! 5·3 − 15 = 15 − 15 = 0. Kad je x = 3, nazivnik je 0. Zato je x ≠ 3 točan uvjet.',
+    'Točan redoslijed: 1) Napiši uvjete, 2) Pronađi NZV, 3) Pomnoži s NZV, 4) Riješi jednadžbu, 5) Provjeri rješenje.',
+    'K1: 2(x+3)−4 = 2x+6−4. K2: 2x+2 = 3x−1. K3: 2x−3x = −1−2. Rješenje: −x = −3 → x = 3.'
+  ];
+
+  const questionTexts = [
+    'Koja jednadžba je linearna?',
+    'Koji je prvi korak za 5x + 3 = 18?',
+    'Riješi: 4x − 10 = 2x + 6',
+    '−(4x − 2) = −4x − 2?',
+    'Koliko je 3·(2x − 4)?',
+    'NZV za 3, 4, 6?',
+    'Riješi: x/3 + x/6 = 1',
+    'Uvjet za 5/(x−2) = 3?',
+    'Uvjeti za 1/x + 3/(2x+6) = 2?',
+    '5x−15=0 kad x=3 → uvjet x≠3?',
+    'Poredaj korake rješavanja',
+    'Kompletni zadatak: 2(x+3)−4 = 3x−1'
+  ];
+
+  // ====== SORT DATA ======
+  const sortItems = [
+    { id: 's0', text: 'Napiši uvjete (nazivnik ≠ 0)', correct: 0 },
+    { id: 's1', text: 'Pronađi NZV svih nazivnika', correct: 1 },
+    { id: 's2', text: 'Pomnoži obje strane s NZV', correct: 2 },
+    { id: 's3', text: 'Riješi jednadžbu bez razlomaka', correct: 3 },
+    { id: 's4', text: 'Provjeri rješenje (i uvjete!)', correct: 4 },
+  ];
+
+  // ====== INIT ======
+  function startExam() {
+    document.getElementById('screen-cover').classList.remove('active');
+    document.getElementById('screen-exam').classList.add('active');
+    initSort();
+  }
+
+  // ====== NAV ======
+  function nextQ(n) {
+    document.getElementById('qp-' + (n-1)).style.display = 'none';
+    document.getElementById('qp-' + n).style.display = 'block';
+    updateProgress(n);
+  }
+  function prevQ(n) {
+    document.getElementById('qp-' + (n+1)).style.display = 'none';
+    document.getElementById('qp-' + n).style.display = 'block';
+    updateProgress(n);
+  }
+  function updateProgress(n) {
+    document.getElementById('q-cur').textContent = n + 1;
+    const pct = Math.round(((n + 1) / TOTAL) * 100);
+    document.getElementById('q-pct').textContent = pct + '%';
+    document.getElementById('q-fill').style.width = pct + '%';
+  }
+
+  // ====== CHOICES ======
+  function pickChoice(qi, btn, idx) {
+    const cont = document.getElementById('ch-' + qi);
+    const btns = cont.querySelectorAll('.choice');
+    btns.forEach(b => b.classList.add('locked'));
+    answers[qi] = idx;
+    const isCorrect = idx === correctAnswers[qi];
+    btn.classList.add(isCorrect ? 'correct' : 'wrong');
+    if (!isCorrect) {
+      btns[correctAnswers[qi]].classList.add('show-correct');
+    }
+    scored[qi] = isCorrect ? (hintUsed[qi] ? Math.ceil(maxPoints[qi] / 2) : maxPoints[qi]) : 0;
+    showFB(qi, isCorrect);
+    document.getElementById('next-' + qi).disabled = false;
+  }
+
+  // ====== TRUE/FALSE ======
+  function pickTF(qi, btn, val) {
+    const row = document.getElementById('tf-' + qi);
+    const btns = row.querySelectorAll('.tf-btn');
+    btns.forEach(b => b.classList.add('locked'));
+    const isCorrect = (qi === 3) ? (val === false) : (val === true);
+    answers[qi] = val;
+    btn.classList.add(isCorrect ? 'correct' : 'wrong');
+    if (!isCorrect) {
+      btns.forEach(b => { if (!b.classList.contains('wrong')) b.classList.add('correct'); });
+    }
+    scored[qi] = isCorrect ? (hintUsed[qi] ? Math.ceil(maxPoints[qi] / 2) : maxPoints[qi]) : 0;
+    showFB(qi, isCorrect);
+    document.getElementById('next-' + qi).disabled = false;
+  }
+
+  // ====== SORT ======
+  let sortOrder = [];
+  function initSort() {
+    const shuffled = [...sortItems].sort(() => Math.random() - 0.5);
+    sortOrder = shuffled.map(s => s.id);
+    const list = document.getElementById('sort-10');
+    list.innerHTML = '';
+    shuffled.forEach((item, i) => {
+      const li = document.createElement('li');
+      li.className = 'sort-item';
+      li.draggable = true;
+      li.dataset.id = item.id;
+      li.innerHTML = `<span class="sort-handle">☰</span><span class="sort-num">${i+1}</span><span>${item.text}</span>`;
+      li.addEventListener('dragstart', dragStart);
+      li.addEventListener('dragover', dragOver);
+      li.addEventListener('drop', drop);
+      li.addEventListener('dragend', dragEnd);
+      // Touch
+      li.addEventListener('touchstart', touchStart, {passive: false});
+      li.addEventListener('touchmove', touchMove, {passive: false});
+      li.addEventListener('touchend', touchEnd);
+      list.appendChild(li);
+    });
+  }
+
+  let dragEl = null;
+  function dragStart(e) { dragEl = this; this.classList.add('dragging'); e.dataTransfer.effectAllowed = 'move'; }
+  function dragOver(e) { e.preventDefault(); }
+  function drop(e) {
+    e.preventDefault();
+    if (dragEl !== this) {
+      const list = document.getElementById('sort-10');
+      const items = [...list.children];
+      const fromIdx = items.indexOf(dragEl);
+      const toIdx = items.indexOf(this);
+      if (fromIdx < toIdx) list.insertBefore(dragEl, this.nextSibling);
+      else list.insertBefore(dragEl, this);
+      renumberSort();
+    }
+  }
+  function dragEnd() { this.classList.remove('dragging'); }
+
+  // Touch support
+  let touchEl = null, touchClone = null;
+  function touchStart(e) {
+    touchEl = this;
+    this.classList.add('dragging');
+  }
+  function touchMove(e) {
+    e.preventDefault();
+    const touch = e.touches[0];
+    const el = document.elementFromPoint(touch.clientX, touch.clientY);
+    if (el && el.closest('.sort-item') && el.closest('.sort-item') !== touchEl) {
+      const target = el.closest('.sort-item');
+      const list = document.getElementById('sort-10');
+      const items = [...list.children];
+      const fromIdx = items.indexOf(touchEl);
+      const toIdx = items.indexOf(target);
+      if (fromIdx < toIdx) list.insertBefore(touchEl, target.nextSibling);
+      else list.insertBefore(touchEl, target);
+      renumberSort();
+    }
+  }
+  function touchEnd() { if (touchEl) { touchEl.classList.remove('dragging'); touchEl = null; } }
+
+  function renumberSort() {
+    const items = document.getElementById('sort-10').querySelectorAll('.sort-item');
+    items.forEach((item, i) => { item.querySelector('.sort-num').textContent = i + 1; });
+  }
+
+  function checkSort(qi) {
+    const items = document.getElementById('sort-10').querySelectorAll('.sort-item');
+    let correctCount = 0;
+    items.forEach((item, i) => {
+      const id = item.dataset.id;
+      const si = sortItems.find(s => s.id === id);
+      if (si.correct === i) { item.classList.add('correct-pos'); correctCount++; }
+      else { item.classList.add('wrong-pos'); }
+      item.draggable = false;
+    });
+    answers[qi] = correctCount;
+    const pts = Math.round((correctCount / sortItems.length) * maxPoints[qi]);
+    scored[qi] = hintUsed[qi] ? Math.ceil(pts / 2) : pts;
+    showFB(qi, correctCount === sortItems.length);
+    document.getElementById('check-sort-10').disabled = true;
+    document.getElementById('next-10').disabled = false;
+  }
+
+  // ====== STEP-BY-STEP ======
+  function checkSteps() {
+    const correct = { 's11-1': 'b', 's11-2': 'a', 's11-3': 'a', 's11-4': 'a' };
+    let pts = 0;
+    Object.keys(correct).forEach(id => {
+      const sel = document.getElementById(id);
+      sel.disabled = true;
+      if (sel.value === correct[id]) { sel.classList.add('correct'); pts++; }
+      else { sel.classList.add('wrong'); }
+    });
+    const ptsScaled = Math.round((pts / 4) * maxPoints[11]);
+    scored[11] = hintUsed[11] ? Math.ceil(ptsScaled / 2) : ptsScaled;
+    answers[11] = pts;
+    showFB(11, pts === 4);
+    document.getElementById('check-steps-11').disabled = true;
+    document.getElementById('next-11').disabled = false;
+  }
+
+  // ====== HINT ======
+  function showHint(qi) {
+    document.getElementById('hint-' + qi).classList.add('open');
+    hintUsed[qi] = true;
+  }
+
+  // ====== FEEDBACK ======
+  function showFB(qi, ok) {
+    const fb = document.getElementById('fb-' + qi);
+    fb.className = 'feedback show ' + (ok ? 'ok' : 'nope');
+    if (ok) {
+      fb.textContent = '✅ Točno! ' + explanations[qi];
+    } else {
+      fb.textContent = '💡 ' + explanations[qi];
+    }
+  }
+
+  // ====== TTS ======
+  function tts(text) {
+    if (speechSynthesis.speaking) speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'hr-HR'; u.rate = 0.85;
+    speechSynthesis.speak(u);
+  }
+
+  // ====== RESULTS ======
+  function showResults() {
+    document.getElementById('screen-exam').classList.remove('active');
+    document.getElementById('screen-results').classList.add('active');
+
+    const total = maxPoints.reduce((a, b) => a + b, 0);
+    const earned = scored.reduce((a, b) => a + b, 0);
+    const pct = Math.round((earned / total) * 100);
+
+    let stars, msg, color, title;
+    if (pct >= 90) {
+      stars = '⭐⭐⭐'; msg = 'Izvrsno, Paulina! Ovo gradivo ti je super jasno! 🎉';
+      color = 'var(--green)'; title = 'Odličan rezultat!'; confetti();
+    } else if (pct >= 75) {
+      stars = '⭐⭐'; msg = 'Super posao! Još malo vježbe i bit će savršeno! 💪';
+      color = 'var(--blue)'; title = 'Jako dobar rezultat!';
+    } else if (pct >= 60) {
+      stars = '⭐'; msg = 'Dobar početak! Pogledaj lekciju za dijelove koji su ti bili teži, pa pokušaj ponovo.';
+      color = 'var(--orange)'; title = 'Solidno!';
+    } else {
+      stars = '💪'; msg = 'Ne brini! Svaki pokušaj te čini jačom. Ponovi lekciju i probaj ponovo — vidjet ćeš napredak!';
+      color = 'var(--purple)'; title = 'Hrabro, nastavi dalje!';
+    }
+
+    document.getElementById('res-title').textContent = title;
+    document.getElementById('res-circle').style.background = `linear-gradient(135deg, ${color}, ${color}22)`;
+    document.getElementById('res-circle').style.color = 'white';
+    document.getElementById('res-pct').textContent = pct + '%';
+    document.getElementById('res-stars').textContent = stars;
+    document.getElementById('res-msg').textContent = msg;
+
+    const correctCount = scored.filter((s, i) => s === maxPoints[i]).length;
+    const hintsCount = hintUsed.filter(Boolean).length;
+    document.getElementById('res-summary').innerHTML = `
+      <div class="result-box"><span class="rb-num" style="color:var(--green)">${correctCount}</span><span class="rb-label">potpuno točnih</span></div>
+      <div class="result-box"><span class="rb-num" style="color:var(--blue)">${earned}/${total}</span><span class="rb-label">bodova</span></div>
+      <div class="result-box"><span class="rb-num" style="color:var(--purple)">${hintsCount}</span><span class="rb-label">hintova korišteno</span></div>
+    `;
+
+    // Review
+    let reviewHTML = '';
+    for (let i = 0; i < TOTAL; i++) {
+      const isOk = scored[i] === maxPoints[i];
+      reviewHTML += `
+        <div class="review-item ${isOk ? 'ri-ok' : 'ri-no'}">
+          <div class="review-q">${i + 1}. ${questionTexts[i]}</div>
+          <div class="review-answer">${isOk ? '✅' : '❌'} ${scored[i]}/${maxPoints[i]} bodova${hintUsed[i] ? ' (hint korišten, −50%)' : ''}</div>
+          <div class="review-explain">${explanations[i]}</div>
+        </div>
+      `;
+    }
+    document.getElementById('res-review').innerHTML = reviewHTML;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ====== CONFETTI ======
+  function confetti() {
+    const boje = ['#FF6B6B','#4ECDC4','#45B7D1','#F7DC6F','#BB8FCE','#82E0AA'];
+    for (let i = 0; i < 50; i++) {
+      const el = document.createElement('div');
+      el.style.cssText = `
+        position:fixed; width:${8+Math.random()*8}px; height:${8+Math.random()*8}px;
+        border-radius:${Math.random()>0.5?'50%':'2px'};
+        background:${boje[Math.floor(Math.random()*boje.length)]};
+        left:${Math.random()*100}vw; top:-10px;
+        animation:padaj ${1.5+Math.random()*2.5}s ease-out forwards; z-index:9999;
+      `;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 4500);
+    }
+  }
+</script>
+</body>
+</html>

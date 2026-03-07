@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Linearne jednadžbe — Paulinina Učionica</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #FFF8F0;
+      --bg-card: #FFFFFF;
+      --text-main: #3A3A3A;
+      --text-light: #6B6B6B;
+      --blue: #4A90D9;
+      --blue-light: #E8F4FD;
+      --green: #5CB85C;
+      --green-light: #E8F8E8;
+      --orange: #FF9800;
+      --orange-light: #FFF3E0;
+      --red: #E74C3C;
+      --red-light: #FDE8E8;
+      --purple: #9B59B6;
+      --purple-light: #F3E8FD;
+      --teal: #26A69A;
+      --teal-light: #E0F2F1;
+      --radius: 16px;
+      --shadow: 0 2px 12px rgba(0,0,0,0.06);
+      --shadow-hover: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Lexend', 'Verdana', sans-serif;
+      background: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.8;
+      letter-spacing: 0.03em;
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      font-size: 19px;
+    }
+    h1 { font-size: 32px; font-weight: 700; color: #2C3E50; margin-bottom: 8px; line-height: 1.3; }
+    h2 { font-size: 26px; font-weight: 600; color: #34495E; margin-top: 24px; margin-bottom: 16px; }
+    h3 { font-size: 22px; font-weight: 600; margin-bottom: 12px; }
+    p { margin-bottom: 16px; }
+
+    /* Header */
+    .header { text-align: center; margin-bottom: 32px; padding: 28px; background: linear-gradient(135deg, var(--blue-light), var(--teal-light)); border-radius: var(--radius); }
+    .header-emoji { font-size: 48px; margin-bottom: 8px; }
+    .header-subtitle { color: var(--text-light); font-size: 17px; margin-top: 4px; }
+
+    /* Progress */
+    .progress-wrapper { margin-bottom: 28px; position: sticky; top: 0; z-index: 100; background: var(--bg-main); padding: 12px 0; }
+    .progress-labels { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 16px; color: var(--text-light); }
+    .progress-bar { height: 14px; background: #E8E4DF; border-radius: 7px; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--blue), var(--teal)); border-radius: 7px; transition: width 0.5s ease; }
+
+    /* Section nav dots */
+    .section-dots { display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+    .section-dot {
+      width: 40px; height: 40px; border-radius: 50%; border: 3px solid #E8E4DF;
+      background: white; display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 16px; cursor: pointer; transition: all 0.3s;
+      font-family: inherit;
+    }
+    .section-dot.active { border-color: var(--blue); background: var(--blue); color: white; }
+    .section-dot.completed { border-color: var(--green); background: var(--green); color: white; }
+    .section-dot:hover { transform: scale(1.1); }
+
+    /* Cards */
+    .kartica {
+      background: var(--bg-card); border-radius: var(--radius); padding: 24px 28px;
+      margin-bottom: 20px; box-shadow: var(--shadow); border-left: 5px solid transparent;
+    }
+    .kartica-naslov { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 20px; margin-bottom: 12px; }
+    .kartica-ikona { font-size: 26px; }
+    .kartica-definicija { border-left-color: var(--blue); background: var(--blue-light); }
+    .kartica-primjer { border-left-color: var(--green); background: var(--green-light); }
+    .kartica-vazno { border-left-color: var(--orange); background: var(--orange-light); }
+    .kartica-upozorenje { border-left-color: var(--red); background: var(--red-light); }
+    .kartica-savjet { border-left-color: var(--purple); background: var(--purple-light); }
+    .kartica-formula { border-left-color: var(--teal); background: var(--teal-light); }
+
+    /* Sections */
+    .section { display: none; animation: fadeIn 0.4s ease; }
+    .section.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Math display */
+    .math-display {
+      font-family: 'JetBrains Mono', 'Courier New', monospace;
+      font-size: 24px; text-align: center; padding: 20px;
+      background: white; border-radius: 12px; margin: 16px 0;
+      box-shadow: var(--shadow); letter-spacing: 0.02em; line-height: 2;
+    }
+    .math-step {
+      display: flex; align-items: center; gap: 14px; padding: 14px 20px;
+      background: white; border-radius: 12px; margin-bottom: 6px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05); transition: all 0.3s;
+    }
+    .math-step:hover { box-shadow: var(--shadow-hover); }
+    .step-num {
+      width: 32px; height: 32px; border-radius: 50%; background: var(--blue);
+      color: white; display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 15px; flex-shrink: 0;
+    }
+    .step-content { font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 20px; flex: 1; }
+    .step-explain { font-family: 'Lexend', sans-serif; font-size: 15px; color: var(--text-light); margin-top: 4px; }
+    .op-plus { color: var(--green); font-weight: 700; }
+    .op-minus { color: var(--red); font-weight: 700; }
+    .op-times { color: var(--blue); font-weight: 700; }
+    .op-divide { color: var(--orange); font-weight: 700; }
+    .highlight { background: #FFFDE7; padding: 2px 6px; border-radius: 4px; }
+    .result { color: var(--teal); font-weight: 700; font-size: 26px; }
+
+    /* Expand/collapse */
+    .expand-wrapper { margin: 16px 0; }
+    .expand-btn {
+      display: flex; align-items: center; gap: 10px; padding: 14px 20px;
+      background: var(--purple-light); border: 2px dashed var(--purple);
+      border-radius: 12px; cursor: pointer; font-size: 17px; font-weight: 500;
+      color: var(--purple); width: 100%; text-align: left; font-family: inherit;
+      transition: all 0.2s;
+    }
+    .expand-btn:hover { background: var(--purple); color: white; }
+    .expand-content {
+      display: none; padding: 20px; background: var(--purple-light);
+      border-radius: 0 0 12px 12px; margin-top: -4px; border-left: 4px solid var(--purple);
+    }
+    .expand-content.open { display: block; animation: fadeIn 0.3s ease; }
+
+    /* Conditions visual */
+    .condition-box {
+      background: linear-gradient(135deg, #FDE8E8, #FFF3E0); border-radius: 16px;
+      padding: 24px; margin: 16px 0; border: 3px solid var(--red);
+      text-align: center;
+    }
+    .condition-box .fraction {
+      display: inline-flex; flex-direction: column; align-items: center;
+      vertical-align: middle; margin: 0 4px;
+    }
+    .condition-box .frac-line { width: 100%; height: 2px; background: var(--text-main); margin: 2px 0; }
+    .denominator-highlight { background: #FFCDD2; padding: 4px 10px; border-radius: 8px; font-weight: 700; }
+    .forbidden-sign { font-size: 40px; color: var(--red); display: block; margin: 8px 0; }
+
+    /* Interactive condition builder */
+    .condition-builder {
+      background: white; border-radius: 16px; padding: 24px;
+      box-shadow: var(--shadow); margin: 16px 0;
+    }
+    .cond-equation {
+      font-family: 'JetBrains Mono', monospace; font-size: 22px;
+      text-align: center; padding: 16px; background: var(--bg-main);
+      border-radius: 12px; margin-bottom: 16px;
+    }
+    .cond-denominators { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin: 12px 0; }
+    .cond-denom-item {
+      padding: 12px 20px; background: var(--red-light); border: 2px solid var(--red);
+      border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 18px;
+      cursor: pointer; transition: all 0.2s; font-weight: 600;
+    }
+    .cond-denom-item:hover { transform: scale(1.05); }
+    .cond-denom-item.selected { background: var(--red); color: white; }
+    .cond-result { text-align: center; font-size: 22px; font-weight: 700; margin-top: 16px; color: var(--red); min-height: 40px; }
+
+    /* Quiz */
+    .pitanje { background: var(--bg-card); border-radius: var(--radius); padding: 28px; margin-bottom: 24px; box-shadow: var(--shadow); }
+    .pitanje-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .pitanje-broj { font-size: 14px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-light); font-weight: 600; }
+    .btn-sound {
+      background: none; border: 2px solid #DDD; border-radius: 50%;
+      width: 40px; height: 40px; font-size: 20px; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-sound:hover { border-color: var(--blue); background: var(--blue-light); }
+    .pitanje-tekst { font-size: 20px; font-weight: 500; margin-bottom: 20px; }
+    .opcije { display: flex; flex-direction: column; gap: 10px; }
+    .opcija {
+      display: flex; align-items: center; gap: 14px; padding: 16px 20px;
+      background: #FAFAFA; border: 2px solid #E8E4DF; border-radius: 12px;
+      cursor: pointer; font-size: 18px; text-align: left; transition: all 0.2s;
+      font-family: inherit;
+    }
+    .opcija:hover { border-color: var(--blue); background: var(--blue-light); }
+    .opcija.tocno { border-color: var(--green); background: var(--green-light); pointer-events: none; }
+    .opcija.netocno { border-color: var(--red); background: var(--red-light); pointer-events: none; }
+    .opcija.disabled { pointer-events: none; opacity: 0.6; }
+    .opcija-slovo {
+      width: 36px; height: 36px; border-radius: 50%; background: var(--blue);
+      color: white; display: flex; align-items: center; justify-content: center;
+      font-weight: 700; flex-shrink: 0;
+    }
+    .feedback { margin-top: 16px; padding: 16px 20px; border-radius: 12px; font-size: 17px; line-height: 1.7; display: none; }
+    .feedback.tocno { background: var(--green-light); border-left: 4px solid var(--green); display: block; }
+    .feedback.netocno { background: var(--orange-light); border-left: 4px solid var(--orange); display: block; }
+
+    /* Navigation */
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 32px; gap: 12px; }
+    .btn {
+      font-family: inherit; font-size: 18px; padding: 14px 32px; border-radius: 12px;
+      border: none; cursor: pointer; font-weight: 600; transition: all 0.2s; min-height: 52px;
+    }
+    .btn-primary { background: var(--blue); color: white; }
+    .btn-primary:hover { background: #3A7BC8; transform: translateY(-1px); }
+    .btn-secondary { background: white; color: var(--text-main); border: 2px solid #DDD; }
+    .btn-secondary:hover { border-color: var(--blue); }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+    /* Recap */
+    .recap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+    .recap-item {
+      padding: 16px; background: white; border-radius: 12px;
+      box-shadow: var(--shadow); text-align: center; font-size: 16px;
+    }
+    .recap-item .recap-emoji { font-size: 32px; display: block; margin-bottom: 6px; }
+
+    /* Arrow animation */
+    .arrow-anim { display: inline-block; animation: bounce 1s infinite; }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(6px); }
+    }
+
+    /* Visual fraction */
+    .vis-fraction {
+      display: inline-flex; flex-direction: column; align-items: center;
+      vertical-align: middle; margin: 0 6px; font-family: 'JetBrains Mono', monospace;
+    }
+    .vis-fraction .num { padding: 2px 8px; }
+    .vis-fraction .line { width: 100%; height: 2px; background: var(--text-main); }
+    .vis-fraction .den { padding: 2px 8px; }
+
+    /* Steps reveal */
+    .steps-container { margin: 16px 0; }
+    .reveal-step {
+      padding: 16px 20px; background: white; border-radius: 12px;
+      margin-bottom: 8px; box-shadow: var(--shadow); opacity: 0;
+      transform: translateY(10px); transition: all 0.4s ease;
+    }
+    .reveal-step.visible { opacity: 1; transform: translateY(0); }
+    .btn-reveal {
+      display: block; margin: 12px auto; padding: 12px 28px;
+      background: var(--teal); color: white; border: none; border-radius: 12px;
+      font-size: 17px; font-weight: 600; cursor: pointer; font-family: inherit;
+      transition: all 0.2s;
+    }
+    .btn-reveal:hover { background: #1E8C82; }
+    .btn-reveal:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* Confetti */
+    @keyframes padaj { to { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      body { padding: 12px; font-size: 17px; }
+      .kartica { padding: 18px 20px; }
+      h1 { font-size: 26px; }
+      h2 { font-size: 22px; }
+      .math-display { font-size: 20px; padding: 16px; }
+      .step-content { font-size: 17px; }
+      .btn { width: 48%; padding: 14px 16px; font-size: 16px; }
+      .recap-grid { grid-template-columns: 1fr; }
+      .header { padding: 20px; }
+      .section-dot { width: 34px; height: 34px; font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-emoji">📐</div>
+  <h1>Linearne jednadžbe</h1>
+  <p class="header-subtitle">Korak po korak do rješenja — matematika 1. razred SŠ</p>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-wrapper">
+  <div class="progress-labels">
+    <span>Cjelina <strong id="current-step">1</strong> od <strong>6</strong></span>
+    <span id="progress-pct">17%</span>
+  </div>
+  <div class="progress-bar">
+    <div class="progress-fill" id="progress-fill" style="width: 17%"></div>
+  </div>
+  <div class="section-dots" id="section-dots">
+    <button class="section-dot active" onclick="goToSection(0)">1</button>
+    <button class="section-dot" onclick="goToSection(1)">2</button>
+    <button class="section-dot" onclick="goToSection(2)">3</button>
+    <button class="section-dot" onclick="goToSection(3)">4</button>
+    <button class="section-dot" onclick="goToSection(4)">5</button>
+    <button class="section-dot" onclick="goToSection(5)">6</button>
+  </div>
+</div>
+
+<!-- ===================== CJELINA 1 ===================== -->
+<div class="section active" id="section-0">
+  <h2>1. Što je linearna jednadžba? 🤔</h2>
+
+  <div class="kartica kartica-definicija">
+    <div class="kartica-naslov">
+      <span class="kartica-ikona">📘</span>
+      <span>Definicija</span>
+      <button class="btn-sound" onclick="procitaj('Linearna jednadžba je jednakost dviju strana koja sadrži jednu nepoznanicu, najčešće x. Cilj je pronaći vrijednost x-a koja čini jednadžbu istinitom.')">🔊</button>
+    </div>
+    <p><strong>Linearna jednadžba</strong> je jednakost dviju strana koja sadrži jednu nepoznanicu (najčešće <strong>x</strong>).</p>
+    <p>Cilj je pronaći vrijednost <strong>x</strong> koja čini jednadžbu istinitom.</p>
+  </div>
+
+  <div class="kartica kartica-primjer">
+    <div class="kartica-naslov">
+      <span class="kartica-ikona">🟢</span>
+      <span>Primjer iz života</span>
+    </div>
+    <p>Zamislimo vagu. ⚖️</p>
+    <p>Na lijevu stranu staviš <strong>2 kutije + 3 kg</strong>.</p>
+    <p>Na desnu stranu staviš <strong>11 kg</strong>.</p>
+    <p>Koliko teži jedna kutija? To je jednadžba:</p>
+    <div class="math-display">2x + 3 = 11</div>
+    <p>Odgovor: jedna kutija teži <strong>4 kg</strong>. ✅</p>
+  </div>
+
+  <div class="kartica kartica-formula">
+    <div class="kartica-naslov">
+      <span class="kartica-ikona">📐</span>
+      <span>Opći oblik</span>
+    </div>
+    <div class="math-display">
+      <strong>ax + b = 0</strong>
+    </div>
+    <p>gdje je <strong>a ≠ 0</strong> (koeficijent uz x) i <strong>b</strong> je slobodni član.</p>
+  </div>
+
+  <div class="expand-wrapper">
+    <button class="expand-btn" onclick="toggleExpand(this)">
+      💡 Što znači "linearna"? Klikni za objašnjenje
+    </button>
+    <div class="expand-content">
+      <p>"Linearna" dolazi od riječi <strong>linija</strong>.</p>
+      <p>Kad nacrtaš graf ove jednadžbe, dobiješ <strong>ravnu liniju</strong> — zato se zove linearna!</p>
+      <p>Nepoznanica x nema eksponent (x², x³...) — uvijek je samo <strong>x</strong> na prvu potenciju.</p>
+    </div>
+  </div>
+
+  <!-- Mini kviz -->
+  <h3 style="margin-top: 28px;">Mini provjera ✏️</h3>
+  <div class="pitanje" id="q1-1">
+    <div class="pitanje-header">
+      <span class="pitanje-broj">Pitanje 1</span>
+      <button class="btn-sound" onclick="procitaj('Koja od ovih jednadžbi je linearna?')">🔊</button>
+    </div>
+    <p class="pitanje-tekst">Koja od ovih jednadžbi je linearna?</p>
+    <div class="opcije">
+      <button class="opcija" onclick="odgovori(this, false, 'q1-1', 'Ova jednadžba ima x na kvadrat — to je kvadratna jednadžba, ne linearna.')"><span class="opcija-slovo">A</span><span>x² + 3 = 7</span></button>
+      <button class="opcija" onclick="odgovori(this, true, 'q1-1', 'Točno! 🎉 Ovo je linearna jednadžba — x je na prvu potenciju.')"><span class="opcija-slovo">B</span><span>5x − 2 = 13</span></button>
+      <button class="opcija" onclick="odgovori(this, false, 'q1-1', 'Ova jednadžba nema nepoznanicu x — to je samo račun s brojevima.')"><span class="opcija-slovo">C</span><span>3 + 4 = 7</span></button>
+    </div>
+    <div class="feedback" id="fb-q1-1"></div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" disabled>← Nazad</button>
+    <button class="btn btn-primary" onclick="goToSection(1)">Dalje <span class="arrow-anim">→</span></button>
+  </div>
+</div>
+
+<!-- ===================== CJELINA 2 ===================== -->
+<div class="section" id="section-1">
+  <h2>2. Pravila rješavanja 🔧</h2>
+
+  <div class="kartica kartica-vazno">
+    <div class="kartica-naslov">
+      <span class="kartica-ikona">🔶</span>
+      <span>Zlatno pravilo jednadžbi</span>
+      <button class="btn-sound" onclick="procitaj('Što god napraviš jednoj strani, moraš napraviti i drugoj. Ako dodaš 5 na lijevu stranu, dodaj 5 i na desnu. Ako množiš lijevu s 3, pomnoži i desnu s 3.')">🔊</button>
+    </div>
+    <p>Što god napraviš jednoj strani jednadžbe, <strong>moraš napraviti i drugoj</strong>!</p>
+    <p>Ako dodaš 5 na lijevu stranu → dodaj 5 i na desnu.</p>
+    <p>Ako množiš lijevu s 3 → pomnoži i desnu s 3.</p>
+  </div>
+
+  <div class="kartica kartica-savjet">
+    <div class="kartica-naslov">
+      <span class="kartica-ikona">💡</span>
+      <span>Trik: prebacivanje</span>
+    </div>
+    <p>Kad član prebaciš na drugu stranu jednadžbe, <strong>promijeni mu predznak</strong>:</p>
+    <p><span class="op-plus">+</span> postaje <span class="op-minus">−</span> &nbsp;&nbsp;i&nbsp;&nbsp; <span class="op-minus">−</span> postaje <span class="op-plus">+</span></p>
+    <p>Ako se <span class="op-times">množi</span> → postaje <span class="op-divide">dijeljenje</span> &nbsp;&nbsp;i&nbsp;&nbsp; obrnuto</p>
+  </div>
+
+  <h3>Primjer korak po korak</h3>
+  <div class="kartica kartica-formula">
+    <div class="kartica-naslov"><span class="kartica-ikona">🎯</span><span>Riješi: 3x + 7 = 22</span></div>
+  </div>
+
+  <div class="steps-container" id="steps-2">
+    <div class="reveal-step visible">
+      <div class="math-step">
+        <span class="step-num">1</span>
+        <div>
+          <div class="step-content">3x + 7 = 22</div>
+          <div class="step-explain">Zapišemo jednadžbu.</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal-step">
+      <div class="math-step">
+        <span class="step-num">2</span>
+        <div>
+          <div class="step-content">3x = 22 <span class="op-minus">− 7</span></div>
+          <div class="step-explain">Prebacimo +7 na desnu stranu → postaje −7.</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal-step">
+      <div class="math-step">
+        <span class="step-num">3</span>
+        <div>
+          <div class="step-content">3x = 15</div>
+          <div class="step-explain">Izračunamo desnu stranu: 22 − 7 = 15.</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal-step">
+      <div class="math-step">
+        <span class="step-num">4</span>
+        <div>
+          <div class="step-content">x = 15 <span class="op-divide">÷ 3</span></div>
+          <div class="step-explain">Koeficijent 3 množi x → prebacimo ga kao dijeljenje.</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal-step">
+      <div class="math-step">
+        <span class="step-num" style="background: var(--green);">✓</span>
+        <div>
+          <div class="step-content"><span class="result">x = 5</span></div>
+          <div class="step-explain">Rješenje! Jedna kutija teži 5. 🎉</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="btn-reveal" onclick="revealNext('steps-2')">Pokaži sljedeći korak ▼</button>
+
+  <!-- Mini kviz -->
+  <h3 style="margin-top: 28px;">Mini provjera ✏️</h3>
+  <div class="pitanje" id="q2-1">
+    <div class="pitanje-header">
+      <span class="pitanje-broj">Pitanje 1</span>
+      <button class="btn-sound" onclick="procitaj('Riješi: 2 x minus 4 jednako 10. Koliko je x?')">🔊</button>
+    </div>
+    <p class="pitanje-tekst">Riješi: <strong>2x − 4 = 10</strong>. Koliko je x?</p>
+    <div class="opcije">
+      <button class="opcija" onclick="odgovori(this, false, 'q2-1', 'Probaj ponovo! Prebaci −4 na desnu stranu: 2x = 10 + 4 = 14, pa dijeli s 2.')"><span class="opcija-slovo">A</span><span>x = 3</span></button>
+      <button class="opcija" onclick="odgovori(this, true, 'q2-1', 'Bravo! 🌟 2x = 14, x = 7. Odlično!')"><span class="opcija-slovo">B</span><span>x = 7</span></button>
+      <button class="opcija" onclick="odgovori(this, false, 'q2-1', 'Ne baš. Pazi na predznak: −4 prebacimo kao +4.')"><span class="opcija-slovo">C</span><span>x = 5</span></button>
+    </div>
+    <div class="feedback" id="fb-q2-1"></div>
+  </div>
+
+  <div class="pitanje" id="q2-2">
+    <div class="pitanje-header">
+      <span class="pitanje-broj">Pitanje 2</span>
+    </div>
+    <p class="pitanje-tekst">Kad prebacimo <strong>+5</strong> na drugu stranu, postaje:</p>
+    <div class="opcije">
+      <button class="opcija" onclick="odgovori(this, true, 'q2-2', 'Točno! ✅ Plus postaje minus kad prebacujemo.')"><span class="opcija-slovo">A</span><span>−5</span></button>
+      <button class="opcija" onclick="odgovori(this, false, 'q2-2', 'Ne — predznak se mijenja. +5 postaje −5.')"><span class="opcija-slovo">B</span><span>+5</span></button>
+      <button class="opcija" onclick="odgovori(this, false, 'q2-2', 'Množenje i dijeljenje su za koeficijente, ne za zbrajanje.')"><span class="opcija-slovo">C</span><span>×5</span></button>
+    </div>
+    <div class="feedback" id="fb-q2-2"></div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goToSection(0)">← Nazad</button>
+    <button class="btn btn-primary" onclick="goToSection(2)">Dalje <span class="arrow-anim">→</span></button>
+  </div>
+</div>
+
+<!-- ===================== CJELINA 3 ===================== -->
+<div class="section" id="section-2">
+  <h2>3. Jednadžbe sa zagradama 🔓</h2>
+
+  <div class="kartica kartica-vazno">
+    <div class="kartica-naslov">
+      <span class="kartica-ikona">🔶</span>
+      <span>Prvo: otkloni zagrade!</span>
+      <button class="btn-sound" onclick="procitaj('Kad imaš zagradu, pomnoži sve unutar zagrade s brojem ispred nje. Na primjer: 3 puta zagrada x plus 2 je jednako 3 puta x plus 3 puta 2, to jest 3x plus 6.')">🔊</button>
+    </div>
+    <p>Kad imaš zagradu, <strong>pomnoži sve unutar zagrade</strong> s brojem ispred nje.</p>
+    <div class="math-display">
+      3 <span class="op-times">·</span> (x + 2) = 3<span class="op-times">·</span>x + 3<span class="op-times">·</span>2 = 3x + 6
+    </div>
+  </div>
+
+  <div class="kartica kartica-upozorenje">
+    <div class="kartica-naslov">
+      <span class="kartica-ikona">⚠️</span>
+      <span>Pazi na minus ispred zagrade!</span>
+    </div>
+    <p>Minus ispred zagrade <strong>mijenja predznak svim članovima</strong> unutar zagrade:</p>
+    <div class="math-display">
+      <span class="op-minus">−</span>(2x − 5) = <span class="op-minus">−2x</span> <span class="op-plus">+ 5</span>
+    </div>
+    <p>Plus postaje minus, minus postaje plus!</p>
+  </div>
+
+  <h3>Primjer korak po korak</h3>
+  <div class="kartica kartica-formula">
+    <div class="kartica-naslov"><span class="kartica-ikona">🎯</span><span>Riješi: 2(3x − 1) + 4 = 3(x + 5)</span></div>
+  </div>
+
+  <div class="steps-container" id="steps-3">
+    <div class="reveal-step visible">
+      <div class="math-step">
+        <span class="step-num">1</span>
+        <div>
+          <div class="step-content">2(3x − 1) + 4 = 3(x + 5)</div>
+          <div class="step-explain">Zapišemo jednadžbu.</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal-step">
+      <div class="math-step">
+        <span class="step-num">2</span>
+        <div>
+          <div class="step-content">6x − 2 + 4 = 3x + 15</div>
+          <div class="step-explain">Množimo zagrade: 2·3x=6x, 2·(−1)=−2, 3·x=3x, 3·5=15.</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal-step">
+      <div class="math-step">
+        <span class="step-num">3</span>
+        <div>
+          <div class="step-content">6x + 2 = 3x + 15</div>
+          <div class="step-explain">Sredimo lijevu stranu: −2 + 4 = 2.</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal-step">
+      <div class="math-step">
+        <span class="step-num">4</span>
+        <div>
+          <div class="step-content">6x − 3x = 15 − 2</div>
+          <div class="step-explain">x-ove na lijevo, brojeve na desno. Predznaci se mijenjaju!</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal-step">
+      <div class="math-step">
+        <span class="step-num">5</span>
+        <div>
+          <div class="step-content">3x = 13</div>
+          <div class="step-explain">Izračunamo obje strane.</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal-step">
+      <div class="math-step">
+        <span class="step-num" style="background: var(--green);">✓</span>
+        <div>
+          <div class="step-content"><span class="result">x = 13/3</span></div>
+          <div class="step-explain">Rješenje! Može biti i razlomak — to je OK. 🎉</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="btn-reveal" onclick="revealNext('steps-3')">Pokaži sljedeći korak ▼</button>
+
+  <h3 style="margin-top: 28px;">Mini provjera ✏️</h3>
+  <div class="pitanje" id="q3-1">
+    <div class="pitanje-header">
+      <span class="pitanje-broj">Pitanje 1</span>
+    </div>
+    <p class="pitanje-tekst">Koliko je <strong>−(3x − 7)</strong> kad makneš zagradu?</p>
+    <div class="opcije">
+      <button class="opcija" onclick="odgovori(this, true, 'q3-1', 'Točno! 🎉 Minus mijenja oba predznaka: 3x postaje −3x, −7 postaje +7.')"><span class="opcija-slovo">A</span><span>−3x + 7</span></button>
+      <button class="opcija" onclick="odgovori(this, false, 'q3-1', 'Pazi — minus ispred zagrade mijenja predznak SVIM članovima unutra.')"><span class="opcija-slovo">B</span><span>−3x − 7</span></button>
+      <button class="opcija" onclick="odgovori(this, false, 'q3-1', 'Ne zaboravi pomnožiti minus s oba člana: −1·3x i −1·(−7).')"><span class="opcija-slovo">C</span><span>3x − 7</span></button>
+    </div>
+    <div class="feedback" id="fb-q3-1"></div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goToSection(1)">← Nazad</button>
+    <button class="btn btn-primary" onclick="goToSection(3)">Dalje <span class="arrow-anim">→</span></button>
+  </div>
+</div>
+
+<!-- ===================== CJELINA 4 ===================== -->
+<div class="section" id="section-3">
+  <h2>4. Jednadžbe s razlomcima 🧩</h2>
+
+  <div class="kartica kartica-vazno">
+    <div class="kartica-naslov">
+      <span class="kartica-ikona">🔶</span>
+      <span>Cilj: riješiti se razlomaka!</span>
+      <button class="btn-sound" onclick="procitaj('Kad jednadžba ima razlomke, prvi korak je pronaći najmanji zajednički višekratnik svih nazivnika. Taj broj se zove N Z V. Onda pomnožiš OBJE strane jednadžbe s tim brojem i razlomci nestanu!')">🔊</button>
+    </div>
+    <p>Kad jednadžba ima razlomke, <strong>pronađi NZV</strong> (najmanji zajednički višekratnik) svih nazivnika.</p>
+    <p>Pomnoži <strong>obje strane</strong> jednadžbe s NZV-om — i razlomci nestanu! 🎉</p>
+  </div>
+
+  <div class="kartica kartica-savjet">
+    <div class="kartica-naslov">
+      <span class="kartica-ikona">💡</span>
+      <span>Kako naći NZV?</span>
+    </div>
+    <p>NZV je <strong>najmanji broj koji se dijeli</strong> sa svim nazivnicima.</p>
+    <p>Primjer: nazivnici su 2, 3 i 6 → NZV = <strong>6</strong></p>
+    <p>Jer se 6 dijeli s 2 ✅, s 3 ✅ i sa 6 ✅.</p>
+  </div>
+
+  <h3>Primjer korak po korak</h3>
+  <div class="kartica kartica-formula">
+    <div class="kartica-naslov"><span class="kartica-ikona">🎯</span>
+    <span>Riješi:
+      <span class="vis-fraction"><span class="num">x</span><span class="line"></span><span class="den">2</span></span>
+       +
+      <span class="vis-fraction"><span class="num">x</span><span class="line"></span><span class="den">3</span></span>
+       = 5
+    </span></div>
+  </div>
+
+  <div class="steps-container" id="steps-4">
+    <div class="reveal-step visible">
+      <div class="math-step">
+        <span class="step-num">1</span>
+        <div>
+          <div class="step-content">x/2 + x/3 = 5</div>
+          <div class="step-explain">Zapišemo jednadžbu. Nazivnici su 2 i 3.</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal-step">
+      <div class="math-step">
+        <span class="step-num">2</span>
+        <div>
+          <div class="step-content">NZV(2, 3) = <span class="highlight">6</span></div>
+          <div class="step-explain">Tražimo NZV. 6 se dijeli i s 2 i s 3.</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal-step">
+      <div class="math-step">
+        <span class="step-num">3</span>
+        <div>
+          <div class="step-content"><span class="op-times">6·</span>(x/2) + <span class="op-times">6·</span>(x/3) = <span class="op-times">6·</span>5</div>
+          <div class="step-explain">Množimo SVE s NZV-om = 6.</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal-step">
+      <div class="math-step">
+        <span class="step-num">4</span>
+        <div>
+          <div class="step-content">3x + 2x = 30</div>
+          <div class="step-explain">6÷2=3 pa 3·x=3x. 6÷3=2 pa 2·x=2x. Razlomci su nestali!</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal-step">
+      <div class="math-step">
+        <span class="step-num">5</span>
+        <div>
+          <div class="step-content">5x = 30</div>
+          <div class="step-explain">Zbrojimo: 3x + 2x = 5x.</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal-step">
+      <div class="math-step">
+        <span class="step-num" style="background: var(--green);">✓</span>
+        <div>
+          <div class="step-content"><span class="result">x = 6</span></div>
+          <div class="step-explain">30 ÷ 5 = 6. Gotovo! 🎉</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="btn-reveal" onclick="revealNext('steps-4')">Pokaži sljedeći korak ▼</button>
+
+  <h3 style="margin-top: 28px;">Mini provjera ✏️</h3>
+  <div class="pitanje" id="q4-1">
+    <div class="pitanje-header"><span class="pitanje-broj">Pitanje 1</span></div>
+    <p class="pitanje-tekst">Koji je NZV za nazivnike <strong>4</strong> i <strong>6</strong>?</p>
+    <div class="opcije">
+      <button class="opcija" onclick="odgovori(this, true, 'q4-1', 'Super! 🌟 12 se dijeli s 4 (=3) i s 6 (=2).')"><span class="opcija-slovo">A</span><span>12</span></button>
+      <button class="opcija" onclick="odgovori(this, false, 'q4-1', '24 se dijeli s oba, ali 12 je manji. Tražimo NAJMANJI zajednički višekratnik.')"><span class="opcija-slovo">B</span><span>24</span></button>
+      <button class="opcija" onclick="odgovori(this, false, 'q4-1', '6 se dijeli s 6, ali NE dijeli se s 4 (6÷4=1.5). Probaj veći broj!')"><span class="opcija-slovo">C</span><span>6</span></button>
+    </div>
+    <div class="feedback" id="fb-q4-1"></div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goToSection(2)">← Nazad</button>
+    <button class="btn btn-primary" onclick="goToSection(4)">Dalje <span class="arrow-anim">→</span></button>
+  </div>
+</div>
+
+<!-- ===================== CJELINA 5: UVJETI ===================== -->
+<div class="section" id="section-4">
+  <h2>5. Uvjeti jednadžbe ⚡</h2>
+  <p><em>Ovo je jako važan dio! Objašnjavamo zašto i kako se postavljaju uvjeti.</em></p>
+
+  <div class="kartica kartica-upozorenje">
+    <div class="kartica-naslov">
+      <span class="kartica-ikona">🚫</span>
+      <span>Zabranjeno dijeljenje!</span>
+      <button class="btn-sound" onclick="procitaj('Dijeljenje nulom je zabranjeno u matematici! Nula ne može biti u nazivniku razlomka. Zato, kad imaš x u nazivniku, moraš napisati uvjet: ta vrijednost x koja bi nazivnik učinila nulom je ZABRANJENA.')">🔊</button>
+    </div>
+    <p><strong>Dijeljenje nulom je zabranjeno!</strong> 🚫</p>
+    <p>Nula ne može biti u nazivniku razlomka.</p>
+    <p>Zato kad imaš <strong>x u nazivniku</strong>, moraš napisati <strong>uvjet</strong>.</p>
+  </div>
+
+  <div class="condition-box">
+    <p style="font-size: 22px; font-weight: 600; margin-bottom: 8px;">Zašto?</p>
+    <p>Koliko je 10 ÷ 0 = ?</p>
+    <span class="forbidden-sign">🤯 NE POSTOJI!</span>
+    <p>Ne postoji broj koji pomnožen s 0 daje 10.</p>
+    <p style="font-weight: 700; color: var(--red); font-size: 22px; margin-top: 12px;">Zato: nazivnik ≠ 0. Uvijek!</p>
+  </div>
+
+  <div class="kartica kartica-definicija">
+    <div class="kartica-naslov">
+      <span class="kartica-ikona">📘</span>
+      <span>Kako odrediti uvjete?</span>
+      <button class="btn-sound" onclick="procitaj('Postavljanje uvjeta u 3 koraka. Korak 1: Pogledaj SVE nazivnike u jednadžbi. Korak 2: Pronađi one koji sadrže x, to jest nepoznanicu. Korak 3: Izjednači svaki takav nazivnik s nulom i riješi — te vrijednosti x-a su ZABRANJENE.')">🔊</button>
+    </div>
+    <p><strong>3 koraka za uvjete:</strong></p>
+    <div class="math-step" style="margin: 8px 0;">
+      <span class="step-num" style="background: var(--red);">1</span>
+      <div><div class="step-explain" style="font-size: 18px; color: var(--text-main);">Pogledaj <strong>SVE nazivnike</strong> u jednadžbi.</div></div>
+    </div>
+    <div class="math-step" style="margin: 8px 0;">
+      <span class="step-num" style="background: var(--red);">2</span>
+      <div><div class="step-explain" style="font-size: 18px; color: var(--text-main);">Pronađi one koji sadrže <strong>x</strong> (nepoznanicu).</div></div>
+    </div>
+    <div class="math-step" style="margin: 8px 0;">
+      <span class="step-num" style="background: var(--red);">3</span>
+      <div><div class="step-explain" style="font-size: 18px; color: var(--text-main);">Izjednači svaki takav nazivnik s 0 i riješi → te vrijednosti x-a su <strong>ZABRANJENE</strong>.</div></div>
+    </div>
+  </div>
+
+  <!-- PRIMJER 1: Jednostavan -->
+  <h3>Primjer 1 — Jednostavno</h3>
+  <div class="kartica kartica-formula">
+    <div class="kartica-naslov"><span class="kartica-ikona">🎯</span>
+    <span>Jednadžba:
+      <span class="vis-fraction"><span class="num">3</span><span class="line"></span><span class="den" style="color: var(--red); font-weight:700;">x</span></span>
+       = 6
+    </span></div>
+  </div>
+
+  <div class="steps-container" id="steps-5a">
+    <div class="reveal-step visible">
+      <div class="math-step">
+        <span class="step-num" style="background: var(--red);">👀</span>
+        <div>
+          <div class="step-content">Nazivnik = <span style="color:var(--red); font-weight:700;">x</span></div>
+          <div class="step-explain">Gledamo: koji nazivnik sadrži x? Ovdje je x SAM u nazivniku.</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal-step">
+      <div class="math-step">
+        <span class="step-num" style="background: var(--red);">🚫</span>
+        <div>
+          <div class="step-content">x ≠ 0</div>
+          <div class="step-explain">x ne smije biti 0 jer bi nazivnik bio 0 → dijeljenje nulom!</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal-step">
+      <div class="math-step">
+        <span class="step-num" style="background: var(--green);">✓</span>
+        <div>
+          <div class="step-content" style="color: var(--red); font-weight: 700;">Uvjet: x ≠ 0</div>
+          <div class="step-explain">Pišemo uvjet PRIJE nego počnemo rješavati. ✍️</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="btn-reveal" onclick="revealNext('steps-5a')">Pokaži sljedeći korak ▼</button>
+
+  <!-- PRIMJER 2: Složeniji -->
+  <h3 style="margin-top: 24px;">Primjer 2 — Izraz u nazivniku</h3>
+  <div class="kartica kartica-formula">
+    <div class="kartica-naslov"><span class="kartica-ikona">🎯</span>
+    <span>Jednadžba:
+      <span class="vis-fraction"><span class="num">5</span><span class="line"></span><span class="den" style="color: var(--red); font-weight:700;">x − 3</span></span>
+       = 2
+    </span></div>
+  </div>
+
+  <div class="steps-container" id="steps-5b">
+    <div class="reveal-step visible">
+      <div class="math-step">
+        <span class="step-num" style="background: var(--red);">👀</span>
+        <div>
+          <div class="step-content">Nazivnik = <span style="color:var(--red); font-weight:700;">(x − 3)</span></div>
+          <div class="step-explain">Cijeli izraz (x − 3) je u nazivniku.</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal-step">
+      <div class="math-step">
+        <span class="step-num" style="background: var(--red);">🚫</span>
+        <div>
+          <div class="step-content">x − 3 ≠ 0</div>
+          <div class="step-explain">Nazivnik ne smije biti 0. Postavljamo jednadžbu: (x − 3) ≠ 0.</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal-step">
+      <div class="math-step">
+        <span class="step-num" style="background: var(--orange);">🔧</span>
+        <div>
+          <div class="step-content">x ≠ 0 + 3</div>
+          <div class="step-explain">Rješavamo kao malu jednadžbu: prebacimo −3 na drugu stranu.</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal-step">
+      <div class="math-step">
+        <span class="step-num" style="background: var(--green);">✓</span>
+        <div>
+          <div class="step-content" style="color: var(--red); font-weight: 700;">Uvjet: x ≠ 3</div>
+          <div class="step-explain">Ako bi x bio 3, nazivnik bi bio 3−3=0. A to je zabranjeno! 🚫</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="btn-reveal" onclick="revealNext('steps-5b')">Pokaži sljedeći korak ▼</button>
+
+  <!-- PRIMJER 3: Dva nazivnika -->
+  <h3 style="margin-top: 24px;">Primjer 3 — Više nazivnika</h3>
+  <div class="kartica kartica-formula">
+    <div class="kartica-naslov"><span class="kartica-ikona">🎯</span>
+    <span>Jednadžba:
+      <span class="vis-fraction"><span class="num">2</span><span class="line"></span><span class="den" style="color: var(--red); font-weight:700;">x</span></span>
+       +
+      <span class="vis-fraction"><span class="num">1</span><span class="line"></span><span class="den" style="color: var(--red); font-weight:700;">x − 5</span></span>
+       = 4
+    </span></div>
+  </div>
+
+  <div class="steps-container" id="steps-5c">
+    <div class="reveal-step visible">
+      <div class="math-step">
+        <span class="step-num" style="background: var(--red);">👀</span>
+        <div>
+          <div class="step-content">Nazivnici: <span style="color:var(--red);">x</span> i <span style="color:var(--red);">(x − 5)</span></div>
+          <div class="step-explain">Imamo DVA nazivnika s x-om. Trebamo dva uvjeta!</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal-step">
+      <div class="math-step">
+        <span class="step-num" style="background: var(--red);">🚫</span>
+        <div>
+          <div class="step-content">1. x ≠ 0</div>
+          <div class="step-explain">Prvi nazivnik je x → x ne smije biti 0.</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal-step">
+      <div class="math-step">
+        <span class="step-num" style="background: var(--red);">🚫</span>
+        <div>
+          <div class="step-content">2. x − 5 ≠ 0 → x ≠ 5</div>
+          <div class="step-explain">Drugi nazivnik je (x − 5) → x ne smije biti 5.</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal-step">
+      <div class="math-step">
+        <span class="step-num" style="background: var(--green);">✓</span>
+        <div>
+          <div class="step-content" style="color: var(--red); font-weight: 700;">Uvjeti: x ≠ 0, x ≠ 5</div>
+          <div class="step-explain">Oba uvjeta moraju biti ispunjena! Pišemo ih prije rješavanja.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="btn-reveal" onclick="revealNext('steps-5c')">Pokaži sljedeći korak ▼</button>
+
+  <!-- PRIMJER 4: Složeni izraz -->
+  <h3 style="margin-top: 24px;">Primjer 4 — Složeni izraz u nazivniku</h3>
+  <div class="kartica kartica-formula">
+    <div class="kartica-naslov"><span class="kartica-ikona">🎯</span>
+    <span>Jednadžba:
+      <span class="vis-fraction"><span class="num">7</span><span class="line"></span><span class="den" style="color: var(--red); font-weight:700;">2x + 4</span></span>
+       = 1
+    </span></div>
+  </div>
+
+  <div class="steps-container" id="steps-5d">
+    <div class="reveal-step visible">
+      <div class="math-step">
+        <span class="step-num" style="background: var(--red);">👀</span>
+        <div>
+          <div class="step-content">Nazivnik = <span style="color:var(--red); font-weight:700;">(2x + 4)</span></div>
+          <div class="step-explain">Izraz s x-om u nazivniku.</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal-step">
+      <div class="math-step">
+        <span class="step-num" style="background: var(--red);">🚫</span>
+        <div>
+          <div class="step-content">2x + 4 ≠ 0</div>
+          <div class="step-explain">Izraz u nazivniku ne smije biti 0.</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal-step">
+      <div class="math-step">
+        <span class="step-num" style="background: var(--orange);">🔧</span>
+        <div>
+          <div class="step-content">2x ≠ −4</div>
+          <div class="step-explain">Prebacimo +4 na drugu stranu → −4.</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal-step">
+      <div class="math-step">
+        <span class="step-num" style="background: var(--green);">✓</span>
+        <div>
+          <div class="step-content" style="color: var(--red); font-weight: 700;">Uvjet: x ≠ −2</div>
+          <div class="step-explain">−4 ÷ 2 = −2. Provjera: 2·(−2) + 4 = 0 → zabranjeno!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="btn-reveal" onclick="revealNext('steps-5d')">Pokaži sljedeći korak ▼</button>
+
+  <div class="kartica kartica-savjet" style="margin-top: 24px;">
+    <div class="kartica-naslov">
+      <span class="kartica-ikona">💡</span>
+      <span>Zapamti recept!</span>
+    </div>
+    <p><strong>1.</strong> Pronađi sve nazivnike koji sadrže x.</p>
+    <p><strong>2.</strong> Za svaki: stavi nazivnik ≠ 0.</p>
+    <p><strong>3.</strong> Riješi tu malu nejednadžbu → dobiješ zabranjenu vrijednost.</p>
+    <p><strong>4.</strong> Napiši: x ≠ (zabranjena vrijednost).</p>
+    <p><strong>5.</strong> Tek onda počni rješavati jednadžbu!</p>
+  </div>
+
+  <!-- Interactive builder -->
+  <h3 style="margin-top: 24px;">Tvoj red! Postavi uvjete 🎮</h3>
+  <div class="condition-builder">
+    <p style="font-weight: 600; margin-bottom: 12px;">Jednadžba:</p>
+    <div class="cond-equation">
+      <span class="vis-fraction"><span class="num">3</span><span class="line"></span><span class="den">x + 1</span></span>
+       −
+      <span class="vis-fraction"><span class="num">2</span><span class="line"></span><span class="den">x − 4</span></span>
+       =
+      <span class="vis-fraction"><span class="num">1</span><span class="line"></span><span class="den">2</span></span>
+    </div>
+    <p style="font-weight: 500; text-align: center;">Koji nazivnici sadrže x? Klikni na sve koji sadrže x:</p>
+    <div class="cond-denominators">
+      <button class="cond-denom-item" onclick="toggleCondDenom(this, 'x+1', true)">(x + 1)</button>
+      <button class="cond-denom-item" onclick="toggleCondDenom(this, 'x-4', true)">(x − 4)</button>
+      <button class="cond-denom-item" onclick="toggleCondDenom(this, '2', false)">2</button>
+    </div>
+    <div class="cond-result" id="cond-result"></div>
+  </div>
+
+  <h3 style="margin-top: 28px;">Mini provjera ✏️</h3>
+  <div class="pitanje" id="q5-1">
+    <div class="pitanje-header"><span class="pitanje-broj">Pitanje 1</span></div>
+    <p class="pitanje-tekst">Koji je uvjet za jednadžbu
+      <span class="vis-fraction"><span class="num">4</span><span class="line"></span><span class="den">3x − 6</span></span> = 1 ?
+    </p>
+    <div class="opcije">
+      <button class="opcija" onclick="odgovori(this, false, 'q5-1', 'Pazi! Moraš riješiti: 3x − 6 ≠ 0, dakle 3x ≠ 6, x ≠ 2.')"><span class="opcija-slovo">A</span><span>x ≠ 6</span></button>
+      <button class="opcija" onclick="odgovori(this, true, 'q5-1', 'Bravo! 🌟 3x − 6 ≠ 0 → 3x ≠ 6 → x ≠ 2. Provjera: 3·2 − 6 = 0. Točno!')"><span class="opcija-slovo">B</span><span>x ≠ 2</span></button>
+      <button class="opcija" onclick="odgovori(this, false, 'q5-1', 'Ne — moraš riješiti cijeli izraz u nazivniku: 3x − 6 = 0.')"><span class="opcija-slovo">C</span><span>x ≠ 0</span></button>
+    </div>
+    <div class="feedback" id="fb-q5-1"></div>
+  </div>
+
+  <div class="pitanje" id="q5-2">
+    <div class="pitanje-header"><span class="pitanje-broj">Pitanje 2</span></div>
+    <p class="pitanje-tekst">Jednadžba ima nazivnike <strong>x</strong>, <strong>(x+2)</strong> i <strong>5</strong>. Koliko uvjeta treba napisati?</p>
+    <div class="opcije">
+      <button class="opcija" onclick="odgovori(this, false, 'q5-2', 'Samo nazivnici koji sadrže x trebaju uvjet. Broj 5 nema x!')"><span class="opcija-slovo">A</span><span>3 uvjeta</span></button>
+      <button class="opcija" onclick="odgovori(this, true, 'q5-2', 'Točno! ✅ Samo x i (x+2) sadrže nepoznanicu. Uvjeti: x ≠ 0, x ≠ −2.')"><span class="opcija-slovo">B</span><span>2 uvjeta</span></button>
+      <button class="opcija" onclick="odgovori(this, false, 'q5-2', 'Ima više od jednog nazivnika s x-om! Pogledaj ponovo.')"><span class="opcija-slovo">C</span><span>1 uvjet</span></button>
+    </div>
+    <div class="feedback" id="fb-q5-2"></div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goToSection(3)">← Nazad</button>
+    <button class="btn btn-primary" onclick="goToSection(5)">Dalje <span class="arrow-anim">→</span></button>
+  </div>
+</div>
+
+<!-- ===================== CJELINA 6: PROVJERA & RECAP ===================== -->
+<div class="section" id="section-5">
+  <h2>6. Provjera rješenja ✅</h2>
+
+  <div class="kartica kartica-vazno">
+    <div class="kartica-naslov">
+      <span class="kartica-ikona">🔶</span>
+      <span>Uvijek provjeri!</span>
+      <button class="btn-sound" onclick="procitaj('Nakon što nađeš rješenje, uvijek ga uvrsti natrag u ORIGINALNU jednadžbu. Ako lijeva strana bude jednaka desnoj, rješenje je točno!')">🔊</button>
+    </div>
+    <p>Nakon rješavanja, <strong>uvrsti x natrag</strong> u originalnu jednadžbu.</p>
+    <p>Ako lijeva strana = desna strana → rješenje je <strong>točno</strong>! ✅</p>
+  </div>
+
+  <h3>Primjer provjere</h3>
+  <div class="kartica kartica-primjer">
+    <div class="kartica-naslov"><span class="kartica-ikona">🟢</span><span>Jednadžba: 2x + 3 = 11, dobili smo x = 4</span></div>
+    <div class="math-step" style="margin: 8px 0;">
+      <span class="step-num">1</span>
+      <div><div class="step-content">L = 2 · <span class="highlight">4</span> + 3 = 8 + 3 = <strong>11</strong></div></div>
+    </div>
+    <div class="math-step" style="margin: 8px 0;">
+      <span class="step-num">2</span>
+      <div><div class="step-content">D = <strong>11</strong></div></div>
+    </div>
+    <div class="math-step" style="margin: 8px 0;">
+      <span class="step-num" style="background: var(--green);">✓</span>
+      <div><div class="step-content" style="color: var(--green);">L = D = 11 ✅ Rješenje je točno!</div></div>
+    </div>
+  </div>
+
+  <div class="kartica kartica-upozorenje">
+    <div class="kartica-naslov">
+      <span class="kartica-ikona">⚠️</span>
+      <span>Pazi kod jednadžbi s uvjetima!</span>
+    </div>
+    <p>Ako rješenje krši uvjet → <strong>jednadžba nema rješenje</strong>!</p>
+    <p>Primjer: ako uvjet kaže x ≠ 3, a ti dobiješ x = 3 → rješenje ne postoji.</p>
+  </div>
+
+  <!-- RECAP -->
+  <h2 style="text-align: center; margin-top: 36px;">Što smo naučili? 🎓</h2>
+  <div class="recap-grid">
+    <div class="recap-item">
+      <span class="recap-emoji">📘</span>
+      <strong>Linearna jednadžba</strong><br>ax + b = 0, x na prvu potenciju
+    </div>
+    <div class="recap-item">
+      <span class="recap-emoji">🔧</span>
+      <strong>Prebacivanje</strong><br>Promijeni predznak kad premiještaš
+    </div>
+    <div class="recap-item">
+      <span class="recap-emoji">🔓</span>
+      <strong>Zagrade</strong><br>Pomnoži sve unutar zagrade
+    </div>
+    <div class="recap-item">
+      <span class="recap-emoji">🧩</span>
+      <strong>Razlomci</strong><br>NZV → pomnoži → razlomci nestanu
+    </div>
+    <div class="recap-item">
+      <span class="recap-emoji">🚫</span>
+      <strong>Uvjeti</strong><br>Nazivnik s x-om ≠ 0 → riješi za x
+    </div>
+    <div class="recap-item">
+      <span class="recap-emoji">✅</span>
+      <strong>Provjera</strong><br>Uvrsti rješenje natrag u jednadžbu
+    </div>
+  </div>
+
+  <div class="kartica" style="background: linear-gradient(135deg, #E8F8E8, #E8F4FD); text-align: center; margin-top: 24px; padding: 32px;">
+    <div style="font-size: 48px; margin-bottom: 12px;">🌟⭐🌟</div>
+    <h2 style="margin-top: 0; color: var(--green);">Svaka čast, Paulina!</h2>
+    <p style="font-size: 20px;">Prošla si cijelu lekciju o linearnim jednadžbama.</p>
+    <p>Svaki korak koji napraviš čini te jačom u matematici! 💪</p>
+    <p style="margin-top: 16px; color: var(--text-light); font-size: 16px;">Savjet: ponovi lekciju za 3 dana, pa opet za 7 dana. 📅</p>
+    <button class="btn btn-primary" style="margin-top: 20px; font-size: 20px; padding: 16px 40px;" onclick="confetti(); this.disabled=true; this.textContent='🎉 Bravo!';">Završi lekciju! 🎉</button>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goToSection(4)">← Nazad</button>
+    <button class="btn btn-primary" onclick="goToSection(0)">Na početak ↺</button>
+  </div>
+</div>
+
+<script>
+  // === SECTION NAVIGATION ===
+  let currentSection = 0;
+  const totalSections = 6;
+  const completedSections = new Set();
+
+  function goToSection(n) {
+    if (n < 0 || n >= totalSections) return;
+    completedSections.add(currentSection);
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById('section-' + n).classList.add('active');
+    currentSection = n;
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function updateProgress() {
+    const pct = Math.round(((currentSection + 1) / totalSections) * 100);
+    document.getElementById('current-step').textContent = currentSection + 1;
+    document.getElementById('progress-pct').textContent = pct + '%';
+    document.getElementById('progress-fill').style.width = pct + '%';
+    const dots = document.querySelectorAll('.section-dot');
+    dots.forEach((d, i) => {
+      d.classList.remove('active', 'completed');
+      if (i === currentSection) d.classList.add('active');
+      else if (completedSections.has(i)) d.classList.add('completed');
+    });
+  }
+
+  // === EXPAND / COLLAPSE ===
+  function toggleExpand(btn) {
+    const content = btn.nextElementSibling;
+    content.classList.toggle('open');
+    btn.textContent = content.classList.contains('open')
+      ? '🔽 Zatvori objašnjenje'
+      : '💡 Što znači "linearna"? Klikni za objašnjenje';
+  }
+
+  // === REVEAL STEPS ===
+  function revealNext(containerId) {
+    const container = document.getElementById(containerId);
+    const steps = container.querySelectorAll('.reveal-step:not(.visible)');
+    if (steps.length > 0) {
+      steps[0].classList.add('visible');
+    }
+    if (steps.length <= 1) {
+      const btn = container.nextElementSibling;
+      if (btn && btn.classList.contains('btn-reveal')) {
+        btn.disabled = true;
+        btn.textContent = 'Svi koraci prikazani ✅';
+      }
+    }
+  }
+
+  // === QUIZ ===
+  function odgovori(btn, tocno, pitanjeId, objasnjenje) {
+    const pitanje = document.getElementById(pitanjeId);
+    const opcije = pitanje.querySelectorAll('.opcija');
+    opcije.forEach(o => o.classList.add('disabled'));
+    if (tocno) {
+      btn.classList.add('tocno');
+    } else {
+      btn.classList.add('netocno');
+      // highlight correct one
+      opcije.forEach(o => {
+        if (o.getAttribute('onclick') && o.getAttribute('onclick').includes('true')) {
+          o.classList.add('tocno');
+        }
+      });
+    }
+    const fb = document.getElementById('fb-' + pitanjeId);
+    fb.className = 'feedback ' + (tocno ? 'tocno' : 'netocno');
+    fb.textContent = objasnjenje;
+    fb.style.display = 'block';
+  }
+
+  // === CONDITION BUILDER ===
+  let condSelected = new Set();
+  let condCorrect = new Set(['x+1', 'x-4']);
+  let condWrong = new Set(['2']);
+  let condCheckDone = false;
+
+  function toggleCondDenom(btn, id, isCorrect) {
+    if (condCheckDone) return;
+    btn.classList.toggle('selected');
+    if (condSelected.has(id)) condSelected.delete(id); else condSelected.add(id);
+
+    // Check if all correct are selected and no wrong
+    const allCorrectSelected = [...condCorrect].every(c => condSelected.has(c));
+    const noWrongSelected = ![...condWrong].some(c => condSelected.has(c));
+    const resultEl = document.getElementById('cond-result');
+
+    if (condSelected.size >= 2 && allCorrectSelected && noWrongSelected) {
+      resultEl.innerHTML = '✅ Točno! Uvjeti: <strong>x ≠ −1</strong> i <strong>x ≠ 4</strong>';
+      resultEl.style.color = 'var(--green)';
+      condCheckDone = true;
+    } else if (condSelected.has('2') && condSelected.size > 0) {
+      resultEl.innerHTML = '🤔 Broj 2 nema x — ne treba mu uvjet!';
+      resultEl.style.color = 'var(--orange)';
+    } else if (condSelected.size > 0) {
+      resultEl.innerHTML = '👀 Ima li još koji nazivnik s x-om?';
+      resultEl.style.color = 'var(--blue)';
+    } else {
+      resultEl.innerHTML = '';
+    }
+  }
+
+  // === TTS ===
+  function procitaj(tekst) {
+    if (speechSynthesis.speaking) speechSynthesis.cancel();
+    const govor = new SpeechSynthesisUtterance(tekst);
+    govor.lang = 'hr-HR';
+    govor.rate = 0.85;
+    govor.pitch = 1.0;
+    speechSynthesis.speak(govor);
+  }
+
+  // === CONFETTI ===
+  function confetti() {
+    const boje = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#F7DC6F', '#BB8FCE', '#82E0AA'];
+    for (let i = 0; i < 60; i++) {
+      const el = document.createElement('div');
+      el.style.cssText = `
+        position: fixed; width: ${8 + Math.random()*8}px; height: ${8 + Math.random()*8}px;
+        border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+        background: ${boje[Math.floor(Math.random() * boje.length)]};
+        left: ${Math.random() * 100}vw; top: -10px;
+        animation: padaj ${1.5 + Math.random() * 2.5}s ease-out forwards;
+        z-index: 9999;
+      `;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 4500);
+    }
+  }
+</script>
+
+</body>
+</html>
