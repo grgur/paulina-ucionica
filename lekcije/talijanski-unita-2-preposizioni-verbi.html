@@ -1,0 +1,2226 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light">
+  <title>Talijanski — Unità 2: Preposizioni i nepravilni glagoli — Paulinina Učionica</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #FFF8F0;
+      --bg-card: #FFFFFF;
+      --text-main: #3A3A3A;
+      --text-light: #6B6B6B;
+      --blue: #4A90D9;
+      --blue-light: #E8F4FD;
+      --green: #5CB85C;
+      --green-light: #E8F8E8;
+      --orange: #FF9800;
+      --orange-light: #FFF3E0;
+      --red: #E74C3C;
+      --red-light: #FDE8E8;
+      --purple: #9B59B6;
+      --purple-light: #F3E8FD;
+      --teal: #26A69A;
+      --teal-light: #E0F2F1;
+      --pink-light: #FFF0F5;
+      --radius: 12px;
+      --shadow: 0 2px 12px rgba(0,0,0,0.06);
+      --shadow-hover: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Lexend', 'Verdana', sans-serif;
+      background: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.8;
+      letter-spacing: 0.03em;
+      padding: 12px;
+      margin: 0 auto;
+      font-size: 17px;
+      -webkit-text-size-adjust: 100%;
+      overflow-x: hidden;
+    }
+
+    h1 { font-size: 24px; font-weight: 700; color: #2C3E50; margin-bottom: 8px; line-height: 1.3; }
+    h2 { font-size: 20px; font-weight: 600; color: #34495E; margin-top: 24px; margin-bottom: 12px; }
+    h3 { font-size: 18px; font-weight: 600; margin-bottom: 10px; }
+    h4 { font-size: 17px; font-weight: 600; margin-bottom: 8px; }
+    p { margin-bottom: 14px; }
+
+    .skip-link {
+      position: absolute; top: -40px; left: 0;
+      background: var(--blue); color: white;
+      padding: 8px 16px; z-index: 10000; text-decoration: none;
+    }
+    .skip-link:focus { top: 0; }
+
+    /* Touch targets */
+    button, .btn, [role="button"] {
+      min-height: 48px;
+      padding: 12px 16px;
+      font-size: 16px;
+      font-family: inherit;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 14px 20px;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 17px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      margin-bottom: 10px;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .btn-primary { background: var(--blue); color: white; }
+    .btn-primary:hover { background: #3A7BC8; }
+    .btn-secondary { background: white; color: var(--text-main); border: 2px solid #DDD; }
+    .btn-secondary:hover { border-color: var(--blue); }
+
+    .kartica {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow);
+      width: 100%;
+      border-left: 5px solid transparent;
+    }
+    .kartica-naslov {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 18px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .kartica-ikona { font-size: 24px; }
+
+    .kartica-definicija { border-left-color: var(--blue); background: var(--blue-light); }
+    .kartica-primjer { border-left-color: var(--green); background: var(--green-light); }
+    .kartica-vazno { border-left-color: var(--orange); background: var(--orange-light); }
+    .kartica-upozorenje { border-left-color: var(--red); background: var(--red-light); }
+    .kartica-savjet { border-left-color: var(--purple); background: var(--purple-light); }
+    .kartica-formula { border-left-color: var(--teal); background: var(--teal-light); }
+
+    /* Settings */
+    .settings-toggle {
+      position: fixed;
+      top: 12px;
+      right: 12px;
+      z-index: 1000;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 2px solid #DDD;
+      font-size: 22px;
+      background: var(--bg-card);
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .settings-panel {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: var(--bg-main);
+      padding: 20px;
+      overflow-y: auto;
+    }
+    .settings-panel h3 { margin-bottom: 16px; }
+    .settings-panel label { display: block; margin: 12px 0 4px; font-weight: 500; }
+    .settings-panel input[type="range"] { width: 100%; }
+    .settings-panel fieldset { border: 1px solid #DDD; padding: 12px; margin: 12px 0; border-radius: 8px; }
+    .settings-panel fieldset label { display: inline-block; margin-right: 16px; }
+
+    /* Pauza gumb */
+    .btn-pauza {
+      position: fixed;
+      bottom: 16px;
+      right: 12px;
+      z-index: 1000;
+      padding: 10px 16px;
+      border-radius: 24px;
+      border: 2px solid var(--teal);
+      font-size: 15px;
+      font-weight: 600;
+      background: var(--bg-card);
+      color: var(--teal);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      cursor: pointer;
+      min-height: 44px;
+    }
+
+    .breathing-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+    }
+    .breathing-box {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      padding: 24px;
+      text-align: center;
+      max-width: 400px;
+      margin: 12px;
+    }
+    .breathing-circle {
+      width: 140px; height: 140px;
+      border-radius: 50%;
+      background: var(--teal-light);
+      border: 4px solid var(--teal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 24px auto;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--teal);
+      animation: breathe 12s infinite ease-in-out;
+    }
+    @keyframes breathe {
+      0%, 100% { transform: scale(1); }
+      33% { transform: scale(1.3); }
+      66% { transform: scale(1); }
+    }
+
+    /* Progress */
+    .progress-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg-main);
+      padding: 10px 0;
+      margin-bottom: 12px;
+    }
+    .progress-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      font-size: 14px;
+      color: var(--text-light);
+    }
+    .progress-bar {
+      height: 10px;
+      background: #E8E4DF;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--blue), var(--teal));
+      border-radius: 6px;
+      transition: width 0.4s ease;
+    }
+
+    /* Cjeline (sekcije) */
+    .cjelina { display: none; animation: fadeIn 0.4s ease; }
+    .cjelina.aktivna { display: block; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Plan (advance organizer) */
+    .plan-list { list-style: none; padding: 0; margin: 12px 0; }
+    .plan-list li {
+      padding: 8px 0;
+      font-size: 17px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .plan-check { font-size: 20px; width: 28px; flex-shrink: 0; }
+    .plan-list li.done { color: var(--green); }
+    .plan-list li.done .plan-check { content: '☑'; }
+
+    /* TTS gumbi */
+    .btn-sound {
+      background: var(--bg-card);
+      border: 2px solid #DDD;
+      border-radius: 50%;
+      width: 44px; height: 44px;
+      font-size: 18px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      min-width: 44px;
+    }
+    .btn-sound:hover { border-color: var(--blue); background: var(--blue-light); }
+    .btn-sound.hr-btn { border-color: var(--pink-light); }
+
+    /* Italian word card */
+    .word-card {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      border-left: 4px solid var(--blue);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .word-it {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--blue);
+      letter-spacing: 0.05em;
+    }
+    .word-hr {
+      font-size: 16px;
+      color: var(--text-light);
+      font-style: italic;
+    }
+    .word-main { flex: 1; min-width: 180px; }
+    .word-buttons { display: flex; gap: 6px; }
+
+    /* Conjugation table */
+    .conj-table {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      padding: 14px;
+      margin: 16px 0;
+      box-shadow: var(--shadow);
+    }
+    .conj-table h4 {
+      text-align: center;
+      color: var(--blue);
+      font-size: 22px;
+      margin-bottom: 14px;
+      font-weight: 700;
+    }
+    .conj-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .conj-cell {
+      padding: 12px 10px;
+      background: var(--blue-light);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .conj-cell.irregular { background: var(--orange-light); border-left: 3px solid var(--orange); }
+    .conj-pronoun {
+      font-size: 14px;
+      color: var(--text-light);
+      font-weight: 500;
+    }
+    .conj-form {
+      font-size: 17px;
+      font-weight: 700;
+      color: #2C3E50;
+    }
+    .conj-cell .btn-sound {
+      width: 36px; height: 36px;
+      min-width: 36px;
+      font-size: 14px;
+      border-width: 1px;
+    }
+
+    /* Example sentences */
+    .example-sent {
+      background: var(--green-light);
+      border-left: 4px solid var(--green);
+      padding: 14px 16px;
+      border-radius: 8px;
+      margin: 10px 0;
+    }
+    .example-it {
+      font-size: 18px;
+      font-weight: 600;
+      color: #2C3E50;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .example-hr {
+      font-size: 15px;
+      color: var(--text-light);
+      font-style: italic;
+    }
+    .highlight-prep {
+      background: #FFE082;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 700;
+      color: #8B4513;
+    }
+    .highlight-verb {
+      background: #C5E1A5;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 700;
+      color: #33691E;
+    }
+
+    /* Preposition table (articolate) */
+    .prep-table {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin: 16px 0;
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      padding: 10px;
+    }
+    .prep-table table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 360px;
+    }
+    .prep-table th, .prep-table td {
+      padding: 10px 8px;
+      text-align: center;
+      border: 1px solid #E0E0E0;
+      font-size: 15px;
+    }
+    .prep-table th {
+      background: var(--blue);
+      color: white;
+      font-weight: 600;
+    }
+    .prep-table tbody th {
+      background: var(--blue-light);
+      color: var(--blue);
+    }
+    .prep-table td {
+      background: var(--bg-card);
+      font-weight: 600;
+      color: #2C3E50;
+    }
+
+    /* Quiz */
+    .pitanje {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow);
+    }
+    .pitanje-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .pitanje-broj {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-light);
+      font-weight: 600;
+    }
+    .pitanje-tekst {
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+    .opcije {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .opcija {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      background: #FAFAFA;
+      border: 2px solid #E8E4DF;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 17px;
+      text-align: left;
+      width: 100%;
+      font-family: inherit;
+      min-height: 52px;
+    }
+    .opcija:hover { border-color: var(--blue); background: var(--blue-light); }
+    .opcija-slovo {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--blue);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      flex-shrink: 0;
+      font-size: 15px;
+    }
+    .opcija.tocno { border-color: var(--green); background: var(--green-light); }
+    .opcija.tocno .opcija-slovo { background: var(--green); }
+    .opcija.netocno { border-color: var(--red); background: var(--red-light); }
+    .opcija.netocno .opcija-slovo { background: var(--red); }
+    .opcija:disabled { cursor: default; opacity: 0.8; }
+    .feedback {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 10px;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    .feedback.tocno { background: var(--green-light); border-left: 4px solid var(--green); }
+    .feedback.netocno { background: var(--orange-light); border-left: 4px solid var(--orange); }
+
+    /* Self-check */
+    .self-check {
+      background: var(--blue-light);
+      border-radius: var(--radius);
+      padding: 18px;
+      margin: 18px 0;
+      text-align: center;
+    }
+    .self-check-options {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+    .btn-self-check {
+      font-family: inherit;
+      font-size: 15px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      font-weight: 500;
+      min-height: 48px;
+    }
+    .btn-self-check:nth-child(1) { background: var(--green-light); border-color: var(--green); }
+    .btn-self-check:nth-child(2) { background: var(--orange-light); border-color: var(--orange); }
+    .btn-self-check:nth-child(3) { background: var(--purple-light); border-color: var(--purple); }
+
+    /* Mood selector */
+    .mood-selector {
+      text-align: center;
+      margin: 16px 0;
+      padding: 16px;
+      background: var(--bg-card);
+      border-radius: var(--radius);
+    }
+    .mood-options {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+    .mood-btn {
+      font-size: 30px;
+      background: none;
+      border: 3px solid transparent;
+      border-radius: 50%;
+      width: 54px; height: 54px;
+      cursor: pointer;
+      padding: 0;
+      min-width: 54px;
+    }
+    .mood-btn:hover { border-color: var(--blue); transform: scale(1.05); }
+    .mood-btn.selected { border-color: var(--blue); background: var(--blue-light); }
+
+    /* Drag & drop sentence builder */
+    .drop-zone {
+      padding: 14px;
+      background: #FAFAFA;
+      border: 2px dashed #BBB;
+      border-radius: 8px;
+      margin: 10px 0;
+      font-size: 17px;
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .word-choice {
+      display: inline-block;
+      padding: 8px 14px;
+      margin: 4px;
+      background: var(--blue-light);
+      border: 2px solid var(--blue);
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--blue);
+      user-select: none;
+      min-height: 40px;
+      font-size: 15px;
+    }
+    .word-choice:hover { background: var(--blue); color: white; }
+    .word-choice.selected { background: var(--green); color: white; border-color: var(--green); }
+    .word-bank {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 10px;
+      background: var(--bg-card);
+      border-radius: 8px;
+      margin: 10px 0;
+    }
+
+    /* Navigation */
+    .nav-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 24px;
+      padding-bottom: 60px;
+    }
+
+    /* Recap */
+    .recap-card { border-left: 5px solid var(--blue); background: var(--blue-light); }
+    .recap-items { margin: 14px 0; }
+    .recap-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      font-size: 16px;
+    }
+    .recap-icon {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--blue);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      flex-shrink: 0;
+      font-size: 14px;
+    }
+
+    /* Advance organizer cjelina */
+    .adv-org-cjelina {
+      background: var(--orange-light);
+      border-left: 4px solid var(--orange);
+      padding: 12px 14px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      font-size: 16px;
+    }
+
+    /* Section title */
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--blue-light);
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .section-num {
+      background: var(--blue);
+      color: white;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* Compare box */
+    .compare-box {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 12px 0;
+    }
+    .compare-item {
+      padding: 12px;
+      background: var(--bg-card);
+      border-radius: 8px;
+      text-align: center;
+      font-weight: 600;
+    }
+    .compare-item.prep-it {
+      background: var(--blue-light);
+      color: var(--blue);
+    }
+    .compare-item.prep-hr {
+      background: var(--green-light);
+      color: var(--green);
+    }
+
+    /* Focus */
+    *:focus-visible {
+      outline: 3px solid var(--blue);
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+    *:focus:not(:focus-visible) { outline: none; }
+
+    .sr-only {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* Tablet */
+    @media (min-width: 600px) {
+      body { padding: 20px; font-size: 18px; max-width: 760px; }
+      h1 { font-size: 28px; }
+      h2 { font-size: 23px; }
+      h3 { font-size: 20px; }
+      .kartica { padding: 20px; }
+      .btn { width: auto; display: inline-block; min-width: 160px; }
+      .nav-buttons { flex-direction: row; justify-content: space-between; }
+      .settings-panel {
+        inset: auto;
+        top: 60px;
+        right: 16px;
+        width: 360px;
+        max-height: 80vh;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-hover);
+      }
+      .conj-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    }
+
+    /* Desktop */
+    @media (min-width: 900px) {
+      body { padding: 28px; font-size: 19px; max-width: 820px; }
+      h1 { font-size: 30px; }
+      h2 { font-size: 25px; margin-top: 28px; }
+    }
+
+    @supports (padding: env(safe-area-inset-bottom)) {
+      .btn-pauza { bottom: calc(16px + env(safe-area-inset-bottom)); }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Preskoči na sadržaj</a>
+
+  <button class="settings-toggle" onclick="toggleSettings()"
+          aria-label="Postavke prikaza" aria-expanded="false" aria-controls="settings-panel">⚙️</button>
+
+  <button class="btn-pauza" onclick="pokaziDisanje()" aria-label="Trebam pauzu">🫁 Pauza</button>
+
+  <header>
+    <h1>🇮🇹 Talijanski — Unità 2</h1>
+    <p style="color: var(--text-light); margin-bottom: 16px;">Preposizioni i nepravilni glagoli • Lekcija za Paulinu</p>
+    <div class="progress-wrapper">
+      <div class="progress-labels">
+        <span>Cjelina <strong id="current-step">1</strong> od <strong id="total-steps">9</strong></span>
+        <span id="progress-pct">11%</span>
+      </div>
+      <div class="progress-bar" role="progressbar" aria-valuenow="11" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-fill" id="progress-fill" style="width: 11%"></div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ========== CJELINA 1: DOBRODOŠLA + DIJAGNOSTIČKA PROVJERA ========== -->
+    <section class="cjelina aktivna" id="cjelina-1" aria-label="Cjelina 1: Dobrodošla">
+      <div class="kartica kartica-vazno">
+        <h2>🌟 Ciao, Paulina!</h2>
+        <p>Dobrodošla u lekciju iz <strong>druge cjeline (Unità 2)</strong>. Danas ćemo zajedno proći <strong>prijedloge</strong> i <strong>nepravilne glagole</strong> koje ste pisali u školi.</p>
+        <p>💡 <strong>Ne žuri se.</strong> Lekcija nema vremensko ograničenje. Radi svojim tempom.</p>
+      </div>
+
+      <div class="mood-selector" role="group" aria-label="Kako se osjećaš?">
+        <p><strong>Kako se danas osjećaš?</strong></p>
+        <div class="mood-options">
+          <button class="mood-btn" onclick="setMood(this, 'super')" aria-label="Super">😊</button>
+          <button class="mood-btn" onclick="setMood(this, 'ok')" aria-label="OK">😐</button>
+          <button class="mood-btn" onclick="setMood(this, 'umorno')" aria-label="Umorno">😴</button>
+          <button class="mood-btn" onclick="setMood(this, 'nervozno')" aria-label="Nervozno">😰</button>
+        </div>
+        <div id="mood-response" role="status" aria-live="polite" style="margin-top: 12px; font-size: 16px; min-height: 20px;"></div>
+      </div>
+
+      <div class="kartica kartica-definicija">
+        <h3>📋 Plan za danas</h3>
+        <ol class="plan-list">
+          <li data-step="2"><span class="plan-check">①</span> Preposizioni semplici (jednostavni prijedlozi)</li>
+          <li data-step="3"><span class="plan-check">②</span> Preposizioni articolate (prijedlog + član)</li>
+          <li data-step="4"><span class="plan-check">③</span> Il partitivo (neodređeni član u množini)</li>
+          <li data-step="5"><span class="plan-check">④</span> Andare i Venire (ići i doći)</li>
+          <li data-step="6"><span class="plan-check">⑤</span> Fare, Dare, Sapere</li>
+          <li data-step="7"><span class="plan-check">⑥</span> Uscire i Giocare</li>
+          <li data-step="8"><span class="plan-check">⑦</span> A che ora? (u koliko sati)</li>
+          <li data-step="9"><span class="plan-check">⑧</span> Vokabular + završetak</li>
+        </ol>
+        <p style="margin-top: 12px;"><strong>🎯 Cilj:</strong> Razumjeti kako spojiti prijedlog i član, te znati glavne nepravilne glagole prezenta.</p>
+      </div>
+
+      <div class="kartica kartica-savjet">
+        <h3>🧠 Brza provjera: što već znaš?</h3>
+        <p style="font-size: 16px;">Tri laka pitanja. Ako ne znaš — savršeno, za to smo i ovdje! 💚</p>
+      </div>
+
+      <div class="pitanje">
+        <div class="pitanje-header">
+          <span class="pitanje-broj">Dijagnostička provjera 1/3</span>
+          <button class="btn-sound" onclick="procitajIT('Io sono di Spalato')" aria-label="Slušaj izgovor">🔊</button>
+        </div>
+        <p class="pitanje-tekst">Što znači <em>"Io sono <strong>di</strong> Spalato"</em>?</p>
+        <div class="opcije" role="radiogroup">
+          <button class="opcija" onclick="checkDiag(this, 0, true)"><span class="opcija-slovo">A</span><span>Ja sam iz Splita</span></button>
+          <button class="opcija" onclick="checkDiag(this, 0, false)"><span class="opcija-slovo">B</span><span>Ja sam u Splitu</span></button>
+          <button class="opcija" onclick="checkDiag(this, 0, false)"><span class="opcija-slovo">C</span><span>Ja idem u Split</span></button>
+        </div>
+        <div class="feedback" id="diag-fb-0" style="display:none;"></div>
+      </div>
+
+      <div class="pitanje">
+        <div class="pitanje-header">
+          <span class="pitanje-broj">Dijagnostička provjera 2/3</span>
+          <button class="btn-sound" onclick="procitajIT('Vado a scuola')" aria-label="Slušaj izgovor">🔊</button>
+        </div>
+        <p class="pitanje-tekst">Koja rečenica znači "Idem u školu"?</p>
+        <div class="opcije" role="radiogroup">
+          <button class="opcija" onclick="checkDiag(this, 1, false)"><span class="opcija-slovo">A</span><span>Vieni a scuola</span></button>
+          <button class="opcija" onclick="checkDiag(this, 1, true)"><span class="opcija-slovo">B</span><span>Vado a scuola</span></button>
+          <button class="opcija" onclick="checkDiag(this, 1, false)"><span class="opcija-slovo">C</span><span>Sono a scuola</span></button>
+        </div>
+        <div class="feedback" id="diag-fb-1" style="display:none;"></div>
+      </div>
+
+      <div class="pitanje">
+        <div class="pitanje-header">
+          <span class="pitanje-broj">Dijagnostička provjera 3/3</span>
+        </div>
+        <p class="pitanje-tekst">Koliko prijedloga (preposizioni) misliš da postoji u talijanskom?</p>
+        <div class="opcije" role="radiogroup">
+          <button class="opcija" onclick="checkDiag(this, 2, false)"><span class="opcija-slovo">A</span><span>Oko 3</span></button>
+          <button class="opcija" onclick="checkDiag(this, 2, true)"><span class="opcija-slovo">B</span><span>9 osnovnih (di, a, da, in, con, su, per, tra, fra)</span></button>
+          <button class="opcija" onclick="checkDiag(this, 2, false)"><span class="opcija-slovo">C</span><span>Više od 50</span></button>
+        </div>
+        <div class="feedback" id="diag-fb-2" style="display:none;"></div>
+      </div>
+
+      <nav class="nav-buttons">
+        <button class="btn btn-primary" onclick="idiNa(2)">Krećemo! → Jednostavni prijedlozi</button>
+      </nav>
+    </section>
+
+    <!-- ========== CJELINA 2: PREPOSIZIONI SEMPLICI ========== -->
+    <section class="cjelina" id="cjelina-2" aria-label="Cjelina 2: Preposizioni semplici">
+      <div class="section-title">
+        <span class="section-num">1</span>
+        <h2>Le preposizioni semplici</h2>
+      </div>
+
+      <div class="adv-org-cjelina">
+        <strong>📌 Što ćeš naučiti:</strong> 6 najvažnijih prijedloga i kad se koji koristi.
+      </div>
+
+      <div class="kartica kartica-definicija">
+        <div class="kartica-naslov"><span class="kartica-ikona">📘</span><span>Što su prijedlozi?</span></div>
+        <p><strong>Preposizioni</strong> (prijedlozi) su <em>male riječi</em> koje povezuju druge riječi u rečenici.</p>
+        <p>U hrvatskom su to: <strong>u, iz, na, s, za, od, do</strong>... U talijanskom ima 9 osnovnih:</p>
+        <p style="text-align: center; font-size: 20px; color: var(--blue); font-weight: 700; margin-top: 12px;">
+          di • a • da • in • con • su • per • tra/fra
+        </p>
+      </div>
+
+      <div class="kartica kartica-vazno">
+        <h3>🎯 6 prijedloga koji su ti najvažniji:</h3>
+      </div>
+
+      <!-- DI -->
+      <div class="word-card">
+        <div class="word-main">
+          <div class="word-it">DI</div>
+          <div class="word-hr">→ iz (odakle si), od, pripadnost</div>
+        </div>
+        <div class="word-buttons">
+          <button class="btn-sound" onclick="procitajIT('di')" aria-label="Slušaj DI">🔊</button>
+        </div>
+      </div>
+      <div class="example-sent">
+        <div class="example-it">
+          <span>Io sono <span class="highlight-prep">di</span> Spalato.</span>
+          <button class="btn-sound" onclick="procitajIT('Io sono di Spalato')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="example-hr">→ Ja sam <em>iz</em> Splita.</div>
+      </div>
+
+      <!-- A -->
+      <div class="word-card">
+        <div class="word-main">
+          <div class="word-it">A</div>
+          <div class="word-hr">→ u (+ grad), za, k, na</div>
+        </div>
+        <div class="word-buttons">
+          <button class="btn-sound" onclick="procitajIT('a')" aria-label="Slušaj A">🔊</button>
+        </div>
+      </div>
+      <div class="example-sent">
+        <div class="example-it">
+          <span>Vivo <span class="highlight-prep">a</span> Salona.</span>
+          <button class="btn-sound" onclick="procitajIT('Vivo a Salona')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="example-hr">→ Živim <em>u</em> Saloni. (s imenom GRADA ide A)</div>
+      </div>
+
+      <!-- IN -->
+      <div class="word-card">
+        <div class="word-main">
+          <div class="word-it">IN</div>
+          <div class="word-hr">→ u (+ država/regija), na</div>
+        </div>
+        <div class="word-buttons">
+          <button class="btn-sound" onclick="procitajIT('in')" aria-label="Slušaj IN">🔊</button>
+        </div>
+      </div>
+      <div class="example-sent">
+        <div class="example-it">
+          <span>Vivo <span class="highlight-prep">in</span> Dalmazia.</span>
+          <button class="btn-sound" onclick="procitajIT('Vivo in Dalmazia')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="example-hr">→ Živim <em>u</em> Dalmaciji. (s REGIJOM / DRŽAVOM ide IN)</div>
+      </div>
+
+      <div class="kartica kartica-upozorenje">
+        <h4>⚠️ PAZI! A vs IN</h4>
+        <ul style="padding-left: 20px; margin-top: 8px;">
+          <li><strong>A</strong> + grad → <em>a Roma, a Milano, a Spalato</em></li>
+          <li><strong>IN</strong> + država/regija → <em>in Italia, in Croazia, in Dalmazia</em></li>
+        </ul>
+      </div>
+
+      <!-- DA -->
+      <div class="word-card">
+        <div class="word-main">
+          <div class="word-it">DA</div>
+          <div class="word-hr">→ od (vremena), kod, daleko od</div>
+        </div>
+        <div class="word-buttons">
+          <button class="btn-sound" onclick="procitajIT('da')" aria-label="Slušaj DA">🔊</button>
+        </div>
+      </div>
+      <div class="example-sent">
+        <div class="example-it">
+          <span>Studio l'italiano <span class="highlight-prep">da</span> tre mesi.</span>
+          <button class="btn-sound" onclick="procitajIT('Studio italiano da tre mesi')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="example-hr">→ Učim talijanski <em>već tri mjeseca</em>.</div>
+      </div>
+
+      <!-- PER -->
+      <div class="word-card">
+        <div class="word-main">
+          <div class="word-it">PER</div>
+          <div class="word-hr">→ za, zbog, radi</div>
+        </div>
+        <div class="word-buttons">
+          <button class="btn-sound" onclick="procitajIT('per')" aria-label="Slušaj PER">🔊</button>
+        </div>
+      </div>
+      <div class="example-sent">
+        <div class="example-it">
+          <span>Studio <span class="highlight-prep">per</span> me.</span>
+          <button class="btn-sound" onclick="procitajIT('Studio per me')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="example-hr">→ Učim <em>za sebe</em>.</div>
+      </div>
+
+      <!-- CON -->
+      <div class="word-card">
+        <div class="word-main">
+          <div class="word-it">CON</div>
+          <div class="word-hr">→ s, sa</div>
+        </div>
+        <div class="word-buttons">
+          <button class="btn-sound" onclick="procitajIT('con')" aria-label="Slušaj CON">🔊</button>
+        </div>
+      </div>
+      <div class="example-sent">
+        <div class="example-it">
+          <span>Parlo <span class="highlight-prep">con</span> un'amica al telefono.</span>
+          <button class="btn-sound" onclick="procitajIT('Parlo con una amica al telefono')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="example-hr">→ Razgovaram <em>s</em> prijateljicom telefonom.</div>
+      </div>
+
+      <!-- Mini kviz -->
+      <div class="kartica kartica-formula">
+        <h3>🎯 Mini-vježba: Koji prijedlog?</h3>
+      </div>
+
+      <div class="pitanje">
+        <div class="pitanje-header">
+          <span class="pitanje-broj">Vježba 1</span>
+          <button class="btn-sound" onclick="procitajIT('Abito in via Vukovarska')" aria-label="Slušaj">🔊</button>
+        </div>
+        <p class="pitanje-tekst">Koji prijedlog nedostaje? <em>"Abito ___ via Vukovarska."</em> (Stanujem u Vukovarskoj ulici.)</p>
+        <div class="opcije" role="radiogroup">
+          <button class="opcija" onclick="checkMini(this, 'p1', false, 'a', 'Blizu! <strong>A</strong> se koristi s gradovima (a Roma). Za <em>ulicu</em> ide IN.')"><span class="opcija-slovo">A</span><span>a</span></button>
+          <button class="opcija" onclick="checkMini(this, 'p1', true, 'in', 'Točno! ✨ <strong>In via</strong> = u ulici. (Isto kao: in Italia, in Dalmazia)')"><span class="opcija-slovo">B</span><span>in</span></button>
+          <button class="opcija" onclick="checkMini(this, 'p1', false, 'di', '<strong>Di</strong> = iz (Io sono di Spalato). Za "u ulici" ide IN.')"><span class="opcija-slovo">C</span><span>di</span></button>
+        </div>
+        <div class="feedback" id="fb-p1" style="display:none;"></div>
+      </div>
+
+      <div class="pitanje">
+        <div class="pitanje-header">
+          <span class="pitanje-broj">Vježba 2</span>
+        </div>
+        <p class="pitanje-tekst">"Parlo ___ mia madre." (Razgovaram s mamom.) Koji prijedlog?</p>
+        <div class="opcije" role="radiogroup">
+          <button class="opcija" onclick="checkMini(this, 'p2', false, 'per', 'Per = za/zbog. Ovdje tražimo "s/sa".')"><span class="opcija-slovo">A</span><span>per</span></button>
+          <button class="opcija" onclick="checkMini(this, 'p2', false, 'di', 'Di = iz/od. Ovdje tražimo "s/sa".')"><span class="opcija-slovo">B</span><span>di</span></button>
+          <button class="opcija" onclick="checkMini(this, 'p2', true, 'con', 'Bravo! 🎉 <strong>Con</strong> = s/sa. Zapamti: Parlo <em>con</em> amici = razgovaram s prijateljima.')"><span class="opcija-slovo">C</span><span>con</span></button>
+        </div>
+        <div class="feedback" id="fb-p2" style="display:none;"></div>
+      </div>
+
+      <div class="self-check" role="group">
+        <p><strong>Razumiješ li razliku a/in?</strong></p>
+        <div class="self-check-options">
+          <button class="btn-self-check" onclick="selfCheck(this, 'da')">✅ Jasno mi je</button>
+          <button class="btn-self-check" onclick="selfCheck(this, 'djelomicno')">🤔 Djelomično</button>
+          <button class="btn-self-check" onclick="selfCheck(this, 'ne')">❓ Trebam pomoć</button>
+        </div>
+      </div>
+
+      <nav class="nav-buttons">
+        <button class="btn btn-secondary" onclick="idiNa(1)">← Nazad</button>
+        <button class="btn btn-primary" onclick="idiNa(3)">Dalje: prijedlog + član →</button>
+      </nav>
+    </section>
+
+    <!-- ========== CJELINA 3: PREPOSIZIONI ARTICOLATE ========== -->
+    <section class="cjelina" id="cjelina-3" aria-label="Cjelina 3: Preposizioni articolate">
+      <div class="section-title">
+        <span class="section-num">2</span>
+        <h2>Le preposizioni articolate</h2>
+      </div>
+
+      <div class="adv-org-cjelina">
+        <strong>📌 Što ćeš naučiti:</strong> Kako se prijedlog <em>spoji</em> s određenim članom (il, la, i, le...) u jednu riječ.
+      </div>
+
+      <div class="kartica kartica-definicija">
+        <div class="kartica-naslov"><span class="kartica-ikona">🧩</span><span>Pravilo spajanja</span></div>
+        <p>Kad iza prijedloga <strong>di, a, da, in, su</strong> dolazi <strong>određeni član</strong> (il, la, lo, i, le, gli, l'), oni se <em>spajaju u jednu riječ</em>.</p>
+        <p style="text-align: center; font-size: 22px; color: var(--blue); font-weight: 700; margin: 12px 0;">
+          A + la = <span class="highlight-prep">alla</span>
+        </p>
+        <p style="text-align: center; font-size: 22px; color: var(--blue); font-weight: 700; margin: 12px 0;">
+          DI + il = <span class="highlight-prep">del</span>
+        </p>
+        <p style="text-align: center; font-size: 22px; color: var(--blue); font-weight: 700; margin: 12px 0;">
+          IN + gli = <span class="highlight-prep">negli</span>
+        </p>
+      </div>
+
+      <div class="kartica kartica-vazno">
+        <h3>📊 Tablica spajanja (scrollaj lijevo-desno →)</h3>
+        <p style="font-size: 15px; color: var(--text-light);">Ne moraš sve znati napamet — ovdje je kao pomagač!</p>
+      </div>
+
+      <div class="prep-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Prijedlog</th>
+              <th>il</th>
+              <th>la</th>
+              <th>l'</th>
+              <th>lo</th>
+              <th>i</th>
+              <th>le</th>
+              <th>gli</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">DI</th>
+              <td>del</td><td>della</td><td>dell'</td><td>dello</td><td>dei</td><td>delle</td><td>degli</td>
+            </tr>
+            <tr>
+              <th scope="row">A</th>
+              <td>al</td><td>alla</td><td>all'</td><td>allo</td><td>ai</td><td>alle</td><td>agli</td>
+            </tr>
+            <tr>
+              <th scope="row">DA</th>
+              <td>dal</td><td>dalla</td><td>dall'</td><td>dallo</td><td>dai</td><td>dalle</td><td>dagli</td>
+            </tr>
+            <tr>
+              <th scope="row">IN</th>
+              <td>nel</td><td>nella</td><td>nell'</td><td>nello</td><td>nei</td><td>nelle</td><td>negli</td>
+            </tr>
+            <tr>
+              <th scope="row">SU</th>
+              <td>sul</td><td>sulla</td><td>sull'</td><td>sullo</td><td>sui</td><td>sulle</td><td>sugli</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="kartica kartica-savjet">
+        <h4>💡 Trik za pamćenje</h4>
+        <p>Prijedlozi <strong>CON i PER</strong> se obično <em>NE spajaju</em> s članom!</p>
+        <p>→ <em>con il libro</em> (a ne ❌ col libro u modernom talijanskom)</p>
+        <p>→ <em>per il mio amico</em></p>
+      </div>
+
+      <h3 style="margin-top: 20px;">📝 Primjeri iz bilježnice:</h3>
+
+      <div class="example-sent">
+        <div class="example-it">
+          <span>Vado <span class="highlight-prep">alla</span> scuola.</span>
+          <button class="btn-sound" onclick="procitajIT('Vado alla scuola')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="example-hr">→ Idem <em>u</em> školu. (a + la = alla)</div>
+      </div>
+
+      <div class="example-sent">
+        <div class="example-it">
+          <span>Parlo <span class="highlight-prep">al</span> telefono.</span>
+          <button class="btn-sound" onclick="procitajIT('Parlo al telefono')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="example-hr">→ Razgovaram <em>na</em> telefon. (a + il = al)</div>
+      </div>
+
+      <div class="example-sent">
+        <div class="example-it">
+          <span>Il libro è <span class="highlight-prep">sulla</span> tavola.</span>
+          <button class="btn-sound" onclick="procitajIT('Il libro è sulla tavola')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="example-hr">→ Knjiga je <em>na</em> stolu. (su + la = sulla)</div>
+      </div>
+
+      <div class="example-sent">
+        <div class="example-it">
+          <span>Vengo <span class="highlight-prep">dalla</span> Croazia.</span>
+          <button class="btn-sound" onclick="procitajIT('Vengo dalla Croazia')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="example-hr">→ Dolazim <em>iz</em> Hrvatske. (da + la = dalla)</div>
+      </div>
+
+      <!-- Mini kviz -->
+      <div class="pitanje">
+        <div class="pitanje-header">
+          <span class="pitanje-broj">Vježba 3</span>
+        </div>
+        <p class="pitanje-tekst">Kako se spoji: <strong>IN + il</strong>?</p>
+        <div class="opcije" role="radiogroup">
+          <button class="opcija" onclick="checkMini(this, 'p3', false, 'nell', 'Skoro! <em>nell\\'</em> se koristi ispred samoglasnika. Za "il" (suglasnik) → NEL.')"><span class="opcija-slovo">A</span><span>nell'</span></button>
+          <button class="opcija" onclick="checkMini(this, 'p3', true, 'nel', 'Točno! 🎯 IN + il = <strong>nel</strong>. Primjer: Nel libro = U knjizi.')"><span class="opcija-slovo">B</span><span>nel</span></button>
+          <button class="opcija" onclick="checkMini(this, 'p3', false, 'nei', '<em>Nei</em> je IN + i (množina). Ovdje je "il" (jednina) → NEL.')"><span class="opcija-slovo">C</span><span>nei</span></button>
+        </div>
+        <div class="feedback" id="fb-p3" style="display:none;"></div>
+      </div>
+
+      <div class="pitanje">
+        <div class="pitanje-header">
+          <span class="pitanje-broj">Vježba 4</span>
+          <button class="btn-sound" onclick="procitajIT('Vado allo stadio')" aria-label="Slušaj">🔊</button>
+        </div>
+        <p class="pitanje-tekst">"Idem <em>na</em> stadion" — <em>"Vado ___ stadio."</em> (lo stadio ima član "lo")</p>
+        <div class="opcije" role="radiogroup">
+          <button class="opcija" onclick="checkMini(this, 'p4', false, 'al', '<em>Al</em> = a + il. Ali "stadio" ima član "lo" → ALLO.')"><span class="opcija-slovo">A</span><span>al</span></button>
+          <button class="opcija" onclick="checkMini(this, 'p4', true, 'allo', 'Bravo! 💪 A + lo = <strong>allo</strong>. Član "lo" se koristi za riječi kao stadio, studente, zucchero.')"><span class="opcija-slovo">B</span><span>allo</span></button>
+          <button class="opcija" onclick="checkMini(this, 'p4', false, 'alla', '<em>Alla</em> = a + la (ženski rod). "Stadio" je muški rod → ALLO.')"><span class="opcija-slovo">C</span><span>alla</span></button>
+        </div>
+        <div class="feedback" id="fb-p4" style="display:none;"></div>
+      </div>
+
+      <nav class="nav-buttons">
+        <button class="btn btn-secondary" onclick="idiNa(2)">← Nazad</button>
+        <button class="btn btn-primary" onclick="idiNa(4)">Dalje: il partitivo →</button>
+      </nav>
+    </section>
+
+    <!-- ========== CJELINA 4: IL PARTITIVO ========== -->
+    <section class="cjelina" id="cjelina-4" aria-label="Cjelina 4: Il partitivo">
+      <div class="section-title">
+        <span class="section-num">3</span>
+        <h2>Il partitivo</h2>
+      </div>
+
+      <div class="adv-org-cjelina">
+        <strong>📌 Što ćeš naučiti:</strong> Kako reći "neki", "nešto", "malo od" pomoću partitivnog člana.
+      </div>
+
+      <div class="kartica kartica-definicija">
+        <div class="kartica-naslov"><span class="kartica-ikona">🧩</span><span>Što je partitiv?</span></div>
+        <p><strong>Partitivni član</strong> je spoj prijedloga <strong>DI</strong> i određenog člana.</p>
+        <p>Koristi se za:</p>
+        <ul style="padding-left: 20px; margin-top: 8px;">
+          <li><strong>"neki"</strong> u množini — <em>degli amici</em> = neki prijatelji</li>
+          <li><strong>"malo/nešto"</strong> — <em>del caffè</em> = malo kave</li>
+        </ul>
+      </div>
+
+      <div class="kartica kartica-vazno">
+        <h4>🔑 Pravilo — partitiv = DI + član</h4>
+        <div class="compare-box">
+          <div class="compare-item prep-it">del / dello / della</div>
+          <div class="compare-item prep-hr">malo / nešto<br>(jednina)</div>
+        </div>
+        <div class="compare-box">
+          <div class="compare-item prep-it">dei / degli / delle</div>
+          <div class="compare-item prep-hr">neki / neke<br>(množina)</div>
+        </div>
+      </div>
+
+      <h3 style="margin-top: 20px;">📝 Primjeri:</h3>
+
+      <div class="example-sent">
+        <div class="example-it">
+          <span>Vengono da me <span class="highlight-prep">degli</span> amici.</span>
+          <button class="btn-sound" onclick="procitajIT('Vengono da me degli amici')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="example-hr">→ Dolaze <em>neki</em> prijatelji kod mene.<br>(alcuni amici = degli amici)</div>
+      </div>
+
+      <div class="example-sent">
+        <div class="example-it">
+          <span>Compro <span class="highlight-prep">del</span> caffè.</span>
+          <button class="btn-sound" onclick="procitajIT('Compro del caffè')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="example-hr">→ Kupujem <em>malo</em> kave. (un po' di caffè = del caffè)</div>
+      </div>
+
+      <div class="example-sent">
+        <div class="example-it">
+          <span>Compro <span class="highlight-prep">della</span> zucchero.</span>
+          <button class="btn-sound" onclick="procitajIT('Compro della zucchero')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="example-hr">→ Kupujem <em>malo</em> šećera.</div>
+      </div>
+
+      <div class="example-sent">
+        <div class="example-it">
+          <span>Compro <span class="highlight-prep">dei</span> biglietti.</span>
+          <button class="btn-sound" onclick="procitajIT('Compro dei biglietti')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="example-hr">→ Kupujem <em>neke</em> karte. (alcuni biglietti = dei biglietti)</div>
+      </div>
+
+      <div class="kartica kartica-savjet">
+        <h4>💡 Važno pravilo</h4>
+        <p>Partitiv je "<em>množina</em>" <strong>neodređenog člana</strong>:</p>
+        <div class="compare-box">
+          <div class="compare-item prep-it">UNO studente<br>(jedan student)</div>
+          <div class="compare-item prep-hr">DEGLI studenti<br>(neki studenti)</div>
+        </div>
+      </div>
+
+      <!-- Mini kviz -->
+      <div class="pitanje">
+        <div class="pitanje-header">
+          <span class="pitanje-broj">Vježba 5</span>
+        </div>
+        <p class="pitanje-tekst">Kako reći "neki prijatelji" na talijanskom?</p>
+        <div class="opcije" role="radiogroup">
+          <button class="opcija" onclick="checkMini(this, 'p5', false, 'degli amico', '<em>Amico</em> je jednina. Za "neki prijatelji" treba množina (amici) → DEGLI amici.')"><span class="opcija-slovo">A</span><span>degli amico</span></button>
+          <button class="opcija" onclick="checkMini(this, 'p5', true, 'degli amici', 'Savršeno! 🎉 <strong>Degli amici</strong> = neki prijatelji. DI + gli = degli.')"><span class="opcija-slovo">B</span><span>degli amici</span></button>
+          <button class="opcija" onclick="checkMini(this, 'p5', false, 'della amici', '<em>Della</em> je za ženski rod jednina. "Amici" su muški rod množina → DEGLI.')"><span class="opcija-slovo">C</span><span>della amici</span></button>
+        </div>
+        <div class="feedback" id="fb-p5" style="display:none;"></div>
+      </div>
+
+      <nav class="nav-buttons">
+        <button class="btn btn-secondary" onclick="idiNa(3)">← Nazad</button>
+        <button class="btn btn-primary" onclick="idiNa(5)">Dalje: Andare i Venire →</button>
+      </nav>
+    </section>
+
+    <!-- ========== CJELINA 5: ANDARE + VENIRE ========== -->
+    <section class="cjelina" id="cjelina-5" aria-label="Cjelina 5: Andare i Venire">
+      <div class="section-title">
+        <span class="section-num">4</span>
+        <h2>Andare i Venire</h2>
+      </div>
+
+      <div class="adv-org-cjelina">
+        <strong>📌 Što ćeš naučiti:</strong> Dva <em>nepravilna</em> glagola koja stalno koristiš — "ići" i "doći".
+      </div>
+
+      <div class="kartica kartica-upozorenje">
+        <h4>🎯 Što su "nepravilni glagoli"?</h4>
+        <p>To su glagoli koji <strong>ne prate standardna pravila</strong>. Moraš ih znati napamet. Ali ne brini — koristiš ih toliko često da ćeš ih brzo naučiti! 💪</p>
+      </div>
+
+      <!-- ANDARE -->
+      <div class="conj-table">
+        <h4>🚶‍♀️ ANDARE = ići</h4>
+        <p style="text-align: center; color: var(--text-light); font-size: 15px;">Glagol koji najviše koristiš!</p>
+        <div class="conj-grid">
+          <div class="conj-cell irregular">
+            <div><div class="conj-pronoun">io</div><div class="conj-form">vado</div></div>
+            <button class="btn-sound" onclick="procitajIT('io vado')" aria-label="Slušaj">🔊</button>
+          </div>
+          <div class="conj-cell irregular">
+            <div><div class="conj-pronoun">noi</div><div class="conj-form">andiamo</div></div>
+            <button class="btn-sound" onclick="procitajIT('noi andiamo')" aria-label="Slušaj">🔊</button>
+          </div>
+          <div class="conj-cell irregular">
+            <div><div class="conj-pronoun">tu</div><div class="conj-form">vai</div></div>
+            <button class="btn-sound" onclick="procitajIT('tu vai')" aria-label="Slušaj">🔊</button>
+          </div>
+          <div class="conj-cell irregular">
+            <div><div class="conj-pronoun">voi</div><div class="conj-form">andate</div></div>
+            <button class="btn-sound" onclick="procitajIT('voi andate')" aria-label="Slušaj">🔊</button>
+          </div>
+          <div class="conj-cell irregular">
+            <div><div class="conj-pronoun">lui/lei</div><div class="conj-form">va</div></div>
+            <button class="btn-sound" onclick="procitajIT('lui va')" aria-label="Slušaj">🔊</button>
+          </div>
+          <div class="conj-cell irregular">
+            <div><div class="conj-pronoun">loro</div><div class="conj-form">vanno</div></div>
+            <button class="btn-sound" onclick="procitajIT('loro vanno')" aria-label="Slušaj">🔊</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="kartica kartica-savjet">
+        <h4>🧠 Trik za pamćenje ANDARE</h4>
+        <p>Imaj na umu: <strong>V-V-V</strong> na početku za 3 oblika (vado, vai, va, vanno), a <strong>AND-</strong> samo u <em>andiamo</em> i <em>andate</em>!</p>
+      </div>
+
+      <h4 style="margin-top: 16px;">📝 Primjeri:</h4>
+
+      <div class="example-sent">
+        <div class="example-it">
+          <span><span class="highlight-verb">Vado</span> all'allenamento.</span>
+          <button class="btn-sound" onclick="procitajIT('Vado all allenamento')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="example-hr">→ Idem na trening.</div>
+      </div>
+
+      <div class="example-sent">
+        <div class="example-it">
+          <span><span class="highlight-verb">Andiamo</span> al bar.</span>
+          <button class="btn-sound" onclick="procitajIT('Andiamo al bar')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="example-hr">→ Idemo u kafić.</div>
+      </div>
+
+      <!-- VENIRE -->
+      <div class="conj-table">
+        <h4>👋 VENIRE = doći</h4>
+        <div class="conj-grid">
+          <div class="conj-cell irregular">
+            <div><div class="conj-pronoun">io</div><div class="conj-form">vengo</div></div>
+            <button class="btn-sound" onclick="procitajIT('io vengo')" aria-label="Slušaj">🔊</button>
+          </div>
+          <div class="conj-cell irregular">
+            <div><div class="conj-pronoun">noi</div><div class="conj-form">veniamo</div></div>
+            <button class="btn-sound" onclick="procitajIT('noi veniamo')" aria-label="Slušaj">🔊</button>
+          </div>
+          <div class="conj-cell irregular">
+            <div><div class="conj-pronoun">tu</div><div class="conj-form">vieni</div></div>
+            <button class="btn-sound" onclick="procitajIT('tu vieni')" aria-label="Slušaj">🔊</button>
+          </div>
+          <div class="conj-cell irregular">
+            <div><div class="conj-pronoun">voi</div><div class="conj-form">venite</div></div>
+            <button class="btn-sound" onclick="procitajIT('voi venite')" aria-label="Slušaj">🔊</button>
+          </div>
+          <div class="conj-cell irregular">
+            <div><div class="conj-pronoun">lui/lei</div><div class="conj-form">viene</div></div>
+            <button class="btn-sound" onclick="procitajIT('lui viene')" aria-label="Slušaj">🔊</button>
+          </div>
+          <div class="conj-cell irregular">
+            <div><div class="conj-pronoun">loro</div><div class="conj-form">vengono</div></div>
+            <button class="btn-sound" onclick="procitajIT('loro vengono')" aria-label="Slušaj">🔊</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="example-sent">
+        <div class="example-it">
+          <span><span class="highlight-verb">Vieni</span> anche tu con noi?</span>
+          <button class="btn-sound" onclick="procitajIT('Vieni anche tu con noi')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="example-hr">→ Dolaziš i ti s nama?</div>
+      </div>
+
+      <div class="example-sent">
+        <div class="example-it">
+          <span><span class="highlight-verb">Vengono</span> amici a casa mia.</span>
+          <button class="btn-sound" onclick="procitajIT('Vengono amici a casa mia')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="example-hr">→ Prijatelji dolaze k meni.</div>
+      </div>
+
+      <!-- Mini kviz -->
+      <div class="pitanje">
+        <div class="pitanje-header">
+          <span class="pitanje-broj">Vježba 6</span>
+        </div>
+        <p class="pitanje-tekst">Kako se kaže "Mi idemo" (mi = noi)?</p>
+        <div class="opcije" role="radiogroup">
+          <button class="opcija" onclick="checkMini(this, 'p6', false, 'vanno', '<em>Vanno</em> = oni idu. Za "mi" (noi) → ANDIAMO.')"><span class="opcija-slovo">A</span><span>Noi vanno</span></button>
+          <button class="opcija" onclick="checkMini(this, 'p6', true, 'andiamo', 'Savršeno! 🌟 <strong>Noi andiamo</strong> = mi idemo. Zapamti: noi uvijek završava na -iamo.')"><span class="opcija-slovo">B</span><span>Noi andiamo</span></button>
+          <button class="opcija" onclick="checkMini(this, 'p6', false, 'andate', '<em>Andate</em> = vi idete. Za "mi" → ANDIAMO.')"><span class="opcija-slovo">C</span><span>Noi andate</span></button>
+        </div>
+        <div class="feedback" id="fb-p6" style="display:none;"></div>
+      </div>
+
+      <div class="pitanje">
+        <div class="pitanje-header">
+          <span class="pitanje-broj">Vježba 7</span>
+          <button class="btn-sound" onclick="procitajIT('Lui viene a scuola')" aria-label="Slušaj">🔊</button>
+        </div>
+        <p class="pitanje-tekst">"Lui ___ a scuola." (On dolazi u školu.) Koji oblik glagola VENIRE?</p>
+        <div class="opcije" role="radiogroup">
+          <button class="opcija" onclick="checkMini(this, 'p7', false, 'vengo', '<em>Vengo</em> je za "io" (ja). Za "lui" → VIENE.')"><span class="opcija-slovo">A</span><span>vengo</span></button>
+          <button class="opcija" onclick="checkMini(this, 'p7', false, 'vieni', '<em>Vieni</em> je za "tu" (ti). Za "lui" → VIENE.')"><span class="opcija-slovo">B</span><span>vieni</span></button>
+          <button class="opcija" onclick="checkMini(this, 'p7', true, 'viene', 'Točno! ✨ <strong>Viene</strong> = dolazi (on/ona).')"><span class="opcija-slovo">C</span><span>viene</span></button>
+        </div>
+        <div class="feedback" id="fb-p7" style="display:none;"></div>
+      </div>
+
+      <div class="self-check" role="group">
+        <p><strong>Razumiješ li razliku andare/venire?</strong></p>
+        <div class="self-check-options">
+          <button class="btn-self-check" onclick="selfCheck(this, 'da')">✅ Jasno mi je</button>
+          <button class="btn-self-check" onclick="selfCheck(this, 'djelomicno')">🤔 Djelomično</button>
+          <button class="btn-self-check" onclick="selfCheck(this, 'ne')">❓ Trebam pomoć</button>
+        </div>
+      </div>
+
+      <nav class="nav-buttons">
+        <button class="btn btn-secondary" onclick="idiNa(4)">← Nazad</button>
+        <button class="btn btn-primary" onclick="idiNa(6)">Dalje: Fare, Dare, Sapere →</button>
+      </nav>
+    </section>
+
+    <!-- ========== CJELINA 6: FARE, DARE, SAPERE ========== -->
+    <section class="cjelina" id="cjelina-6" aria-label="Cjelina 6: Fare, Dare, Sapere">
+      <div class="section-title">
+        <span class="section-num">5</span>
+        <h2>Fare, Dare, Sapere</h2>
+      </div>
+
+      <div class="adv-org-cjelina">
+        <strong>📌 Što ćeš naučiti:</strong> 3 vrlo česta nepravilna glagola: činiti, dati, znati.
+      </div>
+
+      <!-- FARE -->
+      <div class="conj-table">
+        <h4>🛠️ FARE = činiti, raditi</h4>
+        <div class="conj-grid">
+          <div class="conj-cell irregular">
+            <div><div class="conj-pronoun">io</div><div class="conj-form">faccio</div></div>
+            <button class="btn-sound" onclick="procitajIT('io faccio')" aria-label="Slušaj">🔊</button>
+          </div>
+          <div class="conj-cell irregular">
+            <div><div class="conj-pronoun">noi</div><div class="conj-form">facciamo</div></div>
+            <button class="btn-sound" onclick="procitajIT('noi facciamo')" aria-label="Slušaj">🔊</button>
+          </div>
+          <div class="conj-cell irregular">
+            <div><div class="conj-pronoun">tu</div><div class="conj-form">fai</div></div>
+            <button class="btn-sound" onclick="procitajIT('tu fai')" aria-label="Slušaj">🔊</button>
+          </div>
+          <div class="conj-cell irregular">
+            <div><div class="conj-pronoun">voi</div><div class="conj-form">fate</div></div>
+            <button class="btn-sound" onclick="procitajIT('voi fate')" aria-label="Slušaj">🔊</button>
+          </div>
+          <div class="conj-cell irregular">
+            <div><div class="conj-pronoun">lui/lei</div><div class="conj-form">fa</div></div>
+            <button class="btn-sound" onclick="procitajIT('lui fa')" aria-label="Slušaj">🔊</button>
+          </div>
+          <div class="conj-cell irregular">
+            <div><div class="conj-pronoun">loro</div><div class="conj-form">fanno</div></div>
+            <button class="btn-sound" onclick="procitajIT('loro fanno')" aria-label="Slušaj">🔊</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="kartica kartica-vazno">
+        <h4>💡 FARE za vrijeme (tempo!)</h4>
+        <p>U talijanskom se vrijeme izražava s "fare":</p>
+        <ul style="padding-left: 20px; margin-top: 6px;">
+          <li><em>Fa caldo</em> → Vruće je.</li>
+          <li><em>Fa freddo</em> → Hladno je.</li>
+          <li><em>Fa bel tempo</em> → Lijepo je vrijeme.</li>
+        </ul>
+      </div>
+
+      <div class="example-sent">
+        <div class="example-it">
+          <span><span class="highlight-verb">Faccio</span> la professoressa.</span>
+          <button class="btn-sound" onclick="procitajIT('Faccio la professoressa')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="example-hr">→ Ja sam profesorica. (<em>doslovno: "činim profesoricu"</em>)</div>
+      </div>
+
+      <!-- DARE -->
+      <div class="conj-table">
+        <h4>🎁 DARE = dati</h4>
+        <div class="conj-grid">
+          <div class="conj-cell irregular">
+            <div><div class="conj-pronoun">io</div><div class="conj-form">do</div></div>
+            <button class="btn-sound" onclick="procitajIT('io do')" aria-label="Slušaj">🔊</button>
+          </div>
+          <div class="conj-cell irregular">
+            <div><div class="conj-pronoun">noi</div><div class="conj-form">diamo</div></div>
+            <button class="btn-sound" onclick="procitajIT('noi diamo')" aria-label="Slušaj">🔊</button>
+          </div>
+          <div class="conj-cell irregular">
+            <div><div class="conj-pronoun">tu</div><div class="conj-form">dai</div></div>
+            <button class="btn-sound" onclick="procitajIT('tu dai')" aria-label="Slušaj">🔊</button>
+          </div>
+          <div class="conj-cell irregular">
+            <div><div class="conj-pronoun">voi</div><div class="conj-form">date</div></div>
+            <button class="btn-sound" onclick="procitajIT('voi date')" aria-label="Slušaj">🔊</button>
+          </div>
+          <div class="conj-cell irregular">
+            <div><div class="conj-pronoun">lui/lei</div><div class="conj-form">dà</div></div>
+            <button class="btn-sound" onclick="procitajIT('lui dà')" aria-label="Slušaj">🔊</button>
+          </div>
+          <div class="conj-cell irregular">
+            <div><div class="conj-pronoun">loro</div><div class="conj-form">danno</div></div>
+            <button class="btn-sound" onclick="procitajIT('loro danno')" aria-label="Slušaj">🔊</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="example-sent">
+        <div class="example-it">
+          <span>Mi <span class="highlight-verb">dai</span> il tuo libro?</span>
+          <button class="btn-sound" onclick="procitajIT('Mi dai il tuo libro')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="example-hr">→ Hoćeš li mi dati svoju knjigu?</div>
+      </div>
+
+      <!-- SAPERE -->
+      <div class="conj-table">
+        <h4>🧠 SAPERE = znati</h4>
+        <div class="conj-grid">
+          <div class="conj-cell irregular">
+            <div><div class="conj-pronoun">io</div><div class="conj-form">so</div></div>
+            <button class="btn-sound" onclick="procitajIT('io so')" aria-label="Slušaj">🔊</button>
+          </div>
+          <div class="conj-cell irregular">
+            <div><div class="conj-pronoun">noi</div><div class="conj-form">sappiamo</div></div>
+            <button class="btn-sound" onclick="procitajIT('noi sappiamo')" aria-label="Slušaj">🔊</button>
+          </div>
+          <div class="conj-cell irregular">
+            <div><div class="conj-pronoun">tu</div><div class="conj-form">sai</div></div>
+            <button class="btn-sound" onclick="procitajIT('tu sai')" aria-label="Slušaj">🔊</button>
+          </div>
+          <div class="conj-cell irregular">
+            <div><div class="conj-pronoun">voi</div><div class="conj-form">sapete</div></div>
+            <button class="btn-sound" onclick="procitajIT('voi sapete')" aria-label="Slušaj">🔊</button>
+          </div>
+          <div class="conj-cell irregular">
+            <div><div class="conj-pronoun">lui/lei</div><div class="conj-form">sa</div></div>
+            <button class="btn-sound" onclick="procitajIT('lui sa')" aria-label="Slušaj">🔊</button>
+          </div>
+          <div class="conj-cell irregular">
+            <div><div class="conj-pronoun">loro</div><div class="conj-form">sanno</div></div>
+            <button class="btn-sound" onclick="procitajIT('loro sanno')" aria-label="Slušaj">🔊</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="example-sent">
+        <div class="example-it">
+          <span>Lo <span class="highlight-verb">sai</span>?</span>
+          <button class="btn-sound" onclick="procitajIT('Lo sai')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="example-hr">→ Znaš li?</div>
+      </div>
+
+      <div class="example-sent">
+        <div class="example-it">
+          <span>Loro <span class="highlight-verb">sanno</span> l'inglese, il croato e il francese.</span>
+          <button class="btn-sound" onclick="procitajIT('Loro sanno inglese, croato e francese')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="example-hr">→ Oni znaju engleski, hrvatski i francuski.</div>
+      </div>
+
+      <!-- Mini kviz -->
+      <div class="pitanje">
+        <div class="pitanje-header">
+          <span class="pitanje-broj">Vježba 8</span>
+        </div>
+        <p class="pitanje-tekst">Kako reći "Ja radim domaću zadaću" — <em>"Io ___ i compiti."</em></p>
+        <div class="opcije" role="radiogroup">
+          <button class="opcija" onclick="checkMini(this, 'p8', false, 'fa', '<em>Fa</em> je za "lui/lei" (on/ona). Za "io" (ja) → FACCIO.')"><span class="opcija-slovo">A</span><span>fa</span></button>
+          <button class="opcija" onclick="checkMini(this, 'p8', true, 'faccio', 'Super! 🌟 <strong>Faccio</strong> = ja radim/činim.')"><span class="opcija-slovo">B</span><span>faccio</span></button>
+          <button class="opcija" onclick="checkMini(this, 'p8', false, 'fai', '<em>Fai</em> je za "tu" (ti). Za "io" → FACCIO.')"><span class="opcija-slovo">C</span><span>fai</span></button>
+        </div>
+        <div class="feedback" id="fb-p8" style="display:none;"></div>
+      </div>
+
+      <nav class="nav-buttons">
+        <button class="btn btn-secondary" onclick="idiNa(5)">← Nazad</button>
+        <button class="btn btn-primary" onclick="idiNa(7)">Dalje: Uscire i Giocare →</button>
+      </nav>
+    </section>
+
+    <!-- ========== CJELINA 7: USCIRE + GIOCARE ========== -->
+    <section class="cjelina" id="cjelina-7" aria-label="Cjelina 7: Uscire i Giocare">
+      <div class="section-title">
+        <span class="section-num">6</span>
+        <h2>Uscire i Giocare</h2>
+      </div>
+
+      <div class="adv-org-cjelina">
+        <strong>📌 Što ćeš naučiti:</strong> Glagoli za izlaske s prijateljima i igre!
+      </div>
+
+      <!-- USCIRE -->
+      <div class="conj-table">
+        <h4>🚪 USCIRE = izaći, izlaziti</h4>
+        <div class="conj-grid">
+          <div class="conj-cell irregular">
+            <div><div class="conj-pronoun">io</div><div class="conj-form">esco</div></div>
+            <button class="btn-sound" onclick="procitajIT('io esco')" aria-label="Slušaj">🔊</button>
+          </div>
+          <div class="conj-cell irregular">
+            <div><div class="conj-pronoun">noi</div><div class="conj-form">usciamo</div></div>
+            <button class="btn-sound" onclick="procitajIT('noi usciamo')" aria-label="Slušaj">🔊</button>
+          </div>
+          <div class="conj-cell irregular">
+            <div><div class="conj-pronoun">tu</div><div class="conj-form">esci</div></div>
+            <button class="btn-sound" onclick="procitajIT('tu esci')" aria-label="Slušaj">🔊</button>
+          </div>
+          <div class="conj-cell irregular">
+            <div><div class="conj-pronoun">voi</div><div class="conj-form">uscite</div></div>
+            <button class="btn-sound" onclick="procitajIT('voi uscite')" aria-label="Slušaj">🔊</button>
+          </div>
+          <div class="conj-cell irregular">
+            <div><div class="conj-pronoun">lui/lei</div><div class="conj-form">esce</div></div>
+            <button class="btn-sound" onclick="procitajIT('lui esce')" aria-label="Slušaj">🔊</button>
+          </div>
+          <div class="conj-cell irregular">
+            <div><div class="conj-pronoun">loro</div><div class="conj-form">escono</div></div>
+            <button class="btn-sound" onclick="procitajIT('loro escono')" aria-label="Slušaj">🔊</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="kartica kartica-savjet">
+        <h4>🔑 Trik za USCIRE</h4>
+        <p>U jednini i 3. licu množine: <strong>ESC-</strong> (esco, esci, esce, escono).</p>
+        <p>U "noi" i "voi": <strong>USC-</strong> (usciamo, uscite).</p>
+      </div>
+
+      <div class="example-sent">
+        <div class="example-it">
+          <span><span class="highlight-verb">Esco</span> con gli amici al bar.</span>
+          <button class="btn-sound" onclick="procitajIT('Esco con gli amici al bar')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="example-hr">→ Izlazim s prijateljima u kafić.</div>
+      </div>
+
+      <!-- GIOCARE -->
+      <div class="conj-table">
+        <h4>🎮 GIOCARE = igrati (se)</h4>
+        <div class="conj-grid">
+          <div class="conj-cell">
+            <div><div class="conj-pronoun">io</div><div class="conj-form">gioco</div></div>
+            <button class="btn-sound" onclick="procitajIT('io gioco')" aria-label="Slušaj">🔊</button>
+          </div>
+          <div class="conj-cell">
+            <div><div class="conj-pronoun">noi</div><div class="conj-form">giochiamo</div></div>
+            <button class="btn-sound" onclick="procitajIT('noi giochiamo')" aria-label="Slušaj">🔊</button>
+          </div>
+          <div class="conj-cell">
+            <div><div class="conj-pronoun">tu</div><div class="conj-form">giochi</div></div>
+            <button class="btn-sound" onclick="procitajIT('tu giochi')" aria-label="Slušaj">🔊</button>
+          </div>
+          <div class="conj-cell">
+            <div><div class="conj-pronoun">voi</div><div class="conj-form">giocate</div></div>
+            <button class="btn-sound" onclick="procitajIT('voi giocate')" aria-label="Slušaj">🔊</button>
+          </div>
+          <div class="conj-cell">
+            <div><div class="conj-pronoun">lui/lei</div><div class="conj-form">gioca</div></div>
+            <button class="btn-sound" onclick="procitajIT('lui gioca')" aria-label="Slušaj">🔊</button>
+          </div>
+          <div class="conj-cell">
+            <div><div class="conj-pronoun">loro</div><div class="conj-form">giocano</div></div>
+            <button class="btn-sound" onclick="procitajIT('loro giocano')" aria-label="Slušaj">🔊</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="kartica kartica-upozorenje">
+        <h4>⚠️ PAZI na "H"!</h4>
+        <p>U "tu" i "noi" oblicima pišemo <strong>H</strong> iza G: <em>gio<span class="highlight-prep">ch</span>i</em>, <em>gio<span class="highlight-prep">ch</span>iamo</em>.</p>
+        <p>🧠 <strong>Zašto?</strong> Da sačuvamo "tvrdi" K-zvuk. Bez H bi se čitalo "đoći", "đokijamo" 😊</p>
+      </div>
+
+      <div class="example-sent">
+        <div class="example-it">
+          <span><span class="highlight-verb">Gioco</span> a calcio.</span>
+          <button class="btn-sound" onclick="procitajIT('Gioco a calcio')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="example-hr">→ Igram nogomet.</div>
+      </div>
+
+      <div class="pitanje">
+        <div class="pitanje-header">
+          <span class="pitanje-broj">Vježba 9</span>
+        </div>
+        <p class="pitanje-tekst">"Tu ___ con gli amici." (Ti igraš s prijateljima.)</p>
+        <div class="opcije" role="radiogroup">
+          <button class="opcija" onclick="checkMini(this, 'p9', false, 'gioci', 'Gotovo! Ali bez H pisalo bi se "đoći". Za očuvanje K-zvuka trebamo H → GIOCHI.')"><span class="opcija-slovo">A</span><span>gioci</span></button>
+          <button class="opcija" onclick="checkMini(this, 'p9', true, 'giochi', 'Bravo! ⭐ <strong>Giochi</strong> — H čuva tvrdi K-zvuk.')"><span class="opcija-slovo">B</span><span>giochi</span></button>
+          <button class="opcija" onclick="checkMini(this, 'p9', false, 'giocano', '<em>Giocano</em> je za "loro" (oni). Za "tu" → GIOCHI.')"><span class="opcija-slovo">C</span><span>giocano</span></button>
+        </div>
+        <div class="feedback" id="fb-p9" style="display:none;"></div>
+      </div>
+
+      <nav class="nav-buttons">
+        <button class="btn btn-secondary" onclick="idiNa(6)">← Nazad</button>
+        <button class="btn btn-primary" onclick="idiNa(8)">Dalje: Koliko je sati? →</button>
+      </nav>
+    </section>
+
+    <!-- ========== CJELINA 8: A CHE ORA? ========== -->
+    <section class="cjelina" id="cjelina-8" aria-label="Cjelina 8: A che ora">
+      <div class="section-title">
+        <span class="section-num">7</span>
+        <h2>A che ora? — U koliko sati?</h2>
+      </div>
+
+      <div class="adv-org-cjelina">
+        <strong>📌 Što ćeš naučiti:</strong> Kako pitati i reći vrijeme na talijanskom.
+      </div>
+
+      <div class="kartica kartica-definicija">
+        <h4>🕐 Ključne fraze za vrijeme</h4>
+        <div class="compare-box">
+          <div class="compare-item prep-it">Che ore sono?</div>
+          <div class="compare-item prep-hr">Koliko je sati?</div>
+        </div>
+        <div class="compare-box">
+          <div class="compare-item prep-it">A che ora...?</div>
+          <div class="compare-item prep-hr">U koliko sati...?</div>
+        </div>
+      </div>
+
+      <div class="kartica kartica-vazno">
+        <h4>🔑 Vrijeme = <em>A</em> + <em>le</em> + broj</h4>
+        <p>Budući da u talijanskom sati idu u množini ("le ore"), koristi se <strong>ALLE</strong> (a + le) + broj.</p>
+      </div>
+
+      <div class="example-sent">
+        <div class="example-it">
+          <span>Che ore sono? <strong>Sono <span class="highlight-prep">le undici</span>.</strong></span>
+          <button class="btn-sound" onclick="procitajIT('Che ore sono? Sono le undici')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="example-hr">→ Koliko je sati? Jedanaest je.</div>
+      </div>
+
+      <div class="example-sent">
+        <div class="example-it">
+          <span>A che ora finisce la scuola? <strong>Finisce <span class="highlight-prep">alle 13:10</span>.</strong></span>
+          <button class="btn-sound" onclick="procitajIT('A che ora finisce la scuola? Finisce alle tredici e dieci')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="example-hr">→ U koliko sati završava škola? Završava u 13:10.</div>
+      </div>
+
+      <div class="kartica kartica-formula">
+        <h4>🎯 Prijedlozi za vrijeme — mini-rječnik</h4>
+        <div class="compare-box">
+          <div class="compare-item prep-it"><strong>dalle... alle...</strong></div>
+          <div class="compare-item prep-hr">od... do...</div>
+        </div>
+        <div class="compare-box">
+          <div class="compare-item prep-it"><strong>fino alle...</strong></div>
+          <div class="compare-item prep-hr">do (dokle)</div>
+        </div>
+        <div class="compare-box">
+          <div class="compare-item prep-it"><strong>verso le...</strong></div>
+          <div class="compare-item prep-hr">oko / otprilike u</div>
+        </div>
+      </div>
+
+      <div class="example-sent">
+        <div class="example-it">
+          <span>Quando sei a scuola? <strong><span class="highlight-prep">Dalle</span> 8 <span class="highlight-prep">alle</span> 13:10.</strong></span>
+          <button class="btn-sound" onclick="procitajIT('Dalle otto alle tredici e dieci')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="example-hr">→ Kada si u školi? Od 8 do 13:10.</div>
+      </div>
+
+      <div class="example-sent">
+        <div class="example-it">
+          <span>Studio <span class="highlight-prep">fino alle</span> 19.</span>
+          <button class="btn-sound" onclick="procitajIT('Studio fino alle diciannove')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="example-hr">→ Učim do 19h.</div>
+      </div>
+
+      <div class="example-sent">
+        <div class="example-it">
+          <span>Arrivano <span class="highlight-prep">verso le</span> 10.</span>
+          <button class="btn-sound" onclick="procitajIT('Arrivano verso le dieci')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="example-hr">→ Dolaze oko 10.</div>
+      </div>
+
+      <div class="pitanje">
+        <div class="pitanje-header">
+          <span class="pitanje-broj">Vježba 10</span>
+        </div>
+        <p class="pitanje-tekst">Kako reći "Učim od 15 do 18h"?</p>
+        <div class="opcije" role="radiogroup">
+          <button class="opcija" onclick="checkMini(this, 'p10', false, 'a-a', '<em>A</em> bez člana ne radi. Sati su u množini (le ore) → DALLE i ALLE.')"><span class="opcija-slovo">A</span><span>Studio a 15 a 18.</span></button>
+          <button class="opcija" onclick="checkMini(this, 'p10', true, 'dalle-alle', 'Savršeno! 🎯 <strong>Dalle 15 alle 18</strong> = od 15 do 18h.')"><span class="opcija-slovo">B</span><span>Studio dalle 15 alle 18.</span></button>
+          <button class="opcija" onclick="checkMini(this, 'p10', false, 'di-a', '<em>Di</em> nije za sate. Koristi se DALLE (od) → ALLE (do).')"><span class="opcija-slovo">C</span><span>Studio di 15 a 18.</span></button>
+        </div>
+        <div class="feedback" id="fb-p10" style="display:none;"></div>
+      </div>
+
+      <nav class="nav-buttons">
+        <button class="btn btn-secondary" onclick="idiNa(7)">← Nazad</button>
+        <button class="btn btn-primary" onclick="idiNa(9)">Dalje: Vokabular →</button>
+      </nav>
+    </section>
+
+    <!-- ========== CJELINA 9: VOKABULAR + RECAP ========== -->
+    <section class="cjelina" id="cjelina-9" aria-label="Cjelina 9: Vokabular i recap">
+      <div class="section-title">
+        <span class="section-num">8</span>
+        <h2>Vokabular & Recap</h2>
+      </div>
+
+      <div class="adv-org-cjelina">
+        <strong>📌 Što ćeš naučiti:</strong> Korisne riječi iz lekcije "Puoi andare al bar" — i sažetak svega!
+      </div>
+
+      <h3>📚 Nove riječi</h3>
+
+      <div class="word-card">
+        <div class="word-main">
+          <div class="word-it">succedere</div>
+          <div class="word-hr">→ dogoditi se</div>
+        </div>
+        <button class="btn-sound" onclick="procitajIT('succedere')" aria-label="Slušaj">🔊</button>
+      </div>
+
+      <div class="word-card">
+        <div class="word-main">
+          <div class="word-it">inviare / mandare</div>
+          <div class="word-hr">→ poslati (sinonimi!)</div>
+        </div>
+        <button class="btn-sound" onclick="procitajIT('inviare, mandare')" aria-label="Slušaj">🔊</button>
+      </div>
+
+      <div class="word-card">
+        <div class="word-main">
+          <div class="word-it">il tecnico</div>
+          <div class="word-hr">→ tehničar</div>
+        </div>
+        <button class="btn-sound" onclick="procitajIT('il tecnico')" aria-label="Slušaj">🔊</button>
+      </div>
+
+      <div class="word-card">
+        <div class="word-main">
+          <div class="word-it">la pausa pranzo</div>
+          <div class="word-hr">→ pauza za ručak</div>
+        </div>
+        <button class="btn-sound" onclick="procitajIT('la pausa pranzo')" aria-label="Slušaj">🔊</button>
+      </div>
+
+      <div class="word-card">
+        <div class="word-main">
+          <div class="word-it">il panino</div>
+          <div class="word-hr">→ sendvič</div>
+        </div>
+        <button class="btn-sound" onclick="procitajIT('il panino')" aria-label="Slušaj">🔊</button>
+      </div>
+
+      <div class="word-card">
+        <div class="word-main">
+          <div class="word-it">accanto a</div>
+          <div class="word-hr">→ pokraj</div>
+        </div>
+        <button class="btn-sound" onclick="procitajIT('accanto a')" aria-label="Slušaj">🔊</button>
+      </div>
+
+      <div class="word-card">
+        <div class="word-main">
+          <div class="word-it">davanti a</div>
+          <div class="word-hr">→ ispred</div>
+        </div>
+        <button class="btn-sound" onclick="procitajIT('davanti a')" aria-label="Slušaj">🔊</button>
+      </div>
+
+      <div class="word-card">
+        <div class="word-main">
+          <div class="word-it">lontano da</div>
+          <div class="word-hr">→ daleko od</div>
+        </div>
+        <button class="btn-sound" onclick="procitajIT('lontano da')" aria-label="Slušaj">🔊</button>
+      </div>
+
+      <div class="word-card">
+        <div class="word-main">
+          <div class="word-it">il portatile</div>
+          <div class="word-hr">→ laptop</div>
+        </div>
+        <button class="btn-sound" onclick="procitajIT('il portatile')" aria-label="Slušaj">🔊</button>
+      </div>
+
+      <div class="word-card">
+        <div class="word-main">
+          <div class="word-it">incontrare</div>
+          <div class="word-hr">→ naći se, susresti</div>
+        </div>
+        <button class="btn-sound" onclick="procitajIT('incontrare')" aria-label="Slušaj">🔊</button>
+      </div>
+
+      <div class="word-card">
+        <div class="word-main">
+          <div class="word-it">figurati!</div>
+          <div class="word-hr">→ nema na čemu! / zamisli!</div>
+        </div>
+        <button class="btn-sound" onclick="procitajIT('figurati')" aria-label="Slušaj">🔊</button>
+      </div>
+
+      <div class="word-card">
+        <div class="word-main">
+          <div class="word-it">domani</div>
+          <div class="word-hr">→ sutra</div>
+        </div>
+        <button class="btn-sound" onclick="procitajIT('domani')" aria-label="Slušaj">🔊</button>
+      </div>
+
+      <div class="word-card">
+        <div class="word-main">
+          <div class="word-it">sabato</div>
+          <div class="word-hr">→ subota</div>
+        </div>
+        <button class="btn-sound" onclick="procitajIT('sabato')" aria-label="Slušaj">🔊</button>
+      </div>
+
+      <div class="word-card">
+        <div class="word-main">
+          <div class="word-it">ogni</div>
+          <div class="word-hr">→ svaki</div>
+        </div>
+        <button class="btn-sound" onclick="procitajIT('ogni')" aria-label="Slušaj">🔊</button>
+      </div>
+
+      <!-- RECAP -->
+      <div class="kartica recap-card" style="margin-top: 24px;">
+        <h3>📝 Što smo danas naučile</h3>
+        <div class="recap-items">
+          <div class="recap-item">
+            <span class="recap-icon">1</span>
+            <span><strong>Preposizioni semplici</strong> — di, a, in, da, per, con. A + grad, IN + država.</span>
+          </div>
+          <div class="recap-item">
+            <span class="recap-icon">2</span>
+            <span><strong>Preposizioni articolate</strong> — di/a/da/in/su spaja se s članom (alla, del, nel, sulla...).</span>
+          </div>
+          <div class="recap-item">
+            <span class="recap-icon">3</span>
+            <span><strong>Il partitivo</strong> — del, della, degli = "malo", "neki".</span>
+          </div>
+          <div class="recap-item">
+            <span class="recap-icon">4</span>
+            <span><strong>Andare</strong> (vado, vai, va...) i <strong>Venire</strong> (vengo, vieni, viene...).</span>
+          </div>
+          <div class="recap-item">
+            <span class="recap-icon">5</span>
+            <span><strong>Fare</strong> (faccio, fai, fa...), <strong>Dare</strong> (do, dai, dà...), <strong>Sapere</strong> (so, sai, sa...).</span>
+          </div>
+          <div class="recap-item">
+            <span class="recap-icon">6</span>
+            <span><strong>Uscire</strong> (esco, esci, esce...) i <strong>Giocare</strong> (gioco, giochi, gioca...).</span>
+          </div>
+          <div class="recap-item">
+            <span class="recap-icon">7</span>
+            <span><strong>A che ora?</strong> — dalle... alle..., fino alle..., verso le...</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="kartica kartica-primjer" style="text-align: center;">
+        <h3>🌟 Bravo, Paulina!</h3>
+        <p>Prošla si cijelu Unità 2! Ovo je veliko gradivo i svaka riječ koju si naučila je korak naprijed.</p>
+        <p style="font-size: 18px; margin-top: 10px;"><em>"Complimenti! Hai fatto un grande lavoro."</em> 💚</p>
+        <p style="color: var(--text-light); font-size: 15px; margin-top: 8px;">(Svaka čast! Odradila si veliki posao.)</p>
+      </div>
+
+      <div class="kartica kartica-savjet">
+        <h3>🪞 Razmisli</h3>
+        <ul style="padding-left: 20px;">
+          <li>Koji prijedlog mi je bio najteži?</li>
+          <li>Koji nepravilni glagol već koristim često?</li>
+          <li>Što želim dodatno vježbati?</li>
+        </ul>
+        <p style="margin-top: 10px;">💡 Sad možeš otvoriti <strong>ispit</strong> i provjeriti što si naučila!</p>
+      </div>
+
+      <nav class="nav-buttons">
+        <button class="btn btn-secondary" onclick="idiNa(8)">← Nazad</button>
+        <button class="btn btn-primary" onclick="window.location.href='../ispiti/ispit-talijanski-unita-2-preposizioni-verbi.html'">Otvori ispit →</button>
+      </nav>
+    </section>
+
+  </main>
+
+  <!-- Settings Panel -->
+  <div id="settings-panel" class="settings-panel" role="dialog" aria-label="Postavke prikaza" hidden>
+    <h3>⚙️ Postavke prikaza</h3>
+
+    <label for="font-size">Veličina teksta: <span id="font-size-value">17px</span></label>
+    <input type="range" id="font-size" min="16" max="28" value="17"
+           oninput="updateFontSize(this.value)">
+
+    <fieldset>
+      <legend>Pozadina</legend>
+      <label><input type="radio" name="bg" value="cream" checked onchange="updateBg('cream')"> Krem</label>
+      <label><input type="radio" name="bg" value="blue" onchange="updateBg('blue')"> Plava</label>
+      <label><input type="radio" name="bg" value="white" onchange="updateBg('white')"> Bijela</label>
+    </fieldset>
+
+    <label for="line-height">Razmak između redova</label>
+    <input type="range" id="line-height" min="1.5" max="2.5" step="0.1" value="1.8"
+           oninput="updateLineHeight(this.value)">
+
+    <button class="btn btn-secondary" onclick="resetSettings()">Vrati na početno</button>
+    <button class="btn btn-primary" onclick="toggleSettings()">Zatvori</button>
+  </div>
+
+  <!-- Breathing overlay -->
+  <div id="breathingOverlay" class="breathing-overlay" role="dialog" aria-label="Vježba disanja" hidden>
+    <div class="breathing-box">
+      <h3>🫁 Vježba disanja</h3>
+      <div class="breathing-circle" id="breathCircle">
+        <span id="breathText">Udahni</span>
+      </div>
+      <p style="color: var(--text-light); margin-bottom: 16px;">Prati krug i diši polako...</p>
+      <button class="btn btn-secondary" onclick="zatvoriDisanje()">Gotovo, nastavi ✅</button>
+    </div>
+  </div>
+
+  <div aria-live="polite" aria-atomic="true" id="live-feedback" class="sr-only"></div>
+
+  <script>
+    // ===== Navigation =====
+    const UKUPNO_CJELINA = 9;
+    let trenutnaCjelina = 1;
+
+    function idiNa(n) {
+      if (n < 1 || n > UKUPNO_CJELINA) return;
+      document.querySelectorAll('.cjelina').forEach(c => c.classList.remove('aktivna'));
+      document.getElementById('cjelina-' + n).classList.add('aktivna');
+      trenutnaCjelina = n;
+      updateProgress(n);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function updateProgress(current) {
+      const pct = Math.round((current / UKUPNO_CJELINA) * 100);
+      document.getElementById('current-step').textContent = current;
+      document.getElementById('total-steps').textContent = UKUPNO_CJELINA;
+      document.getElementById('progress-pct').textContent = pct + '%';
+      document.getElementById('progress-fill').style.width = pct + '%';
+      document.querySelector('.progress-bar').setAttribute('aria-valuenow', pct);
+    }
+
+    // ===== TTS (Italian + Croatian) =====
+    function procitajIT(tekst) {
+      if (speechSynthesis.speaking) speechSynthesis.cancel();
+      const govor = new SpeechSynthesisUtterance(tekst);
+      govor.lang = 'it-IT';
+      govor.rate = 0.85;
+      govor.pitch = 1.0;
+      speechSynthesis.speak(govor);
+    }
+    function procitajHR(tekst) {
+      if (speechSynthesis.speaking) speechSynthesis.cancel();
+      const govor = new SpeechSynthesisUtterance(tekst);
+      govor.lang = 'hr-HR';
+      govor.rate = 0.85;
+      speechSynthesis.speak(govor);
+    }
+
+    // ===== Settings =====
+    function toggleSettings() {
+      const panel = document.getElementById('settings-panel');
+      const btn = document.querySelector('.settings-toggle');
+      const isOpen = !panel.hidden;
+      panel.hidden = isOpen;
+      btn.setAttribute('aria-expanded', !isOpen);
+    }
+    function updateFontSize(val) {
+      document.body.style.fontSize = val + 'px';
+      document.getElementById('font-size-value').textContent = val + 'px';
+      try { localStorage.setItem('pu-it-font-size', val); } catch(e) {}
+    }
+    function updateBg(theme) {
+      const colors = { cream: '#FFF8F0', blue: '#F0F4FF', white: '#FAFAFA' };
+      document.body.style.background = colors[theme];
+      try { localStorage.setItem('pu-it-bg', theme); } catch(e) {}
+    }
+    function updateLineHeight(val) {
+      document.body.style.lineHeight = val;
+      try { localStorage.setItem('pu-it-lh', val); } catch(e) {}
+    }
+    function resetSettings() {
+      updateFontSize(17); updateBg('cream'); updateLineHeight(1.8);
+      document.getElementById('font-size').value = 17;
+      document.getElementById('line-height').value = 1.8;
+      document.querySelector('input[name="bg"][value="cream"]').checked = true;
+    }
+    function loadSettings() {
+      try {
+        const fs = localStorage.getItem('pu-it-font-size');
+        const bg = localStorage.getItem('pu-it-bg');
+        const lh = localStorage.getItem('pu-it-lh');
+        if (fs) { updateFontSize(fs); document.getElementById('font-size').value = fs; }
+        if (bg) { updateBg(bg); const r = document.querySelector(`input[name="bg"][value="${bg}"]`); if(r) r.checked = true; }
+        if (lh) { updateLineHeight(lh); document.getElementById('line-height').value = lh; }
+      } catch(e) {}
+    }
+
+    // ===== Breathing =====
+    let breathInterval;
+    function pokaziDisanje() {
+      const overlay = document.getElementById('breathingOverlay');
+      overlay.hidden = false;
+      const texts = ['Udahni... 4', 'Udahni... 3', 'Udahni... 2', 'Udahni... 1',
+                     'Drži... 4', 'Drži... 3', 'Drži... 2', 'Drži... 1',
+                     'Izdahni... 4', 'Izdahni... 3', 'Izdahni... 2', 'Izdahni... 1'];
+      let i = 0;
+      document.getElementById('breathText').textContent = texts[0];
+      breathInterval = setInterval(() => {
+        i = (i + 1) % texts.length;
+        document.getElementById('breathText').textContent = texts[i];
+      }, 1000);
+    }
+    function zatvoriDisanje() {
+      clearInterval(breathInterval);
+      document.getElementById('breathingOverlay').hidden = true;
+    }
+
+    // ===== Mood =====
+    function setMood(btn, mood) {
+      const responses = {
+        super: '🌟 Super! Iskoristimo tu energiju za učenje!',
+        ok: '👍 OK, krenimo polako — radi svojim tempom.',
+        umorno: '💚 Razumijem. Radimo lagano danas. Pauza je uvijek opcija.',
+        nervozno: '🤗 Sve je OK. Nema pritiska. Duboki udah i krenimo polako. Hintovi su tu za tebe.'
+      };
+      document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      document.getElementById('mood-response').textContent = responses[mood];
+    }
+
+    // ===== Self-check =====
+    function selfCheck(btn, level) {
+      const messages = {
+        da: '🌟 Super! Nastavi dalje.',
+        djelomicno: '💡 OK! Pogledaj još jednom objašnjenje iznad, ili klikni 🔊 da čuješ izgovor.',
+        ne: '🤗 Nema problema! Vrati se na prethodni dio ili uzmi pauzu. 🫁'
+      };
+      const parent = btn.closest('.self-check');
+      let resp = parent.querySelector('.self-check-response');
+      if (!resp) {
+        resp = document.createElement('div');
+        resp.className = 'self-check-response';
+        resp.style.marginTop = '12px';
+        resp.style.padding = '10px';
+        resp.style.borderRadius = '8px';
+        resp.style.background = 'white';
+        parent.appendChild(resp);
+      }
+      resp.textContent = messages[level];
+      document.getElementById('live-feedback').textContent = messages[level];
+    }
+
+    // ===== Diagnostic check =====
+    const diagFeedback = [
+      { tocno: 'Točno! ✅ DI znači "iz" za mjesto podrijetla.', netocno: '💚 Ne brini — <em>di</em> znači "iz" (odakle si).' },
+      { tocno: 'Bravo! 🌟 VADO je "ja idem" od glagola ANDARE.', netocno: '💚 "Ja idem" = VADO. Vidjet ćemo glagole u Cjelini 4!' },
+      { tocno: 'Super! ⭐ U talijanskom ima 9 osnovnih prijedloga.', netocno: '💡 OK! Osnovnih ima 9: di, a, da, in, con, su, per, tra, fra. Naučit ćemo ih danas!' }
+    ];
+
+    function checkDiag(btn, idx, tocno) {
+      const pitanje = btn.closest('.pitanje');
+      const opcije = pitanje.querySelectorAll('.opcija');
+      opcije.forEach(o => { o.disabled = true; });
+      btn.classList.add(tocno ? 'tocno' : 'netocno');
+      const fb = document.getElementById('diag-fb-' + idx);
+      fb.style.display = 'block';
+      fb.className = 'feedback ' + (tocno ? 'tocno' : 'netocno');
+      fb.innerHTML = tocno ? diagFeedback[idx].tocno : diagFeedback[idx].netocno;
+    }
+
+    // ===== Mini quiz =====
+    function checkMini(btn, id, tocno, odg, poruka) {
+      const pitanje = btn.closest('.pitanje');
+      const opcije = pitanje.querySelectorAll('.opcija');
+      opcije.forEach(o => { o.disabled = true; });
+      btn.classList.add(tocno ? 'tocno' : 'netocno');
+      const fb = document.getElementById('fb-' + id);
+      fb.style.display = 'block';
+      fb.className = 'feedback ' + (tocno ? 'tocno' : 'netocno');
+      fb.innerHTML = (tocno ? '✅ ' : '💡 ') + poruka;
+      document.getElementById('live-feedback').textContent = (tocno ? 'Točno. ' : 'Pogledaj objašnjenje. ');
+    }
+
+    // ===== Keyboard nav =====
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        const sp = document.getElementById('settings-panel');
+        if (!sp.hidden) toggleSettings();
+        const bo = document.getElementById('breathingOverlay');
+        if (!bo.hidden) zatvoriDisanje();
+      }
+    });
+
+    // ===== Init =====
+    window.addEventListener('DOMContentLoaded', () => {
+      loadSettings();
+      updateProgress(1);
+    });
+  </script>
+</body>
+</html>

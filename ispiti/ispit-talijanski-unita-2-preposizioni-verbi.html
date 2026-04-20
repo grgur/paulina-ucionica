@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ispit — Unità 2 (Talijanski)</title>
+<style>
+  :root {
+    --blue: #4A90D9;
+    --blue-dark: #2E6FB5;
+    --green: #52A373;
+    --green-light: #E8F5EC;
+    --orange: #E89B4C;
+    --orange-light: #FDF3E7;
+    --red: #D9534F;
+    --red-light: #FBECEB;
+    --pink: #E86B9B;
+    --purple: #8B6BB8;
+    --yellow-light: #FFF9E6;
+    --text: #2C3E50;
+    --text-soft: #5D6D7E;
+    --bg: #FAFBFC;
+    --card: #FFFFFF;
+    --border: #E5E9EF;
+    --shadow: 0 2px 8px rgba(0,0,0,0.06);
+    --shadow-lg: 0 4px 16px rgba(0,0,0,0.1);
+    --radius: 12px;
+    --radius-lg: 16px;
+    --font-size: 17px;
+    --line-height: 1.7;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    font-size: var(--font-size);
+    line-height: var(--line-height);
+    color: var(--text);
+    background: var(--bg);
+    overflow-x: hidden;
+    padding: 0 0 100px 0;
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+
+  header {
+    background: linear-gradient(135deg, var(--purple) 0%, var(--pink) 100%);
+    color: white;
+    padding: 20px 16px;
+    border-radius: var(--radius-lg);
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+  }
+
+  header h1 { font-size: 1.5rem; margin-bottom: 6px; }
+  header .sub { opacity: 0.92; font-size: 0.95rem; }
+
+  /* Progress */
+  .progress-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: var(--bg);
+    padding: 10px 0;
+    margin: -10px -16px 16px -16px;
+    padding-left: 16px;
+    padding-right: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: var(--text-soft);
+    margin-bottom: 6px;
+  }
+  .progress-bar {
+    background: var(--border);
+    border-radius: 999px;
+    height: 10px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--pink), var(--purple));
+    width: 0%;
+    transition: width 0.4s ease;
+  }
+
+  /* Panel */
+  .card {
+    background: var(--card);
+    border-radius: var(--radius-lg);
+    padding: 20px 18px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+  }
+
+  h2 { font-size: 1.2rem; margin-bottom: 10px; color: var(--purple); }
+  h3 { font-size: 1.05rem; margin-bottom: 8px; }
+  p { margin-bottom: 10px; }
+
+  .muted { color: var(--text-soft); font-size: 0.92rem; }
+
+  /* Intro */
+  .intro-card {
+    background: linear-gradient(135deg, #FFF2F7 0%, #F3E8FF 100%);
+    border: 2px solid var(--pink);
+  }
+  .intro-card ul { list-style: none; padding: 0; margin: 12px 0; }
+  .intro-card li {
+    padding: 8px 0 8px 28px;
+    position: relative;
+  }
+  .intro-card li::before {
+    content: "✨";
+    position: absolute;
+    left: 0;
+    top: 8px;
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border-radius: var(--radius);
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    min-height: 48px;
+    font-family: inherit;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-primary {
+    background: var(--purple);
+    color: white;
+  }
+  .btn-primary:hover { background: #7557a5; }
+  .btn-ghost {
+    background: white;
+    color: var(--purple);
+    border: 2px solid var(--purple);
+  }
+  .btn-pink {
+    background: var(--pink);
+    color: white;
+  }
+  .btn-full { width: 100%; }
+
+  .btn-small {
+    padding: 8px 14px;
+    min-height: 40px;
+    font-size: 0.9rem;
+  }
+
+  /* TTS */
+  .tts-btn {
+    background: var(--pink);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s;
+  }
+  .tts-btn:active { transform: scale(0.9); }
+
+  /* Question */
+  .question-num {
+    display: inline-block;
+    background: var(--purple);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .warmup .question-num { background: var(--green); }
+
+  .question-text {
+    font-size: 1.1rem;
+    font-weight: 500;
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+
+  .italian-phrase {
+    background: var(--yellow-light);
+    border-left: 4px solid var(--pink);
+    padding: 14px;
+    border-radius: var(--radius);
+    margin: 12px 0;
+    font-size: 1.15rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .italian-phrase strong { color: var(--pink); }
+
+  .blank {
+    display: inline-block;
+    min-width: 80px;
+    border-bottom: 2px dashed var(--purple);
+    padding: 0 4px;
+    font-weight: 700;
+    color: var(--purple);
+    text-align: center;
+  }
+
+  /* Choices */
+  .choices {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 14px 0;
+  }
+  .choice {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: white;
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-size: 1rem;
+    text-align: left;
+    min-height: 52px;
+    transition: all 0.15s;
+    font-family: inherit;
+    color: var(--text);
+    width: 100%;
+  }
+  .choice:hover { border-color: var(--purple); background: #FAF7FE; }
+  .choice.correct {
+    background: var(--green-light);
+    border-color: var(--green);
+    color: var(--green);
+    font-weight: 600;
+  }
+  .choice.wrong {
+    background: var(--red-light);
+    border-color: var(--red);
+    color: var(--red);
+  }
+  .choice.disabled { pointer-events: none; opacity: 0.6; }
+  .choice.disabled.correct, .choice.disabled.wrong { opacity: 1; }
+
+  /* Text input */
+  .text-input {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    font-family: inherit;
+    min-height: 48px;
+  }
+  .text-input:focus {
+    outline: none;
+    border-color: var(--purple);
+  }
+
+  /* Match */
+  .match-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 12px 0;
+  }
+  .match-item {
+    padding: 14px 10px;
+    background: white;
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-weight: 600;
+    text-align: center;
+    min-height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+  }
+  .match-item.selected { border-color: var(--purple); background: #F3E8FF; }
+  .match-item.matched {
+    background: var(--green-light);
+    border-color: var(--green);
+    color: var(--green);
+    pointer-events: none;
+  }
+  .match-item.wrong-flash {
+    background: var(--red-light);
+    border-color: var(--red);
+  }
+
+  /* Feedback */
+  .feedback {
+    display: none;
+    padding: 14px;
+    border-radius: var(--radius);
+    margin-top: 12px;
+    font-size: 0.98rem;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct {
+    background: var(--green-light);
+    border-left: 4px solid var(--green);
+    color: #1F5F3A;
+  }
+  .feedback.wrong {
+    background: var(--orange-light);
+    border-left: 4px solid var(--orange);
+    color: #8A5417;
+  }
+
+  .check-btn {
+    margin-top: 12px;
+    background: var(--pink);
+    color: white;
+  }
+
+  /* Breathing overlay */
+  .overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(74,144,217,0.96);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    padding: 20px;
+    flex-direction: column;
+  }
+  .overlay.show { display: flex; }
+  .circle {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+    margin: 24px 0;
+    animation: breathe 12s infinite ease-in-out;
+  }
+  @keyframes breathe {
+    0%, 100% { transform: scale(1); }
+    33%, 66% { transform: scale(1.4); }
+  }
+  .overlay h2 { color: white; }
+  .overlay button {
+    background: white;
+    color: var(--blue);
+    border: none;
+    padding: 12px 24px;
+    border-radius: var(--radius);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 20px;
+    cursor: pointer;
+    min-height: 48px;
+  }
+
+  /* Settings */
+  .settings-btn {
+    position: fixed;
+    bottom: calc(20px + env(safe-area-inset-bottom));
+    right: 16px;
+    z-index: 50;
+    background: var(--purple);
+    color: white;
+    border: none;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    font-size: 1.4rem;
+    cursor: pointer;
+    box-shadow: var(--shadow-lg);
+  }
+  .settings-panel {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-radius: 20px 20px 0 0;
+    padding: 20px 16px calc(20px + env(safe-area-inset-bottom));
+    box-shadow: 0 -4px 16px rgba(0,0,0,0.15);
+    z-index: 51;
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+  .settings-panel.show { display: block; }
+  .settings-panel h3 { margin-bottom: 14px; }
+  .setting-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .setting-row:last-child { border: none; }
+  .setting-btns { display: flex; gap: 6px; }
+  .setting-btns button {
+    background: var(--border);
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    min-height: 36px;
+    min-width: 36px;
+  }
+  .setting-btns button.active { background: var(--purple); color: white; }
+
+  /* Result */
+  #result-screen { display: none; }
+  .score-circle {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--purple), var(--pink));
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20px auto;
+    font-weight: 700;
+  }
+  .score-circle .pct { font-size: 3rem; line-height: 1; }
+  .score-circle .lbl { font-size: 0.9rem; opacity: 0.9; margin-top: 4px; }
+
+  .review-item {
+    padding: 12px;
+    border-radius: var(--radius);
+    margin-bottom: 10px;
+    border-left: 4px solid;
+  }
+  .review-item.ok { background: var(--green-light); border-color: var(--green); }
+  .review-item.not-ok { background: var(--orange-light); border-color: var(--orange); }
+  .review-item small { color: var(--text-soft); display: block; margin-top: 4px; }
+
+  /* Hidden questions until current */
+  .question-card { display: none; }
+  .question-card.active { display: block; animation: fadeIn 0.3s; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (min-width: 600px) {
+    :root { --font-size: 18px; }
+    .container { padding: 24px; }
+    header { padding: 28px 24px; }
+    header h1 { font-size: 1.8rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1>📝 Ispit — Unità 2</h1>
+    <div class="sub">Prijedlozi, partitiv i nepravilni glagoli</div>
+  </header>
+
+  <!-- INTRO -->
+  <div id="intro-screen">
+    <div class="card intro-card">
+      <h2>Prije nego što počneš...</h2>
+      <p><strong>Paulina, ovo nije utrka. 🌸</strong></p>
+      <p>Uzmi koliko god ti treba vremena. Svaki odgovor koji daš — točan ili netočan — znači da tvoj mozak radi i uči.</p>
+      <ul>
+        <li>15 pitanja, bez vremenskog ograničenja</li>
+        <li>Nakon svakog odgovora dobit ćeš objašnjenje</li>
+        <li>Djelomični bodovi su OK — ne moraš sve znati savršeno</li>
+        <li>Ako osjetiš stres, pritisni 🌬️ za pauzu i disanje</li>
+      </ul>
+      <p class="muted">💡 <strong>Zapamti:</strong> greške su dokaz da pokušavaš. To je hrabro.</p>
+      <button class="btn btn-ghost btn-full" onclick="openBreathing()" style="margin-bottom:10px;">🌬️ Vježba disanja (1 min)</button>
+      <button class="btn btn-primary btn-full" onclick="startExam()">Započni ispit →</button>
+    </div>
+  </div>
+
+  <!-- EXAM -->
+  <div id="exam-screen" style="display:none;">
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span id="progress-text">Pitanje 1 / 15</span>
+        <span id="score-text">Osvojeno: 0</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+    </div>
+
+    <!-- Q1: WARMUP - preposizione semplice a città -->
+    <div class="question-card warmup active" data-q="1">
+      <div class="card">
+        <span class="question-num">🌱 Zagrijavanje 1/15</span>
+        <div class="question-text">Koji prijedlog dolazi ispred <strong>grada</strong>?</div>
+        <div class="italian-phrase">
+          Vado <strong class="blank" id="q1-blank">___</strong> Split.
+          <button class="tts-btn" onclick="sayIT('Vado a Split')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="choices">
+          <button class="choice" onclick="answer(1, 'a', true)">a</button>
+          <button class="choice" onclick="answer(1, 'in', false)">in</button>
+          <button class="choice" onclick="answer(1, 'di', false)">di</button>
+        </div>
+        <div class="feedback" id="fb-1"></div>
+      </div>
+    </div>
+
+    <!-- Q2: WARMUP - preposizione in per paese -->
+    <div class="question-card warmup" data-q="2">
+      <div class="card">
+        <span class="question-num">🌱 Zagrijavanje 2/15</span>
+        <div class="question-text">Koji prijedlog dolazi ispred <strong>države</strong>?</div>
+        <div class="italian-phrase">
+          Vado <strong class="blank">___</strong> Italia.
+          <button class="tts-btn" onclick="sayIT('Vado in Italia')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="choices">
+          <button class="choice" onclick="answer(2, 'a', false)">a</button>
+          <button class="choice" onclick="answer(2, 'in', true)">in</button>
+          <button class="choice" onclick="answer(2, 'per', false)">per</button>
+        </div>
+        <div class="feedback" id="fb-2"></div>
+      </div>
+    </div>
+
+    <!-- Q3: andare - io -->
+    <div class="question-card" data-q="3">
+      <div class="card">
+        <span class="question-num">Pitanje 3/15</span>
+        <div class="question-text">Dovrši rečenicu s točnim oblikom glagola <strong>andare</strong>:</div>
+        <div class="italian-phrase">
+          Io <strong class="blank">___</strong> a scuola.
+          <button class="tts-btn" onclick="sayIT('Io vado a scuola')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="choices">
+          <button class="choice" onclick="answer(3, 'ando', false)">ando</button>
+          <button class="choice" onclick="answer(3, 'vado', true)">vado</button>
+          <button class="choice" onclick="answer(3, 'vo', false)">vo</button>
+          <button class="choice" onclick="answer(3, 'andiamo', false)">andiamo</button>
+        </div>
+        <div class="feedback" id="fb-3"></div>
+      </div>
+    </div>
+
+    <!-- Q4: preposizione articolata - al -->
+    <div class="question-card" data-q="4">
+      <div class="card">
+        <span class="question-num">Pitanje 4/15</span>
+        <div class="question-text">"a + il" postaje:</div>
+        <div class="italian-phrase">
+          Vado <strong class="blank">___</strong> cinema.
+          <button class="tts-btn" onclick="sayIT('Vado al cinema')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="choices">
+          <button class="choice" onclick="answer(4, 'a il', false)">a il</button>
+          <button class="choice" onclick="answer(4, 'al', true)">al</button>
+          <button class="choice" onclick="answer(4, 'allo', false)">allo</button>
+          <button class="choice" onclick="answer(4, 'ai', false)">ai</button>
+        </div>
+        <div class="feedback" id="fb-4"></div>
+      </div>
+    </div>
+
+    <!-- Q5: preposizione articolata - alla -->
+    <div class="question-card" data-q="5">
+      <div class="card">
+        <span class="question-num">Pitanje 5/15</span>
+        <div class="question-text">Odaberi točan oblik prijedloga:</div>
+        <div class="italian-phrase">
+          Vado <strong class="blank">___</strong> stazione.
+          <button class="tts-btn" onclick="sayIT('Vado alla stazione')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="choices">
+          <button class="choice" onclick="answer(5, 'al', false)">al</button>
+          <button class="choice" onclick="answer(5, 'alla', true)">alla</button>
+          <button class="choice" onclick="answer(5, 'allo', false)">allo</button>
+          <button class="choice" onclick="answer(5, 'a la', false)">a la</button>
+        </div>
+        <div class="feedback" id="fb-5"></div>
+      </div>
+    </div>
+
+    <!-- Q6: partitivo -->
+    <div class="question-card" data-q="6">
+      <div class="card">
+        <span class="question-num">Pitanje 6/15</span>
+        <div class="question-text">Partitiv (= malo, nešto). Odaberi točno:</div>
+        <div class="italian-phrase">
+          Mangio <strong class="blank">___</strong> pane.
+          <button class="tts-btn" onclick="sayIT('Mangio del pane')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="choices">
+          <button class="choice" onclick="answer(6, 'del', true)">del (di + il)</button>
+          <button class="choice" onclick="answer(6, 'della', false)">della (di + la)</button>
+          <button class="choice" onclick="answer(6, 'dello', false)">dello (di + lo)</button>
+          <button class="choice" onclick="answer(6, 'dei', false)">dei (di + i)</button>
+        </div>
+        <div class="feedback" id="fb-6"></div>
+      </div>
+    </div>
+
+    <!-- Q7: venire - tu -->
+    <div class="question-card" data-q="7">
+      <div class="card">
+        <span class="question-num">Pitanje 7/15</span>
+        <div class="question-text">Dovrši s glagolom <strong>venire</strong>:</div>
+        <div class="italian-phrase">
+          Tu <strong class="blank">___</strong> con me?
+          <button class="tts-btn" onclick="sayIT('Tu vieni con me?')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="choices">
+          <button class="choice" onclick="answer(7, 'vengo', false)">vengo</button>
+          <button class="choice" onclick="answer(7, 'vieni', true)">vieni</button>
+          <button class="choice" onclick="answer(7, 'viene', false)">viene</button>
+          <button class="choice" onclick="answer(7, 'venite', false)">venite</button>
+        </div>
+        <div class="feedback" id="fb-7"></div>
+      </div>
+    </div>
+
+    <!-- Q8: fare - noi -->
+    <div class="question-card" data-q="8">
+      <div class="card">
+        <span class="question-num">Pitanje 8/15</span>
+        <div class="question-text">Dovrši s glagolom <strong>fare</strong> (raditi/činiti):</div>
+        <div class="italian-phrase">
+          Noi <strong class="blank">___</strong> i compiti.
+          <button class="tts-btn" onclick="sayIT('Noi facciamo i compiti')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="choices">
+          <button class="choice" onclick="answer(8, 'fiamo', false)">fiamo</button>
+          <button class="choice" onclick="answer(8, 'faciamo', false)">faciamo</button>
+          <button class="choice" onclick="answer(8, 'facciamo', true)">facciamo</button>
+          <button class="choice" onclick="answer(8, 'faremo', false)">faremo</button>
+        </div>
+        <div class="feedback" id="fb-8"></div>
+      </div>
+    </div>
+
+    <!-- Q9: sapere - io -->
+    <div class="question-card" data-q="9">
+      <div class="card">
+        <span class="question-num">Pitanje 9/15</span>
+        <div class="question-text">Dovrši s glagolom <strong>sapere</strong> (znati):</div>
+        <div class="italian-phrase">
+          Io non <strong class="blank">___</strong> dove sei.
+          <button class="tts-btn" onclick="sayIT('Io non so dove sei')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="choices">
+          <button class="choice" onclick="answer(9, 'sa', false)">sa</button>
+          <button class="choice" onclick="answer(9, 'sai', false)">sai</button>
+          <button class="choice" onclick="answer(9, 'so', true)">so</button>
+          <button class="choice" onclick="answer(9, 'sapo', false)">sapo</button>
+        </div>
+        <div class="feedback" id="fb-9"></div>
+      </div>
+    </div>
+
+    <!-- Q10: uscire - lei -->
+    <div class="question-card" data-q="10">
+      <div class="card">
+        <span class="question-num">Pitanje 10/15</span>
+        <div class="question-text">Dovrši s glagolom <strong>uscire</strong> (izaći):</div>
+        <div class="italian-phrase">
+          Maria <strong class="blank">___</strong> con gli amici.
+          <button class="tts-btn" onclick="sayIT('Maria esce con gli amici')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="choices">
+          <button class="choice" onclick="answer(10, 'usco', false)">usco</button>
+          <button class="choice" onclick="answer(10, 'esci', false)">esci</button>
+          <button class="choice" onclick="answer(10, 'esce', true)">esce</button>
+          <button class="choice" onclick="answer(10, 'escie', false)">escie</button>
+        </div>
+        <div class="feedback" id="fb-10"></div>
+      </div>
+    </div>
+
+    <!-- Q11: giocare - tu (H rule) -->
+    <div class="question-card" data-q="11">
+      <div class="card">
+        <span class="question-num">⚠️ Pitanje 11/15</span>
+        <div class="question-text">Pazi na pravilo <strong>H</strong>! Glagol <strong>giocare</strong>, drugo lice:</div>
+        <div class="italian-phrase">
+          Tu <strong class="blank">___</strong> a calcio.
+          <button class="tts-btn" onclick="sayIT('Tu giochi a calcio')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="choices">
+          <button class="choice" onclick="answer(11, 'gioci', false)">gioci</button>
+          <button class="choice" onclick="answer(11, 'giochi', true)">giochi</button>
+          <button class="choice" onclick="answer(11, 'giocci', false)">giocci</button>
+          <button class="choice" onclick="answer(11, 'giocchi', false)">giocchi</button>
+        </div>
+        <div class="feedback" id="fb-11"></div>
+      </div>
+    </div>
+
+    <!-- Q12: dalle...alle -->
+    <div class="question-card" data-q="12">
+      <div class="card">
+        <span class="question-num">Pitanje 12/15</span>
+        <div class="question-text">Dovrši izraz za vrijeme (<em>od 8 do 13h</em>):</div>
+        <div class="italian-phrase">
+          La scuola è <strong class="blank">dalle</strong> 8:00 <strong class="blank">___</strong> 13:00.
+          <button class="tts-btn" onclick="sayIT('La scuola è dalle otto alle tredici')" aria-label="Slušaj">🔊</button>
+        </div>
+        <div class="choices">
+          <button class="choice" onclick="answer(12, 'a', false)">a</button>
+          <button class="choice" onclick="answer(12, 'al', false)">al</button>
+          <button class="choice" onclick="answer(12, 'alle', true)">alle</button>
+          <button class="choice" onclick="answer(12, 'allo', false)">allo</button>
+        </div>
+        <div class="feedback" id="fb-12"></div>
+      </div>
+    </div>
+
+    <!-- Q13: preposizione articolata - nel -->
+    <div class="question-card" data-q="13">
+      <div class="card">
+        <span class="question-num">Pitanje 13/15</span>
+        <div class="question-text">"in + il" postaje:</div>
+        <div class="italian-phrase">
+          Il libro è <strong class="blank">___</strong> zaino.
+          <button class="tts-btn" onclick="sayIT('Il libro è nello zaino')" aria-label="Slušaj">🔊</button>
+        </div>
+        <p class="muted" style="font-size:0.88rem;">💡 Hint: "zaino" počinje s <strong>z</strong>, pa gleda "lo/nello".</p>
+        <div class="choices">
+          <button class="choice" onclick="answer(13, 'nel', false)">nel</button>
+          <button class="choice" onclick="answer(13, 'nella', false)">nella</button>
+          <button class="choice" onclick="answer(13, 'nello', true)">nello</button>
+          <button class="choice" onclick="answer(13, 'in lo', false)">in lo</button>
+        </div>
+        <div class="feedback" id="fb-13"></div>
+      </div>
+    </div>
+
+    <!-- Q14: vocabulary match -->
+    <div class="question-card" data-q="14">
+      <div class="card">
+        <span class="question-num">Pitanje 14/15</span>
+        <div class="question-text">Spoji talijansku riječ s hrvatskim prijevodom. Klikni prvo talijansku, zatim hrvatsku.</div>
+        <div id="match-grid" class="match-wrap">
+          <button class="match-item" data-side="it" data-id="1" onclick="matchClick(this)">domani 🔊</button>
+          <button class="match-item" data-side="hr" data-id="3" onclick="matchClick(this)">pokraj / uz</button>
+          <button class="match-item" data-side="it" data-id="2" onclick="matchClick(this)">incontrare 🔊</button>
+          <button class="match-item" data-side="hr" data-id="1" onclick="matchClick(this)">sutra</button>
+          <button class="match-item" data-side="it" data-id="3" onclick="matchClick(this)">accanto a 🔊</button>
+          <button class="match-item" data-side="hr" data-id="4" onclick="matchClick(this)">slati</button>
+          <button class="match-item" data-side="it" data-id="4" onclick="matchClick(this)">inviare 🔊</button>
+          <button class="match-item" data-side="hr" data-id="2" onclick="matchClick(this)">susresti</button>
+        </div>
+        <p class="muted" id="match-status" style="text-align:center;">Spojeno: 0 / 4</p>
+        <div class="feedback" id="fb-14"></div>
+      </div>
+    </div>
+
+    <!-- Q15: translation -->
+    <div class="question-card" data-q="15">
+      <div class="card">
+        <span class="question-num">🎯 Pitanje 15/15 — završno</span>
+        <div class="question-text">Prevedi na talijanski: <strong>"Idem u kino."</strong></div>
+        <p class="muted">💡 Hint: "kino" = il cinema → "u kino" traži prijedlog articolato (a + il).</p>
+        <input type="text" class="text-input" id="q15-input" placeholder="Napiši na talijanskom..." autocomplete="off" autocapitalize="off">
+        <button class="btn btn-pink check-btn btn-full" onclick="checkTranslation()">✓ Provjeri</button>
+        <div class="feedback" id="fb-15"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RESULT -->
+  <div id="result-screen">
+    <div class="card" style="text-align:center;">
+      <h2 id="result-title">🎉 Bravo, Paulina!</h2>
+      <div class="score-circle">
+        <div class="pct" id="result-pct">0%</div>
+        <div class="lbl" id="result-points">0 / 15</div>
+      </div>
+      <p id="result-message" style="font-size:1.05rem; margin: 16px 0;"></p>
+    </div>
+
+    <div class="card">
+      <h3>📋 Pregled odgovora</h3>
+      <div id="review-list"></div>
+    </div>
+
+    <div class="card">
+      <h3>🤔 Metakognicija</h3>
+      <p class="muted">Uzmi trenutak i razmisli:</p>
+      <ul style="padding-left:20px; margin: 10px 0;">
+        <li>Što ti je bilo najlakše?</li>
+        <li>Što ti je bilo najteže?</li>
+        <li>Što bi željela ponoviti?</li>
+      </ul>
+      <p style="margin-top:12px;"><strong>💡 Preporuka za ponavljanje:</strong></p>
+      <div id="recommendations"></div>
+    </div>
+
+    <div class="card" style="text-align:center;">
+      <button class="btn btn-ghost btn-full" onclick="location.reload()" style="margin-bottom:10px;">🔄 Pokušaj ponovo</button>
+      <button class="btn btn-primary btn-full" onclick="window.location.href='../lekcije/talijanski-unita-2-preposizioni-verbi.html'">📖 Vrati se na lekciju</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Settings -->
+<button class="settings-btn" onclick="toggleSettings()" aria-label="Postavke">⚙️</button>
+<div class="settings-panel" id="settingsPanel">
+  <h3>⚙️ Postavke</h3>
+  <div class="setting-row">
+    <span>Veličina teksta</span>
+    <div class="setting-btns">
+      <button onclick="setFont(15)">A-</button>
+      <button class="active" onclick="setFont(17)">A</button>
+      <button onclick="setFont(20)">A+</button>
+      <button onclick="setFont(23)">A++</button>
+    </div>
+  </div>
+  <div class="setting-row">
+    <span>Razmak redova</span>
+    <div class="setting-btns">
+      <button onclick="setLH(1.5)">1.5</button>
+      <button class="active" onclick="setLH(1.7)">1.7</button>
+      <button onclick="setLH(2.0)">2.0</button>
+    </div>
+  </div>
+  <div class="setting-row">
+    <span>Pozadina</span>
+    <div class="setting-btns">
+      <button class="active" onclick="setBG('#FAFBFC','#2C3E50')">Bijela</button>
+      <button onclick="setBG('#FFF9E6','#2C3E50')">Krem</button>
+      <button onclick="setBG('#1F2937','#E5E7EB')">Tamna</button>
+    </div>
+  </div>
+  <button class="btn btn-ghost btn-full" onclick="openBreathing()" style="margin-top:12px;">🌬️ Pauza za disanje</button>
+  <button class="btn btn-primary btn-full" onclick="toggleSettings()" style="margin-top:8px;">Zatvori</button>
+</div>
+
+<!-- Breathing Overlay -->
+<div class="overlay" id="breathingOverlay" role="dialog" aria-label="Disanje">
+  <h2>Udahni... zadrži... izdahni</h2>
+  <div class="circle"></div>
+  <p>Diši polako. Nema žurbe. 🌸</p>
+  <button onclick="closeBreathing()">Spremna sam, nastavljam</button>
+</div>
+
+<script>
+  // State
+  const state = {
+    current: 1,
+    total: 15,
+    score: 0,
+    answered: {},
+    questions: {
+      1: {topic:'preposizione a + città', correct:'a'},
+      2: {topic:'preposizione in + paese', correct:'in'},
+      3: {topic:'andare (io)', correct:'vado'},
+      4: {topic:'preposizione articolata: a+il=al', correct:'al'},
+      5: {topic:'preposizione articolata: a+la=alla', correct:'alla'},
+      6: {topic:'partitivo: del', correct:'del'},
+      7: {topic:'venire (tu)', correct:'vieni'},
+      8: {topic:'fare (noi)', correct:'facciamo'},
+      9: {topic:'sapere (io)', correct:'so'},
+      10: {topic:'uscire (lei)', correct:'esce'},
+      11: {topic:'giocare (tu) — pravilo H', correct:'giochi'},
+      12: {topic:'dalle...alle', correct:'alle'},
+      13: {topic:'preposizione articolata: in+lo=nello', correct:'nello'},
+      14: {topic:'vokabular (domani, incontrare, accanto a, inviare)', correct:'match'},
+      15: {topic:'prijevod: Idem u kino → Vado al cinema', correct:'Vado al cinema'}
+    },
+    explanations: {
+      1: 'Ispred <strong>grada</strong> uvijek ide "a" → Vado <strong>a</strong> Split, <strong>a</strong> Roma.',
+      2: 'Ispred <strong>države</strong> ide "in" → <strong>in</strong> Italia, <strong>in</strong> Croazia.',
+      3: 'andare je nepravilan: vado, vai, va, andiamo, andate, vanno.',
+      4: 'a + il = <strong>al</strong>. Sjeti se: al cinema, al mare.',
+      5: 'a + la = <strong>alla</strong> → alla stazione, alla festa.',
+      6: 'Partitiv "malo kruha" = del pane. "pane" je muški (il pane) → del.',
+      7: 'venire nepravilan: vengo, <strong>vieni</strong>, viene, veniamo, venite, vengono.',
+      8: 'fare je nepravilan: faccio, fai, fa, <strong>facciamo</strong>, fate, fanno. Dvostruko CC!',
+      9: 'sapere nepravilan: <strong>so</strong>, sai, sa, sappiamo, sapete, sanno.',
+      10: 'uscire: esco, esci, <strong>esce</strong>, usciamo, uscite, escono.',
+      11: 'giocare čuva tvrdi zvuk /k/ dodavanjem <strong>H</strong>: gioco, <strong>giochi</strong>, gioca...',
+      12: 'Kod sati: <strong>dalle</strong> 8 <strong>alle</strong> 13. Uvijek množina "le ore".',
+      13: 'in + lo = <strong>nello</strong>. Koristi se za riječi koje počinju s z, s+konsonant, gn, ps, y.',
+      14: 'domani = sutra, incontrare = susresti, accanto a = pokraj, inviare = slati.',
+      15: '"Idem u kino" = Vado <strong>al</strong> cinema (a + il cinema = al cinema).'
+    },
+    matches: { selected: null, done: 0 }
+  };
+
+  function startExam() {
+    document.getElementById('intro-screen').style.display = 'none';
+    document.getElementById('exam-screen').style.display = 'block';
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const pct = ((state.current - 1) / state.total) * 100;
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-text').textContent = `Pitanje ${state.current} / ${state.total}`;
+    document.getElementById('score-text').textContent = `Osvojeno: ${state.score}`;
+  }
+
+  function answer(qId, value, correct) {
+    if (state.answered[qId]) return;
+    state.answered[qId] = { value, correct };
+    if (correct) state.score++;
+
+    const card = document.querySelector(`[data-q="${qId}"]`);
+    const buttons = card.querySelectorAll('.choice');
+    buttons.forEach(b => {
+      b.classList.add('disabled');
+      const txt = b.textContent.trim().split(' ')[0].replace('(', '');
+      if (correct && b.onclick.toString().includes(`'${value}', true`)) b.classList.add('correct');
+      if (!correct && b.onclick.toString().includes(`'${value}', false`)) b.classList.add('wrong');
+      if (b.onclick.toString().includes(', true')) b.classList.add('correct');
+    });
+
+    showFeedback(qId, correct);
+    setTimeout(() => nextQuestion(qId), 1600);
+  }
+
+  function showFeedback(qId, correct) {
+    const fb = document.getElementById(`fb-${qId}`);
+    fb.classList.add('show');
+    fb.classList.add(correct ? 'correct' : 'wrong');
+    const expl = state.explanations[qId];
+    if (correct) {
+      fb.innerHTML = `<strong>✅ Točno!</strong> ${expl}`;
+    } else {
+      fb.innerHTML = `<strong>💡 Još malo!</strong> ${expl}`;
+    }
+  }
+
+  function nextQuestion(fromQ) {
+    const cur = document.querySelector(`[data-q="${fromQ}"]`);
+    cur.classList.remove('active');
+    if (fromQ >= state.total) {
+      showResult();
+      return;
+    }
+    state.current = fromQ + 1;
+    const nxt = document.querySelector(`[data-q="${state.current}"]`);
+    nxt.classList.add('active');
+    updateProgress();
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  // Match (Q14)
+  function matchClick(btn) {
+    if (btn.classList.contains('matched')) return;
+    if (!state.matches.selected) {
+      state.matches.selected = btn;
+      btn.classList.add('selected');
+      return;
+    }
+    const a = state.matches.selected;
+    const b = btn;
+    if (a === b) { a.classList.remove('selected'); state.matches.selected = null; return; }
+
+    // need one IT and one HR with same id
+    const sameId = a.dataset.id === b.dataset.id;
+    const diffSide = a.dataset.side !== b.dataset.side;
+    if (sameId && diffSide) {
+      a.classList.remove('selected');
+      a.classList.add('matched');
+      b.classList.add('matched');
+      state.matches.done++;
+      state.matches.selected = null;
+      document.getElementById('match-status').textContent = `Spojeno: ${state.matches.done} / 4`;
+
+      if (state.matches.done === 4) {
+        state.score++;
+        state.answered[14] = { correct: true };
+        showFeedback(14, true);
+        setTimeout(() => nextQuestion(14), 1800);
+      }
+    } else {
+      a.classList.remove('selected');
+      b.classList.add('wrong-flash');
+      setTimeout(() => b.classList.remove('wrong-flash'), 600);
+      state.matches.selected = null;
+    }
+  }
+
+  // Q15 translation
+  function checkTranslation() {
+    if (state.answered[15]) return;
+    const input = document.getElementById('q15-input').value.trim().toLowerCase();
+    const accepted = ['vado al cinema', 'io vado al cinema'];
+    const correct = accepted.includes(input);
+    state.answered[15] = { value: input, correct };
+    if (correct) state.score++;
+    showFeedback(15, correct);
+    const btn = document.querySelector('#q15-input').nextElementSibling;
+    btn.disabled = true;
+    btn.style.opacity = '0.5';
+    setTimeout(showResult, 2200);
+  }
+
+  // RESULT
+  function showResult() {
+    document.getElementById('exam-screen').style.display = 'none';
+    document.getElementById('result-screen').style.display = 'block';
+
+    const pct = Math.round((state.score / state.total) * 100);
+    document.getElementById('result-pct').textContent = pct + '%';
+    document.getElementById('result-points').textContent = `${state.score} / ${state.total}`;
+
+    let title, msg;
+    if (pct >= 85) {
+      title = '🌟 Izvanredno!';
+      msg = 'Paulina, impresivno vladanje talijanskom gramatikom! Tvoj mozak je napravio nove čvrste putove. Čak i kad si nešto pogriješila, to ti pomaže još bolje zapamtiti.';
+    } else if (pct >= 65) {
+      title = '💪 Dobro ti ide!';
+      msg = 'Solidan rezultat! Osnovu si savladala — još malo vježbe na onim nepravilnim glagolima i bit ćeš expert. Pogledaj pregled ispod i ponovi što još nije sjelo.';
+    } else if (pct >= 40) {
+      title = '🌱 Na dobrom si putu';
+      msg = 'Ne žuri! Svaka greška koju si napravila pokazala ti je TOČNO gdje treba još vježbati. To je dragocjeno. Otvori lekciju, ponovi slabe dijelove pa probaj opet — napredak će biti vidljiv.';
+    } else {
+      title = '🌸 Hrabra si što si pokušala';
+      msg = 'Ovo gradivo je stvarno novo i ima puno nepravilnosti. Nije stvar u tome jesi li "dobra" u talijanskom — stvar je u tome koliko si puta pokušala. Vrati se na lekciju, idi polako, jedna cjelina po jedna. Tvoj mozak UPRAVO GRADI nove veze.';
+    }
+    document.getElementById('result-title').textContent = title;
+    document.getElementById('result-message').innerHTML = msg;
+
+    // Review
+    const rev = document.getElementById('review-list');
+    for (let i = 1; i <= state.total; i++) {
+      const ans = state.answered[i];
+      const q = state.questions[i];
+      const ok = ans && ans.correct;
+      const div = document.createElement('div');
+      div.className = 'review-item ' + (ok ? 'ok' : 'not-ok');
+      div.innerHTML = `
+        <strong>${ok ? '✅' : '📝'} Pitanje ${i}:</strong> ${q.topic}
+        <small>${ok ? 'Točno!' : 'Točan odgovor: <strong>' + q.correct + '</strong>'}</small>
+      `;
+      rev.appendChild(div);
+    }
+
+    // Recommendations
+    const weak = [];
+    for (let i = 1; i <= state.total; i++) {
+      if (!state.answered[i] || !state.answered[i].correct) {
+        weak.push(state.questions[i].topic);
+      }
+    }
+    const rec = document.getElementById('recommendations');
+    if (weak.length === 0) {
+      rec.innerHTML = '<p>🎯 Sve si pogodila! Prebaci se na sljedeću jedinicu kad budeš spremna.</p>';
+    } else {
+      rec.innerHTML = '<ul style="padding-left:20px; margin-top:8px;">' +
+        weak.map(t => `<li>${t}</li>`).join('') +
+        '</ul>';
+    }
+
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  // TTS
+  function sayIT(text) {
+    if (!('speechSynthesis' in window)) return;
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'it-IT';
+    u.rate = 0.85;
+    window.speechSynthesis.speak(u);
+  }
+
+  // Settings
+  function toggleSettings() {
+    document.getElementById('settingsPanel').classList.toggle('show');
+  }
+  function setFont(px) {
+    document.documentElement.style.setProperty('--font-size', px + 'px');
+    document.querySelectorAll('#settingsPanel .setting-row:nth-child(2) .setting-btns button')
+      .forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+  }
+  function setLH(v) {
+    document.documentElement.style.setProperty('--line-height', v);
+    document.querySelectorAll('#settingsPanel .setting-row:nth-child(3) .setting-btns button')
+      .forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+  }
+  function setBG(bg, tx) {
+    document.documentElement.style.setProperty('--bg', bg);
+    document.documentElement.style.setProperty('--text', tx);
+    document.querySelectorAll('#settingsPanel .setting-row:nth-child(4) .setting-btns button')
+      .forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+  }
+
+  // Breathing
+  function openBreathing() {
+    document.getElementById('breathingOverlay').classList.add('show');
+  }
+  function closeBreathing() {
+    document.getElementById('breathingOverlay').classList.remove('show');
+  }
+
+  // Keyboard
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeBreathing();
+      document.getElementById('settingsPanel').classList.remove('show');
+    }
+  });
+</script>
+</body>
+</html>

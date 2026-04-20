@@ -119,6 +119,12 @@
       "file": "lekcije/lekcija-linearne-jednadzbe.html",
       "date": "2026-03-07",
       "subject": "Matematika"
+    },
+    {
+      "title": "Talijanski — Unità 2: Prijedlozi i nepravilni glagoli",
+      "file": "lekcije/talijanski-unita-2-preposizioni-verbi.html",
+      "date": "2026-04-20",
+      "subject": "Talijanski jezik"
     }
   ],
   "ispiti": [
@@ -193,6 +199,12 @@
       "file": "ispiti/ispit-linearne-jednadzbe.html",
       "date": "2026-03-07",
       "subject": "Matematika"
+    },
+    {
+      "title": "Ispit: Talijanski — Unità 2 (prijedlozi i glagoli)",
+      "file": "ispiti/ispit-talijanski-unita-2-preposizioni-verbi.html",
+      "date": "2026-04-20",
+      "subject": "Talijanski jezik"
     }
   ],
   "zadaci": []
